@@ -2,7 +2,7 @@
 % Please edit documentation in R/read.R
 \name{dbReadTablesSQLite}
 \alias{dbReadTablesSQLite}
-\title{Read Tables from a SQLite Database}
+\title{Read Data Tables from a SQLite Database}
 \usage{
 dbReadTablesSQLite(conn = getOption("dbWriteSQLite.conn", NULL),
   meta = TRUE)
@@ -13,10 +13,10 @@ dbReadTablesSQLite(conn = getOption("dbWriteSQLite.conn", NULL),
 \item{meta}{A flag specifying whether to preserve meta data.}
 }
 \value{
-A list of the tables.
+A named list of the data tables.
 }
 \description{
-Read Tables from a SQLite Database
+Read Data Tables from a SQLite Database
 }
 \seealso{
 Other dbReadTableSQLite: \code{\link{dbReadTableSQLite}}

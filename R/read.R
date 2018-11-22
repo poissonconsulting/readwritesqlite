@@ -18,10 +18,10 @@ dbReadTableSQLite <- function(table_name,
   as_conditional_tibble(data)
 }
 
-#' Read Tables from a SQLite Database
+#' Read Data Tables from a SQLite Database
 #'
 #' @inheritParams dbWriteTableSQLite
-#' @return A list of the tables.
+#' @return A named list of the data tables.
 #' @family dbReadTableSQLite
 #' @export
 dbReadTablesSQLite <- function(conn = getOption("dbWriteSQLite.conn", NULL),
