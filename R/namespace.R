@@ -1,2 +1,2 @@
-#' @import DBI RSQLite
+#' @import checkr RSQLite
 NULL

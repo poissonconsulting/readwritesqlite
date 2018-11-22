@@ -11,11 +11,10 @@ Description:
   Adds additional functionality to dbWriteTable() and dbReadTable() 
   for SQLiteConnection objects.
 License: MIT + file LICENSE
-Depends:
-    RSQLite
 Imports: 
+    checkr,
     DBI,
-    methods
+    RSQLite,
 Suggests: 
     covr,
     testthat
