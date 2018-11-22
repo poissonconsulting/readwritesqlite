@@ -3,3 +3,4 @@
 export(dbWriteTableSQLite)
 import(RSQLite)
 import(checkr)
+import(err)

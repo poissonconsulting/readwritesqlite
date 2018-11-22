@@ -1,2 +1,2 @@
-#' @import checkr RSQLite
+#' @import err checkr RSQLite
 NULL

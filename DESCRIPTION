@@ -12,6 +12,7 @@ Description:
   for SQLiteConnection objects.
 License: MIT + file LICENSE
 Imports: 
+    err,
     checkr,
     DBI,
     RSQLite,
