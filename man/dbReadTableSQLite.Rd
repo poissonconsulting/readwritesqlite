@@ -15,12 +15,12 @@ dbReadTableSQLite(table_name, conn = getOption("dbWriteSQLite.conn",
 \item{meta}{A flag specifying whether to preserve meta data.}
 }
 \value{
-The updated data frame with the same columns as the table.
+A data frame (tibble if tibble package is installed) of the table.
 }
 \description{
 Read a Table from a SQLite Database
 }
-\examples{
-con <- DBI::dbConnect(RSQLite::SQLite())
-DBI::dbDisconnect(con)
+\seealso{
+Other dbReadTableSQLite: \code{\link{dbReadTablesSQLite}}
 }
+\concept{dbReadTableSQLite}

@@ -20,3 +20,8 @@ as_conditional_tibble <- function(x) {
     x <- tibble::as_tibble(x)
   x
 }
+
+empty_named_list <- function() {
+  list(x = 1)[integer(0)]
+}
+

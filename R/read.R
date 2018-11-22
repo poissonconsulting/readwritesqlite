@@ -1,13 +1,9 @@
 #' Read a Table from a SQLite Database
 #'
-#' @param table_name A string of the (case insensitive) table name.
-#' @param conn A \code{\linkS4class{SQLiteConnection}} object.
-#' @param meta A flag specifying whether to preserve meta data.
-#' @return The updated data frame with the same columns as the table.
+#' @inheritParams dbWriteTableSQLite
+#' @return A data frame (tibble if tibble package is installed) of the table.
+#' @family dbReadTableSQLite
 #' @export
-#' @examples
-#' con <- DBI::dbConnect(RSQLite::SQLite())
-#' DBI::dbDisconnect(con)
 dbReadTableSQLite <- function(table_name,
                               conn = getOption("dbWriteSQLite.conn", NULL),
                               meta = TRUE) {
@@ -20,4 +16,20 @@ dbReadTableSQLite <- function(table_name,
 
   data <- DBI::dbReadTable(conn, table_name)
   as_conditional_tibble(data)
+}
+
+#' Read Tables from a SQLite Database
+#'
+#' @inheritParams dbWriteTableSQLite
+#' @return A list of the tables.
+#' @family dbReadTableSQLite
+#' @export
+dbReadTablesSQLite <- function(conn = getOption("dbWriteSQLite.conn", NULL),
+                               meta = TRUE) {
+  check_inherits(conn, "SQLiteConnection")
+  tables <- DBI::dbListTables(conn)
+  tables <- tables[!tables %in% c("dbWriteSQLiteLog", "dbWriteSQLiteMeta")]
+  if(!length(tables)) return(empty_named_list())
+  names(tables) <- tables
+  lapply(tables, dbReadTableSQLite, conn = conn, meta = meta)
 }

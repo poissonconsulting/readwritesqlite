@@ -3,6 +3,7 @@
 export(dbReadLogTableSQLite)
 export(dbReadMetaTableSQLite)
 export(dbReadTableSQLite)
+export(dbReadTablesSQLite)
 export(dbWriteTableSQLite)
 import(RSQLite)
 import(checkr)
