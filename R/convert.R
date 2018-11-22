@@ -1,27 +1,27 @@
-convert_data <- function(value) {
-  value <- factor_to_character(value)
-  value <- raw_to_character(value)
-  value <- character_to_utf8(value)
-  value
+convert_data <- function(data) {
+  data <- factor_to_character(data)
+  data <- raw_to_character(data)
+  data <- character_to_utf8(data)
+  data
 }
 
-factor_to_character <- function(value, warn = FALSE) {
-  is_factor <- vapply(value, is.factor, TRUE)
-  value[is_factor] <- lapply(value[is_factor], as.character)
-  value
+factor_to_character <- function(data, warn = FALSE) {
+  is_factor <- vapply(data, is.factor, TRUE)
+  data[is_factor] <- lapply(data[is_factor], as.character)
+  data
 }
 
-raw_to_character <- function(value) {
-  is_raw <- vapply(value, is.raw, TRUE)
+raw_to_character <- function(data) {
+  is_raw <- vapply(data, is.raw, TRUE)
   if (any(is_raw)) {
     wrn("Creating a TEXT column from raw, use lists of raw to create BLOB columns")
-    value[is_raw] <- lapply(value[is_raw], as.character)
+    data[is_raw] <- lapply(data[is_raw], as.character)
   }
-  value
+  data
 }
 
-character_to_utf8 <- function(value) {
-  is_character <- vapply(value, is.character, TRUE)
-  value[is_character] <- lapply(value[is_character], enc2utf8)
-  value
+character_to_utf8 <- function(data) {
+  is_character <- vapply(data, is.character, TRUE)
+  data[is_character] <- lapply(data[is_character], enc2utf8)
+  data
 }

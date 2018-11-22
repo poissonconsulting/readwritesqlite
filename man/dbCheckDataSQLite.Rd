@@ -2,22 +2,17 @@
 % Please edit documentation in R/check-data.R
 \name{dbCheckDataSQLite}
 \alias{dbCheckDataSQLite}
-\title{Check and possibly convert a Data Frame}
+\title{Check (and Convert) Data}
 \usage{
-dbCheckDataSQLite(conn, name, value, order = FALSE, exclusive = FALSE,
-  convert = FALSE)
+dbCheckDataSQLite(conn, table_name, data, convert = FALSE)
 }
 \arguments{
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} object, produced by
 [DBI::dbConnect()].}
 
-\item{name}{A string of the (case insensitive) table name.}
+\item{table_name}{A string of the (case insensitive) table name.}
 
-\item{value}{A data frame of the data to write.}
-
-\item{order}{A flag indicating whether the columns have to occur in the same order as values.}
-
-\item{exclusive}{A flag indicating whether other columns are not permitted.}
+\item{data}{A data frame of the data to write.}
 
 \item{convert}{A flag specifying whether to convert data columns.}
 }

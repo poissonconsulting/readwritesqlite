@@ -4,22 +4,24 @@
 \alias{dbWriteTableSQLite}
 \title{Write a data frame to a SQLite Database}
 \usage{
-dbWriteTableSQLite(conn, name, value, commit = TRUE, meta = TRUE,
-  log = TRUE)
+dbWriteTableSQLite(conn, table_name, data, commit = TRUE,
+  delete = FALSE, meta = TRUE, log = TRUE)
 }
 \arguments{
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} object, produced by
 [DBI::dbConnect()].}
 
-\item{name}{A string of the (case insensitive) table name.}
+\item{table_name}{A string of the (case insensitive) table name.}
 
-\item{value}{A data frame of the data to write.}
+\item{data}{A data frame of the data to write.}
 
 \item{commit}{A flag specifying whether to commit the changes.}
 
+\item{delete}{A flag specifying whether to delete existing rows before inserting the data.}
+
 \item{meta}{A flag specifying whether to preserve meta data.}
 
-\item{log}{A flag specifying whether to log change.}
+\item{log}{A flag specifying whether to log data manipulations.}
 }
 \description{
 The table must exist.
