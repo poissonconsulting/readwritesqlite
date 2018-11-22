@@ -13,12 +13,12 @@ MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org
 
 # dbWriteSQLite
 
-Adds additional functionality to `dbWriteTable()` and `dbReadTable()`
-for SQLiteConnection objects
+The goal of `dbWriteSQLite` is to enhance data reading and writing for
+SQLiteConnection objects.
 
 ## Installation
 
-To install the latest version from the Poisson drat
+To install the latest development version from the Poisson drat
 [repository](https://github.com/poissonconsulting/drat)
 
 ``` r
@@ -38,4 +38,4 @@ always welcome.
 
 Please note that this project is released with a [Contributor Code of
 Conduct](CONDUCT.md). By participating in this project you agree to
-abide by its terms.
+abide by its terms

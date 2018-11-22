@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write a data frame to a SQLite Database — dbRemoveTableSQLite • dbWriteSQLite</title>
+<title>Check and possibly convert a Data Frame — dbCheckDataSQLite • dbWriteSQLite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Write a data frame to a SQLite Database — dbRemoveTableSQLite" />
+<meta property="og:title" content="Check and possibly convert a Data Frame — dbCheckDataSQLite" />
 
-<meta property="og:description" content="Write a data frame to a SQLite Database" />
+<meta property="og:description" content="Factors are converted to character,
+raw to character and character to UTF-8 encoding." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dbWriteSQLite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -94,18 +95,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write a data frame to a SQLite Database</h1>
+    <h1>Check and possibly convert a Data Frame</h1>
     
-    <div class="hidden name"><code>dbRemoveTableSQLite.Rd</code></div>
+    <div class="hidden name"><code>dbCheckDataSQLite.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Write a data frame to a SQLite Database</p>
+    <p>Factors are converted to character,
+raw to character and character to UTF-8 encoding.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>dbRemoveTableSQLite</span>(<span class='no'>conn</span>, <span class='no'>name</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>dbCheckDataSQLite</span>(<span class='no'>conn</span>, <span class='no'>name</span>, <span class='no'>value</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclusive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>convert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -120,10 +123,26 @@
       <td><p>A string of the (case insensitive) table name.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Errors if used.</p></td>
+      <th>value</th>
+      <td><p>A data frame of the data to write.</p></td>
+    </tr>
+    <tr>
+      <th>order</th>
+      <td><p>A flag indicating whether the columns have to occur in the same order as values.</p></td>
+    </tr>
+    <tr>
+      <th>exclusive</th>
+      <td><p>A flag indicating whether other columns are not permitted.</p></td>
+    </tr>
+    <tr>
+      <th>convert</th>
+      <td><p>A flag specifying whether to convert data columns.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The data frame with the required and converted columns in the correct order.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -134,7 +153,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

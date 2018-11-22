@@ -4,8 +4,8 @@
 \alias{dbWriteTableSQLite}
 \title{Write a data frame to a SQLite Database}
 \usage{
-dbWriteTableSQLite(conn, name, value, ..., overwrite = FALSE,
-  append = FALSE, meta = TRUE, log = TRUE)
+dbWriteTableSQLite(conn, name, value, commit = TRUE, meta = TRUE,
+  log = TRUE)
 }
 \arguments{
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} object, produced by
@@ -15,18 +15,14 @@ dbWriteTableSQLite(conn, name, value, ..., overwrite = FALSE,
 
 \item{value}{A data frame of the data to write.}
 
-\item{...}{Errors if used.}
-
-\item{overwrite}{A flag specifying whether to overwrite an existing table.}
-
-\item{append}{A flag specifying whether to append to an existing table.}
+\item{commit}{A flag specifying whether to commit the changes.}
 
 \item{meta}{A flag specifying whether to preserve meta data.}
 
 \item{log}{A flag specifying whether to log change.}
 }
 \description{
-Write a data frame to a SQLite Database
+The table must exist.
 }
 \examples{
 con <- DBI::dbConnect(RSQLite::SQLite())

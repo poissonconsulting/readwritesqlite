@@ -1,6 +1,6 @@
 Package: dbWriteSQLite
-Title: Enhanced Table Reading and Writing for SQLiteConnection Objects
-Version: 0.0.0.9000
+Title: Enhanced Data Reading and Writing for SQLiteConnection Objects
+Version: 0.0.0.9001
 Authors@R: 
     person(given = "Joe",
            family = "Thorley",
@@ -8,8 +8,7 @@ Authors@R:
            email = "joe@poissonconsulting.ca",
            comment = c(ORCID = "0000-0002-7683-4592"))
 Description: 
-  Adds additional functionality to dbWriteTable() and dbReadTable() 
-  for SQLiteConnection objects.
+  Enhances data reading and writing for SQLiteConnection objects.
 License: MIT + file LICENSE
 Imports: 
     err,

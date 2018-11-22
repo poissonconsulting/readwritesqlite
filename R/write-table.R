@@ -1,44 +1,32 @@
 #' Write a data frame to a SQLite Database
 #'
-#' @param conn A \code{\linkS4class{SQLiteConnection}} object, produced by
-#'   [DBI::dbConnect()].
-#' @param name A string of the (case insensitive) table name.
-#' @param ... Errors if used.
-#' @param value A data frame of the data to write.
-#' @param overwrite A flag specifying whether to overwrite an existing table.
-#' @param append A flag specifying whether to append to an existing table.
+#' The table must exist.
+#'
+#' @inheritParams dbCheckDataSQLite
+#' @param commit A flag specifying whether to commit the changes.
 #' @param meta A flag specifying whether to preserve meta data.
 #' @param log A flag specifying whether to log change.
 #' @export
 #' @examples
 #' con <- DBI::dbConnect(RSQLite::SQLite())
 #' DBI::dbDisconnect(con)
-dbWriteTableSQLite <- function(conn, name, value, ...,
-                               overwrite = FALSE, append = FALSE,
+dbWriteTableSQLite <- function(conn, name, value, commit = TRUE,
                                meta = TRUE, log = TRUE) {
-  check_inherits(conn, "SQLite")
-  check_string(name)
-  check_data(value)
-  check_unused(...)
-  check_flag(overwrite)
-  check_flag(append)
+  check_flag(commit)
   check_flag(meta)
   check_flag(log)
 
-  dbBegin(conn)
-  on.exit(dbRollback(conn))
+  value <- dbCheckDataSQLite(conn, name, value)
 
-  found <- dbExistsTable(conn, name)
-  if (found && !overwrite && !append) {
-    err("Table '", name, "' exists in database, and both overwrite and",
-         " append are FALSE")
-  }
-  if (found && overwrite) {
-    dbRemoveTable(conn, name)
-  }
+  dbBegin(conn, name = "dbWriteTableSQLite")
+  on.exit(dbRollback(conn, name = "dbWriteTableSQLite"))
 
-  dbWriteTable(conn, name, value)
-  dbCommit(conn)
+  value <- dbCheckDataSQLite(conn, name, value, convert = TRUE)
+
+  if (nrow(value)) dbAppendTable(conn = conn, name = name, value = value)
+  if(!commit) return(invisible(TRUE))
+
+  dbCommit(conn, name = "dbWriteTableSQLite")
   on.exit(NULL)
   invisible(TRUE)
 }
