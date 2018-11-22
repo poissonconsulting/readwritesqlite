@@ -2,22 +2,27 @@
 % Please edit documentation in R/write-table.R
 \name{dbWriteTableSQLite}
 \alias{dbWriteTableSQLite}
-\title{Write a local data frame or file to the database}
+\title{Write a data frame to a SQLite Database}
 \usage{
-dbWriteTableSQLite(conn, name, value)
+dbWriteTableSQLite(conn, name, value, ..., overwrite = FALSE,
+  append = FALSE)
 }
 \arguments{
-\item{conn}{A \linkS4class{DBIConnection} object, as returned by
-\code{\link[=dbConnect]{dbConnect()}}.}
+\item{conn}{A \code{\linkS4class{SQLiteConnection}} object, produced by
+[DBI::dbConnect()].}
 
-\item{name}{A character string specifying the unquoted DBMS table name,
-or the result of a call to \code{\link[=dbQuoteIdentifier]{dbQuoteIdentifier()}}.}
+\item{name}{A string of the (case insensitive) table name.}
 
-\item{value}{a \link{data.frame} (or coercible to data.frame).}
+\item{value}{A data frame of the data to write.}
+
+\item{...}{Errors if used.}
+
+\item{overwrite}{A flag specifying whether to overwrite an existing table.}
+
+\item{append}{A flag specifying whether to append to an existing table.}
 }
 \description{
-Functions for writing data frames or delimiter-separated files
-to database tables.
+Write a data frame to a SQLite Database
 }
 \examples{
 con <- DBI::dbConnect(RSQLite::SQLite())
