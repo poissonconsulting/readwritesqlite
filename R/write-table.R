@@ -28,6 +28,15 @@ dbWriteTableSQLite <- function(conn, name, value, ...,
   dbBegin(conn)
   on.exit(dbRollback(conn))
 
+  found <- dbExistsTable(conn, name)
+  if (found && !overwrite && !append) {
+    err("Table '", name, "' exists in database, and both overwrite and",
+         " append are FALSE")
+  }
+  if (found && overwrite) {
+    dbRemoveTable(conn, name)
+  }
+
   dbWriteTable(conn, name, value)
   dbCommit(conn)
   on.exit(NULL)

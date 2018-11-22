@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • dbWriteSQLite</title>
+<title>dbWriteSQLite • dbWriteSQLite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -25,12 +25,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script>
+<link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="dbWriteSQLite" />
 
 
 
@@ -47,7 +47,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-title-body">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -59,7 +59,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">dbWriteSQLite</a>
+        <a class="navbar-link" href="index.html">dbWriteSQLite</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
       </span>
     </div>
@@ -67,13 +67,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="reference/index.html">Reference</a>
 </li>
       </ul>
       
@@ -91,48 +91,42 @@
 <div class="row">
   <div class="contents col-md-9">
     <div class="page-header">
-      <h1>Reference</h1>
+      <h1>dbWriteSQLite</h1>
     </div>
 
-    <table class="ref-index">
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="dbRemoveTableSQLite.html">dbRemoveTableSQLite()</a></code> </p>
-        </td>
-        <td><p>Write a data frame to a SQLite Database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dbWriteTableSQLite.html">dbWriteTableSQLite()</a></code> </p>
-        </td>
-        <td><p>Write a data frame to a SQLite Database</p></td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
-  </div>
+<hr>
+<div id="output-github_document" class="section level2">
+<h2 class="hasAnchor">
+<a href="#output-github_document" class="anchor"></a>output: github_document</h2>
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<p><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="lifecycle"></a> <a href="https://travis-ci.org/poissonconsulting/dbWriteSQLite"><img src="https://travis-ci.org/poissonconsulting/dbWriteSQLite.svg?branch=master" alt="Travis build status"></a> <a href="https://ci.appveyor.com/project/poissonconsulting/dbWriteSQLite"><img src="https://ci.appveyor.com/api/projects/status/github/poissonconsulting/dbWriteSQLite?branch=master&amp;svg=true" alt="AppVeyor build status"></a> <a href="https://codecov.io/github/poissonconsulting/dbWriteSQLite?branch=master"><img src="https://codecov.io/gh/poissonconsulting/dbWriteSQLite/branch/master/graph/badge.svg" alt="Coverage status"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a></p>
 </div>
+<div id="dbwritesqlite" class="section level1">
+
+<p>Adds additional functionality to <code>dbWriteTable()</code> and <code>dbReadTable()</code> for SQLiteConnection objects</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>To install the latest version from the Poisson drat <a href="https://github.com/poissonconsulting/drat">repository</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"drat"</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2">drat<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drat/topics/addRepo">addRepo</a></span>(<span class="st">"poissonconsulting"</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"dbWriteSQLite"</span>)</a></code></pre></div>
+</div>
+<div id="contribution" class="section level2">
+<h2 class="hasAnchor">
+<a href="#contribution" class="anchor"></a>Contribution</h2>
+<p>Please report any <a href="https://github.com/poissonconsulting/dbWriteSQLite/issues">issues</a>.</p>
+<p><a href="https://github.com/poissonconsulting/dbWriteSQLite/pulls">Pull requests</a> are always welcome.</p>
+<p>Please note that this project is released with a <a href="CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
+</div>
+</div>
+
+
+  </div>
+
+</div>
+
 
       <footer>
       <div class="copyright">
