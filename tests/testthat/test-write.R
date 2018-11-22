@@ -1,4 +1,4 @@
-context("write-table")
+context("write")
 
 test_that("dbWriteTable checks reserved table names", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
