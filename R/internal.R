@@ -42,6 +42,7 @@ table_names_sorted <- function(conn) {
   schemas <- table_schemas(conn)
   if(!length(schemas)) return(character(0))
   foreign_keys <- lapply(schemas, foreign_key)
+  print(foreign_keys)
   foreign_keys <- foreign_keys[order(foreign_keys)]
   names(foreign_keys)
 }
@@ -64,7 +65,8 @@ table_foreign_keys <- function(schema) {
 }
 
 foreign_key <- function(schema) {
-  foreign_key <- c(table_name(schema), table_foreign_keys(schema))
+  foreign_key <- list(name = table_name(schema),
+                      references = table_foreign_keys(schema))
   class(foreign_key) <- "foreign_key"
   foreign_key
 }

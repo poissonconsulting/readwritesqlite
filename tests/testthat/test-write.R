@@ -114,3 +114,18 @@ test_that("dbWriteTablesSQLite writes 1 table", {
   expect_identical(dbWriteTablesSQLite(), "local")
   expect_identical(dbReadLogTableSQLite()$TableLog, "local")
 })
+
+test_that("dbWriteTablesSQLite writes 2 table", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(dbWriteSQLite.conn = con)
+  teardown(options(op))
+
+  local <- data.frame(x = 1:3)
+  local2 <- data.frame(x = 2:6)
+  DBI::dbCreateTable(con, "local2", local)
+  DBI::dbCreateTable(con, "local", local)
+  expect_identical(dbWriteTablesSQLite(), c("local", "local2"))
+  expect_identical(dbReadLogTableSQLite()$TableLog, c("local", "local2"))
+})
+
