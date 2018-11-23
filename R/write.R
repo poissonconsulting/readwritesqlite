@@ -18,14 +18,14 @@ dbWriteTableSQLite <- function(data, table_name = substitute(data),
                                conn = getOption("dbWriteSQLite.conn", NULL),
                                delete = FALSE, commit = TRUE,
                                meta = TRUE, log = TRUE) {
-
   table_name <- chk_deparse(table_name)
-  data <- check_data_sqlite(data, table_name, conn)
 
   check_flag(delete)
   check_flag(commit)
   check_flag(meta)
   check_flag(log)
+
+  data <- check_data_sqlite(data, table_name, conn)
 
   dbBegin(conn, name = "dbWriteTableSQLite")
   on.exit(dbRollback(conn, name = "dbWriteTableSQLite"))
@@ -38,7 +38,7 @@ dbWriteTableSQLite <- function(data, table_name = substitute(data),
     nrow <- dbExecute(conn, p0("DELETE FROM ",  table_name))
     if(log) {
       log_command(conn, table_name, command = "DELETE",
-               nrow = nrow)
+                  nrow = nrow)
     }
   }
   if (nrow(data)) {
@@ -52,4 +52,42 @@ dbWriteTableSQLite <- function(data, table_name = substitute(data),
   dbCommit(conn, name = "dbWriteTableSQLite")
   on.exit(NULL)
   invisible(data)
+}
+
+#' Write a list of data frames to a SQLite Database
+#'
+#' The tables must exist.
+#' The commit = FALSE argument is not yet used.
+#'
+#' @param list A named list of data frames.
+#' Objects which are not data frames are removed.
+#' @inheritParams dbWriteTableSQLite
+#' @return An invisible character vector of the names of the data frames that
+#' were written to connection in the order in which they were written.
+#' @export
+#' @examples
+#' con <- DBI::dbConnect(RSQLite::SQLite())
+#' DBI::dbDisconnect(con)
+dbWriteTablesSQLite <- function(list = as.list(parent.frame()),
+                                conn = getOption("dbWriteSQLite.conn", NULL),
+                                delete = FALSE, commit = TRUE,
+                                meta = TRUE, log = TRUE) {
+
+  check_list(list)
+  check_inherits(conn, "SQLiteConnection")
+
+  list <- list[vapply(list, is.data.frame, TRUE)]
+  check_named(list, unique = TRUE)
+  tables <- table_names_sorted(conn)
+  tables <- tables[tables %in% names(list)]
+  list <- list[tables]
+  if(!length(list)) return(invisible(character(0)))
+
+  if(!isTRUE(commit)) .NotYetUsed(commit)
+
+  mapply(dbWriteTableSQLite, list, names(list),
+         MoreArgs = list(delete = delete, meta = meta, log = log),
+         SIMPLIFY = FALSE)
+
+  invisible(names(list))
 }

@@ -14,7 +14,7 @@ check_meta_table <- function(conn) {
     dbExecute(conn, meta_schema)
   } else {
     meta_schema <- sub(";$", "", meta_schema)
-    schema <- table_schema(conn, "dbWriteSQLiteMeta")
+    schema <- table_schema("dbWriteSQLiteMeta", conn)
     if(!identical(schema, meta_schema))
       err("dbWriteSQLiteMeta Table has an invalid schema")
   }

@@ -19,7 +19,7 @@ check_log_table <- function(conn) {
     dbExecute(conn, log_schema)
   } else {
     log_schema <- sub(";$", "", log_schema)
-    schema <- table_schema(conn, "dbWriteSQLiteLog")
+    schema <- table_schema("dbWriteSQLiteLog", conn)
     if(!identical(schema, log_schema))
       err("dbWriteSQLiteLog Table has an invalid schema")
   }

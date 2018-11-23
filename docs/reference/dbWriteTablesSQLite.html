@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write a data frame to a SQLite Database — dbWriteTableSQLite • dbWriteSQLite</title>
+<title>Write a list of data frames to a SQLite Database — dbWriteTablesSQLite • dbWriteSQLite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Write a data frame to a SQLite Database — dbWriteTableSQLite" />
+<meta property="og:title" content="Write a list of data frames to a SQLite Database — dbWriteTablesSQLite" />
 
-<meta property="og:description" content="The table must exist." />
+<meta property="og:description" content="The tables must exist.
+The commit = FALSE argument is not yet used." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,18 +95,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write a data frame to a SQLite Database</h1>
+    <h1>Write a list of data frames to a SQLite Database</h1>
     
-    <div class="hidden name"><code>dbWriteTableSQLite.Rd</code></div>
+    <div class="hidden name"><code>dbWriteTablesSQLite.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The table must exist.</p>
+    <p>The tables must exist.
+The commit = FALSE argument is not yet used.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>dbWriteTableSQLite</span>(<span class='no'>data</span>, <span class='kw'>table_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>),
+    <pre class="usage"><span class='fu'>dbWriteTablesSQLite</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>as.list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame</a></span>()),
   <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"dbWriteSQLite.conn"</span>, <span class='kw'>NULL</span>), <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -113,12 +115,9 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>A data frame of the data to write.</p></td>
-    </tr>
-    <tr>
-      <th>table_name</th>
-      <td><p>A string of the (case insensitive) table name.</p></td>
+      <th>list</th>
+      <td><p>A named list of data frames.
+Objects which are not data frames are removed.</p></td>
     </tr>
     <tr>
       <th>conn</th>
@@ -144,7 +143,8 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The updated data frame with the same columns as the table.</p>
+    <p>An invisible character vector of the names of the data frames that
+were written to connection in the order in which they were written.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

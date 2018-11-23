@@ -27,8 +27,7 @@ dbReadTableSQLite <- function(table_name,
 dbReadTablesSQLite <- function(conn = getOption("dbWriteSQLite.conn", NULL),
                                meta = TRUE) {
   check_inherits(conn, "SQLiteConnection")
-  tables <- DBI::dbListTables(conn)
-  tables <- tables[!tables %in% c("dbWriteSQLiteLog", "dbWriteSQLiteMeta")]
+  tables <- table_names(conn)
   if(!length(tables)) return(empty_named_list())
   names(tables) <- tables
   lapply(tables, dbReadTableSQLite, conn = conn, meta = meta)

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write a data frame to a SQLite Database — dbWriteTableSQLite • dbWriteSQLite</title>
+<title>Read dbWriteSQLiteLog Table — dbReadLogTableSQLite • dbWriteSQLite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Write a data frame to a SQLite Database — dbWriteTableSQLite" />
+<meta property="og:title" content="Read dbWriteSQLiteLog Table — dbReadLogTableSQLite" />
 
-<meta property="og:description" content="The table must exist." />
+<meta property="og:description" content="The table is created if it doesn't exist." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,62 +94,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write a data frame to a SQLite Database</h1>
+    <h1>Read dbWriteSQLiteLog Table</h1>
     
-    <div class="hidden name"><code>dbWriteTableSQLite.Rd</code></div>
+    <div class="hidden name"><code>dbReadLogTableSQLite.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The table must exist.</p>
+    <p>The table is created if it doesn't exist.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>dbWriteTableSQLite</span>(<span class='no'>data</span>, <span class='kw'>table_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>),
-  <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"dbWriteSQLite.conn"</span>, <span class='kw'>NULL</span>), <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>dbReadLogTableSQLite</span>(<span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"dbWriteSQLite.conn"</span>, <span class='kw'>NULL</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>A data frame of the data to write.</p></td>
-    </tr>
-    <tr>
-      <th>table_name</th>
-      <td><p>A string of the (case insensitive) table name.</p></td>
-    </tr>
-    <tr>
       <th>conn</th>
       <td><p>A <code>SQLiteConnection</code> object.</p></td>
-    </tr>
-    <tr>
-      <th>delete</th>
-      <td><p>A flag specifying whether to delete existing rows before inserting the data.</p></td>
-    </tr>
-    <tr>
-      <th>commit</th>
-      <td><p>A flag specifying whether to commit the changes (useful for checking data).</p></td>
-    </tr>
-    <tr>
-      <th>meta</th>
-      <td><p>A flag specifying whether to preserve meta data.</p></td>
-    </tr>
-    <tr>
-      <th>log</th>
-      <td><p>A flag specifying whether to log data manipulations.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The updated data frame with the same columns as the table.</p>
+    <p>A data frame of the dbWriteSQLiteLog table</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>con</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DBI/topics/dbConnect'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLite'>SQLite</a></span>())
-<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DBI/topics/dbDisconnect'>dbDisconnect</a></span>(<span class='no'>con</span>)</div></pre>
+<span class='fu'>dbReadLogTableSQLite</span>(<span class='no'>con</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 0 x 5</span><span>
+#&gt; </span><span style='color: #555555;'># ... with 5 variables: DateTimeUTCLog </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span style='color: #555555;'>, UserLog </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, TableLog </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   CommandLog </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, NRowLog </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'><span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DBI/topics/dbDisconnect'>dbDisconnect</a></span>(<span class='no'>con</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
