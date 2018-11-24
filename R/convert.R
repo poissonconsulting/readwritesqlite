@@ -1,10 +1,3 @@
-convert_data <- function(data) {
-  data <- factor_to_character(data)
-  data <- raw_to_character(data)
-  data <- character_to_utf8(data)
-  data
-}
-
 factor_to_character <- function(data, warn = FALSE) {
   is_factor <- vapply(data, is.factor, TRUE)
   data[is_factor] <- lapply(data[is_factor], as.character)
@@ -23,5 +16,13 @@ raw_to_character <- function(data) {
 character_to_utf8 <- function(data) {
   is_character <- vapply(data, is.character, TRUE)
   data[is_character] <- lapply(data[is_character], enc2utf8)
+  data
+}
+
+convert_data <- function(data) {
+  data <- as.data.frame(data)
+  data <- factor_to_character(data)
+  data <- raw_to_character(data)
+  data <- character_to_utf8(data)
   data
 }

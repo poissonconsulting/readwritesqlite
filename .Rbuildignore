@@ -6,6 +6,6 @@
 ^CODE_OF_CONDUCT\.md$
 ^\.travis\.yml$
 ^README\.Rmd$
-^dbWriteSQLite\.Rproj$
+^readwritesqlite\.Rproj$
 ^\.Rproj\.user$
 ^build\.R$

@@ -1,5 +1,5 @@
-Package: dbWriteSQLite
-Title: Enhanced Data Reading and Writing for SQLiteConnection Objects
+Package: readwritesqlite
+Title: Enhanced Reading and Writing for SQLite Databases
 Version: 0.0.0.9002
 Authors@R: 
     person(given = "Joe",
@@ -8,7 +8,7 @@ Authors@R:
            email = "joe@poissonconsulting.ca",
            comment = c(ORCID = "0000-0002-7683-4592"))
 Description: 
-  Enhances data reading and writing for SQLiteConnection objects.
+  Enhances reading and writing to and from SQLiteConnection objects.
 License: MIT + file LICENSE
 Imports: 
     err,

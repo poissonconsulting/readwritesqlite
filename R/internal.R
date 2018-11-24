@@ -8,6 +8,11 @@ user <- function() {
   unname(Sys.info()["user"])
 }
 
+is_table <- function(x, conn) {
+  fun <- function(x, conn) DBI::dbExistsTable(conn, x)
+  vapply(x, fun, TRUE, USE.NAMES = FALSE)
+}
+
 table_schema <- function(table_name, conn) {
   sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
   query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
@@ -17,7 +22,7 @@ table_schema <- function(table_name, conn) {
 
 table_schemas <- function(conn) {
   tables <- table_names(conn)
-  if(!length(tables)) return(empty_named_list())
+  if(!length(tables)) return(named_list())
   names(tables) <- tables
   lapply(tables, table_schema, conn)
 }
@@ -28,33 +33,33 @@ as_conditional_tibble <- function(x) {
   x
 }
 
-empty_named_list <- function() {
+named_list <- function() {
   list(x = 1)[integer(0)]
 }
 
 table_names <- function(conn) {
   tables <- DBI::dbListTables(conn)
-  tables <- tables[!tables %in% c("dbWriteSQLiteLog", "dbWriteSQLiteMeta")]
+  tables <- tables[!tables %in% c("readwritesqlite_log", "readwritesqlite_meta")]
   tables
 }
 
-table_names_sorted <- function(conn) {
+table_names_hierarchical <- function(conn) {
   schemas <- table_schemas(conn)
   if(!length(schemas)) return(character(0))
-  foreign_keys <- lapply(schemas, foreign_key)
+  foreign_keys <- lapply(schemas, schema_foreign_key)
   print(foreign_keys)
   foreign_keys <- foreign_keys[order(foreign_keys)]
   names(foreign_keys)
 }
 
-table_name <- function(schema) {
+schema_table_name <- function(schema) {
   pattern <- "(^CREATE\\s+TABLE\\s+`?)(\\w+)(`?\\s*.*)"
   name <- sub(pattern, "\\2", schema, ignore.case = TRUE)
   if(identical(name, schema)) return(character(0))
   name
 }
 
-table_foreign_keys <- function(schema) {
+schema_references <- function(schema) {
   pattern <- "REFERENCES\\s+\\w+"
   matches <- gregexpr(pattern, schema, ignore.case = TRUE)
   foreign_keys <- regmatches(schema, matches)[[1]]
@@ -64,9 +69,9 @@ table_foreign_keys <- function(schema) {
   foreign_keys
 }
 
-foreign_key <- function(schema) {
-  foreign_key <- list(name = table_name(schema),
-                      references = table_foreign_keys(schema))
+schema_foreign_key <- function(schema) {
+  foreign_key <- list(name = schema_table_name(schema),
+                      references = schema_references(schema))
   class(foreign_key) <- "foreign_key"
   foreign_key
 }

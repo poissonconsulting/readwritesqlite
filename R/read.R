@@ -1,34 +1,59 @@
-#' Read a Table from a SQLite Database
-#'
-#' @inheritParams dbWriteTableSQLite
-#' @return A data frame (tibble if tibble package is installed) of the table.
-#' @family dbReadTableSQLite
-#' @export
-dbReadTableSQLite <- function(table_name,
-                              conn = getOption("dbWriteSQLite.conn", NULL),
-                              meta = TRUE) {
-  check_string(table_name)
-  check_inherits(conn, "SQLiteConnection")
-  check_flag(meta)
+read_sqlite_data <- function(table_name, conn, meta) {
+  if(toupper(table_name) == toupper("readwritesqlite_meta"))
+    err("'readwritesqlite_meta' is a reserved table name")
+  
+  if(toupper(table_name) == toupper("readwritesqlite_log"))
+    err("'readwritesqlite_log' is a reserved table name")
 
   if (!dbExistsTable(conn, table_name))
     err("table '", table_name, "' does not exist")
-
+  
   data <- DBI::dbReadTable(conn, table_name)
+  # need meta processing here
   as_conditional_tibble(data)
 }
 
-#' Read Data Tables from a SQLite Database
+#' Read from a SQLite Database
 #'
-#' @inheritParams dbWriteTableSQLite
+#' @param x An object specifying the tables to read.
+#' @inheritParams write_sqlite
+#' @return A named list of data frames.
+#' @family write_sqlite
+#' @export
+read_sqlite <- function(x, conn = getOption("readwritesqlite.conn", NULL),
+                        meta = TRUE, ...) {
+  UseMethod("read_sqlite")
+}
+
+#' Read from a SQLite Database
+#'
+#' @inheritParams write_sqlite
+#' @return A data frame (tibble if tibble package is installed) of the table.
+#' @family dbReadTableSQLite
+#' @export
+read_sqlite.character <- function(x,
+                                  conn = getOption("readwritesqlite.conn", NULL),
+                                  meta = TRUE, ...) {
+  check_unique(x)
+  check_inherits(conn, "SQLiteConnection")
+  check_flag(meta)
+  check_unused(...)
+  
+  datas <- lapply(x, read_sqlite_data, meta = meta)
+  names(datas) <- x
+  datas
+}
+
+#' Read from a SQLite Database
+#'
+#' @inheritParams write_sqlite
 #' @return A named list of the data tables.
 #' @family dbReadTableSQLite
 #' @export
-dbReadTablesSQLite <- function(conn = getOption("dbWriteSQLite.conn", NULL),
-                               meta = TRUE) {
-  check_inherits(conn, "SQLiteConnection")
-  tables <- table_names(conn)
-  if(!length(tables)) return(empty_named_list())
-  names(tables) <- tables
-  lapply(tables, dbReadTableSQLite, conn = conn, meta = meta)
+read_sqlite.SQLiteConnection <- function(
+  x = getOption("readwritesqlite.conn", NULL), meta = TRUE, ...) {
+  check_unused(...)
+  tables <- table_names(x)
+  if(!length(tables)) return(named_list())
+  read_sqlite(tables, conn = x, meta = meta)
 }

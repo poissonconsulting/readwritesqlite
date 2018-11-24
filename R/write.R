@@ -1,37 +1,23 @@
-#' Write a data frame to a SQLite Database
-#'
-#' The table must exist.
-#'
-#' @param data A data frame of the data to write.
-#' @param table_name A string of the (case insensitive) table name.
-#' @param conn A \code{\linkS4class{SQLiteConnection}} object.
-#' @param delete A flag specifying whether to delete existing rows before inserting the data.
-#' @param commit A flag specifying whether to commit the changes (useful for checking data).
-#' @param meta A flag specifying whether to preserve meta data.
-#' @param log A flag specifying whether to log data manipulations.
-#' @return The updated data frame with the same columns as the table.
-#' @export
-#' @examples
-#' con <- DBI::dbConnect(RSQLite::SQLite())
-#' DBI::dbDisconnect(con)
-dbWriteTableSQLite <- function(data, table_name = substitute(data),
-                               conn = getOption("dbWriteSQLite.conn", NULL),
-                               delete = FALSE, commit = TRUE,
-                               meta = TRUE, log = TRUE) {
-  table_name <- chk_deparse(table_name)
-
-  check_flag(delete)
-  check_flag(commit)
-  check_flag(meta)
-  check_flag(log)
-
-  data <- check_data_sqlite(data, table_name, conn)
-
-  dbBegin(conn, name = "dbWriteTableSQLite")
-  on.exit(dbRollback(conn, name = "dbWriteTableSQLite"))
-
-  data2 <- check_data_sqlite(data, table_name, conn, convert = TRUE)
-
+write_sqlite_data <- function(data, table_name, conn, delete, meta, log) {
+  # this is imperfect as user can get around by quoting table.....
+  if(toupper(table_name) == toupper("readwritesqlite_meta"))
+    err("'readwritesqlite_meta' is a reserved table name")
+  
+  if(toupper(table_name) == toupper("readwritesqlite_log"))
+    err("'readwritesqlite_log' is a reserved table name")
+  
+  if (!is_table(table_name, conn))
+    err("table '", table_name, "' does not exist")
+  
+  colnames <- dbListFields(conn, table_name)
+  
+  check_colnames(data, colnames = colnames)
+  data <- data[colnames]
+  # need to add more data checking here
+  
+  # need to add meta recording here
+  data <- convert_data(data)
+  
   if(delete) {
     sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
     query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
@@ -42,52 +28,117 @@ dbWriteTableSQLite <- function(data, table_name = substitute(data),
     }
   }
   if (nrow(data)) {
-    dbAppendTable(conn, table_name, data2)
+    dbAppendTable(conn, table_name, data)
     if(log) {
-      log_command(conn, table_name, command = "INSERT", nrow = nrow(data2))
+      log_command(conn, table_name, command = "INSERT", nrow = nrow(data))
     }
   }
-  if(!commit) return(invisible(data))
+}
 
-  dbCommit(conn, name = "dbWriteTableSQLite")
+#' Write to a SQLite Database
+#'
+#' write_sqlite() does not create any tables other than 
+#' readwritesqlite_log and readwritesqlite_meta for logging data alterations
+#' and preserving meta data.
+#'
+#' @param x The object to write.
+#' @param conn A \code{\linkS4class{SQLiteConnection}} to a database.
+#' @param delete A flag specifying whether to delete existing rows before 
+#' inserting data.
+#' @param commit A flag specifying whether to commit the data alterations 
+#' (useful for checking data).
+#' @param meta A flag specifying whether to preserve meta data.
+#' @param log A flag specifying whether to log data alterations.
+#' @param ... Not used.
+#' @return An invisible character vector of the names of the tables that were altered.
+#' @family write_sqlite
+#' @export
+write_sqlite <- function(x, conn = getOption("readwritesqlite.conn", NULL),
+                         delete = FALSE, commit = TRUE,
+                         meta = TRUE, log = TRUE, ...) {
+  UseMethod("write_sqlite")
+}
+
+#' Write a data frame to a SQLite Database
+#'
+#' @param x A data frame.
+#' @inheritParams write_sqlite
+#' @param table_name A string of the (case insensitive) table name.
+#' @family write_sqlite
+#' @export
+write_sqlite.data.frame <- function(x, conn = getOption("readwritesqlite.conn", NULL),
+                                    delete = FALSE, commit = TRUE,
+                                    meta = TRUE, log = TRUE, table_name = substitute(x), 
+                                    ...) {
+  check_inherits(conn, "SQLiteConnection")
+  check_flag(delete)
+  check_flag(commit)
+  check_flag(meta)
+  check_flag(log)
+  check_unused(...)
+  
+  table_name <- chk_deparse(table_name)
+  check_string(table_name)
+  
+  dbBegin(conn, name = "write_sqlite")
+  on.exit(dbRollback(conn, name = "write_sqlite"))
+  
+  write_sqlite_data(x, table_name, conn = conn, delete = delete, 
+                    meta = meta, log = log)
+  if(!commit) return(invisible(table_name))
+  
+  dbCommit(conn, name = "write_sqlite")
   on.exit(NULL)
-  invisible(data)
+  invisible(table_name)
 }
 
 #' Write a list of data frames to a SQLite Database
 #'
-#' The tables must exist.
-#' The commit = FALSE argument is not yet used.
-#'
-#' @param list A named list of data frames.
-#' Objects which are not data frames are removed.
-#' @inheritParams dbWriteTableSQLite
-#' @return An invisible character vector of the names of the data frames that
-#' were written to connection in the order in which they were written.
+#' @param x A named list of data frames.
+#' @inheritParams write_sqlite
+#' @family write_sqlite
 #' @export
-#' @examples
-#' con <- DBI::dbConnect(RSQLite::SQLite())
-#' DBI::dbDisconnect(con)
-dbWriteTablesSQLite <- function(list = as.list(parent.frame()),
-                                conn = getOption("dbWriteSQLite.conn", NULL),
-                                delete = FALSE, commit = TRUE,
-                                meta = TRUE, log = TRUE) {
-
-  check_list(list)
+write_sqlite.list <- function(x, conn = getOption("readwritesqlite.conn", NULL),
+                              delete = FALSE, commit = TRUE,
+                              meta = TRUE, log = TRUE, ...) {
+  check_named(x)
   check_inherits(conn, "SQLiteConnection")
-
-  list <- list[vapply(list, is.data.frame, TRUE)]
-  check_named(list, unique = TRUE)
-  tables <- table_names_sorted(conn)
-  tables <- tables[tables %in% names(list)]
-  list <- list[tables]
-  if(!length(list)) return(invisible(character(0)))
-
+  check_flag(delete)
+  check_flag(commit)
+  check_flag(meta)
+  check_flag(log)
+  check_unused(...)
+  
+  x <- x[vapply(x, is.data.frame, TRUE)]
+  if(!length(x)) {
+    wrn("x has no data frames")
+    return(character(0))
+  }
+  is <- is_table(names(x), conn)
+  
+  if(any(!is)) {
+    non_matching <- names(x)[!is]
+    wrn(co(non_matching,  
+           "the following %n data frame%s have names which do not match a table: %c", 
+           lots = "%n data frames have names that do not match a table",
+           conjunction = "and"))
+  }
+  
+  table_names <- hierachical_table_names(conn)
+  table_names <- table_names[toupper(table_names) %in% toupper(names(x))]
+  if(length(non_matching)) {
+    
+  }
+  x <- x[names(x) %in% table_names]
+  if(!length(x)) return(invisible(character(0)))
+  
   if(!isTRUE(commit)) .NotYetUsed(commit)
-
-  mapply(dbWriteTableSQLite, list, names(list),
+  
+  mapply(write_sqlite, list, names(list),
          MoreArgs = list(delete = delete, meta = meta, log = log),
          SIMPLIFY = FALSE)
-
-  invisible(names(list))
+  
+  dbCommit(conn, name = "write_sqlite")
+  on.exit(NULL)
+  invisible(data_name)
 }
