@@ -80,3 +80,8 @@ schema_foreign_key <- function(schema) {
   check_inherits(e2, "foreign_key")
   e1[1] %in% e2
 }
+
+set_class <- function(x, value) {
+  class(x) <- value
+  x
+}

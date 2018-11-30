@@ -1,5 +1,5 @@
 log_schema <- function () {
-  "CREATE TABLE readwritesqlite_log (
+  "CREATE TABLE \"readwritesqlite_log\" (
   DateTimeUTCLog TEXT NOT NULL,
   UserLog TEXT NOT NULL,
   TableLog TEXT NOT NULL,

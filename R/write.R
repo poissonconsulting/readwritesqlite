@@ -70,7 +70,7 @@ write_sqlite.data.frame <- function(x, conn = getOption("readwritesqlite.conn", 
                                     delete = FALSE, commit = TRUE,
                                     meta = TRUE, log = TRUE, table_name = substitute(x), 
                                     ...) {
-  check_inherits(conn, "SQLiteConnection")
+  check_sqlite_connection(conn, connected = TRUE)
   check_flag(delete)
   check_flag(commit)
   check_flag(meta)
@@ -102,7 +102,7 @@ write_sqlite.list <- function(x, conn = getOption("readwritesqlite.conn", NULL),
                               delete = FALSE, commit = TRUE,
                               meta = TRUE, log = TRUE, ...) {
   check_named(x)
-  check_inherits(conn, "SQLiteConnection")
+  check_sqlite_connection(conn, connected = TRUE)
   check_flag(delete)
   check_flag(commit)
   check_flag(meta)

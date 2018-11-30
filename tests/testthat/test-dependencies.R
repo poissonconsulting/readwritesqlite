@@ -1,6 +1,6 @@
 context("dependencies")
 
-test_that("write_sqlite.data.frame writes", {
+test_that("unquoted table names case insensitive in RSQLite", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
   op <- options(readwritesqlite.conn = con)
@@ -8,22 +8,114 @@ test_that("write_sqlite.data.frame writes", {
   
   local <- data.frame(x = as.character(1:3))
 
-  expect_true(DBI::dbCreateTable(con, "local", local))
-  expect_identical(DBI::dbListTables(con), "local")
+  expect_true(DBI::dbCreateTable(con, "loCal", local))
+  expect_identical(DBI::dbListTables(con), "loCal")
+  
+  # these match
+  expect_true(DBI::dbExistsTable(con, "loCal"))
   expect_true(DBI::dbExistsTable(con, "local"))
   expect_true(DBI::dbExistsTable(con, "LOCAL"))
-  # this is weird as says not exists!
-  expect_false(DBI::dbExistsTable(con, "`local`"))
   
-  # RSQLite is case insensitive for table names
-  expect_error(DBI::dbCreateTable(con, "LOCAL", local), 
+  expect_false(DBI::dbExistsTable(con, "`loCal`"))
+  expect_false(DBI::dbExistsTable(con, "[loCal]"))
+  expect_false(DBI::dbExistsTable(con, "\"loCal\""))
+  expect_false(DBI::dbExistsTable(con, '"loCal"'))
+  
+  expect_error(DBI::dbCreateTable(con, "loCal", local),
+               "table `loCal` already exists")
+  expect_error(DBI::dbCreateTable(con, "local", local),
+               "table `local` already exists")
+  expect_error(DBI::dbCreateTable(con, "LOCAL", local),
                "table `LOCAL` already exists")
-  
-  # unless table names are quoted
-  expect_true(DBI::dbCreateTable(con, "`LOCAL`", local))
-  
-  expect_identical(DBI::dbListTables(con), c("`LOCAL`", "local"))
-  
-  expect_error(DBI::dbCreateTable(con, "`local`", local), 
-               "table ```local``` already exists")
+  expect_true(DBI::dbCreateTable(con, "`loCal`", local))
+  expect_identical(DBI::dbListTables(con), c("`loCal`", "loCal"))
+  expect_true(DBI::dbCreateTable(con, "[loCal]", local))
+  expect_identical(DBI::dbListTables(con), c("[loCal]", "`loCal`", "loCal"))
+  expect_true(DBI::dbCreateTable(con, "\"loCal\"", local))
+  expect_identical(DBI::dbListTables(con), 
+                   c("\"loCal\"", "[loCal]", "`loCal`", "loCal"))
 })
+
+test_that("``quoted table names case sensitive in RSQLite", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(readwritesqlite.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(x = as.character(1:3))
+
+  expect_true(DBI::dbCreateTable(con, "`loCal`", local))
+  expect_identical(DBI::dbListTables(con), "`loCal`")
+
+  # this is weird as says not exists!!
+  expect_false(DBI::dbExistsTable(con, "`loCal`"))
+  # but creation fails with error already exists
+  expect_error(DBI::dbCreateTable(con, "`loCal`", local),
+               "table ```loCal``` already exists")
+
+  expect_false(DBI::dbExistsTable(con, "``loCal``"))
+  expect_false(DBI::dbExistsTable(con, "loCal"))
+  expect_false(DBI::dbExistsTable(con, "[loCal]"))
+  expect_false(DBI::dbExistsTable(con, "\"loCal\""))
+  expect_false(DBI::dbExistsTable(con, '"loCal"'))
+}
+
+test_that("[] quoted table names case sensitive in RSQLite", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(readwritesqlite.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(x = as.character(1:3))
+
+  expect_true(DBI::dbCreateTable(con, "[loCal]", local))
+  expect_identical(DBI::dbListTables(con), "[loCal]")
+
+  # this matches!
+  expect_true(DBI::dbExistsTable(con, "[loCal]"))
+
+  expect_false(DBI::dbExistsTable(con, "loCal"))
+  expect_false(DBI::dbExistsTable(con, "`loCal`"))
+  expect_false(DBI::dbExistsTable(con, "\"loCal\""))
+  expect_false(DBI::dbExistsTable(con, '"loCal"'))
+}
+
+test_that("\"\" quoted table names case sensitive in RSQLite", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(readwritesqlite.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(x = as.character(1:3))
+
+  expect_true(DBI::dbCreateTable(con, "\"loCal\"", local))
+  expect_identical(DBI::dbListTables(con), "\"loCal\"")
+
+  # these match!
+  expect_true(DBI::dbExistsTable(con, "\"loCal\""))
+  expect_true(DBI::dbExistsTable(con, '"loCal"'))
+
+  expect_false(DBI::dbExistsTable(con, "[loCal]"))
+  expect_false(DBI::dbExistsTable(con, "loCal"))
+  expect_false(DBI::dbExistsTable(con, "`loCal`"))
+}
+
+test_that('"" quoted table names case sensitive in RSQLite', {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(readwritesqlite.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(x = as.character(1:3))
+
+  expect_true(DBI::dbCreateTable(con, '"loCal"', local))
+  expect_identical(DBI::dbListTables(con), "\"loCal\"")
+
+  # these match!
+  expect_true(DBI::dbExistsTable(con, '"loCal"'))
+  expect_true(DBI::dbExistsTable(con, "\"loCal\""))
+
+  expect_false(DBI::dbExistsTable(con, "[loCal]"))
+  expect_false(DBI::dbExistsTable(con, "loCal"))
+  expect_false(DBI::dbExistsTable(con, "`loCal`"))
+}
