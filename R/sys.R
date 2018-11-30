@@ -1,0 +1,2 @@
+.log_table_name <- "\"readwritesqlite_log\""
+.meta_table_name <- "\"readwritesqlite_log\""

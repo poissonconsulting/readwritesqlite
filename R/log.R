@@ -1,5 +1,5 @@
 log_schema <- function () {
-  "CREATE TABLE \"readwritesqlite_log\" (
+  p("CREATE TABLE", .log_table_name, "(
   DateTimeUTCLog TEXT NOT NULL,
   UserLog TEXT NOT NULL,
   TableLog TEXT NOT NULL,
@@ -10,18 +10,18 @@ log_schema <- function () {
     CommandLog IN ('UPDATE', 'DELETE', 'INSERT') AND
     NRowLog >= 1
   )
-);"
+);")
 }
 
 check_log_table <- function(conn) {
   log_schema <- log_schema()
-  if (!dbExistsTable(conn, "readwritesqlite_log")) {
+  if (!exists_sqlite_table(.log_table_name, conn)) {
     dbExecute(conn, log_schema)
   } else {
     log_schema <- sub(";$", "", log_schema)
-    schema <- table_schema("readwritesqlite_log", conn)
+    schema <- table_schema(.log_table_name, conn)
     if(!identical(schema, log_schema))
-      err("table 'readwritesqlite_log' has an invalid schema")
+      err("table '", .log_table_name, "' has an invalid schema")
   }
 }
 
@@ -33,7 +33,7 @@ log_command <- function(conn, name, command, nrow) {
                      CommandLog = command,
                      NRowLog = nrow,
                      stringsAsFactors = FALSE)
-  dbWriteTable(conn, "readwritesqlite_log", data, row.names = FALSE, 
+  dbWriteTable(conn, .log_table_name, data, row.names = FALSE, 
                append = TRUE)
 }
 
@@ -50,7 +50,7 @@ log_command <- function(conn, name, command, nrow) {
 #' DBI::dbDisconnect(con)
 read_sqlite_log <- function(conn = getOption("readwritesqlite.conn", NULL)) {
   check_log_table(conn)
-  data <- dbReadTable(conn, "readwritesqlite_log")
+  data <- dbReadTable(conn, .log_table_name)
   data$DateTimeUTCLog <- as.POSIXct(data$DateTimeUTCLog, tz = "UTC")
   as_conditional_tibble(data)
 }

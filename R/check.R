@@ -44,8 +44,6 @@ check_sqlite_name <- function(x, values = NULL, length = NA, unique = FALSE,
   check_classes(x, c("sqlite_name", "character"), 
                 order = TRUE, x_name = x_name)
   
-  
-  
   check_vector(as.character(x), values = values, length = length, unique = unique,
                sorted = sorted, named = named, attributes = attributes, 
                x_name = x_name, error = error) 

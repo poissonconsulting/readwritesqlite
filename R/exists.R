@@ -1,9 +1,9 @@
 #' Title
 #'
-#' @param table_name 
+#' @param table_name A character or sqlite_name vector of table names.
 #' @param conn 
 #'
-#' @return
+#' @return A local specifying 
 #' @export
 #'
 #' @examples
