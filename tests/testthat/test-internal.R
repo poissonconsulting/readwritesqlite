@@ -1,17 +1,20 @@
 context("internal")
 
-test_that("schema_table_name gets table name from schema", {
-  expect_identical(schema_table_name("CREATE TABL Data ("), character(0))
-  expect_identical(schema_table_name("CREATE TABLE Data ("), "Data")
-  expect_identical(schema_table_name("CREATE TABLE Data(TABLE"), "Data")
-  expect_identical(schema_table_name("create table data ("), "data")
-  expect_identical(schema_table_name("CREATE TABLE `local` (\n"), "local")
-  expect_identical(schema_table_name("CREATE TABLE `local` (\n"), "local")
+test_that("unquoted table names case insensitive in RSQLite", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+
+  local <- data.frame(x = as.character(1:3))
+
+  expect_false(tables_exists("loCal", con))
+  expect_true(DBI::dbCreateTable(con, "loCal", local))
+  expect_true(tables_exists("loCal", con))
+  expect_true(tables_exists("LOCAL", con))
+  expect_identical(tables_exists(c("loCal", "LOCAL"), con), c(TRUE, TRUE))
+  expect_true(DBI::dbCreateTable(con, "`loCal`", local))
+  expect_true(tables_exists("`loCal`", con))
+  # this is why need own internal tables_exists
+  expect_false(dbExistsTable(con, "`loCal`"))
+  expect_false(tables_exists("`LOCAL`", con))
 })
 
-test_that("schema_references gets foreign keys from schema", {
-  expect_identical(schema_references("REFERENCE Station ("), character(0))
-  expect_identical(schema_references("REFERENCES Station ("), "Station")
-  expect_identical(schema_references("REFERENCES Station ( REFERENCES Station2("),
-                   c("Station", "Station2"))
-})

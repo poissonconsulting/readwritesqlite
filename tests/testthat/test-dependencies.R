@@ -3,7 +3,7 @@ context("dependencies")
 test_that("unquoted table names case insensitive in RSQLite", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
   
   local <- data.frame(x = as.character(1:3))
@@ -39,7 +39,7 @@ test_that("unquoted table names case insensitive in RSQLite", {
 test_that("``quoted table names case sensitive in RSQLite", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
   
   local <- data.frame(x = as.character(1:3))
@@ -58,12 +58,12 @@ test_that("``quoted table names case sensitive in RSQLite", {
   expect_false(DBI::dbExistsTable(con, "[loCal]"))
   expect_false(DBI::dbExistsTable(con, "\"loCal\""))
   expect_false(DBI::dbExistsTable(con, '"loCal"'))
-}
+})
 
 test_that("[] quoted table names case sensitive in RSQLite", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
   
   local <- data.frame(x = as.character(1:3))
@@ -78,12 +78,12 @@ test_that("[] quoted table names case sensitive in RSQLite", {
   expect_false(DBI::dbExistsTable(con, "`loCal`"))
   expect_false(DBI::dbExistsTable(con, "\"loCal\""))
   expect_false(DBI::dbExistsTable(con, '"loCal"'))
-}
+})
 
 test_that("\"\" quoted table names case sensitive in RSQLite", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
   
   local <- data.frame(x = as.character(1:3))
@@ -98,12 +98,12 @@ test_that("\"\" quoted table names case sensitive in RSQLite", {
   expect_false(DBI::dbExistsTable(con, "[loCal]"))
   expect_false(DBI::dbExistsTable(con, "loCal"))
   expect_false(DBI::dbExistsTable(con, "`loCal`"))
-}
+})
 
 test_that('"" quoted table names case sensitive in RSQLite', {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
   
   local <- data.frame(x = as.character(1:3))
@@ -118,4 +118,4 @@ test_that('"" quoted table names case sensitive in RSQLite', {
   expect_false(DBI::dbExistsTable(con, "[loCal]"))
   expect_false(DBI::dbExistsTable(con, "loCal"))
   expect_false(DBI::dbExistsTable(con, "`loCal`"))
-}
+})

@@ -25,28 +25,30 @@ check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), e
   invisible(x)
 }
 
-#' Check SQLite Name
-#'
-#' @inheritParams checkr::check_vector
-#' @return An invisible copy of the original object.
-#' @export
-#'
-#' @examples
-#' check_sqlite_name("Data")
-check_sqlite_name <- function(x, values = NULL, length = NA, unique = FALSE, 
-                              sorted = FALSE, named = NA, attributes = named,
-                              x_name = substitute(x), error = TRUE) {
-  x_name <- chk_deparse(x_name)
+check_table_name <- function(table_name, conn, exists = TRUE) {
+  check_string(table_name)
   
-  checkor(check_null(values), 
-          check_vector(values, c("", NA_character_), length = TRUE))
+  table_name <- as.sqlite_name(table_name)
+
+  if(table_name == as.sqlite_name(.log_table_name))
+    err("'", table_name, "' is a reserved table")
+
+  if(table_name == as.sqlite_name(.meta_table_name))
+    err("'", table_name, "' is a reserved table")
   
-  check_classes(x, c("sqlite_name", "character"), 
-                order = TRUE, x_name = x_name)
+  table_exists <- tables_exists(table_name, conn)
+  if(isTRUE(exists) && !table_exists)
+    err("table '", table_name, "' does not exist")
   
-  check_vector(as.character(x), values = values, length = length, unique = unique,
-               sorted = sorted, named = named, attributes = attributes, 
-               x_name = x_name, error = error) 
-  invisible(x)
+  if(isFALSE(exists) && table_exists)
+    err("table '", table_name, "' already exists")
+  
+  as.character(table_name)
 }
 
+check_table_names <- function(table_names, conn, exists = TRUE) {
+  check_character(table_names)
+  if(!length(table_names)) return(table_names)
+  
+  vapply(table_names, check_table_name, "", conn = conn, exists = exists)
+}

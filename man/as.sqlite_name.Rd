@@ -2,31 +2,15 @@
 % Please edit documentation in R/sqlite-name.R
 \name{as.sqlite_name}
 \alias{as.sqlite_name}
-\alias{as.character.sqlite_name}
-\alias{as.sqlite_name.character}
-\title{Coerce to a SQLite Name}
+\title{SQLite Name}
 \usage{
 as.sqlite_name(x, ...)
-
-\method{as.character}{sqlite_name}(x, ...)
-
-\method{as.sqlite_name}{character}(x, ...)
-}
-\arguments{
-\item{x}{The object to coerce}
-
-\item{...}{Unused.}
 }
 \description{
-Coerce to a SQLite Name
-}
-\section{Methods (by class)}{
-\itemize{
-\item \code{sqlite_name}: Coerces SQLite name vector to a character vector
-
-\item \code{character}: Coerces character vector to a SQLite name vector
-}}
-
-\examples{
-as.sqlite_name("Data")
+A SQLite name is a vector of names for SQLite objects that inherits from character.
+It is useful for comparing SQLite names which are case insensitive except when 
+they are quoted using \code{"name"}, \code{[name]} \code{`name`}.
+When making a comparison, SQLite names are converted to upper case 
+unless they are quoted using one of the three methods 
+in which case the quotes are removed.
 }

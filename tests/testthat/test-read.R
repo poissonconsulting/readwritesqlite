@@ -1,41 +1,41 @@
 context("read")
 
-test_that("dbReadTableSQLite requires table", {
+test_that("rws_read_sqlite requires table", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
 
-  expect_error(dbReadTableSQLite("local2"), "table 'local2' does not exist")
+  expect_error(rws_read_sqlite("local2"), "table 'local2' does not exist")
 })
 
-test_that("dbReadTableSQLite returns tibble", {
+test_that("rws_read_sqlite returns tibble", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
 
   local <- data.frame(x = as.character(1:3), stringsAsFactors = FALSE)
   DBI::dbWriteTable(con, "local", local)
 
   skip_if_not_installed("tibble")
-    expect_identical(dbReadTableSQLite("local"), tibble::as_tibble(local))
+    expect_identical(rws_read_sqlite("local"), tibble::as_tibble(local))
 })
 
-test_that("dbReadTablesSQLite returns empty named list", {
+test_that("rws_read_sqlite returns empty named list", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
 
-  tables <- dbReadTablesSQLite()
+  tables <- rws_read_sqlite()
   expect_identical(tables, list(y = 2)[FALSE])
 })
 
-test_that("dbReadTablesSQLite returns list with single named data frame", {
+test_that("rws_read_sqlite returns list with single named data frame", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
 
   local <- data.frame(x = 1:3)
@@ -47,7 +47,7 @@ test_that("dbReadTablesSQLite returns list with single named data frame", {
 test_that("dbReadTablesSQLite returns list with multiple named data frames", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
 
   local <- data.frame(x = 1:3)

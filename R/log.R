@@ -7,15 +7,14 @@ log_schema <- function () {
   NRowLog INTEGER NOT NULL,
   CHECK (
     DATETIME(DateTimeUTCLog) IS DateTimeUTCLog AND
-    CommandLog IN ('UPDATE', 'DELETE', 'INSERT') AND
-    NRowLog >= 1
-  )
-);")
+    CommandLog IN ('CREATE', 'UPDATE', 'DELETE', 'INSERT') AND
+    NRowLog >= 0
+  ));")
 }
 
 check_log_table <- function(conn) {
   log_schema <- log_schema()
-  if (!exists_sqlite_table(.log_table_name, conn)) {
+  if (!tables_exists(.log_table_name, conn)) {
     dbExecute(conn, log_schema)
   } else {
     log_schema <- sub(";$", "", log_schema)
@@ -37,18 +36,18 @@ log_command <- function(conn, name, command, nrow) {
                append = TRUE)
 }
 
-#' Read dbWriteSQLiteLog Table
+#' Read Log Data Table from SQLite Database
 #'
 #' The table is created if it doesn't exist.
 #'
-#' @inheritParams write_sqlite
-#' @return A data frame of the dbWriteSQLiteLog table
+#' @inheritParams rws_write_sqlite
+#' @return A data frame of the log table
 #' @export
 #' @examples
 #' con <- DBI::dbConnect(RSQLite::SQLite())
-#' read_sqlite_log(con)
+#' rws_read_sqlite_meta(con)
 #' DBI::dbDisconnect(con)
-read_sqlite_log <- function(conn = getOption("readwritesqlite.conn", NULL)) {
+rws_read_sqlite_log <- function(conn = getOption("rws.conn", NULL)) {
   check_log_table(conn)
   data <- dbReadTable(conn, .log_table_name)
   data$DateTimeUTCLog <- as.POSIXct(data$DateTimeUTCLog, tz = "UTC")

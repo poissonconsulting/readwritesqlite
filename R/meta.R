@@ -1,22 +1,22 @@
 meta_schema <- function () {
-  "CREATE TABLE readwritesqlite_meta (
+  p("CREATE TABLE", .meta_table_name, "(
   TableMeta TEXT NOT NULL,
   ColumnMeta TEXT NOT NULL,
   MetaMeta TEXT NOT NULL,
   DescriptionMeta TEXT,
   PRIMARY KEY(TableMeta, ColumnMeta)
-);"
+);")
 }
 
 check_meta_table <- function(conn) {
   meta_schema <- meta_schema()
-  if (!dbExistsTable(conn, "readwritesqlite_meta")) {
+  if (!tables_exists(.meta_table_name, conn)) {
     dbExecute(conn, meta_schema)
   } else {
     meta_schema <- sub(";$", "", meta_schema)
-    schema <- table_schema("readwritesqlite_meta", conn)
+    schema <- table_schema(.meta_table_name, conn)
     if(!identical(schema, meta_schema))
-      err("table 'readwritesqlite_meta' has an invalid schema")
+      err("table '", .meta_table_name, "' has an invalid schema")
   }
 }
 
@@ -24,15 +24,15 @@ check_meta_table <- function(conn) {
 #'
 #' The table is created if it doesn't exist.
 #'
-#' @inheritParams write_sqlite
-#' @return A data frame of the readwritesqlite_meta table
+#' @inheritParams rws_write_sqlite
+#' @return A data frame of the meta table
 #' @export
 #' @examples
 #' con <- DBI::dbConnect(RSQLite::SQLite())
-#' dbReadMetaTableSQLite(con)
+#' rws_read_sqlite_meta(con)
 #' DBI::dbDisconnect(con)
-read_sqlite_meta <- function(conn = getOption("readwritesqlite.conn", NULL)) {
+rws_read_sqlite_meta <- function(conn = getOption("rws.conn", NULL)) {
   check_meta_table(conn)
-  data <- dbReadTable(conn, "readwritesqlite_meta")
+  data <- dbReadTable(conn, .meta_table_name)
   as_conditional_tibble(data)
 }

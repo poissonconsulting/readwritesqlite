@@ -1,12 +1,12 @@
 context("log")
 
-test_that("read_sqlite_log creates table", {
+test_that("rws_read_sqlite_log creates table", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
   
-  log <- read_sqlite_log(con)
+  log <- rws_read_sqlite_log()
   
   expect_identical(nrow(log), 0L)
   expect_identical(colnames(log), c("DateTimeUTCLog", "UserLog", "TableLog",
@@ -14,22 +14,22 @@ test_that("read_sqlite_log creates table", {
   expect_identical(attr(log$DateTimeUTCLog, "tzone"), "UTC")
 })
 
-test_that("write_sqlite logs commands", {
+test_that("rws_write_sqlite logs commands", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
-  op <- options(readwritesqlite.conn = con)
+  op <- options(rws.conn = con)
   teardown(options(op))
   
   local <- data.frame(x = as.character(1:3))
   DBI::dbCreateTable(con, "local", local)
-  expect_identical(nrow(read_sqlite_log()), 0L)
-  write_sqlite(local)
-  expect_identical(nrow(read_sqlite_log()), 1L)
-  write_sqlite(local)
-  expect_identical(nrow(read_sqlite_log()), 2L)
-  write_sqlite(local, delete = TRUE)
-  expect_identical(nrow(read_sqlite_log()), 4L)
-  log <- read_sqlite_log()
+  expect_identical(nrow(rws_read_sqlite_log()), 0L)
+  rws_write_sqlite(local)
+  expect_identical(nrow(rws_read_sqlite_log()), 1L)
+  rws_write_sqlite(local)
+  expect_identical(nrow(rws_read_sqlite_log()), 2L)
+  rws_write_sqlite(local, delete = TRUE)
+  expect_identical(nrow(rws_read_sqlite_log()), 4L)
+  log <- rws_read_sqlite_log()
   expect_identical(log$TableLog,
                    rep("local", 4L))
   expect_identical(log$CommandLog,
