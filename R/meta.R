@@ -57,6 +57,23 @@ data_column_has_meta <- function(x) {
   is.logical(x) || dttr::is.Date(x) || dttr::is.POSIXct(x) 
 }
 
+data_column_meta <- function(x) {
+  if (is.logical(x)) return("class: logical")
+  if (is.Date(x)) return("class: Date")
+  if (is.POSIXct(x)) return(p("tz:", dttr::dtt_tz(x)))
+  stop("unrecognized meta type")
+}
+
+meta_column_meta <- function(column_name, table_name, conn) {
+  column_name <- as.character(to_upper(as.sqlite_name(column_name)))
+  table_name <- as.character(to_upper(as.sqlite_name(table_name)))
+  
+  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- meta_table[meta_table$TableMeta == table_name,]
+  meta_table <- meta_table[meta_table$ColumnMeta == column_name,]
+  meta_table$MetaMeta
+}
+
 meta_has_meta <- function(table_name, conn) {
   data <- read_table(table_name, meta = FALSE, conn = conn)
   
@@ -72,11 +89,44 @@ meta_has_meta <- function(table_name, conn) {
   has_meta
 }
 
+meta_data_column <- function (column_name, data, table_name, conn) {
+  
+  print(column_name)
+  print(data)
+  data_column <- data[[column_name]]
+  data_column_meta <- data_column_meta(data_column)
+  meta_column_meta <- meta_column_meta(column_name, table_name, conn)
+
+  if(is.na(meta_column_meta)) {
+    meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+    row <- as.sqlite_name(meta_table$TableMeta) == as.sqlite_name(table_name)
+    row <- row & as.sqlite_name(meta_table$ColumnMeta) == as.sqlite_name(column_name)
+    meta_table$MetaMeta[row] <- data_column_meta
+    update_meta_table(meta_table, conn = conn)
+  }
+  if(!identical(data_column_meta, meta_column_meta)) {
+    err(p0("data meta '", data_column_meta, "' for column '", column_name, 
+           "' in table '", table_name, "' is inconsistent with meta '", 
+           meta_column_meta, "'"))
+  }
+  column_name
+}
+
 meta_data <- function(data, table_name, conn) {
   check_meta_table(conn)
   data_has_meta <- vapply(data, FUN = data_column_has_meta, FUN.VALUE = TRUE)
   meta_has_meta <- meta_has_meta(table_name, conn)
   
+  meta_mismatch <- !is.na(meta_has_meta) & data_has_meta != meta_has_meta
+  if(any(meta_mismatch)) {
+    columns <- names(meta_mismatch[meta_mismatch])
+    err(co(columns, p0("the following column%s in table '", table_name, 
+                       "' have inconsistent meta data: %c")))
+  }
+  if(!any(data_has_meta)) return(data)
+  columns <- names(data)[data_has_meta]
+  lapply(columns, meta_data_column, data = data, 
+         table_name = table_name, conn = conn)
   data
 }
 
