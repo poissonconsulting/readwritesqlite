@@ -110,6 +110,27 @@ meta_data_column <- function (column_name, data, table_name, conn) {
   column_name
 }
 
+table_column_names <- function(conn) {
+  table_names <- table_names(conn)
+  if(!length(table_names)) 
+    return(data.frame(Table = character(0), Column = character(0), 
+                      stringsAsFactors = FALSE))
+  table_column_names <- lapply(table_names, column_names, conn = conn)
+  table_column_names <- mapply(function(x, y) 
+    data.frame(Table = y, Column = x, stringsAsFactors = FALSE), 
+    table_column_names, table_names, SIMPLIFY = FALSE)
+  table_column_names$stringsAsFactors <- FALSE
+  do.call("rbind", table_column_names)
+}
+
+delete_meta_data <- function(table_name, conn) {
+  check_meta_table(conn)
+  table_name <- to_upper(table_name)
+  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- meta_table[meta_table$TableMeta != table_name,,drop = FALSE]
+  update_meta_table(meta_table, conn = conn)
+}
+
 meta_data <- function(data, table_name, conn) {
   check_meta_table(conn)
   data_has_meta <- vapply(data, FUN = data_column_has_meta, FUN.VALUE = TRUE)

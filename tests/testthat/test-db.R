@@ -1,4 +1,4 @@
-context("internal")
+context("db")
 
 test_that("table_column_names", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
