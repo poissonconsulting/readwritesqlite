@@ -43,3 +43,20 @@ rws_read_sqlite_meta <- function(conn = getOption("rws.conn", NULL)) {
   data <- read_table(.meta_table_name, meta = FALSE, conn = conn)
   as_conditional_tibble(data)
 }
+
+# delete_meta_data <- function(table_name, conn) {
+#   check_meta_table(conn)
+#   meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+#   delete_data(.meta_table_name, log = FALSE, conn = conn)
+#   meta_table$MetaMeta[meta_table$TableMeta == table_name] <- 
+#   append_data(meta_table, .meta_table_name, log = FALSE, conn = conn)
+# }
+# 
+# meta_data <- function(data, table_name, delete, conn) {
+#   if(delete) {
+#         
+#   }
+#   has_units <- vapply(data, FUN = has_units, FUN.VALUE = TRUE)
+#   
+# }
+
