@@ -1,3 +1,12 @@
+delete_data <- function(table_name, log, conn) {
+  sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
+  query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
+  nrow <- dbExecute(conn, p0("DELETE FROM ",  table_name))
+  if(log) {
+    log_command(conn, table_name, command = "DELETE", nrow = nrow)
+  }
+}
+
 foreign_keys <- function(conn, on = TRUE) {
   old <- DBI::dbGetQuery(conn, "PRAGMA foreign_keys;")
   old <- as.logical(old[1,1])
@@ -38,6 +47,42 @@ table_names <- function(conn) {
   tables <- DBI::dbListTables(conn)
   tables <- tables[!tables %in% c(.log_table_name, .meta_table_name)]
   tables
+}
+
+column_names <- function(table_name, conn) {
+  DBI::dbListFields(conn, table_name)
+}
+
+create_table <- function(data, table_name, log, conn) {
+  DBI::dbCreateTable(conn, table_name, data)
+  if(log) log_command(conn, table_name, command = "CREATE", nrow = 0L)
+  data
+}
+
+append_data <- function(data, table_name, log, conn) {
+  if (nrow(data)) {
+    dbAppendTable(conn, table_name, data)
+    if(log) {
+      log_command(conn, table_name, command = "INSERT", nrow = nrow(data))
+    }
+    data
+  }
+}
+
+check_data_rws <- function(data, table_name, conn) {
+  colnames <- column_names(table_name, conn = conn)
+  check_colnames(data, colnames = colnames)
+  data <- data[colnames]
+  # need to add more data checking here
+  
+  data <- convert_data(data)
+  data
+}
+
+table_column_names <- function(conn) {
+  table_names <- table_names(conn)
+  if(!length(table_names)) return(data.frame(Table = character(0), Column = character(0)))
+  table_column_names <- lapply(table_names, column_names)
 }
 
 tables_exists <- function(table_names, conn) {

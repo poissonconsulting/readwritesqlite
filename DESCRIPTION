@@ -13,6 +13,7 @@ License: MIT + file LICENSE
 Imports: 
     err,
     checkr,
+    dttr,
     DBI,
     RSQLite,
 Suggests: 

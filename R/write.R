@@ -1,32 +1,14 @@
 write_sqlite_data <- function(data, table_name, conn, exists, delete, meta, log) {
-  if(isFALSE(exists) || 
-     (is.na(exists) && !tables_exists(table_name, conn = conn))) {
-    DBI::dbCreateTable(conn, table_name, data)
-    if(log) log_command(conn, table_name, command = "CREATE", nrow = 0L)
-  }
+  if(isFALSE(exists) || (is.na(exists) && !tables_exists(table_name, conn))) 
+    create_table(data, table_name, log = log, conn = conn)
+  
+  data <- check_data_rws(data, table_name, conn = conn)
 
-  colnames <- dbListFields(conn, table_name)
-  check_colnames(data, colnames = colnames)
-  data <- data[colnames]
-  # need to add more data checking here
+#  if(meta) meta_data(data, table_name, delete = delete conn)
+
+  if(delete) delete_data(table_name,  log = log, conn = conn)
   
-  # need to add meta recording here
-  data <- convert_data(data)
-  
-  if(delete) {
-    sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
-    query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
-    nrow <- dbExecute(conn, p0("DELETE FROM ",  table_name))
-    if(log) {
-      log_command(conn, table_name, command = "DELETE", nrow = nrow)
-    }
-  }
-  if (nrow(data)) {
-    dbAppendTable(conn, table_name, data)
-    if(log) {
-      log_command(conn, table_name, command = "INSERT", nrow = nrow(data))
-    }
-  }
+  append_data(data, table_name, log = log, conn = conn)
 }
 
 #' Write to a SQLite Database

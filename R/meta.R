@@ -18,6 +18,7 @@ check_meta_table <- function(conn) {
     if(!identical(schema, meta_schema))
       err("table '", .meta_table_name, "' has an invalid schema")
   }
+  
 }
 
 #' Read Meta Data table from SQLite Database
