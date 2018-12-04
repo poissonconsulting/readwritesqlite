@@ -2,10 +2,23 @@ meta_schema <- function () {
   p("CREATE TABLE", .meta_table_name, "(
   TableMeta TEXT NOT NULL,
   ColumnMeta TEXT NOT NULL,
-  MetaMeta TEXT NOT NULL,
+  MetaMeta TEXT,
   DescriptionMeta TEXT,
   PRIMARY KEY(TableMeta, ColumnMeta)
 );")
+}
+
+update_meta_table <- function(meta_data, conn) {
+  meta_data$TableMeta <- to_upper(as.sqlite_name(meta_data$TableMeta))
+  meta_data$ColumnMeta <- to_upper(as.sqlite_name(meta_data$ColumnMeta))
+  meta_data$TableMeta <- as.character(meta_data$TableMeta)
+  meta_data$ColumnMeta <- as.character(meta_data$ColumnMeta)
+  
+  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- merge(meta_data, meta_table, all.x = TRUE, 
+                      by = c("TableMeta", "ColumnMeta"))
+  delete_data(.meta_table_name, log = FALSE, meta = FALSE, conn = conn)
+  append_data(meta_table, .meta_table_name, log = FALSE, conn = conn)
 }
 
 check_meta_table <- function(conn) {
@@ -40,32 +53,8 @@ rws_read_sqlite_meta <- function(conn = getOption("rws.conn", NULL)) {
   as_conditional_tibble(data)
 }
 
-update_meta_table <- function(meta_data, conn) {
-  meta_data$TableMeta <- to_upper(as.sqlite_name(meta_data$TableMeta))
-  meta_data$ColumnMeta <- to_upper(as.sqlite_name(meta_data$ColumnMeta))
-  meta_data$TableMeta <- as.character(meta_data$TableMeta)
-  meta_data$ColumnMeta <- as.character(meta_data$ColumnMeta)
-
-  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
-  meta_table <- merge(meta_data, meta_table, all.x = TRUE, 
-                      by = c("TableMeta", "ColumnMeta"))
-  delete_data(.meta_table_name, log = FALSE, conn = conn)
-  append_data(meta_table, .meta_table_name, log = FALSE, conn = conn)
-}
-
-delete_meta_data <- function(table_name, conn) {
-  check_meta_table(conn)
-  table_name <- as.character(to_upper(as.sqlite_name(table_name)))
-  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
-  meta_table <- meta_table[meta_table$TableMeta != table_name,,drop = FALSE]
-  update_meta_table(meta_table, conn = conn)
-}
-
-meta_data <- function(data, table_name, delete, conn) {
-   if(delete) delete_meta_data()
-#         
-#   }
-#   has_units <- vapply(data, FUN = has_units, FUN.VALUE = TRUE)
-#   
+meta_data <- function(data, table_name, conn) {
+  has_units <- vapply(data, FUN = has_units, FUN.VALUE = TRUE)
+  data
 }
 

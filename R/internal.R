@@ -1,10 +1,17 @@
-delete_data <- function(table_name, log, conn) {
+delete_meta_data <- function(table_name, conn) {
+  check_meta_table(conn)
+  table_name <- as.character(to_upper(as.sqlite_name(table_name)))
+  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- meta_table[meta_table$TableMeta != table_name,,drop = FALSE]
+  update_meta_table(meta_table, conn = conn)
+}
+
+delete_data <- function(table_name, log, meta, conn) {
   sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
   query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
   nrow <- dbExecute(conn, p0("DELETE FROM ",  table_name))
-  if(log) {
-    log_command(conn, table_name, command = "DELETE", nrow = nrow)
-  }
+  if(log) log_command(conn, table_name, command = "DELETE", nrow = nrow)
+  if(meta) delete_meta_data(table_name, conn)
 }
 
 foreign_keys <- function(conn, on = TRUE) {
