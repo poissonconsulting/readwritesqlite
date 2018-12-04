@@ -230,7 +230,7 @@ test_that("rws_write_sqlite not commits", {
   expect_identical(rws_write_sqlite(y, exists = NA, commit = FALSE), c("local", "LOCAL"))
   expect_identical(DBI::dbListTables(con), character(0))
   expect_identical(rws_write_sqlite(y, exists = NA, commit = TRUE), c("local", "LOCAL"))
-  expect_identical(DBI::dbListTables(con), c("local", "readwritesqlite_log"))
+  expect_identical(DBI::dbListTables(con), c("local", "readwritesqlite_log", "readwritesqlite_meta"))
   remote <- DBI::dbReadTable(con, "local")
   expect_identical(remote, rbind(y$local, y$LOCAL))
 })
