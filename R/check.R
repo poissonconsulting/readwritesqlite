@@ -28,12 +28,10 @@ check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), e
 check_table_name <- function(table_name, conn, exists) {
   check_string(table_name)
   
-  table_name <- as.sqlite_name(table_name)
-
-  if(table_name == as.sqlite_name(.log_table_name))
+  if(to_upper(table_name) == to_upper(.log_table_name))
     err("'", table_name, "' is a reserved table")
 
-  if(table_name == as.sqlite_name(.meta_table_name))
+  if(to_upper(table_name) == to_upper(.meta_table_name))
     err("'", table_name, "' is a reserved table")
   
   table_exists <- tables_exists(table_name, conn)
@@ -54,8 +52,7 @@ check_table_names <- function(table_names, conn, exists, delete) {
          USE.NAMES = FALSE)
   
   if(isFALSE(exists) || isTRUE(delete)) {
-    table_names <- as.sqlite_name(table_names)
-    duplicates <- duplicated(table_names)
+    duplicates <- duplicated(to_upper(table_names))
     if(any(duplicates)) {
       table_names %in% table_names[duplicates]
       table_names <- sort(table_names)

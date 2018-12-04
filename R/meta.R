@@ -9,11 +9,9 @@ meta_schema <- function () {
 }
 
 update_meta_table <- function(meta_data, conn) {
-  meta_data$TableMeta <- to_upper(as.sqlite_name(meta_data$TableMeta))
-  meta_data$ColumnMeta <- to_upper(as.sqlite_name(meta_data$ColumnMeta))
-  meta_data$TableMeta <- as.character(meta_data$TableMeta)
-  meta_data$ColumnMeta <- as.character(meta_data$ColumnMeta)
-  
+  meta_data$TableMeta <- to_upper(meta_data$TableMeta)
+  meta_data$ColumnMeta <- to_upper(meta_data$ColumnMeta)
+
   meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- merge(meta_data, meta_table, all.x = TRUE, 
                       by = c("TableMeta", "ColumnMeta"))
@@ -65,8 +63,8 @@ data_column_meta <- function(x) {
 }
 
 meta_column_meta <- function(column_name, table_name, conn) {
-  column_name <- as.character(to_upper(as.sqlite_name(column_name)))
-  table_name <- as.character(to_upper(as.sqlite_name(table_name)))
+  column_name <- to_upper(column_name)
+  table_name <- to_upper(table_name)
   
   meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- meta_table[meta_table$TableMeta == table_name,]
@@ -77,13 +75,13 @@ meta_column_meta <- function(column_name, table_name, conn) {
 meta_has_meta <- function(table_name, conn) {
   data <- read_table(table_name, meta = FALSE, conn = conn)
   
-  table_name <- as.character(to_upper(as.sqlite_name(table_name)))
+  table_name <- to_upper(table_name)
   meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- meta_table[meta_table$TableMeta == table_name,,drop = FALSE]
   has_meta <- !is.na(meta_table$MetaMeta)
   if(!nrow(data)) has_meta[!has_meta] <- NA
   names(has_meta) <- meta_table$ColumnMeta
-  data_names <- as.character(to_upper(as.sqlite_name(names(data))))
+  data_names <- to_upper(names(data))
   has_meta <- has_meta[data_names]
   names(has_meta) <- names(data)
   has_meta
@@ -99,8 +97,8 @@ meta_data_column <- function (column_name, data, table_name, conn) {
 
   if(is.na(meta_column_meta)) {
     meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
-    row <- as.sqlite_name(meta_table$TableMeta) == as.sqlite_name(table_name)
-    row <- row & as.sqlite_name(meta_table$ColumnMeta) == as.sqlite_name(column_name)
+    row <- to_upper(meta_table$TableMeta) == to_upper(table_name)
+    row <- row & to_upper(meta_table$ColumnMeta) == to_upper(column_name)
     meta_table$MetaMeta[row] <- data_column_meta
     update_meta_table(meta_table, conn = conn)
   }

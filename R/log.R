@@ -26,7 +26,7 @@ check_log_table <- function(conn) {
 
 log_command <- function(conn, name, command, nrow) {
   check_log_table(conn)
-  name <- to_upper(as.sqlite_name(name))
+  name <- to_upper(name)
   data <- data.frame(DateTimeUTCLog = sys_date_time_utc(),
                      UserLog = user(),
                      TableLog = name,

@@ -1,6 +1,6 @@
 delete_meta_data <- function(table_name, conn) {
   check_meta_table(conn)
-  table_name <- as.character(to_upper(as.sqlite_name(table_name)))
+  table_name <- to_upper(table_name)
   meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- meta_table[meta_table$TableMeta != table_name,,drop = FALSE]
   update_meta_table(meta_table, conn = conn)
@@ -107,8 +107,8 @@ table_column_names <- function(conn) {
 
 tables_exists <- function(table_names, conn) {
   tables <- DBI::dbListTables(conn)
-  table_names <- to_upper(as.sqlite_name(table_names))
-  tables <- to_upper(as.sqlite_name(tables))
+  table_names <- to_upper(table_names)
+  tables <- to_upper(tables)
   table_names %in% tables
 }
 
