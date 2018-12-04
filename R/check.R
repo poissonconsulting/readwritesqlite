@@ -54,24 +54,20 @@ check_table_names <- function(table_names, conn, exists, delete) {
   if(isFALSE(exists) || isTRUE(delete)) {
     duplicates <- duplicated(to_upper(table_names))
     if(any(duplicates)) {
-      table_names %in% table_names[duplicates]
-      table_names <- unique(table_names)
+      table_names <- table_names[!duplicated(to_upper(table_names))]
       table_names <- sort(table_names)
       
-      # needs some love
-      but <- ""
       if(isFALSE(exists)) {
-        but <- "exists is FALSE"
-        if(isTRUE(delete))
-          but <- p0(but, " and ")
-      }
-      but <- p0(but, if(isTRUE(delete)) "delete is TRUE" else "")
-      if(!identical(but, "")) but <- p0(" (", but, ")")
-      
-      err(p0(co(table_names, "table name %c is duplicated",
-            some = "the following %n table name%s %r duplicates: %c",
+        if(isTRUE(delete)) { 
+          but <- "but exists = FALSE and delete = TRUE"
+        } else
+          but <- "but exists = FALSE"
+      } else
+        but <- "but delete = TRUE"
+      err(p(co(table_names, one = "table name %c is duplicated",
+                 "the following %n table name%s %r duplicated: %c",
              conjunction = "and"), but))
     }
   }
-  as.character(table_names)
+  table_names
 }

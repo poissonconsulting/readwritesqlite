@@ -1,12 +1,8 @@
 Package: readwritesqlite
 Title: Enhanced Reading and Writing for SQLite Databases
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R: 
-    person(given = "Joe",
-           family = "Thorley",
-           role = c("aut", "cre"),
-           email = "joe@poissonconsulting.ca",
-           comment = c(ORCID = "0000-0002-7683-4592"))
+    person("Joe", "Thorley", role = c("aut", "cre"), email = "joe@poissonconsulting.ca", comment = c(ORCID = "0000-0002-7683-4592"))
 Description: 
   Enhances reading and writing to and from SQLiteConnection objects.
 License: MIT + file LICENSE

@@ -33,13 +33,13 @@ test_that("check_table_names", {
   expect_identical(check_table_names(c("e", "e"), con, exists = NA, delete = FALSE), 
                    c("e", "e"))
   expect_error(check_table_names(c("e", "e"), con, exists = FALSE, delete = FALSE), 
-                   "table name 'e' is duplicated [(]exists is FALSE[)]")
+                   "table name 'e' is duplicated but exists = FALSE")
   expect_error(check_table_names(c("e", "f", "f", "e"), con, exists = FALSE, delete = TRUE), 
-                   "the following 2 table names are duplicates: 'e' and 'f' [(]exists is FALSE and delete is TRUE[)]")
+                   "the following 2 table names are duplicated: 'e' and 'f' but exists = FALSE and delete = TRUE")
   expect_error(check_table_names(c("e", "f", "f", "e", "e"), con, exists = FALSE, delete = TRUE), 
-                   "the following 2 table names are duplicates: 'e' and 'f' [(]exists is FALSE and delete is TRUE[)]")
+                   "the following 2 table names are duplicated: 'e' and 'f' but exists = FALSE and delete = TRUE")
   expect_error(check_table_names(c("e", "E"), con, exists = NA, delete = TRUE), 
-                   "the following 2 table names are duplicates: 'e' and 'E' [(]delete is TRUE[)]")
+                    "table name 'e' is duplicated but delete = TRUE")
   expect_identical(check_table_names(c("e", "E"), con, exists = NA, delete = FALSE), 
                    c("e", "E"))
 })
