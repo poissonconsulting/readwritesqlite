@@ -27,7 +27,7 @@ rws_read_sqlite.character <- function(x,
                                   conn = getOption("rws.conn", NULL),
                                   meta = TRUE, ...) {
   check_sqlite_connection(conn, connected = TRUE)
-  check_table_names(x, conn)
+  check_table_names(x, conn, exists = TRUE, delete = FALSE)
   check_flag(meta)
   check_unused(...)
   
@@ -40,10 +40,9 @@ rws_read_sqlite.character <- function(x,
 #'
 #' @inheritParams rws_write_sqlite
 #' @return A named list of the data tables.
-#' @family dbReadTableSQLite
+#' @family rws_read_sqlite
 #' @export
-rws_read_sqlite.SQLiteConnection <- function(x = getOption("rws.conn", NULL), 
-                                         meta = TRUE, ...) {
+rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
   check_sqlite_connection(x, connected = TRUE)
   check_flag(meta)
   check_unused(...)

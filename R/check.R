@@ -25,7 +25,7 @@ check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), e
   invisible(x)
 }
 
-check_table_name <- function(table_name, conn, exists = TRUE) {
+check_table_name <- function(table_name, conn, exists) {
   check_string(table_name)
   
   table_name <- as.sqlite_name(table_name)
@@ -46,9 +46,35 @@ check_table_name <- function(table_name, conn, exists = TRUE) {
   as.character(table_name)
 }
 
-check_table_names <- function(table_names, conn, exists = TRUE) {
+check_table_names <- function(table_names, conn, exists, delete) {
   check_character(table_names)
   if(!length(table_names)) return(table_names)
   
-  vapply(table_names, check_table_name, "", conn = conn, exists = exists)
+  vapply(table_names, check_table_name, "", conn = conn, exists = exists,
+         USE.NAMES = FALSE)
+  
+  if(isFALSE(exists) || isTRUE(delete)) {
+    table_names <- as.sqlite_name(table_names)
+    duplicates <- duplicated(table_names)
+    if(any(duplicates)) {
+      table_names %in% table_names[duplicates]
+      table_names <- sort(table_names)
+      table_names <- as.character(table_names)
+      table_names <- unique(table_names)
+      
+      but <- ""
+      if(isFALSE(exists)) {
+        but <- "exists is FALSE"
+        if(isTRUE(delete))
+          but <- p0(but, " and ")
+      }
+      but <- p0(but, if(isTRUE(delete)) "delete is TRUE" else "")
+      if(!identical(but, "")) but <- p0(" (", but, ")")
+      
+      err(p0(co(table_names, "table name %c is duplicated",
+            some = "the following %n table name%s %r duplicates: %c",
+             conjunction = "and"), but))
+    }
+  }
+  as.character(table_names)
 }

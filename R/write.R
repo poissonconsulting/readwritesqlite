@@ -1,6 +1,6 @@
 write_sqlite_data <- function(data, table_name, conn, exists, delete, meta, log) {
   if(isFALSE(exists)) {
-    DBI::dbCreateTable(con, table_name, data)
+    DBI::dbCreateTable(conn, table_name, data)
     if(log) log_command(conn, table_name, command = "CREATE", nrow = 0L)
   }
   
@@ -96,45 +96,33 @@ rws_write_sqlite.list <- function(x, conn = getOption("rws.conn", NULL),
                                   exists = TRUE,
                                   delete = FALSE, commit = TRUE,
                                   meta = TRUE, log = TRUE, ...) {
-  .NotYetImplemented()
-  # check_named(x)
-  # check_sqlite_connection(conn, connected = TRUE)
-  # check_flag(delete)
-  # check_flag(commit)
-  # check_flag(meta)
-  # check_flag(log)
-  # check_unused(...)
-  # 
-  # x <- x[vapply(x, is.data.frame, TRUE)]
-  # if(!length(x)) {
-  #   wrn("x has no data frames")
-  #   return(character(0))
-  # }
-  # is <- is_table(names(x), conn)
-  # 
-  # if(any(!is)) {
-  #   non_matching <- names(x)[!is]
-  #   wrn(co(non_matching,  
-  #          "the following %n data frame%s have names which do not match a table: %c", 
-  #          lots = "%n data frames have names that do not match a table",
-  #          conjunction = "and"))
-  # }
-  # 
-  # table_names <- hierachical_table_names(conn)
-  # table_names <- table_names[toupper(table_names) %in% toupper(names(x))]
-  # if(length(non_matching)) {
-  #   
-  # }
-  # x <- x[names(x) %in% table_names]
-  # if(!length(x)) return(invisible(character(0)))
-  # 
-  # if(!isTRUE(commit)) .NotYetUsed(commit)
-  # 
-  # mapply(write_sqlite, list, names(list),
-  #        MoreArgs = list(delete = delete, meta = meta, log = log),
-  #        SIMPLIFY = FALSE)
-  # 
-  # dbCommit(conn, name = "write_sqlite")
-  # on.exit(NULL)
-  # invisible(data_name)
+  check_named(x)
+  check_sqlite_connection(conn, connected = TRUE)
+  check_scalar(exists, c(TRUE, NA))
+  check_flag(delete)
+  check_flag(commit)
+  check_flag(meta)
+  check_flag(log)
+  check_unused(...)
+
+  x <- x[vapply(x, is.data.frame, TRUE)]
+  if(!length(x)) {
+    wrn("x has no data frames")
+    return(invisible(character(0)))
+  }
+  
+  check_table_names(names(x), conn, exists = exists, delete = delete)
+
+  dbBegin(conn, name = "rws_write_sqlite")
+  on.exit(dbRollback(conn, name = "rws_write_sqlite"))
+
+  mapply(write_sqlite_data, x, names(x),
+         MoreArgs = list(conn = conn, exists = exists, delete = delete, 
+                         meta = meta, log = log), SIMPLIFY = FALSE)
+
+  if(!commit) return(invisible(names(x)))
+  
+  dbCommit(conn, name = "rws_write_sqlite")
+  on.exit(NULL)
+  invisible(invisible(names(x)))
 }

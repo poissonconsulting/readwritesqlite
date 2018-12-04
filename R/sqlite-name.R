@@ -65,3 +65,7 @@ print.sqlite_name <- function(x, ...) {
   print(as.character(x))
   invisible(x)
 }
+
+duplicated.sqlite_name <- function (x, incomparables = FALSE, ...) {
+  duplicated(to_upper(x), incomparables = incomparables)
+}

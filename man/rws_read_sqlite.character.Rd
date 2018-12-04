@@ -23,6 +23,7 @@ A data frame (tibble if tibble package is installed) of the table.
 Read from a SQLite Database
 }
 \seealso{
-Other rws_read_sqlite: \code{\link{rws_read_sqlite}}
+Other rws_read_sqlite: \code{\link{rws_read_sqlite.SQLiteConnection}},
+  \code{\link{rws_read_sqlite}}
 }
 \concept{rws_read_sqlite}

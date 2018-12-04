@@ -4,8 +4,7 @@
 \alias{rws_read_sqlite.SQLiteConnection}
 \title{Read from a SQLite Database}
 \usage{
-\method{rws_read_sqlite}{SQLiteConnection}(x = getOption("rws.conn",
-  NULL), meta = TRUE, ...)
+\method{rws_read_sqlite}{SQLiteConnection}(x, meta = TRUE, ...)
 }
 \arguments{
 \item{x}{The object to write.}
@@ -20,4 +19,8 @@ A named list of the data tables.
 \description{
 Read from a SQLite Database
 }
-\concept{dbReadTableSQLite}
+\seealso{
+Other rws_read_sqlite: \code{\link{rws_read_sqlite.character}},
+  \code{\link{rws_read_sqlite}}
+}
+\concept{rws_read_sqlite}
