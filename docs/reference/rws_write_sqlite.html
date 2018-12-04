@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write a data frame to a SQLite Database — dbWriteTableSQLite • dbWriteSQLite</title>
+<title>Write to a SQLite Database — rws_write_sqlite • readwritesqlite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Write a data frame to a SQLite Database — dbWriteTableSQLite" />
+<meta property="og:title" content="Write to a SQLite Database — rws_write_sqlite" />
 
-<meta property="og:description" content="The table must exist." />
+<meta property="og:description" content="Write to a SQLite Database" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,8 +62,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">dbWriteSQLite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
+        <a class="navbar-link" href="../index.html">readwritesqlite</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
       </span>
     </div>
 
@@ -94,43 +94,44 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write a data frame to a SQLite Database</h1>
+    <h1>Write to a SQLite Database</h1>
     
-    <div class="hidden name"><code>dbWriteTableSQLite.Rd</code></div>
+    <div class="hidden name"><code>rws_write_sqlite.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The table must exist.</p>
+    <p>Write to a SQLite Database</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>dbWriteTableSQLite</span>(<span class='no'>data</span>, <span class='kw'>table_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>data</span>),
-  <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"dbWriteSQLite.conn"</span>, <span class='kw'>NULL</span>), <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>rws_write_sqlite</span>(<span class='no'>x</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.conn"</span>, <span class='kw'>NULL</span>), <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>A data frame of the data to write.</p></td>
-    </tr>
-    <tr>
-      <th>table_name</th>
-      <td><p>A string of the (case insensitive) table name.</p></td>
+      <th>x</th>
+      <td><p>The object to write.</p></td>
     </tr>
     <tr>
       <th>conn</th>
-      <td><p>A <code>SQLiteConnection</code> object.</p></td>
+      <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
+    </tr>
+    <tr>
+      <th>exists</th>
+      <td><p>A flag specifying whether the table must already exist.</p></td>
     </tr>
     <tr>
       <th>delete</th>
-      <td><p>A flag specifying whether to delete existing rows before inserting the data.</p></td>
+      <td><p>A flag specifying whether to delete existing rows before 
+inserting data.</p></td>
     </tr>
     <tr>
       <th>commit</th>
-      <td><p>A flag specifying whether to commit the changes (useful for checking data).</p></td>
+      <td><p>A flag specifying whether to commit the operations 
+(calling with commit = FALSE can be useful for checking data).</p></td>
     </tr>
     <tr>
       <th>meta</th>
@@ -138,18 +139,24 @@
     </tr>
     <tr>
       <th>log</th>
-      <td><p>A flag specifying whether to log data manipulations.</p></td>
+      <td><p>A flag specifying whether to log the operations alterations.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Not used.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The updated data frame with the same columns as the table.</p>
+    <p>An invisible character vector of the name(s) of the table(s).</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other rws_write_sqlite: <code><a href='rws_write_sqlite.data.frame.html'>rws_write_sqlite.data.frame</a></code>,
+  <code><a href='rws_write_sqlite.list.html'>rws_write_sqlite.list</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>con</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DBI/topics/dbConnect'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLite'>SQLite</a></span>())
-<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DBI/topics/dbDisconnect'>dbDisconnect</a></span>(<span class='no'>con</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -157,9 +164,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>
@@ -170,7 +177,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.1.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
 </div>
       </footer>
    </div>

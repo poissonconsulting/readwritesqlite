@@ -1,5 +1,6 @@
 write_sqlite_data <- function(data, table_name, conn, exists, delete, meta, log) {
-  if(isFALSE(exists)) {
+  if(isFALSE(exists) || 
+     (is.na(exists) && !tables_exists(table_name, conn = conn))) {
     DBI::dbCreateTable(conn, table_name, data)
     if(log) log_command(conn, table_name, command = "CREATE", nrow = 0L)
   }

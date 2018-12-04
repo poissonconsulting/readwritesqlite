@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write a list of data frames to a SQLite Database — dbWriteTablesSQLite • dbWriteSQLite</title>
+<title>Read from a SQLite Database — rws_read_sqlite.character • readwritesqlite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Write a list of data frames to a SQLite Database — dbWriteTablesSQLite" />
+<meta property="og:title" content="Read from a SQLite Database — rws_read_sqlite.character" />
 
-<meta property="og:description" content="The tables must exist.
-The commit = FALSE argument is not yet used." />
+<meta property="og:description" content="Read from a SQLite Database" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,8 +62,8 @@ The commit = FALSE argument is not yet used." />
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">dbWriteSQLite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
+        <a class="navbar-link" href="../index.html">readwritesqlite</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
       </span>
     </div>
 
@@ -95,61 +94,52 @@ The commit = FALSE argument is not yet used." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write a list of data frames to a SQLite Database</h1>
+    <h1>Read from a SQLite Database</h1>
     
-    <div class="hidden name"><code>dbWriteTablesSQLite.Rd</code></div>
+    <div class="hidden name"><code>rws_read_sqlite.character.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The tables must exist.
-The commit = FALSE argument is not yet used.</p>
+    <p>Read from a SQLite Database</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>dbWriteTablesSQLite</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>as.list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame</a></span>()),
-  <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"dbWriteSQLite.conn"</span>, <span class='kw'>NULL</span>), <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for character</span>
+<span class='fu'><a href='rws_read_sqlite.html'>rws_read_sqlite</a></span>(<span class='no'>x</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.conn"</span>,
+  <span class='kw'>NULL</span>), <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>list</th>
-      <td><p>A named list of data frames.
-Objects which are not data frames are removed.</p></td>
+      <th>x</th>
+      <td><p>The object to write.</p></td>
     </tr>
     <tr>
       <th>conn</th>
-      <td><p>A <code>SQLiteConnection</code> object.</p></td>
-    </tr>
-    <tr>
-      <th>delete</th>
-      <td><p>A flag specifying whether to delete existing rows before inserting the data.</p></td>
-    </tr>
-    <tr>
-      <th>commit</th>
-      <td><p>A flag specifying whether to commit the changes (useful for checking data).</p></td>
+      <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
     </tr>
     <tr>
       <th>meta</th>
       <td><p>A flag specifying whether to preserve meta data.</p></td>
     </tr>
     <tr>
-      <th>log</th>
-      <td><p>A flag specifying whether to log data manipulations.</p></td>
+      <th>...</th>
+      <td><p>Not used.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An invisible character vector of the names of the data frames that
-were written to connection in the order in which they were written.</p>
+    <p>A data frame (tibble if tibble package is installed) of the table.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other rws_read_sqlite: <code><a href='rws_read_sqlite.SQLiteConnection.html'>rws_read_sqlite.SQLiteConnection</a></code>,
+  <code><a href='rws_read_sqlite.html'>rws_read_sqlite</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>con</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DBI/topics/dbConnect'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLite'>SQLite</a></span>())
-<span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DBI/topics/dbDisconnect'>dbDisconnect</a></span>(<span class='no'>con</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -157,9 +147,9 @@ were written to connection in the order in which they were written.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>
@@ -170,7 +160,7 @@ were written to connection in the order in which they were written.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.1.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
 </div>
       </footer>
    </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read a Table from a SQLite Database — dbReadTableSQLite • dbWriteSQLite</title>
+<title>Read from a SQLite Database — rws_read_sqlite • readwritesqlite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Read a Table from a SQLite Database — dbReadTableSQLite" />
+<meta property="og:title" content="Read from a SQLite Database — rws_read_sqlite" />
 
-<meta property="og:description" content="Read a Table from a SQLite Database" />
+<meta property="og:description" content="Read from a SQLite Database" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,8 +62,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">dbWriteSQLite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
+        <a class="navbar-link" href="../index.html">readwritesqlite</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
       </span>
     </div>
 
@@ -94,44 +94,40 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read a Table from a SQLite Database</h1>
+    <h1>Read from a SQLite Database</h1>
     
-    <div class="hidden name"><code>dbReadTableSQLite.Rd</code></div>
+    <div class="hidden name"><code>rws_read_sqlite.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Read a Table from a SQLite Database</p>
+    <p>Read from a SQLite Database</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>dbReadTableSQLite</span>(<span class='no'>table_name</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"dbWriteSQLite.conn"</span>,
-  <span class='kw'>NULL</span>), <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>rws_read_sqlite</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>table_name</th>
-      <td><p>A string of the (case insensitive) table name.</p></td>
+      <th>x</th>
+      <td><p>An object specifying the table(s) to read.</p></td>
     </tr>
     <tr>
-      <th>conn</th>
-      <td><p>A <code>SQLiteConnection</code> object.</p></td>
-    </tr>
-    <tr>
-      <th>meta</th>
-      <td><p>A flag specifying whether to preserve meta data.</p></td>
+      <th>...</th>
+      <td><p>Not used.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame (tibble if tibble package is installed) of the table.</p>
+    <p>A named list of data frames.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other dbReadTableSQLite: <code><a href='dbReadTablesSQLite.html'>dbReadTablesSQLite</a></code></p></div>
+    <div class='dont-index'><p>Other rws_read_sqlite: <code><a href='rws_read_sqlite.SQLiteConnection.html'>rws_read_sqlite.SQLiteConnection</a></code>,
+  <code><a href='rws_read_sqlite.character.html'>rws_read_sqlite.character</a></code></p></div>
     
 
   </div>
@@ -154,7 +150,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.1.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
 </div>
       </footer>
    </div>

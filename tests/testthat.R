@@ -1,4 +1,4 @@
 library(testthat)
-library(dbWriteSQLite)
+library(readwritesqlite)
 
-test_check("dbWriteSQLite")
+test_check("readwritesqlite")

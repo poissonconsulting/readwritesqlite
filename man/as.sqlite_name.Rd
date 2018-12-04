@@ -6,11 +6,13 @@
 \usage{
 as.sqlite_name(x, ...)
 }
+\arguments{
+\item{x}{An object to coerce.}
+
+\item{...}{Unused}
+}
 \description{
 A SQLite name is a vector of names for SQLite objects that inherits from character.
-It is useful for comparing SQLite names which are case insensitive except when 
-they are quoted using \code{"name"}, \code{[name]} \code{`name`}.
-When making a comparison, SQLite names are converted to upper case 
-unless they are quoted using one of the three methods 
-in which case the quotes are removed.
+It is useful for comparing SQLite names which are case insensitive 
+except when they are quoted using \code{"name"}, \code{[name]} \code{`name`}.
 }

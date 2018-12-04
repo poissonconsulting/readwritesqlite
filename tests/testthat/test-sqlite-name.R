@@ -23,15 +23,3 @@ test_that("sqlite_name", {
   expect_identical(y == "`DaTA`", c(FALSE, FALSE, TRUE, FALSE, FALSE, FALSE))
   expect_identical(y == "\"DaTA\"", c(FALSE, FALSE, FALSE, FALSE, FALSE, TRUE))
 })
-
-test_that("sqlite_name sorts", {
-  x1 <- c("DaTa", "DATA", "`DaTA`", "[DATa]", "\"dATA\"", '"DaTA"')
-  x2 <- c("DaTa1", "DATA2", "`DaTA3`", "[DATa4]", "\"dATA5\"", '"DaTA6"')
-  x1 <- as.sqlite_name(x1)
-  x2 <- as.sqlite_name(x2)
-  
-  expect_identical(sort(x1), 
-                   as.sqlite_name(c("\"dATA\"", "\"DaTA\"", "`DaTA`", "[DATa]", "DaTa", "DATA")))
-  expect_identical(sort(x2), 
-                   as.sqlite_name(c("DaTa1", "DATA2", "`DaTA3`", "[DATa4]", "\"dATA5\"", "\"DaTA6\"")))
-})

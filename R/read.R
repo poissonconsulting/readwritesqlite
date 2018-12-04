@@ -13,7 +13,7 @@ read_sqlite_data <- function(table_name, conn, meta) {
 #' @return A named list of data frames.
 #' @family rws_read_sqlite
 #' @export
-rws_read_sqlite <- function(x, meta = TRUE, ...) {
+rws_read_sqlite <- function(x, ...) {
   UseMethod("rws_read_sqlite")
 }
 

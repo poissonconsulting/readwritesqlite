@@ -218,3 +218,19 @@ test_that("rws_write_sqlite writes list with 2 identically named data frames", {
   remote <- DBI::dbReadTable(con, "local")
   expect_identical(remote, rbind(y$local, y$LOCAL))
 })
+
+test_that("rws_write_sqlite not commits", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+
+  y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
+  
+  expect_identical(rws_write_sqlite(y, exists = NA, commit = FALSE), c("local", "LOCAL"))
+  expect_identical(DBI::dbListTables(con), character(0))
+  expect_identical(rws_write_sqlite(y, exists = NA, commit = TRUE), c("local", "LOCAL"))
+  expect_identical(DBI::dbListTables(con), c("local", "readwritesqlite_log"))
+  remote <- DBI::dbReadTable(con, "local")
+  expect_identical(remote, rbind(y$local, y$LOCAL))
+})
