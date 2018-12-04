@@ -1,10 +1,11 @@
-write_sqlite_data <- function(data, table_name, conn, exists, delete, meta, log) {
+write_sqlite_data <- function(data, table_name, conn, exists, delete, meta, 
+                              log) {
   if(isFALSE(exists) || (is.na(exists) && !tables_exists(table_name, conn))) 
     create_table(data, table_name, log = log, conn = conn)
   
   data <- check_data_rws(data, table_name, conn = conn)
 
-#  if(meta) meta_data(data, table_name, delete = delete conn)
+#  if(meta) meta_data(data, table_name, delete = delete, conn = conn)
 
   if(delete) delete_data(table_name,  log = log, conn = conn)
   

@@ -69,6 +69,12 @@ append_data <- function(data, table_name, log, conn) {
   }
 }
 
+read_table <- function(table_name, meta, conn) {
+  data <- DBI::dbReadTable(conn, table_name)
+  # need some meta processing here 
+  data
+}
+
 check_data_rws <- function(data, table_name, conn) {
   colnames <- column_names(table_name, conn = conn)
   check_colnames(data, colnames = colnames)
@@ -82,7 +88,12 @@ check_data_rws <- function(data, table_name, conn) {
 table_column_names <- function(conn) {
   table_names <- table_names(conn)
   if(!length(table_names)) return(data.frame(Table = character(0), Column = character(0)))
-  table_column_names <- lapply(table_names, column_names)
+  table_column_names <- lapply(table_names, column_names, conn = conn)
+  table_column_names <- mapply(function(x, y) 
+    data.frame(Table = y, Column = x, stringsAsFactors = FALSE), 
+    table_column_names, table_names, SIMPLIFY = FALSE)
+  table_column_names$stringsAsFactors <- FALSE
+  do.call("rbind", table_column_names)
 }
 
 tables_exists <- function(table_names, conn) {

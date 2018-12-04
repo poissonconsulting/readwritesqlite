@@ -50,7 +50,7 @@ log_command <- function(conn, name, command, nrow) {
 #' DBI::dbDisconnect(con)
 rws_read_sqlite_log <- function(conn = getOption("rws.conn", NULL)) {
   check_log_table(conn)
-  data <- dbReadTable(conn, .log_table_name)
+  data <- read_table(.log_table_name, meta = FALSE, conn = conn)
   data$DateTimeUTCLog <- as.POSIXct(data$DateTimeUTCLog, tz = "UTC")
   as_conditional_tibble(data)
 }

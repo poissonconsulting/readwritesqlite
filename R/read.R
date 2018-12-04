@@ -1,8 +1,5 @@
 read_sqlite_data <- function(table_name, conn, meta) {
-  data <- DBI::dbReadTable(conn, table_name)
-  if(meta) {
-    .NotYetImplemented()
-  }
+  data <- read_table(table_name, meta = meta, conn = conn)
   as_conditional_tibble(data)
 }
 
