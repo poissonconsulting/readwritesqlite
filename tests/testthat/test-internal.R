@@ -18,3 +18,15 @@ test_that("unquoted table names case insensitive in RSQLite", {
   expect_false(tables_exists("`LOCAL`", con))
 })
 
+test_that("foreign keys", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  
+  # by default foreign keys are not switched on
+  expect_false(foreign_keys(con))
+  expect_true(foreign_keys(con))
+  expect_true(foreign_keys(con))
+  expect_true(foreign_keys(con, FALSE))
+  expect_false(foreign_keys(con))
+  expect_true(foreign_keys(con))
+})

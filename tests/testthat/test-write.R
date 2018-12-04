@@ -5,7 +5,7 @@ test_that("rws_write_sqlite.data.frame checks reserved table names", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   local <- data.frame(x = as.character(1:3))
   expect_error(rws_write_sqlite(local, table_name =  "readwritesqlite_log"),
                "'readwritesqlite_log' is a reserved table")
@@ -22,7 +22,7 @@ test_that("rws_write_sqlite.data.frame checks table exists", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   local <- data.frame(x = as.character(1:3))
   expect_error(rws_write_sqlite(local),
                "table 'local' does not exist")
@@ -33,7 +33,7 @@ test_that("rws_write_sqlite.data.frame writes to existing table", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   local <- data.frame(x = 1:3, select = 1:3)
   DBI::dbCreateTable(con, "local", local)
   expect_identical(rws_write_sqlite(local), "local")
@@ -46,7 +46,7 @@ test_that("rws_write_sqlite.data.frame errors if exists = FALSE and already exis
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   local <- data.frame(x = 1:3, select = 1:3)
   DBI::dbCreateTable(con, "local", local)
   expect_error(rws_write_sqlite(local, exists = FALSE), "table 'local' already exists")
@@ -57,7 +57,7 @@ test_that("rws_write_sqlite.data.frame creates table", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   local <- data.frame(x = 1:3, select = 1:3)
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   remote <- DBI::dbReadTable(con, "local")
@@ -69,7 +69,7 @@ test_that("rws_write_sqlite.data.frame handling of case", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   local <- data.frame(x = 1:3, select = 1:3)
   DBI::dbCreateTable(con, "local", local)
   DBI::dbCreateTable(con, "`LOCAL`", local)
@@ -78,7 +78,7 @@ test_that("rws_write_sqlite.data.frame handling of case", {
   LOCAL <- local
   expect_identical(rws_write_sqlite(LOCAL), "LOCAL")
   expect_identical(rws_write_sqlite(LOCAL, table_name = "`LOCAL`"), "`LOCAL`")
-
+  
   remote <- DBI::dbReadTable(con, "LOCAL")
   expect_identical(remote, rbind(local, local, local))
   
@@ -91,7 +91,7 @@ test_that("rws_write_sqlite.data.frame checks all columns present", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   local <- data.frame(x = as.character(1:3), select = 1:3)
   DBI::dbCreateTable(con, "local", local)
   local <- local[1]
@@ -104,7 +104,7 @@ test_that("rws_write_sqlite.data.frame corrects column order", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   local <- data.frame(x = 4:6, select = 1:3)
   DBI::dbCreateTable(con, "local", local)
   expect_identical(rws_write_sqlite(local), "local")
@@ -119,7 +119,7 @@ test_that("rws_write_sqlite.data.frame can delete", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   local <- data.frame(x = 1:3)
   DBI::dbCreateTable(con, "local", local)
   rws_write_sqlite(local)
@@ -133,7 +133,7 @@ test_that("rws_write_sqlite.data.frame can not commit", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   local <- data.frame(x = 1:3)
   DBI::dbCreateTable(con, "local", local)
   rws_write_sqlite(local, commit = FALSE)
@@ -148,7 +148,7 @@ test_that("rws_write_sqlite.list issues warning with no data frames", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   y <- list(x = 1)
   expect_warning(rws_write_sqlite(y), "x has no data frames")
 })
@@ -158,7 +158,7 @@ test_that("rws_write_sqlite.list requires named list", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   y <- list(data.frame(x = 1:3))
   expect_error(rws_write_sqlite(y), "x must be named")
 })
@@ -168,7 +168,7 @@ test_that("rws_write_sqlite requires existing table by default", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   y <- list(local = data.frame(x = 1:3))
   
   expect_error(rws_write_sqlite(y), "table 'local' does not exist")
@@ -179,7 +179,7 @@ test_that("rws_write_sqlite writes list with 1 data frame", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   y <- list(local = data.frame(x = 1:3))
   
   DBI::dbCreateTable(con, "local", y$local)
@@ -193,7 +193,7 @@ test_that("rws_write_sqlite writes list with 2 data frame", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   y <- list(local = data.frame(x = 1:3), local2 = data.frame(y = 1:4))
   
   DBI::dbCreateTable(con, "local", y$local)
@@ -210,7 +210,7 @@ test_that("rws_write_sqlite writes list with 2 identically named data frames", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
   
   DBI::dbCreateTable(con, "LOCAL", y$local)
@@ -224,7 +224,7 @@ test_that("rws_write_sqlite not commits", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
   
   expect_identical(rws_write_sqlite(y, exists = NA, commit = FALSE), c("local", "LOCAL"))
@@ -233,4 +233,45 @@ test_that("rws_write_sqlite not commits", {
   expect_identical(DBI::dbListTables(con), c("local", "readwritesqlite_log"))
   remote <- DBI::dbReadTable(con, "local")
   expect_identical(remote, rbind(y$local, y$LOCAL))
+})
+
+test_that("foreign keys switched on one data frame at a time", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)")
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local2 (
+                  x INTEGER NOT NULL,
+                FOREIGN KEY (x) REFERENCES local (x))")
+  
+  y <- list(local = data.frame(x = 1:4), local2 = data.frame(x = 1:3))
+  
+  expect_error(rws_write_sqlite(y$local2, table_name = "local2"), 
+               "FOREIGN KEY constraint failed")
+  
+  expect_identical(rws_write_sqlite(y$local, table_name = "local"), "local")
+  expect_identical(rws_write_sqlite(y$local2, table_name = "local2"), "local2")
+})
+
+test_that("foreign keys switched off for two data frame", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)")
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local2 (
+                  x INTEGER NOT NULL,
+                FOREIGN KEY (x) REFERENCES local (x))")
+  
+  expect_false(foreign_keys(con))
+  y <- list(local2 = data.frame(x = 1:3), local = data.frame(x = 1:4))
+  expect_identical(rws_write_sqlite(y), c("local2", "local"))
+  expect_true(foreign_keys(con))
 })

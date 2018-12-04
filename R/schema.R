@@ -1,10 +1,5 @@
 
-table_schema <- function(table_name, conn) {
-  sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
-  query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
-  schema <- DBI::dbGetQuery(conn, statement = query)[[1]]
-  schema
-}
+
 
 table_schemas <- function(conn) {
   tables <- table_names(conn)

@@ -4,7 +4,7 @@ write_sqlite_data <- function(data, table_name, conn, exists, delete, meta, log)
     DBI::dbCreateTable(conn, table_name, data)
     if(log) log_command(conn, table_name, command = "CREATE", nrow = 0L)
   }
-  
+
   colnames <- dbListFields(conn, table_name)
   check_colnames(data, colnames = colnames)
   data <- data[colnames]
@@ -70,12 +70,14 @@ rws_write_sqlite.data.frame <- function(
   table_name <- chk_deparse(table_name)
   check_string(table_name)
   check_table_name(table_name, conn, exists = exists)
-  
   check_unused(...)
   
+  foreign_keys <- foreign_keys(conn)
+
   dbBegin(conn, name = "rws_write_sqlite")
   on.exit(dbRollback(conn, name = "rws_write_sqlite"))
-  
+  on.exit(foreign_keys(conn, foreign_keys), add = TRUE)
+
   write_sqlite_data(x, table_name, conn = conn, exists = exists, 
                     delete = delete, 
                     meta = meta, log = log)
@@ -84,6 +86,7 @@ rws_write_sqlite.data.frame <- function(
   
   dbCommit(conn, name = "rws_write_sqlite")
   on.exit(NULL)
+  foreign_keys(conn, foreign_keys)
   invisible(table_name)
 }
 
@@ -113,17 +116,22 @@ rws_write_sqlite.list <- function(x, conn = getOption("rws.conn", NULL),
   }
   
   check_table_names(names(x), conn, exists = exists, delete = delete)
-
+  
+  foreign_keys <- foreign_keys(conn, FALSE)
+  
   dbBegin(conn, name = "rws_write_sqlite")
   on.exit(dbRollback(conn, name = "rws_write_sqlite"))
+  on.exit(foreign_keys(conn, foreign_keys), add = TRUE)
 
   mapply(write_sqlite_data, x, names(x),
          MoreArgs = list(conn = conn, exists = exists, delete = delete, 
                          meta = meta, log = log), SIMPLIFY = FALSE)
 
+  foreign_keys(conn, TRUE)
   if(!commit) return(invisible(names(x)))
   
   dbCommit(conn, name = "rws_write_sqlite")
   on.exit(NULL)
+  foreign_keys(conn, foreign_keys)
   invisible(invisible(names(x)))
 }
