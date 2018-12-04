@@ -87,7 +87,9 @@ check_data_rws <- function(data, table_name, conn) {
 
 table_column_names <- function(conn) {
   table_names <- table_names(conn)
-  if(!length(table_names)) return(data.frame(Table = character(0), Column = character(0)))
+  if(!length(table_names)) 
+    return(data.frame(Table = character(0), Column = character(0), 
+                      stringsAsFactors = FALSE))
   table_column_names <- lapply(table_names, column_names, conn = conn)
   table_column_names <- mapply(function(x, y) 
     data.frame(Table = y, Column = x, stringsAsFactors = FALSE), 

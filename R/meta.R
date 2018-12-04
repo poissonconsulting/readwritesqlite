@@ -18,13 +18,9 @@ check_meta_table <- function(conn) {
     if(!identical(schema, meta_schema))
       err("table '", .meta_table_name, "' has an invalid schema")
   }
-  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
   table_column_names <- table_column_names(conn)
   colnames(table_column_names) <- c("TableMeta", "ColumnMeta")
-  meta_table <- merge(table_column_names, meta_table, all.x = TRUE, 
-                      by = c("TableMeta", "ColumnMeta"))
-  delete_data(.meta_table_name, log = FALSE, conn = conn)
-  append_data(meta_table, .meta_table_name, log = FALSE, conn = conn)
+  update_meta_table(table_column_names, conn = conn)
 }
 
 #' Read Meta Data table from SQLite Database
@@ -44,19 +40,32 @@ rws_read_sqlite_meta <- function(conn = getOption("rws.conn", NULL)) {
   as_conditional_tibble(data)
 }
 
-# delete_meta_data <- function(table_name, conn) {
-#   check_meta_table(conn)
-#   meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
-#   delete_data(.meta_table_name, log = FALSE, conn = conn)
-#   meta_table$MetaMeta[meta_table$TableMeta == table_name] <- 
-#   append_data(meta_table, .meta_table_name, log = FALSE, conn = conn)
-# }
-# 
-# meta_data <- function(data, table_name, delete, conn) {
-#   if(delete) {
+update_meta_table <- function(meta_data, conn) {
+  meta_data$TableMeta <- to_upper(as.sqlite_name(meta_data$TableMeta))
+  meta_data$ColumnMeta <- to_upper(as.sqlite_name(meta_data$ColumnMeta))
+  meta_data$TableMeta <- as.character(meta_data$TableMeta)
+  meta_data$ColumnMeta <- as.character(meta_data$ColumnMeta)
+
+  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- merge(meta_data, meta_table, all.x = TRUE, 
+                      by = c("TableMeta", "ColumnMeta"))
+  delete_data(.meta_table_name, log = FALSE, conn = conn)
+  append_data(meta_table, .meta_table_name, log = FALSE, conn = conn)
+}
+
+delete_meta_data <- function(table_name, conn) {
+  check_meta_table(conn)
+  table_name <- as.character(to_upper(as.sqlite_name(table_name)))
+  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- meta_table[meta_table$TableMeta != table_name,,drop = FALSE]
+  update_meta_table(meta_table, conn = conn)
+}
+
+meta_data <- function(data, table_name, delete, conn) {
+   if(delete) delete_meta_data()
 #         
 #   }
 #   has_units <- vapply(data, FUN = has_units, FUN.VALUE = TRUE)
 #   
-# }
+}
 

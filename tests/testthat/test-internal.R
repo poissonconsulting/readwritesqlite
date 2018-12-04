@@ -6,8 +6,8 @@ test_that("table_column_names", {
 
   local <- data.frame(x = as.character(1:3))
 
-  expect_identical(table_column_names(con), data.frame(Table = character(0),
-                                                       Column = character(0)))
+  expect_identical(table_column_names(con), 
+                   data.frame(Table = character(0), Column = character(0), stringsAsFactors = FALSE))
   expect_true(DBI::dbCreateTable(con, "loCal", local))
   expect_identical(table_column_names(con), data.frame(Table = "loCal",
                                                        Column = "x",
