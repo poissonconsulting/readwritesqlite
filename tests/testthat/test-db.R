@@ -1,23 +1,5 @@
 context("db")
 
-test_that("table_column_names", {
-  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(con))
-
-  local <- data.frame(x = as.character(1:3))
-
-  expect_identical(table_column_names(con), 
-                   data.frame(Table = character(0), Column = character(0), stringsAsFactors = FALSE))
-  expect_true(DBI::dbCreateTable(con, "loCal", local))
-  expect_identical(table_column_names(con), data.frame(Table = "loCal",
-                                                       Column = "x",
-                                                       stringsAsFactors = FALSE))
-  expect_true(DBI::dbCreateTable(con, "loCal2", local))
-  expect_identical(table_column_names(con), data.frame(Table = c("loCal", "loCal2"),
-                                                       Column = c("x", "x"),
-                                                       stringsAsFactors = FALSE))
-})
-
 test_that("unquoted table names case insensitive in RSQLite", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
