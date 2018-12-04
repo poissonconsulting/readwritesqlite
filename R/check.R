@@ -41,7 +41,7 @@ check_table_name <- function(table_name, conn, exists) {
   if(isFALSE(exists) && table_exists)
     err("table '", table_name, "' already exists")
   
-  as.character(table_name)
+  table_name
 }
 
 check_table_names <- function(table_names, conn, exists, delete) {
@@ -55,10 +55,10 @@ check_table_names <- function(table_names, conn, exists, delete) {
     duplicates <- duplicated(to_upper(table_names))
     if(any(duplicates)) {
       table_names %in% table_names[duplicates]
-      table_names <- sort(table_names)
-      table_names <- as.character(table_names)
       table_names <- unique(table_names)
+      table_names <- sort(table_names)
       
+      # needs some love
       but <- ""
       if(isFALSE(exists)) {
         but <- "exists is FALSE"

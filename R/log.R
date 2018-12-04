@@ -24,17 +24,15 @@ check_log_table <- function(conn) {
   }
 }
 
-log_command <- function(conn, name, command, nrow) {
+log_command <- function(conn, table_name, command, nrow) {
   check_log_table(conn)
-  name <- to_upper(name)
   data <- data.frame(DateTimeUTCLog = sys_date_time_utc(),
                      UserLog = user(),
-                     TableLog = name,
+                     TableLog = to_upper(table_name),
                      CommandLog = command,
                      NRowLog = nrow,
                      stringsAsFactors = FALSE)
-  dbWriteTable(conn, .log_table_name, data, row.names = FALSE, 
-               append = TRUE)
+  append_data(data, table_name = .log_table_name, log = FALSE, conn = conn)
 }
 
 #' Read Log Data Table from SQLite Database

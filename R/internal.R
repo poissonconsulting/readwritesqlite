@@ -82,7 +82,7 @@ read_table <- function(table_name, meta, conn) {
   data
 }
 
-check_data_rws <- function(data, table_name, conn) {
+check_data_table <- function(data, table_name, conn) {
   colnames <- column_names(table_name, conn = conn)
   check_colnames(data, colnames = colnames)
   data <- data[colnames]
