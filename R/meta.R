@@ -11,7 +11,7 @@ meta_schema <- function () {
 make_meta_data <- function(conn) {
   table_names <- table_names(conn)
   if(!length(table_names)) 
-    return(data.frame(TableMeta = character(0), ColumnMeta = character(0), 
+    return(data.frame(TableMeta = character(0), ColumnMeta = character(0),
                       stringsAsFactors = FALSE))
   meta_data <- lapply(table_names, column_names, conn = conn)
   meta_data <- mapply(function(x, y) 
@@ -24,15 +24,11 @@ make_meta_data <- function(conn) {
   meta_data
 }
 
-update_meta_table <- function(meta_data, conn) {
+replace_meta_table <- function(meta_data, conn) {
   meta_data$TableMeta <- to_upper(meta_data$TableMeta)
   meta_data$ColumnMeta <- to_upper(meta_data$ColumnMeta)
-  
-  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
-  meta_table <- merge(meta_data, meta_table, all.x = TRUE, 
-                      by = c("TableMeta", "ColumnMeta"))
   delete_data(.meta_table_name, log = FALSE, meta = FALSE, conn = conn)
-  append_data(meta_table, .meta_table_name, log = FALSE, conn = conn)
+  append_data(meta_data, .meta_table_name, log = FALSE, conn = conn)
 }
 
 check_meta_table <- function(conn) {
@@ -45,8 +41,11 @@ check_meta_table <- function(conn) {
     if(!identical(schema, meta_schema))
       err("table '", .meta_table_name, "' has an invalid schema")
   }
+  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
   meta_data <- make_meta_data(conn)
-  update_meta_table(meta_data, conn = conn)
+  meta_data <- merge(meta_data, meta_table, all.x = TRUE,
+                     by = c("TableMeta", "ColumnMeta"))
+  replace_meta_table(meta_data, conn) 
 }
 
 #' Read Meta Data table from SQLite Database
@@ -71,7 +70,7 @@ delete_meta_data <- function(table_name, conn) {
   table_name <- to_upper(table_name)
   meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- meta_table[meta_table$TableMeta != table_name,,drop = FALSE]
-  update_meta_table(meta_table, conn = conn)
+  replace_meta_table(meta_table, conn = conn)
 }
 
 data_column_has_meta <- function(x) {
@@ -111,21 +110,19 @@ meta_column_meta <- function(column_name, table_name, conn) {
 }
 
 meta_data_column <- function (column_name, data, table_name, conn) {
-  
-  print(column_name)
-  print(data)
   data_column <- data[[column_name]]
   data_column_meta <- data_column_meta(data_column)
   meta_column_meta <- meta_column_meta(column_name, table_name, conn)
   
+  print(data_column_meta)
+  print(meta_column_meta)
   if(is.na(meta_column_meta)) {
     meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
-    row <- to_upper(meta_table$TableMeta) == to_upper(table_name)
-    row <- row & to_upper(meta_table$ColumnMeta) == to_upper(column_name)
+    row <- meta_table$TableMeta == to_upper(table_name) & 
+      meta_table$ColumnMeta == to_upper(column_name)
     meta_table$MetaMeta[row] <- data_column_meta
-    update_meta_table(meta_table, conn = conn)
-  }
-  if(!identical(data_column_meta, meta_column_meta)) {
+    replace_meta_table(meta_table, conn = conn)
+  } else if(!identical(data_column_meta, meta_column_meta)) {
     err(p0("data meta '", data_column_meta, "' for column '", column_name, 
            "' in table '", table_name, "' is inconsistent with meta '", 
            meta_column_meta, "'"))

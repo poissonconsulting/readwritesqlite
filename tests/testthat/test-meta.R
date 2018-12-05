@@ -39,16 +39,10 @@ test_that("meta handles logical", {
   
   local <- data.frame(z = c(TRUE, FALSE, NA))
   DBI::dbCreateTable(con, "local", local)
-  #  expect_identical(rws_write_sqlite(local), "local")
-  
-  #  meta <- rws_read_sqlite_meta()
-  #  expect_identical(meta, tibble::tibble(TableMeta = "LOCAL",
-  # ColumnMeta = "Z",
-  # MetaMeta = "class: logical",
-  # DescriptionMeta = NA_character_))
-  # 
-  #  remote <- rws_read_sqlite("local")
-  #  expect_identical(remote$local, tibble::as_tibble(local))
+  expect_identical(rws_write_sqlite(local), "local")
+  meta <- rws_read_sqlite_meta()
+  expect_identical(meta, tibble::tibble(TableMeta = "LOCAL",
+  ColumnMeta = "Z",
+  MetaMeta = "class: logical",
+  DescriptionMeta = NA_character_))
 })
-
-
