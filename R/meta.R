@@ -18,7 +18,10 @@ make_meta_data <- function(conn) {
     data.frame(TableMeta = y, ColumnMeta = x, stringsAsFactors = FALSE), 
     meta_data, table_names, SIMPLIFY = FALSE)
   meta_data$stringsAsFactors <- FALSE
-  do.call("rbind", meta_data)
+  meta_data <- do.call("rbind", meta_data)
+  meta_data$TableMeta <- to_upper(meta_data$TableMeta)
+  meta_data$ColumnMeta <- to_upper(meta_data$ColumnMeta)
+  meta_data
 }
 
 update_meta_table <- function(meta_data, conn) {

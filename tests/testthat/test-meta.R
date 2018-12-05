@@ -10,12 +10,12 @@ test_that("make_meta_data works", {
                    data.frame(TableMeta = character(0), ColumnMeta = character(0), 
                               stringsAsFactors = FALSE))
   expect_true(DBI::dbCreateTable(con, "loCal", local))
-  expect_identical(make_meta_data(con), data.frame(TableMeta = "loCal",
-                                                       ColumnMeta = "x",
+  expect_identical(make_meta_data(con), data.frame(TableMeta = "LOCAL",
+                                                       ColumnMeta = "X",
                                                        stringsAsFactors = FALSE))
   expect_true(DBI::dbCreateTable(con, "loCal2", local))
-  expect_identical(make_meta_data(con), data.frame(TableMeta = c("loCal", "loCal2"),
-                                                       ColumnMeta = c("x", "x"),
+  expect_identical(make_meta_data(con), data.frame(TableMeta = c("LOCAL", "LOCAL2"),
+                                                       ColumnMeta = c("X", "X"),
                                                        stringsAsFactors = FALSE))
 })
 
