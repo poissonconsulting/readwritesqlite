@@ -46,3 +46,21 @@ test_that("meta handles logical", {
   MetaMeta = "class: logical",
   DescriptionMeta = NA_character_))
 })
+
+test_that("meta handles all classes logical", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(logical = TRUE, date = as.Date("2000-01-01"),
+                      posixct = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"),
+                      units = units::as_units(10, "m"))
+  
+  expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
+  meta <- rws_read_sqlite_meta()
+  expect_identical(meta, tibble::tibble(TableMeta = rep("LOCAL", 4),
+  ColumnMeta = c("DATE", "LOGICAL", "POSIXCT", "UNITS"),
+  MetaMeta = c("class: Date", "class: logical", "tz: Etc/GMT+8", "units: m"),
+  DescriptionMeta = rep(NA_character_, 4)))
+})

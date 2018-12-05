@@ -28,6 +28,7 @@ replace_meta_table <- function(meta_data, conn) {
   meta_data$TableMeta <- to_upper(meta_data$TableMeta)
   meta_data$ColumnMeta <- to_upper(meta_data$ColumnMeta)
   delete_data(.meta_table_name, meta = FALSE, log = FALSE, conn = conn)
+  meta_data <- meta_data[order(meta_data$TableMeta, meta_data$ColumnMeta),] 
   write_data(meta_data, .meta_table_name, meta = FALSE, log = FALSE, conn = conn)
 }
 
@@ -82,9 +83,6 @@ data_column_meta <- function(x) {
   NA_character_
 }
 
-# else if (has_measurement_units(x)) {
-#    x %<>% deparse_measurement_units()
-  
 data_column_has_meta <- function(x) {
   !is.na(data_column_meta(x))
 }
