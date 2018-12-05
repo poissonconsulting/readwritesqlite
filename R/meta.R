@@ -31,7 +31,7 @@ replace_meta_table <- function(meta_data, conn) {
   write_data(meta_data, .meta_table_name, meta = FALSE, log = FALSE, conn = conn)
 }
 
-check_meta_table <- function(conn) {
+confrm_meta_table <- function(conn) {
   meta_schema <- meta_schema()
   if (!tables_exists(.meta_table_name, conn)) {
     dbExecute(conn, meta_schema)
@@ -60,13 +60,13 @@ check_meta_table <- function(conn) {
 #' rws_read_sqlite_meta(con)
 #' DBI::dbDisconnect(con)
 rws_read_sqlite_meta <- function(conn = getOption("rws.conn", NULL)) {
-  check_meta_table(conn)
+  confrm_meta_table(conn)
   data <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   as_conditional_tibble(data)
 }
 
 delete_meta_data <- function(table_name, conn) {
-  check_meta_table(conn)
+  confrm_meta_table(conn)
   table_name <- to_upper(table_name)
   meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- meta_table[meta_table$TableMeta != table_name,,drop = FALSE]
@@ -131,7 +131,7 @@ meta_data_column <- function (column_name, data, table_name, conn) {
 }
 
 write_meta_data <- function(data, table_name, conn) {
-  check_meta_table(conn)
+  confrm_meta_table(conn)
   data_has_meta <- vapply(data, FUN = data_column_has_meta, FUN.VALUE = TRUE)
   meta_has_meta <- meta_has_meta(table_name, conn)
   

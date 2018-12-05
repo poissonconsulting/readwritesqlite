@@ -12,7 +12,7 @@ log_schema <- function () {
   ));")
 }
 
-check_log_table <- function(conn) {
+confirm_log_table <- function(conn) {
   log_schema <- log_schema()
   if (!tables_exists(.log_table_name, conn)) {
     dbExecute(conn, log_schema)
@@ -25,7 +25,7 @@ check_log_table <- function(conn) {
 }
 
 log_command <- function(conn, table_name, command, nrow) {
-  check_log_table(conn)
+  confirm_log_table(conn)
   data <- data.frame(DateTimeUTCLog = sys_date_time_utc(),
                      UserLog = user(),
                      TableLog = to_upper(table_name),
@@ -48,7 +48,7 @@ log_command <- function(conn, table_name, command, nrow) {
 #' rws_read_sqlite_meta(con)
 #' DBI::dbDisconnect(con)
 rws_read_sqlite_log <- function(conn = getOption("rws.conn", NULL)) {
-  check_log_table(conn)
+  confirm_log_table(conn)
   data <- read_data(.log_table_name, meta = FALSE, conn = conn)
   data$DateTimeUTCLog <- as.POSIXct(data$DateTimeUTCLog, tz = "UTC")
   as_conditional_tibble(data)
