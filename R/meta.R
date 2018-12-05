@@ -73,11 +73,28 @@ delete_meta_data_table_name <- function(table_name, conn) {
   replace_meta_table(meta_table, conn = conn)
 }
 
-data_column_has_meta <- function(x) {
-  is.logical(x) || dttr::is.Date(x) || dttr::is.POSIXct(x) 
+data_column_meta <- function(x) {
+  if (is.logical(x)) return("class: logical")
+  if (is.Date(x)) return("class: Date")
+  if (is.POSIXct(x)) return(p("tz:", dttr::dtt_tz(x)))
+  return(NA_character_)
 }
 
-meta_has_meta <- function(table_name, conn) {
+data_column_has_meta <- function(x) {
+  !is.na(data_column_meta(x))
+}
+
+meta_table_column_meta <- function(column_name, table_name, conn) {
+  column_name <- to_upper(column_name)
+  table_name <- to_upper(table_name)
+  
+  meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- meta_table[meta_table$TableMeta == table_name,]
+  meta_table <- meta_table[meta_table$ColumnMeta == column_name,]
+  meta_table$MetaMeta
+}
+
+meta_table_has_meta <- function(table_name, conn) {
   table_name <- to_upper(table_name)
   meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- meta_table[meta_table$TableMeta == table_name,,drop = FALSE]
@@ -92,27 +109,10 @@ meta_has_meta <- function(table_name, conn) {
   has_meta
 }
 
-data_column_meta <- function(x) {
-  if (is.logical(x)) return("class: logical")
-  if (is.Date(x)) return("class: Date")
-  if (is.POSIXct(x)) return(p("tz:", dttr::dtt_tz(x)))
-  stop("unrecognized meta type")
-}
-
-meta_column_meta <- function(column_name, table_name, conn) {
-  column_name <- to_upper(column_name)
-  table_name <- to_upper(table_name)
-  
-  meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
-  meta_table <- meta_table[meta_table$TableMeta == table_name,]
-  meta_table <- meta_table[meta_table$ColumnMeta == column_name,]
-  meta_table$MetaMeta
-}
-
-meta_data_column <- function (column_name, data, table_name, conn) {
+write_meta_data_column <- function (column_name, data, table_name, conn) {
   data_column <- data[[column_name]]
   data_column_meta <- data_column_meta(data_column)
-  meta_column_meta <- meta_column_meta(column_name, table_name, conn)
+  meta_column_meta <- meta_table_column_meta(column_name, table_name, conn)
   
   print(data_column_meta)
   print(meta_column_meta)
@@ -133,7 +133,7 @@ meta_data_column <- function (column_name, data, table_name, conn) {
 write_meta_data <- function(data, table_name, conn) {
   confirm_meta_table(conn)
   data_has_meta <- vapply(data, FUN = data_column_has_meta, FUN.VALUE = TRUE)
-  meta_has_meta <- meta_has_meta(table_name, conn)
+  meta_has_meta <- meta_table_has_meta(table_name, conn)
   
   meta_mismatch <- !is.na(meta_has_meta) & data_has_meta != meta_has_meta
   if(any(meta_mismatch)) {
@@ -144,12 +144,12 @@ write_meta_data <- function(data, table_name, conn) {
   if(!any(data_has_meta)) return(data)
   
   columns <- names(data)[data_has_meta]
-  lapply(columns, meta_data_column, data = data, 
+  lapply(columns, write_meta_data_column, data = data, 
          table_name = table_name, conn = conn)
   data
 }
 
 read_meta_data <- function(data, table_name, conn) {
+  confirm_meta_table(conn)
   data
-  
 }
