@@ -3,11 +3,11 @@ write_sqlite_data <- function(data, table_name, conn, exists, delete, meta,
   if(isFALSE(exists) || (is.na(exists) && !tables_exists(table_name, conn))) 
     create_table(data, table_name, log = log, conn = conn)
   
-  if(delete) delete_data(table_name, log = log, meta = meta, conn = conn)
+  if(delete) delete_data(table_name, meta = meta, log = log, conn = conn)
   
   data <- check_data_table(data, table_name, conn = conn)
 
-  write_data(data, table_name, log = log, meta = meta, conn = conn)
+  write_data(data, table_name, meta = meta, log = log, conn = conn)
 }
 
 #' Write to a SQLite Database

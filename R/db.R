@@ -20,7 +20,7 @@ create_table <- function(data, table_name, log, conn) {
   data
 }
 
-write_data <- function(data, table_name, log, meta, conn) {
+write_data <- function(data, table_name, meta, log, conn) {
   if(meta) data <- write_meta_data(data, table_name = table_name, conn = conn)
   if (nrow(data)) {
     DBI::dbAppendTable(conn, table_name, data)
@@ -29,7 +29,7 @@ write_data <- function(data, table_name, log, meta, conn) {
   data
 }
 
-delete_data <- function(table_name, log, meta, conn) {
+delete_data <- function(table_name, meta, log, conn) {
   sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
   query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
   nrow <- dbExecute(conn, p0("DELETE FROM ",  table_name))

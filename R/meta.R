@@ -27,8 +27,8 @@ make_meta_data <- function(conn) {
 replace_meta_table <- function(meta_data, conn) {
   meta_data$TableMeta <- to_upper(meta_data$TableMeta)
   meta_data$ColumnMeta <- to_upper(meta_data$ColumnMeta)
-  delete_data(.meta_table_name, log = FALSE, meta = FALSE, conn = conn)
-  write_data(meta_data, .meta_table_name, log = FALSE, meta = FALSE, conn = conn)
+  delete_data(.meta_table_name, meta = FALSE, log = FALSE, conn = conn)
+  write_data(meta_data, .meta_table_name, meta = FALSE, log = FALSE, conn = conn)
 }
 
 check_meta_table <- function(conn) {
@@ -152,4 +152,3 @@ write_meta_data <- function(data, table_name, conn) {
 read_meta_data <- function(data, table_name, conn) {
   data
 }
-
