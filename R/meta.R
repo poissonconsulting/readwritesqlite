@@ -28,7 +28,7 @@ replace_meta_table <- function(meta_data, conn) {
   meta_data$TableMeta <- to_upper(meta_data$TableMeta)
   meta_data$ColumnMeta <- to_upper(meta_data$ColumnMeta)
   delete_data(.meta_table_name, log = FALSE, meta = FALSE, conn = conn)
-  append_data(meta_data, .meta_table_name, log = FALSE, conn = conn)
+  write_data(meta_data, .meta_table_name, log = FALSE, meta = FALSE, conn = conn)
 }
 
 check_meta_table <- function(conn) {
@@ -41,7 +41,7 @@ check_meta_table <- function(conn) {
     if(!identical(schema, meta_schema))
       err("table '", .meta_table_name, "' has an invalid schema")
   }
-  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_data <- make_meta_data(conn)
   meta_data <- merge(meta_data, meta_table, all.x = TRUE,
                      by = c("TableMeta", "ColumnMeta"))
@@ -61,14 +61,14 @@ check_meta_table <- function(conn) {
 #' DBI::dbDisconnect(con)
 rws_read_sqlite_meta <- function(conn = getOption("rws.conn", NULL)) {
   check_meta_table(conn)
-  data <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  data <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   as_conditional_tibble(data)
 }
 
 delete_meta_data <- function(table_name, conn) {
   check_meta_table(conn)
   table_name <- to_upper(table_name)
-  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- meta_table[meta_table$TableMeta != table_name,,drop = FALSE]
   replace_meta_table(meta_table, conn = conn)
 }
@@ -79,11 +79,11 @@ data_column_has_meta <- function(x) {
 
 meta_has_meta <- function(table_name, conn) {
   table_name <- to_upper(table_name)
-  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- meta_table[meta_table$TableMeta == table_name,,drop = FALSE]
   has_meta <- !is.na(meta_table$MetaMeta)
   
-  data <- read_table(table_name, meta = FALSE, conn = conn)
+  data <- read_data(table_name, meta = FALSE, conn = conn)
   if(!nrow(data)) has_meta[!has_meta] <- NA
   names(has_meta) <- meta_table$ColumnMeta
   data_names <- to_upper(names(data))
@@ -103,7 +103,7 @@ meta_column_meta <- function(column_name, table_name, conn) {
   column_name <- to_upper(column_name)
   table_name <- to_upper(table_name)
   
-  meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- meta_table[meta_table$TableMeta == table_name,]
   meta_table <- meta_table[meta_table$ColumnMeta == column_name,]
   meta_table$MetaMeta
@@ -117,7 +117,7 @@ meta_data_column <- function (column_name, data, table_name, conn) {
   print(data_column_meta)
   print(meta_column_meta)
   if(is.na(meta_column_meta)) {
-    meta_table <- read_table(.meta_table_name, meta = FALSE, conn = conn)
+    meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
     row <- meta_table$TableMeta == to_upper(table_name) & 
       meta_table$ColumnMeta == to_upper(column_name)
     meta_table$MetaMeta[row] <- data_column_meta

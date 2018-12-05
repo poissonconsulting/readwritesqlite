@@ -32,7 +32,8 @@ log_command <- function(conn, table_name, command, nrow) {
                      CommandLog = command,
                      NRowLog = nrow,
                      stringsAsFactors = FALSE)
-  append_data(data, table_name = .log_table_name, log = FALSE, conn = conn)
+  write_data(data, table_name = .log_table_name, log = FALSE, meta = FALSE, 
+             conn = conn)
 }
 
 #' Read Log Data Table from SQLite Database
@@ -48,7 +49,7 @@ log_command <- function(conn, table_name, command, nrow) {
 #' DBI::dbDisconnect(con)
 rws_read_sqlite_log <- function(conn = getOption("rws.conn", NULL)) {
   check_log_table(conn)
-  data <- read_table(.log_table_name, meta = FALSE, conn = conn)
+  data <- read_data(.log_table_name, meta = FALSE, conn = conn)
   data$DateTimeUTCLog <- as.POSIXct(data$DateTimeUTCLog, tz = "UTC")
   as_conditional_tibble(data)
 }

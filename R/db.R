@@ -1,17 +1,17 @@
-read_table <- function(table_name, meta, conn) {
-  data <- DBI::dbReadTable(conn, table_name)
-  if(meta) data <- read_meta_data(data, table_name, conn)
-  data
-}
-
 column_names <- function(table_name, conn) {
   DBI::dbListFields(conn, table_name)
 }
 
 table_names <- function(conn) {
   tables <- DBI::dbListTables(conn)
-  tables <- tables[!tables %in% c(.log_table_name, .meta_table_name)]
+  reserved <- to_upper(c(.log_table_name, .meta_table_name))
+  tables <- tables[!to_upper(tables) %in% reserved]
   tables
+}
+
+tables_exists <- function(table_names, conn) {
+  tables <- DBI::dbListTables(conn)
+  to_upper(table_names) %in% to_upper(tables)
 }
 
 create_table <- function(data, table_name, log, conn) {
@@ -20,7 +20,8 @@ create_table <- function(data, table_name, log, conn) {
   data
 }
 
-append_data <- function(data, table_name, log, conn) {
+write_data <- function(data, table_name, log, meta, conn) {
+  if(meta) data <- write_meta_data(data, table_name = table_name, conn = conn)
   if (nrow(data)) {
     DBI::dbAppendTable(conn, table_name, data)
     if(log) log_command(conn, table_name, command = "INSERT", nrow = nrow(data))
@@ -36,9 +37,10 @@ delete_data <- function(table_name, log, meta, conn) {
   if(meta) delete_meta_data(table_name, conn)
 }
 
-tables_exists <- function(table_names, conn) {
-  tables <- DBI::dbListTables(conn)
-  to_upper(table_names) %in% to_upper(tables)
+read_data <- function(table_name, meta, conn) {
+  data <- DBI::dbReadTable(conn, table_name)
+  if(meta) data <- read_meta_data(data, table_name, conn)
+  data
 }
 
 table_schema <- function(table_name, conn) {

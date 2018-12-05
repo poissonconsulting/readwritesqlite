@@ -1,5 +1,5 @@
 read_sqlite_data <- function(table_name, conn, meta) {
-  data <- read_table(table_name, meta = meta, conn = conn)
+  data <- read_data(table_name, meta = meta, conn = conn)
   as_conditional_tibble(data)
 }
 
