@@ -14,6 +14,12 @@ tables_exists <- function(table_names, conn) {
   to_upper(table_names) %in% to_upper(tables)
 }
 
+nrows_table <- function(table_name, conn) {
+  nrows <- DBI::dbGetQuery(conn, p0("SELECT COUNT(*) FROM ", table_name, ";"))
+  nrows <- nrows[1,1]
+  nrows
+}
+
 create_table <- function(data, table_name, log, conn) {
   DBI::dbCreateTable(conn, table_name, data)
   if(log) log_command(conn, table_name, command = "CREATE", nrow = 0L)

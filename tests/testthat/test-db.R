@@ -1,5 +1,16 @@
 context("db")
 
+test_that("nrows_table", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  
+  local <- data.frame(x = as.character(1:3))
+  expect_true(DBI::dbCreateTable(con, "local", local))
+  expect_identical(nrows_table("local", con), 0L)
+  DBI::dbWriteTable(con, "local", local, append = TRUE)
+  expect_identical(nrows_table("local", con), 3L)
+})
+
 test_that("unquoted table names case insensitive in RSQLite", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))

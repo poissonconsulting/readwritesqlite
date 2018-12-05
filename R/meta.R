@@ -66,6 +66,20 @@ rws_read_sqlite_meta <- function(conn = getOption("rws.conn", NULL)) {
   as_conditional_tibble(data)
 }
 
+data_column_meta <- function(column) {
+  if (is.logical(column)) return("class: logical")
+  if (is.Date(column)) return("class: Date")
+  if (is.POSIXct(column)) return(p("tz:", dttr::dtt_tz(column)))
+  if (is.sfc(column)) return(p("proj:", sf::st_crs(column)$proj4string))
+  if (is.units(column)) return(p("units:", units::deparse_unit(column)))
+  NA_character_
+}
+
+data_meta <- function(data) {
+  colnames(data) <- to_upper(colnames(data))
+  vapply(data, FUN = data_column_meta, FUN.VALUE = "", USE.NAMES = TRUE)
+}
+
 delete_meta_data_table_name <- function(table_name, conn) {
   confirm_meta_table(conn)
   table_name <- to_upper(table_name)
@@ -74,83 +88,67 @@ delete_meta_data_table_name <- function(table_name, conn) {
   replace_meta_table(meta_table, conn = conn)
 }
 
-data_column_meta <- function(x) {
-  if (is.logical(x)) return("class: logical")
-  if (is.Date(x)) return("class: Date")
-  if (is.POSIXct(x)) return(p("tz:", dttr::dtt_tz(x)))
-  if (is.sfc(x)) return(p("proj:", sf::st_crs(x)$proj4string))
-  if (is.units(x)) return(p("units:", units::deparse_unit(x)))
-  NA_character_
-}
-
-data_column_has_meta <- function(x) {
-  !is.na(data_column_meta(x))
-}
-
-meta_table_column_meta <- function(column_name, table_name, conn) {
-  column_name <- to_upper(column_name)
+meta_table_meta <- function(table_name, conn) {
   table_name <- to_upper(table_name)
   
   meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_table <- meta_table[meta_table$TableMeta == table_name,]
-  meta_table <- meta_table[meta_table$ColumnMeta == column_name,]
-  meta_table$MetaMeta
+  meta_table_meta <- meta_table$MetaMeta
+  names(meta_table_meta) <- meta_table$ColumnMeta
+  meta_table_meta
 }
 
-meta_table_has_meta <- function(table_name, conn) {
+write_meta_data_column <- function (column, column_name, table_name, conn) {
+  meta <- data_column_meta(column)
+  column_name <- to_upper(column_name)
   table_name <- to_upper(table_name)
+  
   meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
-  meta_table <- meta_table[meta_table$TableMeta == table_name,,drop = FALSE]
-  has_meta <- !is.na(meta_table$MetaMeta)
-  
-  data <- read_data(table_name, meta = FALSE, conn = conn)
-  if(!nrow(data)) has_meta[!has_meta] <- NA
-  names(has_meta) <- meta_table$ColumnMeta
-  data_names <- to_upper(names(data))
-  has_meta <- has_meta[data_names]
-  names(has_meta) <- names(data)
-  has_meta
-}
-
-write_meta_data_column <- function (column_name, data, table_name, conn) {
-  data_column <- data[[column_name]]
-  data_column_meta <- data_column_meta(data_column)
-  meta_column_meta <- meta_table_column_meta(column_name, table_name, conn)
-  
-  if(is.na(meta_column_meta)) {
-    meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
-    row <- meta_table$TableMeta == to_upper(table_name) & 
-      meta_table$ColumnMeta == to_upper(column_name)
-    meta_table$MetaMeta[row] <- data_column_meta
-    replace_meta_table(meta_table, conn = conn)
-  } else if(!identical(data_column_meta, meta_column_meta)) {
-    err(p0("data meta '", data_column_meta, "' for column '", column_name, 
-           "' in table '", table_name, "' is inconsistent with meta '", 
-           meta_column_meta, "'"))
-  }
-  column_name
+  meta_table$MetaMeta[meta_table$TableMeta == table_name & 
+                        meta_table$ColumnMeta == column_name] <- meta
+  replace_meta_table(meta_table, conn = conn)
+  column
 }
 
 write_meta_data <- function(data, table_name, conn) {
   confirm_meta_table(conn)
-  data_has_meta <- vapply(data, FUN = data_column_has_meta, FUN.VALUE = TRUE)
-  meta_has_meta <- meta_table_has_meta(table_name, conn)
+  data_meta <- data_meta(data)
+  meta <- meta_table_meta(table_name, conn)[names(data_meta)]
   
-  meta_mismatch <- !is.na(meta_has_meta) & data_has_meta != meta_has_meta
-  if(any(meta_mismatch)) {
-    columns <- names(meta_mismatch[meta_mismatch])
+  data_meta[is.na(data_meta)] <- "NA"
+  if(nrows_table(table_name, conn)) meta[is.na(meta)] <- "NA"
+
+  mismatch <- !is.na(meta) & data_meta != meta
+  if(any(mismatch)) {
+    columns <- names(data_meta)[mismatch]
     err(co(columns, p0("the following column%s in table '", table_name, 
                        "' have inconsistent meta data: %c")))
   }
-  if(!any(data_has_meta)) return(data)
   
-  columns <- names(data)[data_has_meta]
-  lapply(columns, write_meta_data_column, data = data, 
-         table_name = table_name, conn = conn)
+  columns <- names(data_meta)[data_meta != "NA"]
+  if(!length(columns)) return(data)
+  old_colnames <- colnames(data)
+  colnames(data) <- to_upper(colnames(data))
+
+  data[columns] <- 
+    mapply(FUN = write_meta_data_column, data[columns], columns, 
+           MoreArgs = list(table_name = table_name, conn = conn), SIMPLIFY = FALSE)
+  colnames(data) <- old_colnames
   data
+}
+
+read_meta_data_column <- function(column, meta) {
+  # process meta here
+  column
 }
 
 read_meta_data <- function(data, table_name, conn) {
   confirm_meta_table(conn)
+  meta <- meta_table_meta(table_name, conn)
+  meta <- meta[!is.na(meta)]
+  if(!length(meta)) return(data)
+  
+  data[names(meta)] <- mapply(FUN = read_meta_data_column, data[names(meta)], 
+                              meta, SIMPLIFY = FALSE)
   data
 }
