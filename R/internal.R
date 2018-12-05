@@ -24,3 +24,5 @@ named_list <- function() {
 }
 
 is.sfc <- function(x) inherits(x, "sfc")
+
+is.units <- function(x) inherits(x, "units")

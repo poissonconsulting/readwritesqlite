@@ -12,7 +12,8 @@ Imports:
     dttr,
     DBI,
     RSQLite,
-    sf
+    sf,
+    units
 Suggests: 
     covr,
     testthat,

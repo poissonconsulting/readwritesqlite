@@ -78,6 +78,7 @@ data_column_meta <- function(x) {
   if (is.Date(x)) return("class: Date")
   if (is.POSIXct(x)) return(p("tz:", dttr::dtt_tz(x)))
   if (is.sfc(x)) return(p("proj:", sf::st_crs(x)$proj4string))
+  if (is.units(x)) return(p("units:", units::deparse_unit(x)))
   NA_character_
 }
 
