@@ -130,7 +130,7 @@ meta_data_column <- function (column_name, data, table_name, conn) {
   column_name
 }
 
-meta_data <- function(data, table_name, conn) {
+write_meta_data <- function(data, table_name, conn) {
   check_meta_table(conn)
   data_has_meta <- vapply(data, FUN = data_column_has_meta, FUN.VALUE = TRUE)
   meta_has_meta <- meta_has_meta(table_name, conn)
@@ -146,6 +146,10 @@ meta_data <- function(data, table_name, conn) {
   columns <- names(data)[data_has_meta]
   lapply(columns, meta_data_column, data = data, 
          table_name = table_name, conn = conn)
+  data
+}
+
+read_meta_data <- function(data, table_name, conn) {
   data
 }
 

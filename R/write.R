@@ -2,13 +2,13 @@ write_sqlite_data <- function(data, table_name, conn, exists, delete, meta,
                               log) {
   if(isFALSE(exists) || (is.na(exists) && !tables_exists(table_name, conn))) 
     create_table(data, table_name, log = log, conn = conn)
-
+  
   if(delete) delete_data(table_name, log = log, meta = meta, conn = conn)
   
   data <- check_data_table(data, table_name, conn = conn)
-
-  if(meta) meta_data(data, table_name, conn = conn)
-
+  
+  if(meta) write_meta_data(data, table_name, conn = conn)
+  
   append_data(data, table_name, log = log, conn = conn)
 }
 
@@ -56,11 +56,11 @@ rws_write_sqlite.data.frame <- function(
   check_unused(...)
   
   foreign_keys <- foreign_keys(conn)
-
+  
   dbBegin(conn, name = "rws_write_sqlite")
   on.exit(dbRollback(conn, name = "rws_write_sqlite"))
   on.exit(foreign_keys(conn, foreign_keys), add = TRUE)
-
+  
   write_sqlite_data(x, table_name, conn = conn, exists = exists, 
                     delete = delete, 
                     meta = meta, log = log)
@@ -91,7 +91,7 @@ rws_write_sqlite.list <- function(x, conn = getOption("rws.conn", NULL),
   check_flag(meta)
   check_flag(log)
   check_unused(...)
-
+  
   x <- x[vapply(x, is.data.frame, TRUE)]
   if(!length(x)) {
     wrn("x has no data frames")
@@ -105,11 +105,11 @@ rws_write_sqlite.list <- function(x, conn = getOption("rws.conn", NULL),
   dbBegin(conn, name = "rws_write_sqlite")
   on.exit(dbRollback(conn, name = "rws_write_sqlite"))
   on.exit(foreign_keys(conn, foreign_keys), add = TRUE)
-
+  
   mapply(write_sqlite_data, x, names(x),
          MoreArgs = list(conn = conn, exists = exists, delete = delete, 
                          meta = meta, log = log), SIMPLIFY = FALSE)
-
+  
   foreign_keys(conn, TRUE)
   if(!commit) return(invisible(names(x)))
   

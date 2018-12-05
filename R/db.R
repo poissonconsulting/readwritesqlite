@@ -1,6 +1,6 @@
 read_table <- function(table_name, meta, conn) {
   data <- DBI::dbReadTable(conn, table_name)
-  # need some meta processing here 
+  if(meta) data <- read_meta_data(data, table_name, conn)
   data
 }
 
