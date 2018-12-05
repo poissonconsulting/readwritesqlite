@@ -4,8 +4,8 @@ write_sqlite_data <- function(data, table_name, conn, exists, delete, meta,
     create_table(data, table_name, log = log, conn = conn)
   
   if(delete) delete_data(table_name, meta = meta, log = log, conn = conn)
-  
-  data <- check_data_table(data, table_name, conn = conn)
+
+  data <- validate_data(data, table_name, conn = conn)
 
   write_data(data, table_name, meta = meta, log = log, conn = conn)
 }
