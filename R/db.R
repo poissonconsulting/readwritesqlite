@@ -34,7 +34,7 @@ delete_data <- function(table_name, meta, log, conn) {
   query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
   nrow <- dbExecute(conn, p0("DELETE FROM ",  table_name))
   if(log) log_command(conn, table_name, command = "DELETE", nrow = nrow)
-  if(meta) delete_meta_data(table_name, conn)
+  if(meta) delete_meta_data_table_name(table_name, conn)
 }
 
 read_data <- function(table_name, meta, conn) {
