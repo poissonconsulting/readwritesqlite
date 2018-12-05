@@ -12,6 +12,7 @@ Imports:
     dttr,
     DBI,
     RSQLite,
+    sf
 Suggests: 
     covr,
     testthat,

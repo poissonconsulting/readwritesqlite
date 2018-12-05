@@ -22,3 +22,5 @@ as_conditional_tibble <- function(x) {
 named_list <- function() {
   list(x = 1)[integer(0)]
 }
+
+is.sfc <- function(x) inherits(x, "sfc")

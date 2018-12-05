@@ -77,9 +77,13 @@ data_column_meta <- function(x) {
   if (is.logical(x)) return("class: logical")
   if (is.Date(x)) return("class: Date")
   if (is.POSIXct(x)) return(p("tz:", dttr::dtt_tz(x)))
-  return(NA_character_)
+  if (is.sfc(x)) return(p("proj:", sf::st_crs(x)$proj4string))
+  NA_character_
 }
 
+# else if (has_measurement_units(x)) {
+#    x %<>% deparse_measurement_units()
+  
 data_column_has_meta <- function(x) {
   !is.na(data_column_meta(x))
 }
@@ -114,8 +118,6 @@ write_meta_data_column <- function (column_name, data, table_name, conn) {
   data_column_meta <- data_column_meta(data_column)
   meta_column_meta <- meta_table_column_meta(column_name, table_name, conn)
   
-  print(data_column_meta)
-  print(meta_column_meta)
   if(is.na(meta_column_meta)) {
     meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
     row <- meta_table$TableMeta == to_upper(table_name) & 
