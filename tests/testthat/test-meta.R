@@ -47,7 +47,7 @@ test_that("meta handles logical", {
   DescriptionMeta = NA_character_))
 })
 
-test_that("meta handles all classes logical", {
+test_that("meta handles all classes", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
@@ -63,4 +63,52 @@ test_that("meta handles all classes logical", {
   ColumnMeta = c("DATE", "LOGICAL", "POSIXCT", "UNITS"),
   MetaMeta = c("class: Date", "class: logical", "tz: Etc/GMT+8", "units: m"),
   DescriptionMeta = rep(NA_character_, 4)))
+})
+
+test_that("meta errors if meta and then no meta", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(z = c(TRUE, FALSE, NA))
+
+  expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
+  expect_identical(rws_write_sqlite(local), "local")
+  
+  local$z <- as.character(local$z)
+  expect_error(rws_write_sqlite(local), 
+"column 'z' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data")
+})
+
+test_that("meta errors if no meta and then meta", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(z = as.character(c(TRUE, FALSE, NA)))
+
+  expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
+  expect_identical(rws_write_sqlite(local), "local")
+  
+  local$z <- as.logical(local$z)
+  expect_error(rws_write_sqlite(local), 
+"column 'z' in table 'local' has 'class: logical' meta data for the input data but 'No' for the existing data")
+})
+
+test_that("meta errors if inconsistent meta", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(z = c(TRUE, FALSE, NA))
+
+  expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
+  expect_identical(rws_write_sqlite(local), "local")
+  
+  local$z <- Sys.Date()
+  expect_error(rws_write_sqlite(local), 
+"column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data")
 })

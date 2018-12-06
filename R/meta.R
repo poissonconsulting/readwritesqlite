@@ -76,7 +76,6 @@ data_column_meta <- function(column) {
 }
 
 data_meta <- function(data) {
-  colnames(data) <- to_upper(colnames(data))
   vapply(data, FUN = data_column_meta, FUN.VALUE = "", USE.NAMES = TRUE)
 }
 
@@ -110,30 +109,38 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
   column
 }
 
-write_meta_data <- function(data, table_name, conn) {
+validate_data_meta <- function(data, table_name, conn) {
   confirm_meta_table(conn)
   data_meta <- data_meta(data)
-  meta <- meta_table_meta(table_name, conn)[names(data_meta)]
+  meta <- meta_table_meta(table_name, conn)[to_upper(names(data_meta))]
   
-  data_meta[is.na(data_meta)] <- "NA"
-  if(nrows_table(table_name, conn)) meta[is.na(meta)] <- "NA"
+  data_meta[is.na(data_meta)] <- "No"
+  if(nrows_table(table_name, conn)) meta[is.na(meta)] <- "No"
 
   mismatch <- !is.na(meta) & data_meta != meta
   if(any(mismatch)) {
-    columns <- names(data_meta)[mismatch]
-    err(co(columns, p0("the following column%s in table '", table_name, 
-                       "' have inconsistent meta data: %c")))
-  }
+    wch <- which(mismatch)[1]
+    data_meta <- data_meta[wch]
+    meta <- meta[wch]
+    column_name <- names(data_meta)
   
-  columns <- names(data_meta)[data_meta != "NA"]
-  if(!length(columns)) return(data)
-  old_colnames <- colnames(data)
-  colnames(data) <- to_upper(colnames(data))
+    err("column '", column_name, "' in table '", table_name, 
+        "' has '", data_meta, "' meta data for the input data", 
+        " but '", meta, "' for the existing data")
+  }
+  data_meta[data_meta != "No"]
+}
 
-  data[columns] <- 
-    mapply(FUN = write_meta_data_column, data[columns], columns, 
+write_meta_data <- function(data, table_name, conn) {
+  data_meta <- validate_data_meta(data, table_name, conn)
+
+  if(!length(data_meta)) return(data)
+  
+  column_names <- names(data_meta)
+
+  data[column_names] <- 
+    mapply(FUN = write_meta_data_column, data[column_names], column_names, 
            MoreArgs = list(table_name = table_name, conn = conn), SIMPLIFY = FALSE)
-  colnames(data) <- old_colnames
   data
 }
 
