@@ -86,6 +86,12 @@ read_meta_data_column <- function(column, meta) {
     units <- sub("(^units:\\s*)(.*)", "\\2", meta)
     return(units::as_units(column, "m"))
   }
+#  if(grepl("^proj:", meta)) {
+#    proj <- sub("(^proj:\\s*)(.*)", "\\2", meta)
+#    print(proj)
+#    print(column)
+#    return(sf::st_set_crs(sf::st_as_sfc(column), proj))
+#  }
   column
 }
 
@@ -121,6 +127,8 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
   meta_table$MetaMeta[meta_table$TableMeta == table_name & 
                         meta_table$ColumnMeta == column_name] <- meta
   replace_meta_table(meta_table, conn = conn)
+  if(grepl("^proj:", meta))
+    column <- as.character(column)
   column
 }
 
@@ -131,7 +139,7 @@ validate_data_meta <- function(data, table_name, conn) {
   
   data_meta[is.na(data_meta)] <- "No"
   if(nrows_table(table_name, conn)) meta[is.na(meta)] <- "No"
-
+  
   mismatch <- !is.na(meta) & data_meta != meta
   if(any(mismatch)) {
     wch <- which(mismatch)[1]
@@ -148,11 +156,11 @@ validate_data_meta <- function(data, table_name, conn) {
 
 write_meta_data <- function(data, table_name, conn) {
   data_meta <- validate_data_meta(data, table_name, conn)
-
+  
   if(!length(data_meta)) return(data)
   
   column_names <- names(data_meta)
-
+  
   data[column_names] <- 
     mapply(FUN = write_meta_data_column, data[column_names], column_names, 
            MoreArgs = list(table_name = table_name, conn = conn), SIMPLIFY = FALSE)
@@ -168,7 +176,7 @@ read_meta_data <- function(data, table_name, conn) {
   
   meta <- meta[!is.na(meta)]
   if(!length(meta)) return(data)
-
+  
   data[names(meta)] <- mapply(FUN = read_meta_data_column, data[names(meta)], 
                               meta, SIMPLIFY = FALSE)
   data

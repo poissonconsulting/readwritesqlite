@@ -173,6 +173,7 @@ test_that("meta reads all classes", {
   local <- data.frame(logical = TRUE, date = as.Date("2000-01-01"),
                       posixct = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"),
                       units = units::as_units(10, "m"))
+#                      geometry = sf::st_sfc(sf::st_point(c(0,1)), crs = 4326))
   
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   remote <- rws_read_sqlite_table("local")
