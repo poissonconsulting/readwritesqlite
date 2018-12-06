@@ -135,7 +135,6 @@ test_that("fix meta inconsistent by deleting", {
 "column 'z' in table 'local' has 'class: logical' meta data for the input data but 'class: Date' for the existing data")
 })
 
-
 test_that("meta reads logical", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
@@ -149,3 +148,34 @@ test_that("meta reads logical", {
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
 })
+
+test_that("meta reads off", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(z = c(TRUE, FALSE, NA))
+
+  expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
+  
+  remote <- rws_read_sqlite_table("local", meta = FALSE)
+  local$z <- as.integer(local$z)
+  expect_identical(remote, tibble::as_tibble(local))
+})
+
+test_that("meta reads all classes", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(logical = TRUE, date = as.Date("2000-01-01"),
+                      posixct = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"),
+                      units = units::as_units(10, "m"))
+  
+  expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(remote, tibble::as_tibble(local))
+})
+

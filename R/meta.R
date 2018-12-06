@@ -76,7 +76,16 @@ data_column_meta <- function(column) {
 }
 
 read_meta_data_column <- function(column, meta) {
-  if(grepl(meta, "class: logical")) return(as.logical(column))
+  if(grepl("class:\\s*logical", meta)) return(as.logical(column))
+  if(grepl("class:\\s* Date", meta)) return(dttr::dtt_date(column))
+  if(grepl("^tz:", meta)) {
+    tz <- sub("(^tz:\\s*)(.*)", "\\2", meta)
+    return(dttr::dtt_date_time(column, tz = tz))
+  } 
+  if(grepl("^units:", meta)) {
+    units <- sub("(^units:\\s*)(.*)", "\\2", meta)
+    return(units::as_units(column, "m"))
+  }
   column
 }
 
