@@ -123,7 +123,7 @@ validate_data_meta <- function(data, table_name, conn) {
     data_meta <- data_meta[wch]
     meta <- meta[wch]
     column_name <- names(data_meta)
-  
+    
     err("column '", column_name, "' in table '", table_name, 
         "' has '", data_meta, "' meta data for the input data", 
         " but '", meta, "' for the existing data")

@@ -112,3 +112,25 @@ test_that("meta errors if inconsistent meta", {
   expect_error(rws_write_sqlite(local), 
 "column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data")
 })
+
+test_that("fix meta inconsistent by deleting", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(z = c(TRUE, FALSE, NA))
+
+  expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
+  expect_identical(rws_write_sqlite(local), "local")
+  
+  local$z <- Sys.Date()
+  expect_error(rws_write_sqlite(local), 
+"column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data")
+  expect_identical(rws_write_sqlite(local, delete = TRUE), "local")
+  expect_identical(rws_write_sqlite(local), "local")
+
+ local <- data.frame(z = c(TRUE, FALSE, NA))
+  expect_error(rws_write_sqlite(local), 
+"column 'z' in table 'local' has 'class: logical' meta data for the input data but 'class: Date' for the existing data")
+})
