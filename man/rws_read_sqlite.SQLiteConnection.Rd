@@ -2,22 +2,22 @@
 % Please edit documentation in R/read.R
 \name{rws_read_sqlite.SQLiteConnection}
 \alias{rws_read_sqlite.SQLiteConnection}
-\title{Read from a SQLite Database}
+\title{Read All Tables from a SQLite Database}
 \usage{
 \method{rws_read_sqlite}{SQLiteConnection}(x, meta = TRUE, ...)
 }
 \arguments{
-\item{x}{The object to write.}
+\item{x}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 
 \item{meta}{A flag specifying whether to preserve meta data.}
 
 \item{...}{Not used.}
 }
 \value{
-A named list of the data tables.
+A named list of the data frames.
 }
 \description{
-Read from a SQLite Database
+Read All Tables from a SQLite Database
 }
 \seealso{
 Other rws_read_sqlite: \code{\link{rws_read_sqlite.character}},

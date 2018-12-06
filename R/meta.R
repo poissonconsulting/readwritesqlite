@@ -75,6 +75,12 @@ data_column_meta <- function(column) {
   NA_character_
 }
 
+read_meta_data_column <- function(column, meta) {
+  if(grepl(meta, "class: logical")) return(as.logical(column))
+  column
+}
+
+
 data_meta <- function(data) {
   vapply(data, FUN = data_column_meta, FUN.VALUE = "", USE.NAMES = TRUE)
 }
@@ -144,17 +150,16 @@ write_meta_data <- function(data, table_name, conn) {
   data
 }
 
-read_meta_data_column <- function(column, meta) {
-  # process meta here
-  column
-}
-
 read_meta_data <- function(data, table_name, conn) {
   confirm_meta_table(conn)
   meta <- meta_table_meta(table_name, conn)
+  
+  meta <- meta[to_upper(names(data))]
+  names(meta) <- names(data)
+  
   meta <- meta[!is.na(meta)]
   if(!length(meta)) return(data)
-  
+
   data[names(meta)] <- mapply(FUN = read_meta_data_column, data[names(meta)], 
                               meta, SIMPLIFY = FALSE)
   data

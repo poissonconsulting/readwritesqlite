@@ -14,10 +14,11 @@ rws_read_sqlite <- function(x, ...) {
   UseMethod("rws_read_sqlite")
 }
 
-#' Read from a SQLite Database
+#' Read Tables from a SQLite Database
 #'
 #' @inheritParams rws_write_sqlite
-#' @return A data frame (tibble if tibble package is installed) of the table.
+#' @param x A character vector of table names.
+#' @return A named list of the data frames.
 #' @family rws_read_sqlite
 #' @export
 rws_read_sqlite.character <- function(x,
@@ -33,10 +34,11 @@ rws_read_sqlite.character <- function(x,
   datas
 }
 
-#' Read from a SQLite Database
+#' Read All Tables from a SQLite Database
 #'
 #' @inheritParams rws_write_sqlite
-#' @return A named list of the data tables.
+#' @param x A \code{\linkS4class{SQLiteConnection}} to a database.
+#' @return A named list of the data frames.
 #' @family rws_read_sqlite
 #' @export
 rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
@@ -47,4 +49,15 @@ rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
   table_names <- table_names(x)
   if(!length(table_names)) return(named_list())
   rws_read_sqlite(table_names, conn = x, meta = meta)
+}
+
+#' Read A Tables from a SQLite Database
+#'
+#' @inheritParams rws_write_sqlite
+#' @param x A string of the table name.
+#' @return A data frame of the table.
+#' @export
+rws_read_sqlite_table <- function(x, meta = TRUE, 
+                                  conn = getOption("rws.conn", NULL)) {
+  rws_read_sqlite(x, meta = meta, conn = conn)[[1]]
 }

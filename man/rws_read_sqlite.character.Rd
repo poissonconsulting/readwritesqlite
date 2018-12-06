@@ -2,13 +2,13 @@
 % Please edit documentation in R/read.R
 \name{rws_read_sqlite.character}
 \alias{rws_read_sqlite.character}
-\title{Read from a SQLite Database}
+\title{Read Tables from a SQLite Database}
 \usage{
 \method{rws_read_sqlite}{character}(x, conn = getOption("rws.conn",
   NULL), meta = TRUE, ...)
 }
 \arguments{
-\item{x}{The object to write.}
+\item{x}{A character vector of table names.}
 
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 
@@ -17,10 +17,10 @@
 \item{...}{Not used.}
 }
 \value{
-A data frame (tibble if tibble package is installed) of the table.
+A named list of the data frames.
 }
 \description{
-Read from a SQLite Database
+Read Tables from a SQLite Database
 }
 \seealso{
 Other rws_read_sqlite: \code{\link{rws_read_sqlite.SQLiteConnection}},
