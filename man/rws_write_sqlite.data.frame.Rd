@@ -4,14 +4,12 @@
 \alias{rws_write_sqlite.data.frame}
 \title{Write a data frame to a SQLite Database}
 \usage{
-\method{rws_write_sqlite}{data.frame}(x, conn = getOption("rws.conn",
-  NULL), exists = TRUE, delete = FALSE, commit = TRUE, meta = TRUE,
-  log = TRUE, table_name = substitute(x), ...)
+\method{rws_write_sqlite}{data.frame}(x, exists = TRUE, delete = FALSE,
+  commit = TRUE, meta = TRUE, log = TRUE,
+  conn = getOption("rws.conn", NULL), table_name = substitute(x), ...)
 }
 \arguments{
 \item{x}{The object to write.}
-
-\item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 
 \item{exists}{A flag specifying whether the table must already exist.}
 
@@ -24,6 +22,8 @@ inserting data.}
 \item{meta}{A flag specifying whether to preserve meta data.}
 
 \item{log}{A flag specifying whether to log the operations alterations.}
+
+\item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 
 \item{table_name}{A string of the table name.}
 

@@ -4,13 +4,11 @@
 \alias{rws_write_sqlite}
 \title{Write to a SQLite Database}
 \usage{
-rws_write_sqlite(x, conn = getOption("rws.conn", NULL), exists = TRUE,
-  delete = FALSE, commit = TRUE, meta = TRUE, log = TRUE, ...)
+rws_write_sqlite(x, exists = TRUE, delete = FALSE, commit = TRUE,
+  meta = TRUE, log = TRUE, conn = getOption("rws.conn", NULL), ...)
 }
 \arguments{
 \item{x}{The object to write.}
-
-\item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 
 \item{exists}{A flag specifying whether the table must already exist.}
 
@@ -23,6 +21,8 @@ inserting data.}
 \item{meta}{A flag specifying whether to preserve meta data.}
 
 \item{log}{A flag specifying whether to log the operations alterations.}
+
+\item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 
 \item{...}{Not used.}
 }

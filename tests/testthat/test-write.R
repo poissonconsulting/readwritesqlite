@@ -270,8 +270,8 @@ test_that("foreign keys switched off for two data frame", {
                   x INTEGER NOT NULL,
                 FOREIGN KEY (x) REFERENCES local (x))")
   
-  expect_false(foreign_keys(con))
+  expect_false(foreign_keys(TRUE, con))
   y <- list(local2 = data.frame(x = 1:3), local = data.frame(x = 1:4))
   expect_identical(rws_write_sqlite(y), c("local2", "local"))
-  expect_true(foreign_keys(con))
+  expect_true(foreign_keys(TRUE, con))
 })

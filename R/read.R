@@ -1,4 +1,4 @@
-read_sqlite_data <- function(table_name, conn, meta) {
+read_sqlite_data <- function(table_name, meta, conn) {
   data <- read_data(table_name, meta = meta, conn = conn)
   as_conditional_tibble(data)
 }
@@ -25,11 +25,11 @@ rws_read_sqlite.character <- function(x,
                                   conn = getOption("rws.conn", NULL),
                                   meta = TRUE, ...) {
   check_sqlite_connection(conn, connected = TRUE)
-  check_table_names(x, conn, exists = TRUE, delete = FALSE)
+  check_table_names(x, exists = TRUE, delete = FALSE, conn = conn)
   check_flag(meta)
   check_unused(...)
   
-  datas <- lapply(x, read_sqlite_data, conn = conn, meta = meta)
+  datas <- lapply(x, read_sqlite_data, meta = meta, conn = conn)
   names(datas) <- x
   datas
 }
@@ -48,7 +48,7 @@ rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
   
   table_names <- table_names(x)
   if(!length(table_names)) return(named_list())
-  rws_read_sqlite(table_names, conn = x, meta = meta)
+  rws_read_sqlite(table_names, meta = meta, conn = x)
 }
 
 #' Read A Tables from a SQLite Database

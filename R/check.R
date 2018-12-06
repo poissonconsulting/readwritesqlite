@@ -25,7 +25,7 @@ check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), e
   invisible(x)
 }
 
-check_table_name <- function(table_name, conn, exists) {
+check_table_name <- function(table_name, exists, conn) {
   check_string(table_name)
   
   if(to_upper(table_name) == to_upper(.log_table_name))
@@ -44,11 +44,11 @@ check_table_name <- function(table_name, conn, exists) {
   table_name
 }
 
-check_table_names <- function(table_names, conn, exists, delete) {
+check_table_names <- function(table_names, exists, delete, conn) {
   check_character(table_names)
   if(!length(table_names)) return(table_names)
   
-  vapply(table_names, check_table_name, "", conn = conn, exists = exists,
+  vapply(table_names, check_table_name, "", exists = exists, conn = conn,
          USE.NAMES = FALSE)
   
   if(isFALSE(exists) || isTRUE(delete)) {

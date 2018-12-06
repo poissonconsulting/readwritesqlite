@@ -24,7 +24,7 @@ confirm_log_table <- function(conn) {
   }
 }
 
-log_command <- function(conn, table_name, command, nrow) {
+log_command <- function(table_name, command, nrow, conn) {
   confirm_log_table(conn)
   data <- data.frame(DateTimeUTCLog = sys_date_time_utc(),
                      UserLog = user(),
