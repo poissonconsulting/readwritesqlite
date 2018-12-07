@@ -11,12 +11,12 @@ test_that("make_meta_data works", {
                               stringsAsFactors = FALSE))
   expect_true(DBI::dbCreateTable(con, "loCal", local))
   expect_identical(make_meta_data(con), data.frame(TableMeta = "LOCAL",
-                                                       ColumnMeta = "X",
-                                                       stringsAsFactors = FALSE))
+                                                   ColumnMeta = "X",
+                                                   stringsAsFactors = FALSE))
   expect_true(DBI::dbCreateTable(con, "loCal2", local))
   expect_identical(make_meta_data(con), data.frame(TableMeta = c("LOCAL", "LOCAL2"),
-                                                       ColumnMeta = c("X", "X"),
-                                                       stringsAsFactors = FALSE))
+                                                   ColumnMeta = c("X", "X"),
+                                                   stringsAsFactors = FALSE))
 })
 
 test_that("read_sqlite_meta creates table", {
@@ -42,9 +42,9 @@ test_that("meta handles logical", {
   expect_identical(rws_write_sqlite(local), "local")
   meta <- rws_read_sqlite_meta()
   expect_identical(meta, tibble::tibble(TableMeta = "LOCAL",
-  ColumnMeta = "Z",
-  MetaMeta = "class: logical",
-  DescriptionMeta = NA_character_))
+                                        ColumnMeta = "Z",
+                                        MetaMeta = "class: logical",
+                                        DescriptionMeta = NA_character_))
 })
 
 test_that("meta handles all classes", {
@@ -60,9 +60,9 @@ test_that("meta handles all classes", {
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   meta <- rws_read_sqlite_meta()
   expect_identical(meta, tibble::tibble(TableMeta = rep("LOCAL", 4),
-  ColumnMeta = c("DATE", "LOGICAL", "POSIXCT", "UNITS"),
-  MetaMeta = c("class: Date", "class: logical", "tz: Etc/GMT+8", "units: m"),
-  DescriptionMeta = rep(NA_character_, 4)))
+                                        ColumnMeta = c("DATE", "LOGICAL", "POSIXCT", "UNITS"),
+                                        MetaMeta = c("class: Date", "class: logical", "tz: Etc/GMT+8", "units: m"),
+                                        DescriptionMeta = rep(NA_character_, 4)))
 })
 
 test_that("meta errors if meta and then no meta", {
@@ -72,13 +72,13 @@ test_that("meta errors if meta and then no meta", {
   teardown(options(op))
   
   local <- data.frame(z = c(TRUE, FALSE, NA))
-
+  
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   expect_identical(rws_write_sqlite(local), "local")
   
   local$z <- as.character(local$z)
   expect_error(rws_write_sqlite(local), 
-"column 'z' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data")
+               "column 'z' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data")
 })
 
 test_that("meta errors if no meta and then meta", {
@@ -88,13 +88,13 @@ test_that("meta errors if no meta and then meta", {
   teardown(options(op))
   
   local <- data.frame(z = as.character(c(TRUE, FALSE, NA)))
-
+  
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   expect_identical(rws_write_sqlite(local), "local")
   
   local$z <- as.logical(local$z)
   expect_error(rws_write_sqlite(local), 
-"column 'z' in table 'local' has 'class: logical' meta data for the input data but 'No' for the existing data")
+               "column 'z' in table 'local' has 'class: logical' meta data for the input data but 'No' for the existing data")
 })
 
 test_that("meta errors if inconsistent meta", {
@@ -104,13 +104,13 @@ test_that("meta errors if inconsistent meta", {
   teardown(options(op))
   
   local <- data.frame(z = c(TRUE, FALSE, NA))
-
+  
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   expect_identical(rws_write_sqlite(local), "local")
   
   local$z <- Sys.Date()
   expect_error(rws_write_sqlite(local), 
-"column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data")
+               "column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data")
 })
 
 test_that("fix meta inconsistent by deleting", {
@@ -120,19 +120,19 @@ test_that("fix meta inconsistent by deleting", {
   teardown(options(op))
   
   local <- data.frame(z = c(TRUE, FALSE, NA))
-
+  
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   expect_identical(rws_write_sqlite(local), "local")
   
   local$z <- Sys.Date()
   expect_error(rws_write_sqlite(local), 
-"column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data")
+               "column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data")
   expect_identical(rws_write_sqlite(local, delete = TRUE), "local")
   expect_identical(rws_write_sqlite(local), "local")
-
- local <- data.frame(z = c(TRUE, FALSE, NA))
+  
+  local <- data.frame(z = c(TRUE, FALSE, NA))
   expect_error(rws_write_sqlite(local), 
-"column 'z' in table 'local' has 'class: logical' meta data for the input data but 'class: Date' for the existing data")
+               "column 'z' in table 'local' has 'class: logical' meta data for the input data but 'class: Date' for the existing data")
 })
 
 test_that("meta reads logical", {
@@ -142,7 +142,7 @@ test_that("meta reads logical", {
   teardown(options(op))
   
   local <- data.frame(z = c(TRUE, FALSE, NA))
-
+  
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   
   remote <- rws_read_sqlite_table("local")
@@ -156,7 +156,7 @@ test_that("meta reads off", {
   teardown(options(op))
   
   local <- data.frame(z = c(TRUE, FALSE, NA))
-
+  
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   
   remote <- rws_read_sqlite_table("local", meta = FALSE)
@@ -176,7 +176,10 @@ test_that("meta reads all classes", {
                       geometry = sf::st_sfc(sf::st_point(c(0,1)), crs = 4326))
   
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
-  readwritesqlite:::table_schema("local", con)
+  expect_identical(readwritesqlite:::table_schema("local", con),
+                   paste0("CREATE TABLE `local` (\n  `logical` INTEGER,\n  ",
+                          "`date` REAL,\n  `posixct` REAL,\n  `units` REAL,\n  ",
+                          "`geometry` BLOB\n)"))    
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
 })
@@ -202,10 +205,11 @@ test_that("meta logical logical different types", {
                   ztext TEXT,
                   znone NONE
               )")
-   
+  
   expect_identical(rws_write_sqlite(local), "local")
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
+  remote2 <- rws_read_sqlite_table("local", meta = FALSE)
 })
 
 test_that("meta Date different types", {
@@ -229,7 +233,7 @@ test_that("meta Date different types", {
                   ztext TEXT,
                   znone NONE
               )")
-   
+  
   expect_identical(rws_write_sqlite(local), "local")
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
@@ -258,7 +262,7 @@ test_that("meta POSIXct different types", {
                   ztext TEXT,
                   znone NONE
               )")
-   
+  
   expect_identical(rws_write_sqlite(local), "local")
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
@@ -269,9 +273,9 @@ test_that("meta units different types", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   z <- units::as_units(c(10, 11.5, NA), "m3")
-
+  
   local <- data.frame(
     zinteger = z,
     zreal = z,
@@ -286,7 +290,7 @@ test_that("meta units different types", {
                   ztext TEXT,
                   znone NONE
               )")
-   
+  
   expect_identical(rws_write_sqlite(local), "local")
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
@@ -297,11 +301,11 @@ test_that("meta sfc different types", {
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
   teardown(options(op))
-
+  
   z <- sf::st_sfc(c(sf::st_point(c(0,1)), 
                     sf::st_point(c(0,1)),
                     sf::st_point(c(0,1))
-                    ), crs = 4326)
+  ), crs = 4326)
   
   local <- data.frame(
     zinteger = z,
@@ -319,7 +323,7 @@ test_that("meta sfc different types", {
                   ztext TEXT,
                   znone NONE
               )")
-   
+  
   expect_identical(rws_write_sqlite(local), "local")
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
