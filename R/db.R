@@ -56,6 +56,12 @@ table_schema <- function(table_name, conn) {
   schema
 }
 
+table_info <- function(table_name, conn) {
+  query <- p0("PRAGMA table_info(", table_name, ");")
+  table_info <- DBI::dbGetQuery(conn, query)
+  table_info
+}
+
 foreign_keys <- function(on, conn) {
   old <- DBI::dbGetQuery(conn, "PRAGMA foreign_keys;")
   old <- as.logical(old[1,1])
