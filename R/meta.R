@@ -86,12 +86,10 @@ read_meta_data_column <- function(column, meta) {
     units <- sub("(^units:\\s*)(.*)", "\\2", meta)
     return(units::as_units(column, "m"))
   }
-#  if(grepl("^proj:", meta)) {
-#    proj <- sub("(^proj:\\s*)(.*)", "\\2", meta)
-#    print(proj)
-#    print(column)
-#    return(sf::st_set_crs(sf::st_as_sfc(column), proj))
-#  }
+ if(grepl("^proj:", meta)) {
+   proj <- sub("(^proj:\\s*)(.*)", "\\2", meta)
+   return(sf::st_set_crs(sf::st_as_sfc(column), proj))
+ }
   column
 }
 
@@ -128,7 +126,7 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
                         meta_table$ColumnMeta == column_name] <- meta
   replace_meta_table(meta_table, conn = conn)
   if(grepl("^proj:", meta))
-    column <- as.character(column)
+    column <- sf::st_as_binary(column, endian = "little")
   column
 }
 
