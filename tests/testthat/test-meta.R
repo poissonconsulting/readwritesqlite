@@ -354,4 +354,9 @@ test_that("meta sfc different types", {
   expect_identical(rws_write_sqlite(local), "local")
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
+  remote2 <- rws_read_sqlite_table("local", meta = FALSE)
+  expect_identical(vapply(remote2, is.blob, TRUE), 
+                   c(zinteger = TRUE, zreal = TRUE, znumeric = TRUE,
+                     ztext = FALSE, zblob = TRUE))
+  expect_identical(remote2$ztext, "MULTIPOINT (0 1, 0 1, 0 1)")
 })

@@ -127,11 +127,15 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
                         meta_table$ColumnMeta == column_name] <- meta
   replace_meta_table(meta_table, conn = conn)
   
+
   if(grepl("^units:", meta)) return(as.double(column))
-  if(grepl("^proj:", meta))
-    return(sf::st_as_binary(column, endian = "little"))
 
   is_text <- is_table_column_text(column_name, table_name, conn)
+
+  if(grepl("^proj:", meta)) {
+    if(is_text) return(sf::st_as_text(column))
+    return(sf::st_as_binary(column, endian = "little"))
+  }
 
   if(is_text) return(as.character(column))
   return(as.numeric(column))

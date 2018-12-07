@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9009</span>
       </span>
     </div>
 
@@ -106,9 +106,9 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for data.frame</span>
-<span class='fu'><a href='rws_write_sqlite.html'>rws_write_sqlite</a></span>(<span class='no'>x</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.conn"</span>,
-  <span class='kw'>NULL</span>), <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>table_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>x</span>), <span class='no'>...</span>)</pre>
+<span class='fu'><a href='rws_write_sqlite.html'>rws_write_sqlite</a></span>(<span class='no'>x</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.conn"</span>, <span class='kw'>NULL</span>), <span class='kw'>table_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>x</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -116,10 +116,6 @@
     <tr>
       <th>x</th>
       <td><p>The object to write.</p></td>
-    </tr>
-    <tr>
-      <th>conn</th>
-      <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
     </tr>
     <tr>
       <th>exists</th>
@@ -142,6 +138,10 @@ inserting data.</p></td>
     <tr>
       <th>log</th>
       <td><p>A flag specifying whether to log the operations alterations.</p></td>
+    </tr>
+    <tr>
+      <th>conn</th>
+      <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
     </tr>
     <tr>
       <th>table_name</th>
