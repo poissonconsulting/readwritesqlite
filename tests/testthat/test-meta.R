@@ -186,13 +186,24 @@ test_that("meta does logical different types", {
   op <- options(rws.conn = con)
   teardown(options(op))
   
-  local <- data.frame(z = c(TRUE, FALSE, NA))
+  z <- c(TRUE, FALSE, NA)
+  local <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    znone = z)
   
-  # dbSendQuery("CREATE TABLE local ")
-  # 
-  # expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
-  # 
-  # remote <- rws_read_sqlite_table("local")
-  # expect_identical(remote, tibble::as_tibble(local))
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  zinteger INTEGER,
+                  zreal REAL,
+                  znumeric NUMERIC,
+                  ztext TEXT,
+                  znone NONE
+              )")
+   
+  expect_identical(rws_write_sqlite(local), "local")
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(remote, tibble::as_tibble(local))
 })
 
