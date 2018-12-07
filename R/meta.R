@@ -76,18 +76,19 @@ data_column_meta <- function(column) {
 }
 
 read_meta_data_column <- function(column, meta) {
-  if(grepl("class:\\s*logical", meta)) {
-    column <- as.numeric(column)
+  if(grepl("^class:\\s*logical$", meta)) {
+    column <- as.double(column)
     return(as.logical(column))
   }
-  if(grepl("class:\\s* Date", meta)) return(dttr::dtt_date(column))
+  if(grepl("^class:\\s* Date$", meta)) return(dttr::dtt_date(column))
   if(grepl("^tz:", meta)) {
     tz <- sub("(^tz:\\s*)(.*)", "\\2", meta)
     return(dttr::dtt_date_time(column, tz = tz))
   } 
   if(grepl("^units:", meta)) {
     units <- sub("(^units:\\s*)(.*)", "\\2", meta)
-    return(units::as_units(column, "m"))
+    column <- as.double(column)
+    return(units::as_units(column, units))
   }
  if(grepl("^proj:", meta)) {
    proj <- sub("(^proj:\\s*)(.*)", "\\2", meta)
@@ -128,8 +129,18 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
   meta_table$MetaMeta[meta_table$TableMeta == table_name & 
                         meta_table$ColumnMeta == column_name] <- meta
   replace_meta_table(meta_table, conn = conn)
+  
+  if(grepl("^class: logical", meta))
+    return(as.integer(column))
+  if(grepl("^class: Date", meta))
+    return(as.character(column))
+  if(grepl("^tz:", meta))
+    return(as.character(column))
+  if(grepl("^units:", meta))
+    return(as.double(column))
   if(grepl("^proj:", meta))
-    column <- sf::st_as_binary(column, endian = "little")
+    return(sf::st_as_binary(column, endian = "little"))
+  
   column
 }
 

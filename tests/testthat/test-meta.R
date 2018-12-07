@@ -176,11 +176,12 @@ test_that("meta reads all classes", {
                       geometry = sf::st_sfc(sf::st_point(c(0,1)), crs = 4326))
   
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
+  readwritesqlite:::table_schema("local", con)
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
 })
 
-test_that("meta does logical different types", {
+test_that("meta logical logical different types", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
@@ -207,3 +208,119 @@ test_that("meta does logical different types", {
   expect_identical(remote, tibble::as_tibble(local))
 })
 
+test_that("meta Date different types", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  z <- as.Date(c("2001-02-03", "2002-03-04", NA))
+  local <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    znone = z)
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  zinteger INTEGER,
+                  zreal REAL,
+                  znumeric NUMERIC,
+                  ztext TEXT,
+                  znone NONE
+              )")
+   
+  expect_identical(rws_write_sqlite(local), "local")
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(remote, tibble::as_tibble(local))
+})
+
+test_that("meta POSIXct different types", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  z <- as.POSIXct(c(
+    "2001-01-02 03:04:05", "2007-08-09 10:11:12", NA), tz = "Etc/GMT+8")
+  
+  local <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    znone = z)
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  zinteger INTEGER,
+                  zreal REAL,
+                  znumeric NUMERIC,
+                  ztext TEXT,
+                  znone NONE
+              )")
+   
+  expect_identical(rws_write_sqlite(local), "local")
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(remote, tibble::as_tibble(local))
+})
+
+test_that("meta units different types", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+
+  z <- units::as_units(c(10, 11.5, NA), "m3")
+
+  local <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    znone = z)
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  zinteger INTEGER,
+                  zreal REAL,
+                  znumeric NUMERIC,
+                  ztext TEXT,
+                  znone NONE
+              )")
+   
+  expect_identical(rws_write_sqlite(local), "local")
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(remote, tibble::as_tibble(local))
+})
+
+test_that("meta sfc different types", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+
+  z <- sf::st_sfc(c(sf::st_point(c(0,1)), 
+                    sf::st_point(c(0,1)),
+                    sf::st_point(c(0,1))
+                    ), crs = 4326)
+  
+  local <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    znone = z)
+  
+  colnames(local) <- c("zinteger", "zreal", "znumeric", "ztext", "znone")
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  zinteger INTEGER,
+                  zreal REAL,
+                  znumeric NUMERIC,
+                  ztext TEXT,
+                  znone NONE
+              )")
+   
+  expect_identical(rws_write_sqlite(local), "local")
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(remote, tibble::as_tibble(local))
+})
