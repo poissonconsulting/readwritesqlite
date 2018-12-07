@@ -196,20 +196,26 @@ test_that("meta logical logical different types", {
     zreal = z,
     znumeric = z,
     ztext = z,
-    znone = z)
+    zblob = z)
   
   DBI::dbGetQuery(con, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
                   ztext TEXT,
-                  znone NONE
+                  zblob BLOB
               )")
   
   expect_identical(rws_write_sqlite(local), "local")
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- rws_read_sqlite_table("local", meta = FALSE)
+  expect_identical(remote2, tibble::tibble(
+    zinteger = c(1L, 0L, NA),
+    zreal = c(1, 0, NA),
+    znumeric = c(1L, 0L, NA),
+    ztext = c("TRUE", "FALSE", NA),
+    zblob = c(1, 0, NA)))
 })
 
 test_that("meta Date different types", {
@@ -224,19 +230,26 @@ test_that("meta Date different types", {
     zreal = z,
     znumeric = z,
     ztext = z,
-    znone = z)
+    zblob = z)
   
   DBI::dbGetQuery(con, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
                   ztext TEXT,
-                  znone NONE
+                  zblob BLOB
               )")
   
   expect_identical(rws_write_sqlite(local), "local")
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
+  remote2 <- rws_read_sqlite_table("local", meta = FALSE)
+  expect_identical(remote2, tibble::tibble(
+    zinteger = c(11356L, 11750L, NA),
+    zreal = c(11356, 11750, NA),
+    znumeric = c(11356L, 11750L, NA),
+    ztext = c("2001-02-03", "2002-03-04", NA),
+    zblob = c(11356, 11750, NA)))
 })
 
 test_that("meta POSIXct different types", {
@@ -253,19 +266,26 @@ test_that("meta POSIXct different types", {
     zreal = z,
     znumeric = z,
     ztext = z,
-    znone = z)
+    zblob = z)
   
   DBI::dbGetQuery(con, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
                   ztext TEXT,
-                  znone NONE
+                  zblob BLOB
               )")
   
   expect_identical(rws_write_sqlite(local), "local")
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
+  remote2 <- rws_read_sqlite_table("local", meta = FALSE)
+  expect_identical(remote2, tibble::tibble(
+    zinteger = c(978433445L, 1186683072L, NA),
+    zreal = c(978433445, 1186683072, NA),
+    znumeric = c(978433445L, 1186683072L, NA),
+    ztext = c("2001-01-02 03:04:05", "2007-08-09 10:11:12", NA),
+    zblob = c(978433445, 1186683072, NA)))
 })
 
 test_that("meta units different types", {
@@ -281,19 +301,26 @@ test_that("meta units different types", {
     zreal = z,
     znumeric = z,
     ztext = z,
-    znone = z)
+    zblob = z)
   
   DBI::dbGetQuery(con, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
                   ztext TEXT,
-                  znone NONE
+                  zblob NONE
               )")
   
   expect_identical(rws_write_sqlite(local), "local")
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
+  remote2 <- rws_read_sqlite_table("local", meta = FALSE)
+  expect_identical(remote2, tibble::tibble(
+    zinteger = c(10, 11.5, NA),
+    zreal = c(10, 11.5, NA),
+    znumeric = c(10, 11.5, NA),
+    ztext = c("10.0", "11.5", NA),
+    zblob = c(10, 11.5, NA)))
 })
 
 test_that("meta sfc different types", {
@@ -312,16 +339,16 @@ test_that("meta sfc different types", {
     zreal = z,
     znumeric = z,
     ztext = z,
-    znone = z)
+    zblob = z)
   
-  colnames(local) <- c("zinteger", "zreal", "znumeric", "ztext", "znone")
+  colnames(local) <- c("zinteger", "zreal", "znumeric", "ztext", "zblob")
   
   DBI::dbGetQuery(con, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
                   ztext TEXT,
-                  znone NONE
+                  zblob BLOB
               )")
   
   expect_identical(rws_write_sqlite(local), "local")

@@ -64,4 +64,7 @@ test_that("table_info", {
   expect_identical(table_info$type, c("INTEGER", "REAL", "REAL", "REAL", "BLOB"))
   expect_identical(table_info$notnull, rep(0L, 5))
   expect_identical(table_info$pk, rep(0L, 5))
+  
+  expect_identical(table_column_type("GEOMETRY", "local", con), "BLOB")
+  
 })

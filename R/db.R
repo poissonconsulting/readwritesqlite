@@ -62,6 +62,15 @@ table_info <- function(table_name, conn) {
   table_info
 }
 
+table_column_type <- function(column_name, table_name, conn) {
+  table_info <- table_info(table_name, conn)
+  table_info$type[to_upper(table_info$name) == to_upper(column_name)]
+}
+
+is_table_column_text <- function(column_name, table_name, conn) {
+  table_column_type(column_name, table_name, conn) == "TEXT"
+}
+
 foreign_keys <- function(on, conn) {
   old <- DBI::dbGetQuery(conn, "PRAGMA foreign_keys;")
   old <- as.logical(old[1,1])
