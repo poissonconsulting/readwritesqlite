@@ -20,6 +20,9 @@ validate_data <- function(data, table_name, conn) {
            "column%s in table '", table_name, "': %c"), conjunction = "and"))
   }
   
+  pk <- table_info$name[table_info$pk != 0L]
+  check_key(data, key = pk, x_name = p0("table '", table_name, "'"))
+  
   names(data) <- data_names[names(data)]
   data <- convert_data(data)
   data
