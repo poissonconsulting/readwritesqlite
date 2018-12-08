@@ -27,3 +27,8 @@ is.sfc <- function(x) inherits(x, "sfc")
 
 is.units <- function(x) inherits(x, "units")
 is.blob <- function(x) inherits(x, "blob")
+
+any_is_na <- function(x) {
+  any(is.na(x))
+}
+  
