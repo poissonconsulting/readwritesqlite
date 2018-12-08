@@ -96,7 +96,7 @@ test_that("rws_write_sqlite.data.frame checks all columns present", {
   DBI::dbCreateTable(con, "local", local)
   local <- local[1]
   expect_error(rws_write_sqlite(local),
-               "data column names must include 'x' and 'select'")
+               "data column names must include 'X' and 'SELECT'")
 })
 
 test_that("rws_write_sqlite.data.frame corrects column order", {
@@ -112,6 +112,19 @@ test_that("rws_write_sqlite.data.frame corrects column order", {
   expect_identical(rws_write_sqlite(local[c(1,1,2)], table_name = "local"), "local")
   remote <- DBI::dbReadTable(con, "local")
   expect_identical(remote, rbind(local, local, local))
+})
+
+test_that("rws_write_sqlite.data.frame is case insensitive", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(x = as.character(1:3), seLect = 1:3)
+  DBI::dbCreateTable(con, "local", local)
+  colnames(local) <- toupper(colnames(local))
+  
+  expect_identical(rws_write_sqlite(local), "local")
 })
 
 test_that("rws_write_sqlite.data.frame can delete", {
