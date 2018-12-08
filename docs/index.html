@@ -63,7 +63,61 @@
 <div id="readwritesqlite" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#readwritesqlite" class="anchor"></a>readwritesqlite</h1></div>
-<p>The goal of <code>readwritesqlite</code> is to enhance data reading and writing for SQLiteConnection objects.</p>
+<p>SQLite databases are a simple, powerful way to validate, query and store related data frames particularly when used with the RSQLite package. However, current solutions do not preserve meta data, log changes or provide particularly useful error messages.</p>
+<div id="what-it-does" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-it-does" class="anchor"></a>What It Does</h2>
+<p><code>readwritesqlite</code> is an R package that by default automatically</p>
+<ul>
+<li>preserves
+<ul>
+<li>the time zone for POSIXct columns</li>
+<li>the projection for sfc columns</li>
+<li>the units for unit columns</li>
+<li>the class for logical and Date columns</li>
+</ul>
+</li>
+<li>logs
+<ul>
+<li>the date time</li>
+<li>system user</li>
+<li>number of rows deleted, or inserted by table</li>
+</ul>
+</li>
+<li>provides informative error messages if
+<ul>
+<li>columns are missing (extra columns are silently ignored and the remaining columns correctly ordered)</li>
+<li>NOT NULL columns contain missing values</li>
+<li>PRIMARY KEY column values in the input data are not unique</li>
+</ul>
+</li>
+</ul>
+<p><code>readwritesqlite</code> also allows the user to</p>
+<ul>
+<li>read and write lists of data frames</li>
+<li>delete existing data before writing</li>
+<li>confirm data can be written without commiting any changes</li>
+</ul>
+</div>
+<div id="what-it-doesnt-do" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-it-doesnt-do" class="anchor"></a>What It Doesn’t Do</h2>
+<p><code>readwritesqlite</code> does not currently</p>
+<ul>
+<li>preserve
+<ul>
+<li>factor levels (because in our experience they invariably end up changing)</li>
+</ul>
+</li>
+<li>override the default error messages for violations of
+<ul>
+<li>CHECK constraints</li>
+<li>UNIQUE constraints</li>
+<li>FOREIGN KEY constraints (although foreign key constraints are enforced when writing)</li>
+</ul>
+</li>
+</ul>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
