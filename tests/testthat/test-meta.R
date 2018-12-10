@@ -397,6 +397,42 @@ test_that("meta factor different types", {
     zblob = c(2L, 1L, NA)))
 })
 
+test_that("meta ordered different types", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  z <- ordered(c("x", "y", NA), levels = c("y", "x"))
+  local <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    zblob = z)
+  
+  colnames(local) <- c("zinteger", "zreal", "znumeric", "ztext", "zblob")
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  zinteger INTEGER,
+                  zreal REAL,
+                  znumeric NUMERIC,
+                  ztext TEXT,
+                  zblob BLOB
+              )")
+  
+  expect_identical(rws_write_sqlite(local), "local")
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(remote, tibble::as_tibble(local))
+  remote2 <- rws_read_sqlite_table("local", meta = FALSE)
+  expect_identical(remote2, tibble::tibble(
+    zinteger = c(2L, 1L, NA),
+    zreal = c(2, 1, NA),
+    znumeric = c(2L, 1L, NA),
+    ztext = c("x", "y", NA),
+    zblob = c(2L, 1L, NA)))
+})
+
 test_that("read_meta_levels", {
   expect_identical(read_meta_levels("factor:  '1', '3'"), c("1", "3"))
   expect_identical(read_meta_levels("ordered:'4'"), c("4"))
