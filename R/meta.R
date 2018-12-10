@@ -101,13 +101,13 @@ read_meta_data_column <- function(column, meta) {
     proj <- sub("(^proj:\\s*)(.*)", "\\2", meta)
     return(sf::st_set_crs(sf::st_as_sfc(column), proj))
   }
-  if(grepl("^(ordered|factor):", meta)) {
-    fun <- if(grepl("^ordered", meta)) ordered else factor
+  if(grepl("^factor:", meta)) {
     levels <- read_meta_levels(meta)
-    if(is.character(column)) return(fun(column, levels = levels))
-    column <- fun(column, levels = 1:length(levels))
-    levels(column) <- levels
-    return(column)
+    return(factor(column, levels = levels))
+  }
+  if(grepl("^ordered:", meta)) {
+    levels <- read_meta_levels(meta)
+    return(ordered(column, levels = levels))
   }
   column
 }
@@ -138,7 +138,7 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
   meta <- data_column_meta(column)
   column_name <- to_upper(column_name)
   table_name <- to_upper(table_name)
-
+  
   meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_table$MetaMeta[meta_table$TableMeta == table_name & 
                         meta_table$ColumnMeta == column_name] <- meta
@@ -146,6 +146,7 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
   
   
   if(grepl("^units:", meta)) return(as.double(column))
+  if(grepl("^(factor|ordered):", meta)) return(as.character(column))
   
   is_text <- is_table_column_text(column_name, table_name, conn)
   
@@ -153,14 +154,18 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
     if(is_text) return(sf::st_as_text(column))
     return(sf::st_as_binary(column, endian = "little"))
   }
-  if(grepl("^(factor|ordered):", meta)) {
-    if(is_text) return(as.character(column))
-    return(as.integer(column))
-  } 
+
   if(is_text) return(as.character(column))
   return(as.numeric(column))
   
   column
+}
+
+consistent_factors <- function(data_meta, meta_meta) {
+  if(!grepl("^(factor|ordered):", data_meta)) return(FALSE)
+  if(!grepl("^(factor|ordered):", meta_meta)) return(FALSE)
+  if(grepl("^factor:", data_meta) != grepl("^factor:", data_meta)) return(FALSE)
+  return(all(read_meta_levels(meta_meta) %in% read_meta_levels(data_meta)))
 }
 
 validate_data_meta <- function(data, table_name, conn) {
@@ -171,16 +176,17 @@ validate_data_meta <- function(data, table_name, conn) {
   data_meta[is.na(data_meta)] <- "No"
   if(nrows_table(table_name, conn)) meta[is.na(meta)] <- "No"
   
-  mismatch <- !is.na(meta) & data_meta != meta
-  if(any(mismatch)) {
-    wch <- which(mismatch)[1]
-    data_meta <- data_meta[wch]
-    meta <- meta[wch]
-    column_name <- names(data_meta)
-    
-    err("column '", column_name, "' in table '", table_name, 
-        "' has '", data_meta, "' meta data for the input data", 
-        " but '", meta, "' for the existing data")
+  mismatch <- which(!is.na(meta) & data_meta != meta)
+  for(wch in mismatch) {
+    dmeta <- data_meta[wch]
+    mmeta <- meta[wch]
+    if(!consistent_factors(dmeta, mmeta)) {
+      column_name <- names(dmeta)
+      
+      err("column '", column_name, "' in table '", table_name, 
+          "' has '", dmeta, "' meta data for the input data", 
+          " but '", mmeta, "' for the existing data")
+    }
   }
   data_meta[data_meta != "No"]
 }

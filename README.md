@@ -18,8 +18,6 @@ related data frames particularly when used with the RSQLite package.
 However, current solutions do not preserve meta data, log changes or
 provide particularly useful error messages.
 
-## What It Does
-
 `readwritesqlite` is an R package that by default automatically
 
   - preserves
@@ -41,21 +39,53 @@ provide particularly useful error messages.
 `readwritesqlite` also allows the user to
 
   - read and write lists of data frames
-  - rearrange and add factor levels
+  - rearrange and add factor and ordered levels
   - delete existing data (and meta data) before writing
   - confirm data can be written without commiting any changes
 
-## What It Doesn’t Do
+## Demonstration
 
-`readwritesqlite` does not currently
+``` r
+library(readwritesqlite)
+rws_data
+#>   logical       date factor ordered             posixct units geometry
+#> 1    TRUE 2000-01-01      x       x 2001-01-02 03:04:05  10.0     0, 1
+#> 2   FALSE 2001-02-03      y       y 2006-07-08 09:10:11  11.5     1, 0
+#> 3      NA       <NA>   <NA>    <NA>                <NA>    NA     1, 1
 
-  - preserve meta data in queries (only through `rws_read_sqlite()` and
-    `rws_write_sqlite()` functions)
-  - override the default error messages for violations of
-      - CHECK constraints
-      - UNIQUE constraints
-      - FOREIGN KEY constraints (although foreign key constraints are
-        enforced when writing)
+conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+rws_write_sqlite(rws_data, conn = conn, exists = FALSE)
+
+rws_read_sqlite_log(conn)
+#> # A tibble: 2 x 5
+#>   DateTimeUTCLog      UserLog TableLog CommandLog NRowLog
+#>   <dttm>              <chr>   <chr>    <chr>        <int>
+#> 1 2018-12-10 20:07:15 joe     RWS_DATA CREATE           0
+#> 2 2018-12-10 20:07:16 joe     RWS_DATA INSERT           3
+rws_read_sqlite_meta(conn)
+#> # A tibble: 7 x 4
+#>   TableMeta ColumnMeta MetaMeta                            DescriptionMeta
+#>   <chr>     <chr>      <chr>                               <chr>          
+#> 1 RWS_DATA  DATE       class: Date                         <NA>           
+#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                    <NA>           
+#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +… <NA>           
+#> 4 RWS_DATA  LOGICAL    class: logical                      <NA>           
+#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                   <NA>           
+#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                       <NA>           
+#> 7 RWS_DATA  UNITS      units: m                            <NA>
+
+rws_read_sqlite(conn)
+#> $rws_data
+#> # A tibble: 3 x 7
+#>   logical date       factor ordered posixct             units
+#>   <lgl>   <date>     <fct>  <ord>   <dttm>              <S3:>
+#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…
+#> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…
+#> 3 NA      NA         <NA>   <NA>    NA                  "  N…
+#> # ... with 1 more variable: geometry <POINT [°]>
+
+DBI::dbDisconnect(conn)
+```
 
 ## Installation
 

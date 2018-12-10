@@ -170,16 +170,19 @@ test_that("meta reads all classes", {
   op <- options(rws.conn = con)
   teardown(options(op))
   
-  local <- data.frame(logical = TRUE, date = as.Date("2000-01-01"),
+  local <- data.frame(logical = TRUE, 
+                      date = as.Date("2000-01-01"),
                       posixct = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"),
                       units = units::as_units(10, "m"),
-                      geometry = sf::st_sfc(sf::st_point(c(0,1)), crs = 4326))
+                      geometry = sf::st_sfc(sf::st_point(c(0,1)), crs = 4326),
+                      factor = factor("fac"),
+                      ordered = ordered("ordered"))
   
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   expect_identical(readwritesqlite:::table_schema("local", con),
                    paste0("CREATE TABLE `local` (\n  `logical` INTEGER,\n  ",
                           "`date` REAL,\n  `posixct` REAL,\n  `units` REAL,\n  ",
-                          "`geometry` BLOB\n)"))    
+                          "`geometry` BLOB,\n  `factor` TEXT,\n  `ordered` TEXT\n)"))    
   remote <- rws_read_sqlite_table("local")
   expect_identical(remote, tibble::as_tibble(local))
 })
@@ -388,11 +391,11 @@ test_that("meta factor different types", {
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- rws_read_sqlite_table("local", meta = FALSE)
   expect_identical(remote2, tibble::tibble(
-    zinteger = c(2L, 1L, NA),
-    zreal = c(2, 1, NA),
-    znumeric = c(2L, 1L, NA),
+    zinteger = c("x", "y", NA),
+    zreal = c("x", "y", NA),
+    znumeric = c("x", "y", NA),
     ztext = c("x", "y", NA),
-    zblob = c(2L, 1L, NA)))
+    zblob = c("x", "y", NA)))
 })
 
 test_that("meta ordered different types", {
@@ -422,11 +425,11 @@ test_that("meta ordered different types", {
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- rws_read_sqlite_table("local", meta = FALSE)
   expect_identical(remote2, tibble::tibble(
-    zinteger = c(2L, 1L, NA),
-    zreal = c(2, 1, NA),
-    znumeric = c(2L, 1L, NA),
+    zinteger = c("x", "y", NA),
+    zreal = c("x", "y", NA),
+    znumeric = c("x", "y", NA),
     ztext = c("x", "y", NA),
-    zblob = c(2L, 1L, NA)))
+    zblob = c("x", "y", NA)))
 })
 
 test_that("meta factor without meta then meta errors", {
@@ -469,7 +472,7 @@ test_that("meta factor without meta then meta errors", {
                    "column 'zinteger' in table 'local' has 'factor: 'y', 'x'' meta data for the input data but 'No' for the existing data")
 })
 
-test_that("meta factor rearrange types", {
+test_that("meta factor rearrange levels", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))
   op <- options(rws.conn = con)
@@ -502,17 +505,92 @@ test_that("meta factor rearrange types", {
     ztext = z,
     zblob = z)
   
- # expect_identical(rws_write_sqlite(local), "local")
+  expect_identical(rws_write_sqlite(local), "local")
   
-  # remote <- rws_read_sqlite_table("local")
-  # expect_identical(remote, tibble::as_tibble(local))
-  # remote2 <- rws_read_sqlite_table("local", meta = FALSE)
-  # expect_identical(remote2, tibble::tibble(
-  #   zinteger = c(2L, 1L, NA),
-  #   zreal = c(2, 1, NA),
-  #   znumeric = c(2L, 1L, NA),
-  #   ztext = c("x", "y", NA),
-  #   zblob = c(2L, 1L, NA)))
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(remote, tibble::as_tibble(rbind(local, local, local)))
+})
+
+test_that("meta factor add levels", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  z <- factor(c("x", "y", NA), levels = c("y", "x"))
+  local <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    zblob = z)
+
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  zinteger INTEGER,
+                  zreal REAL,
+                  znumeric NUMERIC,
+                  ztext TEXT,
+                  zblob BLOB
+              )")
+  
+  expect_identical(rws_write_sqlite(local), "local")
+
+
+  z <- factor(c("x", "y", "z"), levels = c("z", "y", "x"))
+  local2 <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    zblob = z)
+  
+  expect_identical(rws_write_sqlite(local2, table_name = "local"), "local")
+  
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(levels(remote$zinteger), c("z", "y", "x"))
+  expect_identical(remote$zinteger, factor(c("x", "y", NA, "x", "y", "z"), 
+                                           levels = c("z", "y", "x")))
+})
+
+test_that("meta ordered add and rearrange levels", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  z <- ordered(c("x", "y", NA), levels = c("y", "x"))
+  local <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    zblob = z)
+
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  zinteger INTEGER,
+                  zreal REAL,
+                  znumeric NUMERIC,
+                  ztext TEXT,
+                  zblob BLOB
+              )")
+  
+  expect_identical(rws_write_sqlite(local), "local")
+
+
+  z <- ordered(c("x", "y", "z"), levels = c("z", "x", "y"))
+  local2 <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    zblob = z)
+  
+  expect_identical(rws_write_sqlite(local2, table_name = "local"), "local")
+  
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(levels(remote$zinteger), c("z", "x", "y"))
+  expect_identical(remote$zinteger, ordered(c("x", "y", NA, "x", "y", "z"), 
+                                           levels = c("z", "x", "y")))
 })
 
 

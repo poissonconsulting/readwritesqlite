@@ -6,6 +6,7 @@ Authors@R:
 Description: 
   Enhances reading and writing to and from SQLiteConnection objects.
 License: MIT + file LICENSE
+Depends: R (>= 3.4)
 Imports: 
     err,
     checkr,

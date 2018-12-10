@@ -1,3 +1,4 @@
+^data-raw$
 ^docs$
 ^_pkgdown\.yml$
 ^LICENSE\.md$
