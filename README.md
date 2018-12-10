@@ -18,7 +18,7 @@ related data frames particularly when used with the RSQLite package.
 However, current solutions do not preserve meta data, log changes or
 provide particularly useful error messages.
 
-`readwritesqlite` is an R package that by default automatically
+`readwritesqlite` is an R package that by default
 
   - preserves
       - the time zone for POSIXct columns
@@ -54,25 +54,14 @@ rws_data
 #> 3      NA       <NA>   <NA>    <NA>                <NA>    NA     1, 1
 
 conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-rws_write_sqlite(rws_data, conn = conn, exists = FALSE)
+rws_write_sqlite(rws_data, conn = conn)
 
 rws_read_sqlite_log(conn)
 #> # A tibble: 2 x 5
 #>   DateTimeUTCLog      UserLog TableLog CommandLog NRowLog
 #>   <dttm>              <chr>   <chr>    <chr>        <int>
-#> 1 2018-12-10 20:07:15 joe     RWS_DATA CREATE           0
-#> 2 2018-12-10 20:07:16 joe     RWS_DATA INSERT           3
-rws_read_sqlite_meta(conn)
-#> # A tibble: 7 x 4
-#>   TableMeta ColumnMeta MetaMeta                            DescriptionMeta
-#>   <chr>     <chr>      <chr>                               <chr>          
-#> 1 RWS_DATA  DATE       class: Date                         <NA>           
-#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                    <NA>           
-#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +… <NA>           
-#> 4 RWS_DATA  LOGICAL    class: logical                      <NA>           
-#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                   <NA>           
-#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                       <NA>           
-#> 7 RWS_DATA  UNITS      units: m                            <NA>
+#> 1 2018-12-10 20:25:37 joe     RWS_DATA CREATE           0
+#> 2 2018-12-10 20:25:37 joe     RWS_DATA INSERT           3
 
 rws_read_sqlite(conn)
 #> $rws_data

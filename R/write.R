@@ -25,7 +25,7 @@ write_sqlite_data <- function(data, table_name, exists, delete, meta,
 #' @return An invisible character vector of the name(s) of the table(s).
 #' @family rws_write_sqlite
 #' @export
-rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE, commit = TRUE,
+rws_write_sqlite <- function(x, exists = getOption("rws.exists", NA), delete = FALSE, commit = TRUE,
                              meta = TRUE, log = TRUE, 
                              conn = getOption("rws.conn", NULL), ...) {
   UseMethod("rws_write_sqlite")
@@ -38,7 +38,7 @@ rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE, commit = TRUE,
 #' @family rws_write_sqlite
 #' @export
 rws_write_sqlite.data.frame <- function(
-  x, exists = TRUE, delete = FALSE, commit = TRUE,
+  x, exists = getOption("rws.exists", NA), delete = FALSE, commit = TRUE,
   meta = TRUE, log = TRUE, conn = getOption("rws.conn", NULL), 
   table_name = substitute(x), ...) {
   check_scalar(exists, c(TRUE, NA))
@@ -78,7 +78,7 @@ rws_write_sqlite.data.frame <- function(
 #' @family rws_write_sqlite
 #' @export
 rws_write_sqlite.list <- function(x,
-                                  exists = TRUE,
+                                  exists = getOption("rws.exists", NA),
                                   delete = FALSE, commit = TRUE,
                                   meta = TRUE, log = TRUE, 
                                   conn = getOption("rws.conn", NULL), ...) {

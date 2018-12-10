@@ -19,6 +19,8 @@ Suggests:
     covr,
     testthat,
     tibble
+Remotes:
+    poissonconsulting/dttr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1

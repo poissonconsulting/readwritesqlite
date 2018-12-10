@@ -4,8 +4,8 @@
 \alias{rws_write_sqlite.list}
 \title{Write a list of data frames to a SQLite Database}
 \usage{
-\method{rws_write_sqlite}{list}(x, exists = TRUE, delete = FALSE,
-  commit = TRUE, meta = TRUE, log = TRUE,
+\method{rws_write_sqlite}{list}(x, exists = getOption("rws.exists", NA),
+  delete = FALSE, commit = TRUE, meta = TRUE, log = TRUE,
   conn = getOption("rws.conn", NULL), ...)
 }
 \arguments{

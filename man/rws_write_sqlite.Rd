@@ -4,8 +4,9 @@
 \alias{rws_write_sqlite}
 \title{Write to a SQLite Database}
 \usage{
-rws_write_sqlite(x, exists = TRUE, delete = FALSE, commit = TRUE,
-  meta = TRUE, log = TRUE, conn = getOption("rws.conn", NULL), ...)
+rws_write_sqlite(x, exists = getOption("rws.exists", NA),
+  delete = FALSE, commit = TRUE, meta = TRUE, log = TRUE,
+  conn = getOption("rws.conn", NULL), ...)
 }
 \arguments{
 \item{x}{The object to write.}

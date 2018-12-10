@@ -24,7 +24,7 @@ test_that("rws_write_sqlite.data.frame checks table exists", {
   teardown(options(op))
   
   local <- data.frame(x = as.character(1:3))
-  expect_error(rws_write_sqlite(local),
+  expect_error(rws_write_sqlite(local, exists = TRUE),
                "table 'local' does not exist")
 })
 
@@ -161,17 +161,6 @@ test_that("rws_write_sqlite.list requires named list", {
   
   y <- list(data.frame(x = 1:3))
   expect_error(rws_write_sqlite(y), "x must be named")
-})
-
-test_that("rws_write_sqlite requires existing table by default", {
-  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(con))
-  op <- options(rws.conn = con)
-  teardown(options(op))
-  
-  y <- list(local = data.frame(x = 1:3))
-  
-  expect_error(rws_write_sqlite(y), "table 'local' does not exist")
 })
 
 test_that("rws_write_sqlite writes list with 1 data frame", {
