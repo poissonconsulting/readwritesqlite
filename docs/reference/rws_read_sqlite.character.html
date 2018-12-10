@@ -78,6 +78,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/using-readwritesqlite.html">Using readwritesqlite</a>
+    </li>
+  </ul>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -106,8 +118,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for character</span>
-<span class='fu'><a href='rws_read_sqlite.html'>rws_read_sqlite</a></span>(<span class='no'>x</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.conn"</span>,
-  <span class='kw'>NULL</span>), <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='rws_read_sqlite.html'>rws_read_sqlite</a></span>(<span class='no'>x</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.conn"</span>, <span class='kw'>NULL</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -117,12 +129,12 @@
       <td><p>A character vector of table names.</p></td>
     </tr>
     <tr>
-      <th>conn</th>
-      <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
-    </tr>
-    <tr>
       <th>meta</th>
       <td><p>A flag specifying whether to preserve meta data.</p></td>
+    </tr>
+    <tr>
+      <th>conn</th>
+      <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
     </tr>
     <tr>
       <th>...</th>

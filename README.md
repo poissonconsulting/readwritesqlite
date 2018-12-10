@@ -25,7 +25,7 @@ provide particularly useful error messages.
       - the projection for sfc columns
       - the units for unit columns
       - the class for logical and Date columns
-      - factor and ordered levels
+      - the levels for factors and ordered factors
   - logs
       - the date time
       - system user
@@ -38,8 +38,8 @@ provide particularly useful error messages.
 
 `readwritesqlite` also allows the user to
 
-  - read and write lists of data frames
-  - rearrange and add factor and ordered levels
+  - read and write named lists or environments of data frames
+  - rearrange and add levels for factors and ordered factors
   - delete existing data (and meta data) before writing
   - confirm data can be written without commiting any changes
 
@@ -54,14 +54,8 @@ rws_data
 #> 3      NA       <NA>   <NA>    <NA>                <NA>    NA     1, 1
 
 conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-rws_write_sqlite(rws_data, conn = conn)
 
-rws_read_sqlite_log(conn)
-#> # A tibble: 2 x 5
-#>   DateTimeUTCLog      UserLog TableLog CommandLog NRowLog
-#>   <dttm>              <chr>   <chr>    <chr>        <int>
-#> 1 2018-12-10 20:25:37 joe     RWS_DATA CREATE           0
-#> 2 2018-12-10 20:25:37 joe     RWS_DATA INSERT           3
+rws_write_sqlite(rws_data, conn = conn)
 
 rws_read_sqlite(conn)
 #> $rws_data

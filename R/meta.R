@@ -9,7 +9,7 @@ meta_schema <- function () {
 }
 
 make_meta_data <- function(conn) {
-  table_names <- table_names(conn)
+  table_names <- rws_list_tables(conn)
   if(!length(table_names)) 
     return(data.frame(TableMeta = character(0), ColumnMeta = character(0),
                       stringsAsFactors = FALSE))

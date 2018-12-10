@@ -1,0 +1,112 @@
+---
+title: "Using readwritesqlite"
+author: "Joe Thorley"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using readwritesqlite}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`readwritesqlite` is an R package to enhance reading and writing to SQLite databases.
+
+## Starting
+
+The first task after loading `readwritesqlite` is to create an object of class SQLiteConnection.
+Below we create one in memory although in general the user will want to specify a path.
+```{r}
+library(readwritesqlite)
+conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+```
+
+## Options
+
+The readwritesqlite package has two options.
+
+- `rws.conn` which can be used to specify the default connection
+- `rws.exists` which can be used to specify whether by default a table must (or mustn't) exist before writing
+
+```{r}
+options(rws.conn = conn)
+```
+
+In general it is good practice to set `options(rws.exists = TRUE)` to ensure all tables 
+have already been created by the database designer (presumably with checks and foreign keys).
+
+## Writing Data
+
+Individual data frames or environments or named lists of data frames can be written to a connection using `rws_write_sqlite()`.
+In the case of a data frame the default table name is the name of the object.
+```{r}
+rws_write_sqlite(rws_data)
+rws_list_tables()
+```
+The fact that `rws_write_sqlite()` accepts environments means that the user can easily
+write all the data frames in the current environment to a SQLiteConnection.
+```{r}
+a_table <- rws_data[c("date", "logical")]
+another_table <- rws_data[c("factor", "ordered")]
+not_a_table <- 1
+rws_write_sqlite(as.list(environment()))
+rws_list_tables()
+```
+
+### Foreign Keys
+
+The `rws_write_sqlite()` function ensures that writing the new data frame(s) to the database does not violate foreign keys.
+If any data does the database is left unchanged.
+
+### Commiting Data
+
+By default, if no check or key violations occur the data frame(s) are written to the database.
+If, however, the user wishes to simply confirm that data could be written to a database without actually making any changes then they
+can call `rws_write_sqlite()` with `commit = FALSE`.
+
+### Deleting Data (and Meta Data)
+
+Meta data is recorded if the user uses `rws_write_sqlite()` to write data to an empty table.
+In order to the change the meta data the user should read the existing data from the table 
+(using `rws_read_sqlite()`), modify it accordingly and then re-write it using 
+`rws_write_sqlite()` with `delete = TRUE`. 
+The only exception is for factors and ordered factors.
+In this case the user can pass data with additional or rearranged factor or ordered factor levels without deleting the existing data.
+
+## Reading Data
+
+Data can be read using `rws_read_sqlite()` which takes a vector of table names 
+or a connection and returns a named list of data frames (or if the `tibble` package is installed tibbles).
+```{r}
+tables <- rws_read_sqlite(conn)
+names(tables)
+tables$rws_data
+```
+It is worth noting that if the user wishes to read all the tables from a connection then they must pass the connection as the first argument even if the connection is specified in the options.
+
+If the user wishes to read a single data frame they can use `rws_read_sqlite_table()`
+```{r}
+rws_read_sqlite_table("rws_data")
+```
+
+The `rws_read_sqlite_meta()` and `rws_read_sqlite_log()` allow the user to read the meta and log tables.
+```{r}
+rws_read_sqlite_meta()
+```
+
+```{r}
+rws_read_sqlite_log()
+```
+
+## Cleaning Up
+
+It's good practice to close a connection once you have finished with it.
+```{r}
+DBI::dbDisconnect(conn)
+```

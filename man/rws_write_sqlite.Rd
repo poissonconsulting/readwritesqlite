@@ -9,7 +9,7 @@ rws_write_sqlite(x, exists = getOption("rws.exists", NA),
   conn = getOption("rws.conn", NULL), ...)
 }
 \arguments{
-\item{x}{The object to write.}
+\item{x}{The data frame, named list of data frames or environment with data frames to write.}
 
 \item{exists}{A flag specifying whether the table must already exist.}
 
@@ -32,9 +32,5 @@ An invisible character vector of the name(s) of the table(s).
 }
 \description{
 Write to a SQLite Database
-}
-\seealso{
-Other rws_write_sqlite: \code{\link{rws_write_sqlite.data.frame}},
-  \code{\link{rws_write_sqlite.list}}
 }
 \concept{rws_write_sqlite}

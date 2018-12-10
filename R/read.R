@@ -10,7 +10,7 @@ read_sqlite_data <- function(table_name, meta, conn) {
 #' @return A named list of data frames.
 #' @family rws_read_sqlite
 #' @export
-rws_read_sqlite <- function(x, ...) {
+rws_read_sqlite <- function(x, meta = TRUE, ...) {
   UseMethod("rws_read_sqlite")
 }
 
@@ -21,9 +21,9 @@ rws_read_sqlite <- function(x, ...) {
 #' @return A named list of the data frames.
 #' @family rws_read_sqlite
 #' @export
-rws_read_sqlite.character <- function(x,
-                                  conn = getOption("rws.conn", NULL),
-                                  meta = TRUE, ...) {
+rws_read_sqlite.character <- function(x, meta = TRUE,
+                                      conn = getOption("rws.conn", NULL),
+                                      ...) {
   check_sqlite_connection(conn, connected = TRUE)
   check_table_names(x, exists = TRUE, delete = FALSE, conn = conn)
   check_flag(meta)
@@ -46,7 +46,7 @@ rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
   check_flag(meta)
   check_unused(...)
   
-  table_names <- table_names(x)
+  table_names <- rws_list_tables(x)
   if(!length(table_names)) return(named_list())
   rws_read_sqlite(table_names, meta = meta, conn = x)
 }

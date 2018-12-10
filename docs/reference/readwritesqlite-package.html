@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write a data frame to a SQLite Database — rws_write_sqlite.data.frame • readwritesqlite</title>
+<title>readwritesqlite: Enhanced Reading and Writing for SQLite Databases — readwritesqlite-package • readwritesqlite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,15 @@
 
 
 
-<meta property="og:title" content="Write a data frame to a SQLite Database — rws_write_sqlite.data.frame" />
+<meta property="og:title" content="readwritesqlite: Enhanced Reading and Writing for SQLite Databases — readwritesqlite-package" />
 
-<meta property="og:description" content="Write a data frame to a SQLite Database" />
+<meta property="og:description" content="readwritesqlite preserves meta data, logs changes and provides informative error messages.
+  readwritesqlite preserves the time zone for POSIXct columns, 
+  the projection for sfc columns, the units for unit columns, 
+  the class for logical and Date columns and 
+  the levels for factors and ordered factors.
+  readwritesqlite logs the date time, system user and 
+  number of rows deleted, or inserted by table." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -78,6 +84,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/using-readwritesqlite.html">Using readwritesqlite</a>
+    </li>
+  </ul>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -94,80 +112,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write a data frame to a SQLite Database</h1>
+    <h1>readwritesqlite: Enhanced Reading and Writing for SQLite Databases</h1>
     
-    <div class="hidden name"><code>rws_write_sqlite.data.frame.Rd</code></div>
+    <div class="hidden name"><code>readwritesqlite-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Write a data frame to a SQLite Database</p>
+    <p>readwritesqlite preserves meta data, logs changes and provides informative error messages.
+  readwritesqlite preserves the time zone for POSIXct columns, 
+  the projection for sfc columns, the units for unit columns, 
+  the class for logical and Date columns and 
+  the levels for factors and ordered factors.
+  readwritesqlite logs the date time, system user and 
+  number of rows deleted, or inserted by table.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for data.frame</span>
-<span class='fu'><a href='rws_write_sqlite.html'>rws_write_sqlite</a></span>(<span class='no'>x</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.exists"</span>,
-  <span class='fl'>NA</span>), <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.conn"</span>, <span class='kw'>NULL</span>), <span class='kw'>table_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>x</span>), <span class='no'>...</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>The object to write.</p></td>
-    </tr>
-    <tr>
-      <th>exists</th>
-      <td><p>A flag specifying whether the table must already exist.</p></td>
-    </tr>
-    <tr>
-      <th>delete</th>
-      <td><p>A flag specifying whether to delete existing rows before 
-inserting data.</p></td>
-    </tr>
-    <tr>
-      <th>commit</th>
-      <td><p>A flag specifying whether to commit the operations 
-(calling with commit = FALSE can be useful for checking data).</p></td>
-    </tr>
-    <tr>
-      <th>meta</th>
-      <td><p>A flag specifying whether to preserve meta data.</p></td>
-    </tr>
-    <tr>
-      <th>log</th>
-      <td><p>A flag specifying whether to log the operations alterations.</p></td>
-    </tr>
-    <tr>
-      <th>conn</th>
-      <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
-    </tr>
-    <tr>
-      <th>table_name</th>
-      <td><p>A string of the table name.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Not used.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other rws_write_sqlite: <code><a href='rws_write_sqlite.list.html'>rws_write_sqlite.list</a></code>,
-  <code><a href='rws_write_sqlite.html'>rws_write_sqlite</a></code></p></div>
-    
+        
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#see-also">See also</a></li>
-          </ul>
+                </ul>
 
+    <h2>Author</h2>
+    <p><strong>Maintainer</strong>: Joe Thorley <a href='mailto:joe@poissonconsulting.ca'>joe@poissonconsulting.ca</a> (0000-0002-7683-4592)</p>
   </div>
 </div>
 

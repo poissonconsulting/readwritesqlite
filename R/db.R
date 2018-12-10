@@ -2,13 +2,6 @@ column_names <- function(table_name, conn) {
   DBI::dbListFields(conn, table_name)
 }
 
-table_names <- function(conn) {
-  tables <- DBI::dbListTables(conn)
-  reserved <- to_upper(c(.log_table_name, .meta_table_name))
-  tables <- tables[!to_upper(tables) %in% reserved]
-  tables
-}
-
 tables_exists <- function(table_names, conn) {
   tables <- DBI::dbListTables(conn)
   to_upper(table_names) %in% to_upper(tables)

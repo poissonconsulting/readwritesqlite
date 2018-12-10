@@ -12,7 +12,7 @@ write_sqlite_data <- function(data, table_name, exists, delete, meta,
 
 #' Write to a SQLite Database
 #'
-#' @param x The object to write.
+#' @param x The data frame, named list of data frames or environment with data frames to write.
 #' @param exists A flag specifying whether the table must already exist.
 #' @param delete A flag specifying whether to delete existing rows before 
 #' inserting data.
@@ -31,11 +31,6 @@ rws_write_sqlite <- function(x, exists = getOption("rws.exists", NA), delete = F
   UseMethod("rws_write_sqlite")
 }
 
-#' Write a data frame to a SQLite Database
-#'
-#' @inheritParams rws_write_sqlite
-#' @param table_name A string of the table name.
-#' @family rws_write_sqlite
 #' @export
 rws_write_sqlite.data.frame <- function(
   x, exists = getOption("rws.exists", NA), delete = FALSE, commit = TRUE,
@@ -71,11 +66,6 @@ rws_write_sqlite.data.frame <- function(
   invisible(table_name)
 }
 
-#' Write a list of data frames to a SQLite Database
-#'
-#' @param x A named list of data frames.
-#' @inheritParams rws_write_sqlite
-#' @family rws_write_sqlite
 #' @export
 rws_write_sqlite.list <- function(x,
                                   exists = getOption("rws.exists", NA),
@@ -116,4 +106,18 @@ rws_write_sqlite.list <- function(x,
   on.exit(NULL)
   foreign_keys(foreign_keys, conn)
   invisible(invisible(names(x)))
+}
+
+#' @export
+rws_write_sqlite.environment <- function(x,
+                                         exists = getOption("rws.exists", NA),
+                                         delete = FALSE, commit = TRUE,
+                                         meta = TRUE, log = TRUE, 
+                                         conn = getOption("rws.conn", NULL), 
+                                         ...) {
+  x <- as.list(x)
+  check_unused(...)
+  invisible(
+    rws_write_sqlite(x, exists = exists, delete = delete, commit = commit,
+                     meta = meta, log = log, conn = conn))
 }
