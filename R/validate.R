@@ -24,6 +24,5 @@ validate_data <- function(data, table_name, conn) {
   check_key(data, key = pk, x_name = p0("table '", table_name, "'"))
   
   names(data) <- data_names[names(data)]
-  data <- convert_data(data)
   data
 }

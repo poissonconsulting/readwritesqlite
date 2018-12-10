@@ -87,7 +87,7 @@ test_that("meta errors if no meta and then meta", {
   op <- options(rws.conn = con)
   teardown(options(op))
   
-  local <- data.frame(z = as.character(c(TRUE, FALSE, NA)))
+  local <- data.frame(z = as.character(c(TRUE, FALSE, NA)), stringsAsFactors = FALSE)
   
   expect_identical(rws_write_sqlite(local, exists = FALSE), "local")
   expect_identical(rws_write_sqlite(local), "local")
@@ -359,4 +359,48 @@ test_that("meta sfc different types", {
                    c(zinteger = TRUE, zreal = TRUE, znumeric = TRUE,
                      ztext = FALSE, zblob = TRUE))
   expect_identical(remote2$ztext, "MULTIPOINT (0 1, 0 1, 0 1)")
+})
+
+test_that("meta factor different types", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  z <- factor(c("x", "y", NA), levels = c("y", "x"))
+  local <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    zblob = z)
+  
+  colnames(local) <- c("zinteger", "zreal", "znumeric", "ztext", "zblob")
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  zinteger INTEGER,
+                  zreal REAL,
+                  znumeric NUMERIC,
+                  ztext TEXT,
+                  zblob BLOB
+              )")
+  
+  expect_identical(rws_write_sqlite(local), "local")
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(remote, tibble::as_tibble(local))
+  remote2 <- rws_read_sqlite_table("local", meta = FALSE)
+  expect_identical(remote2, tibble::tibble(
+    zinteger = c(2L, 1L, NA),
+    zreal = c(2, 1, NA),
+    znumeric = c(2L, 1L, NA),
+    ztext = c("x", "y", NA),
+    zblob = c(2L, 1L, NA)))
+})
+
+test_that("read_meta_levels", {
+  expect_identical(read_meta_levels("factor:  '1', '3'"), c("1", "3"))
+  expect_identical(read_meta_levels("ordered:'4'"), c("4"))
+  expect_identical(read_meta_levels("'1', '3', '10'"), c("1", "3", "10"))
+  expect_identical(read_meta_levels(character(0)), character(0))
+  expect_identical(read_meta_levels("factor:  "), character(0))
 })

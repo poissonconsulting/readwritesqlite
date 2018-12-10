@@ -31,4 +31,3 @@ is.blob <- function(x) inherits(x, "blob")
 any_is_na <- function(x) {
   any(is.na(x))
 }
-  

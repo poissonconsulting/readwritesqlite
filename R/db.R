@@ -28,6 +28,7 @@ create_table <- function(data, table_name, log, conn) {
 
 write_data <- function(data, table_name, meta, log, conn) {
   if(meta) data <- write_meta_data(data, table_name = table_name, conn = conn)
+  data <- convert_data(data)
   if (nrow(data)) {
     DBI::dbAppendTable(conn, table_name, data)
     if(log) log_command(table_name, command = "INSERT", nrow = nrow(data), conn = conn)

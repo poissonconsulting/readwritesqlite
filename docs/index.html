@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9010</span>
       </span>
     </div>
 
@@ -75,6 +75,7 @@
 <li>the projection for sfc columns</li>
 <li>the units for unit columns</li>
 <li>the class for logical and Date columns</li>
+<li>factor and ordered levels</li>
 </ul>
 </li>
 <li>logs
@@ -95,7 +96,8 @@
 <p><code>readwritesqlite</code> also allows the user to</p>
 <ul>
 <li>read and write lists of data frames</li>
-<li>delete existing data before writing</li>
+<li>rearrange and add factor levels</li>
+<li>delete existing data (and meta data) before writing</li>
 <li>confirm data can be written without commiting any changes</li>
 </ul>
 </div>
@@ -104,11 +106,7 @@
 <a href="#what-it-doesnt-do" class="anchor"></a>What It Doesn’t Do</h2>
 <p><code>readwritesqlite</code> does not currently</p>
 <ul>
-<li>preserve
-<ul>
-<li>factor levels (because in our experience they invariably end up changing)</li>
-</ul>
-</li>
+<li>preserve meta data in queries (only through <code><a href="reference/rws_read_sqlite.html">rws_read_sqlite()</a></code> and <code><a href="reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> functions)</li>
 <li>override the default error messages for violations of
 <ul>
 <li>CHECK constraints</li>

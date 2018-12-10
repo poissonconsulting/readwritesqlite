@@ -72,7 +72,17 @@ data_column_meta <- function(column) {
   if (is.POSIXct(column)) return(p("tz:", dttr::dtt_tz(column)))
   if (is.sfc(column)) return(p("proj:", sf::st_crs(column)$proj4string))
   if (is.units(column)) return(p("units:", units::deparse_unit(column)))
+  if (is.ordered(column)) return(p("ordered:", err::cc(levels(column))))
+  if (is.factor(column)) return(p("factor:", err::cc(levels(column))))
   NA_character_
+}
+
+read_meta_levels <- function(x) {
+  x <- sub("^(factor|ordered)(:\\s*)(.*)$", "\\3", x)
+  if(!length(x)) return(x)
+  x <- strsplit(x, ",")[[1]]
+  x <- sub("^(\\s*')(.+)", "\\2", x)
+  sub("^(.+)('\\s*)$", "\\1", x)
 }
 
 read_meta_data_column <- function(column, meta) {
@@ -87,13 +97,20 @@ read_meta_data_column <- function(column, meta) {
     column <- as.double(column)
     return(units::as_units(column, units))
   }
- if(grepl("^proj:", meta)) {
-   proj <- sub("(^proj:\\s*)(.*)", "\\2", meta)
-   return(sf::st_set_crs(sf::st_as_sfc(column), proj))
- }
+  if(grepl("^proj:", meta)) {
+    proj <- sub("(^proj:\\s*)(.*)", "\\2", meta)
+    return(sf::st_set_crs(sf::st_as_sfc(column), proj))
+  }
+  if(grepl("^(ordered|factor):", meta)) {
+    fun <- if(grepl("^ordered", meta)) ordered else factor
+    levels <- read_meta_levels(meta)
+    if(is.character(column)) return(fun(column, levels = levels))
+    column <- fun(column, levels = 1:length(levels))
+    levels(column) <- levels
+    return(column)
+  }
   column
 }
-
 
 data_meta <- function(data) {
   vapply(data, FUN = data_column_meta, FUN.VALUE = "", USE.NAMES = TRUE)
@@ -121,25 +138,28 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
   meta <- data_column_meta(column)
   column_name <- to_upper(column_name)
   table_name <- to_upper(table_name)
-  
+
   meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_table$MetaMeta[meta_table$TableMeta == table_name & 
                         meta_table$ColumnMeta == column_name] <- meta
   replace_meta_table(meta_table, conn = conn)
   
-
+  
   if(grepl("^units:", meta)) return(as.double(column))
-
+  
   is_text <- is_table_column_text(column_name, table_name, conn)
-
+  
   if(grepl("^proj:", meta)) {
     if(is_text) return(sf::st_as_text(column))
     return(sf::st_as_binary(column, endian = "little"))
   }
-
+  if(grepl("^(factor|ordered):", meta)) {
+    if(is_text) return(as.character(column))
+    return(as.integer(column))
+  } 
   if(is_text) return(as.character(column))
   return(as.numeric(column))
-
+  
   column
 }
 

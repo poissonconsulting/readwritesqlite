@@ -27,6 +27,7 @@ provide particularly useful error messages.
       - the projection for sfc columns
       - the units for unit columns
       - the class for logical and Date columns
+      - factor and ordered levels
   - logs
       - the date time
       - system user
@@ -40,16 +41,16 @@ provide particularly useful error messages.
 `readwritesqlite` also allows the user to
 
   - read and write lists of data frames
-  - delete existing data before writing
+  - rearrange and add factor levels
+  - delete existing data (and meta data) before writing
   - confirm data can be written without commiting any changes
 
 ## What It Doesn’t Do
 
 `readwritesqlite` does not currently
 
-  - preserve
-      - factor levels (because in our experience they invariably end up
-        changing)
+  - preserve meta data in queries (only through `rws_read_sqlite()` and
+    `rws_write_sqlite()` functions)
   - override the default error messages for violations of
       - CHECK constraints
       - UNIQUE constraints
