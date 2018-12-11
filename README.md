@@ -38,7 +38,7 @@ provide particularly useful error messages.
 
 `readwritesqlite` also allows the user to
 
-  - read and write named lists or environments of data frames
+  - write named lists or environments of data frames
   - rearrange and add levels for factors and ordered factors
   - delete existing data (and meta data) before writing
   - confirm data can be written without commiting any changes
@@ -47,13 +47,13 @@ provide particularly useful error messages.
 
 ``` r
 library(readwritesqlite)
-rws_data
+conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+
+print(rws_data)
 #>   logical       date factor ordered             posixct units geometry
 #> 1    TRUE 2000-01-01      x       x 2001-01-02 03:04:05  10.0     0, 1
 #> 2   FALSE 2001-02-03      y       y 2006-07-08 09:10:11  11.5     1, 0
 #> 3      NA       <NA>   <NA>    <NA>                <NA>    NA     1, 1
-
-conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
 rws_write_sqlite(rws_data, conn = conn)
 
@@ -69,6 +69,11 @@ rws_read_sqlite(conn)
 
 DBI::dbDisconnect(conn)
 ```
+
+## Information
+
+For more information on using `readwritesqlite` see the vignette
+[using-readwritesqlite](https://poissonconsulting.github.io/readwritesqlite/articles/using-readwritesqlite.html).
 
 ## Installation
 

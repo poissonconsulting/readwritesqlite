@@ -6,13 +6,10 @@
 \alias{readwritesqlite-package}
 \title{readwritesqlite: Enhanced Reading and Writing for SQLite Databases}
 \description{
-readwritesqlite preserves meta data, logs changes and provides informative error messages.
-  readwritesqlite preserves the time zone for POSIXct columns, 
-  the projection for sfc columns, the units for unit columns, 
-  the class for logical and Date columns and 
-  the levels for factors and ordered factors.
-  readwritesqlite logs the date time, system user and 
-  number of rows deleted, or inserted by table.
+readwritesqlite preserves time zones (for POSIXct columns), 
+  projections (for sfc columns), units (for unit columns), 
+  levels (for factors and ordered factors) and classes for logical and Date columns.
+  It also logs changes to tables and provides informative error messages.
 }
 \author{
 \strong{Maintainer}: Joe Thorley \email{joe@poissonconsulting.ca} (0000-0002-7683-4592)
