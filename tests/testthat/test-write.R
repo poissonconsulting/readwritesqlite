@@ -86,6 +86,60 @@ test_that("rws_write_sqlite.data.frame handling of case", {
   expect_identical(REMOTE, LOCAL)
 })
 
+test_that("rws_write_sqlite.data.frame deals with \" quoted table names", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(x = 1:3, select = 1:3)
+  locals <- data.frame(y = 1:2)
+  DBI::dbCreateTable(con, "local", local)
+  DBI::dbCreateTable(con, '"local"', locals)
+  expect_identical(rws_list_tables(), sort(c("\"local\"", "local")))
+  
+  expect_identical(rws_write_sqlite(local), "local")
+  expect_identical(rws_write_sqlite(locals, table_name = "\"local\""), "\"local\"")
+  remotes <- DBI::dbReadTable(con, "\"local\"")
+  expect_identical(remotes, locals)
+})
+
+test_that("rws_write_sqlite.data.frame deals with [ quoted table names", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(x = 1:3, select = 1:3)
+  locals <- data.frame(y = 1:2)
+  DBI::dbCreateTable(con, "local", local)
+  DBI::dbCreateTable(con, "[local]", locals)
+  expect_identical(rws_list_tables(), sort(c("[local]", "local")))
+  
+  expect_identical(rws_write_sqlite(local), "local")
+  expect_identical(rws_write_sqlite(locals, table_name = "[local]"), "[local]")
+  remotes <- DBI::dbReadTable(con, "[local]")
+  expect_identical(remotes, locals)
+})
+
+test_that("rws_write_sqlite.data.frame deals with backtick quoted table names", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(x = 1:3, select = 1:3)
+  locals <- data.frame(y = 1:2)
+  DBI::dbCreateTable(con, "local", local)
+  DBI::dbCreateTable(con, "`local`", locals)
+  expect_identical(rws_list_tables(), sort(c("`local`", "local")))
+  
+  expect_identical(rws_write_sqlite(local), "local")
+  expect_identical(rws_write_sqlite(locals, table_name = "`local`"), "`local`")
+  remotes <- DBI::dbReadTable(con, "`local`")
+  expect_identical(remotes, locals)
+})
+
 test_that("rws_write_sqlite.data.frame corrects column order", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))

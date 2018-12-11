@@ -11,5 +11,5 @@ rws_list_tables <- function(conn = getOption("rws.conn", NULL)) {
   tables <- DBI::dbListTables(conn)
   reserved <- to_upper(c(.log_table_name, .meta_table_name))
   tables <- tables[!to_upper(tables) %in% reserved]
-  tables
+  sort(tables)
 }

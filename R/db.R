@@ -50,7 +50,7 @@ table_schema <- function(table_name, conn) {
 }
 
 table_info <- function(table_name, conn) {
-  query <- p0("PRAGMA table_info(", table_name, ");")
+  query <- p0("PRAGMA table_info('", table_name, "');")
   table_info <- DBI::dbGetQuery(conn, query)
   table_info
 }
