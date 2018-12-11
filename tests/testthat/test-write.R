@@ -118,7 +118,7 @@ test_that("rws_write_sqlite.data.frame deals with [ quoted table names", {
   
   expect_identical(rws_write_sqlite(local), "local")
   expect_identical(rws_write_sqlite(locals, table_name = "[local]"), "[local]")
-  remotes <- DBI::dbReadTable(con, "[local]")
+  remotes <- as.data.frame(rws_read_sqlite_table("[local]"))
   expect_identical(remotes, locals)
 })
 
@@ -166,6 +166,26 @@ test_that("rws_write_sqlite.data.frame is case insensitive", {
   colnames(local) <- toupper(colnames(local))
   
   expect_identical(rws_write_sqlite(local), "local")
+})
+
+test_that("rws_write_sqlite.data.frame deals with quoted column names", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- tibble::tibble(x = factor(1:3), `[x]` = factor(2:4), `"x"` = factor(3:5))
+  expect_identical(rws_write_sqlite(local), "local")
+  
+  meta <- rws_read_sqlite_meta()
+  expect_identical(meta$ColumnMeta, sort(c("\"x\"", "[x]", "X")))
+  expect_identical(DBI::dbReadTable(con, "local"),
+                   data.frame(x = as.character(1:3),
+                              X.x. = as.character(2:4),
+                              X.x..1 = as.character(3:5),
+                              stringsAsFactors = FALSE))
+  remote <- rws_read_sqlite_table("local")
+  expect_identical(remote, local)
 })
 
 test_that("rws_write_sqlite.data.frame can delete", {

@@ -38,6 +38,7 @@ delete_data <- function(table_name, meta, log, conn) {
 
 read_data <- function(table_name, meta, conn) {
   data <- DBI::dbReadTable(conn, table_name)
+  colnames(data) <- column_names(table_name, conn)
   if(meta) data <- read_meta_data(data, table_name, conn)
   data
 }
