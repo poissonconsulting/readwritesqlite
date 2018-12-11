@@ -10,7 +10,7 @@ test_that("rws_write_sqlite.data.frame checks all columns present", {
   DBI::dbCreateTable(con, "local", local)
   local <- local[1]
   expect_error(rws_write_sqlite(local),
-               "data column names must include 'X' and 'SELECT'")
+               "'local' column names must include 'X' and 'SELECT'")
 })
 
 test_that("rws_write_sqlite.data.frame checks missing values", {
@@ -27,7 +27,7 @@ test_that("rws_write_sqlite.data.frame checks missing values", {
               )")
   
   expect_error(rws_write_sqlite(local),
-               "there are unpermitted missing values in the following column in table 'local': 'X2'")
+               "there are unpermitted missing values in the following column in data 'local': 'X2'")
   local <- na.omit(local)
   expect_identical(rws_write_sqlite(local), "local")
 })
@@ -46,7 +46,7 @@ test_that("rws_write_sqlite.data.frame checks primary key on input values", {
               PRIMARY KEY (x2, select2))")
   
   expect_error(rws_write_sqlite(local),
-               "columns 'X2' and 'SELECT2' in table 'local' must be a unique key")
+               "columns 'X2' and 'SELECT2' in data 'local' must be a unique key")
   local$x2 <- 1:3
   expect_identical(rws_write_sqlite(local), "local")
 })
