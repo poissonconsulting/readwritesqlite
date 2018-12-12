@@ -417,9 +417,11 @@ test_that("foreign keys pick up foreign key violation for two data frames", {
                   x INTEGER NOT NULL,
                 FOREIGN KEY (x) REFERENCES local (x))")
   
-  expect_false(foreign_keys(TRUE, con))
+  expect_false(foreign_keys(FALSE, con))
+  expect_false(defer_foreign_keys(TRUE, con))
   y <- list(local2 = data.frame(x = 1:3), local = data.frame(x = 2:3))
   expect_error(rws_write_sqlite(y), "FOREIGN KEY constraint failed")
-  expect_true(foreign_keys(TRUE, con))
+  expect_false(foreign_keys(TRUE, con))
+  expect_false(defer_foreign_keys(TRUE, con))
 })
 
