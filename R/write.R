@@ -118,22 +118,23 @@ rws_write_sqlite.list <- function(x,
   
   check_table_names(names(x), exists = exists, delete = delete, complete = complete, conn = conn)
   
-  foreign_keys <- foreign_keys(FALSE, conn)
-  
+  foreign_keys <- foreign_keys(TRUE, conn)
+  defer <- defer_foreign_keys(TRUE, conn)
+
   dbBegin(conn, name = "rws_write_sqlite")
   on.exit(dbRollback(conn, name = "rws_write_sqlite"))
   on.exit(foreign_keys(foreign_keys, conn), add = TRUE)
+  on.exit(defer_foreign_keys(defer, conn), add = TRUE)
   
   mapply(write_sqlite_data, x, names(x),
          MoreArgs = list(exists = exists, delete = delete, 
                          meta = meta, log = log, conn = conn), SIMPLIFY = FALSE)
   
-  foreign_keys(TRUE, conn)
   if(!commit) return(invisible(names(x)))
-  
   dbCommit(conn, name = "rws_write_sqlite")
   on.exit(NULL)
   foreign_keys(foreign_keys, conn)
+  defer_foreign_keys(defer, conn)
   invisible(invisible(names(x)))
 }
 

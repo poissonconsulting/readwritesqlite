@@ -75,3 +75,14 @@ foreign_keys <- function(on, conn) {
     DBI::dbExecute(conn, "PRAGMA foreign_keys = OFF;")
   old
 }
+
+defer_foreign_keys <- function(on, conn) {
+  old <- DBI::dbGetQuery(conn, "PRAGMA defer_foreign_keys;")
+  old <- as.logical(old[1,1])
+  
+  if(on && !old)
+    DBI::dbExecute(conn, "PRAGMA defer_foreign_keys = ON;")
+  if(!on && old)
+    DBI::dbExecute(conn, "PRAGMA defer_foreign_keys = OFF;")
+  old
+}

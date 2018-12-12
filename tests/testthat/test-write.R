@@ -403,3 +403,23 @@ test_that("foreign keys switched off for two data frame", {
   expect_identical(rws_write_sqlite(y), c("local2", "local"))
   expect_true(foreign_keys(TRUE, con))
 })
+
+test_that("foreign keys pick up foreign key violation for two data frames", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)")
+  
+  DBI::dbGetQuery(con, "CREATE TABLE local2 (
+                  x INTEGER NOT NULL,
+                FOREIGN KEY (x) REFERENCES local (x))")
+  
+  expect_false(foreign_keys(TRUE, con))
+  y <- list(local2 = data.frame(x = 1:3), local = data.frame(x = 2:3))
+  expect_error(rws_write_sqlite(y), "FOREIGN KEY constraint failed")
+  expect_true(foreign_keys(TRUE, con))
+})
+
