@@ -1,5 +1,6 @@
 write_sqlite_data <- function(data, table_name, exists, delete, meta, 
                               log, conn) {
+  data <- as.data.frame(data) # otherwise sf objects can cause problems
   if(isFALSE(exists) || (is.na(exists) && !tables_exists(table_name, conn))) 
     create_table(data, table_name, log = log, conn = conn)
   
