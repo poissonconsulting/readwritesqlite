@@ -544,7 +544,7 @@ test_that("meta factor add levels", {
     ztext = z,
     zblob = z)
   
-  expect_identical(rws_write_sqlite(local2, table_name = "local"), "local")
+  expect_identical(rws_write_sqlite(local2, x_name = "local"), "local")
   
   remote <- rws_read_sqlite_table("local")
   expect_identical(levels(remote$zinteger), c("z", "y", "x"))
@@ -585,7 +585,7 @@ test_that("meta ordered add and rearrange levels", {
     ztext = z,
     zblob = z)
   
-  expect_identical(rws_write_sqlite(local2, table_name = "local"), "local")
+  expect_identical(rws_write_sqlite(local2, x_name = "local"), "local")
   
   remote <- rws_read_sqlite_table("local")
   expect_identical(levels(remote$zinteger), c("z", "x", "y"))

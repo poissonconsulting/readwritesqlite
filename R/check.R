@@ -30,7 +30,7 @@ check_table_name <- function(table_name, exists, conn) {
   
   if(to_upper(table_name) == to_upper(.log_table_name))
     err("'", table_name, "' is a reserved table")
-
+  
   if(to_upper(table_name) == to_upper(.meta_table_name))
     err("'", table_name, "' is a reserved table")
   
@@ -44,29 +44,35 @@ check_table_name <- function(table_name, exists, conn) {
   table_name
 }
 
-check_table_names <- function(table_names, exists, delete, conn) {
+check_table_names <- function(table_names, exists, delete, complete, conn) {
   check_character(table_names)
   if(!length(table_names)) return(table_names)
   
   vapply(table_names, check_table_name, "", exists = exists, conn = conn,
          USE.NAMES = FALSE)
   
-  if(isFALSE(exists) || isTRUE(delete)) {
+  if(isFALSE(exists) || isTRUE(delete) || isTRUE(complete)) {
     duplicates <- duplicated(to_upper(table_names))
     if(any(duplicates)) {
       table_names <- table_names[!duplicated(to_upper(table_names))]
       table_names <- sort(table_names)
       
-      if(isFALSE(exists)) {
-        if(isTRUE(delete)) { 
-          but <- "but exists = FALSE and delete = TRUE"
-        } else
-          but <- "but exists = FALSE"
-      } else
-        but <- "but delete = TRUE"
-      err(p(co(table_names, one = "table name %c is duplicated",
-                 "the following %n table name%s %r duplicated: %c",
-             conjunction = "and"), but))
+      exists <- if(isFALSE(exists)) "exists = FALSE" else NULL
+      delete <- if(isTRUE(delete)) "delete = TRUE" else NULL
+      complete <- if(isTRUE(complete)) "complete = TRUE" else NULL
+      
+      but <- p0(c(exists, delete, complete), collapse = " and ")
+      
+      err(co(table_names, one = p0(but, " but the following table name%s %r duplicated: %c"),
+               conjunction = "and"))
+    }
+  }
+  if(isTRUE(complete)) {
+    missing <- 
+      setdiff(to_upper(rws_list_tables(conn)), to_upper(table_names))
+    if(length(missing)) {
+      err(co(missing, "complete = TRUE but the following table name%s %r not represented: %c",
+             conjunction = "and"))
     }
   }
   table_names

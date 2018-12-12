@@ -42,6 +42,7 @@ provide particularly useful error messages.
   - rearrange and add levels for factors and ordered factors
   - delete existing data (and meta data) before writing
   - confirm data can be written without commiting any changes
+  - check all existing tables are written to
 
 ## Demonstration
 

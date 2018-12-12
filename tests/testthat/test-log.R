@@ -52,7 +52,7 @@ test_that("rws_write_sqlite list logs commands", {
   rws_write_sqlite(y)
   expect_identical(nrow(rws_read_sqlite_log()), 4L)
   expect_error(rws_write_sqlite(y, delete = TRUE),
-  "table name 'local' is duplicated but delete = TRUE")
+  "delete = TRUE but the following table name is duplicated: 'local'")
   rws_write_sqlite(y["LOCAl"], delete = TRUE)
   expect_identical(nrow(rws_read_sqlite_log()), 6L)
   log <- rws_read_sqlite_log()

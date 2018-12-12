@@ -39,11 +39,12 @@ options(rws.conn = conn)
 ```
 
 In general it is good practice to set `options(rws.exists = TRUE)` to ensure all tables 
-have already been created by the database designer (presumably with checks and foreign keys).
+have already been created by the database designer (presumably with the necessary checks and foreign keys).
 
 ## Writing Data
 
 Individual data frames or environments or named lists of data frames can be written to a connection using `rws_write_sqlite()`.
+
 In the case of a data frame the default table name is the name of the object.
 ```{r}
 rws_write_sqlite(rws_data)
@@ -55,9 +56,10 @@ write all the data frames in the current environment to a SQLiteConnection.
 a_table <- rws_data[c("date", "logical")]
 another_table <- rws_data[c("factor", "ordered")]
 not_a_table <- 1
-rws_write_sqlite(as.list(environment()))
+rws_write_sqlite(environment())
 rws_list_tables()
 ```
+Objects which are not data frames are silently filtered from enviroments but cause an error with lists.
 
 ### Foreign Keys
 
@@ -78,6 +80,14 @@ In order to the change the meta data the user should read the existing data from
 `rws_write_sqlite()` with `delete = TRUE`. 
 The only exception is for factors and ordered factors.
 In this case the user can pass data with additional or rearranged factor or ordered factor levels without deleting the existing data.
+
+### Complete Data
+
+If the user sets `complete = TRUE` when writing enviroments or named lists of data frames
+then the function issues an informative error message if any of data frames have duplicated names or some of the existing tables are not represented.
+If it is also the case that `exists = TRUE` then extra data frames are ignored and an informative warning message is issued.
+The combination of `exists = TRUE` and `complete = TRUE` in conjunction with an environment of data frames
+is really useful for ensuring all tables are populated while automatically removing extraneous objects and data frames.
 
 ## Reading Data
 
