@@ -29,17 +29,9 @@ conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
 ## Options
 
-The readwritesqlite package has two options.
+The readwritesqlite package has one option.
 
-- `rws.conn` which can be used to specify the default connection
-- `rws.exists` which can be used to specify whether by default a table must (or mustn't) exist before writing
-
-```{r}
-options(rws.conn = conn)
-```
-
-In general it is good practice to set `options(rws.exists = TRUE)` to ensure all tables 
-have already been created by the database designer (presumably with the necessary checks and foreign keys).
+- `rws.silent` a flag which specifies whether package specific messages and warnings should be suppressed.
 
 ## Writing Data
 
@@ -47,8 +39,8 @@ Individual data frames or environments or named lists of data frames can be writ
 
 In the case of a data frame the default table name is the name of the object.
 ```{r}
-rws_write_sqlite(rws_data)
-rws_list_tables()
+rws_write_sqlite(rws_data, exists = FALSE, conn = conn)
+rws_list_tables(conn)
 ```
 The fact that `rws_write_sqlite()` accepts environments means that the user can easily
 write all the data frames in the current environment to a SQLiteConnection.
@@ -56,10 +48,16 @@ write all the data frames in the current environment to a SQLiteConnection.
 a_table <- rws_data[c("date", "logical")]
 another_table <- rws_data[c("factor", "ordered")]
 not_a_table <- 1
-rws_write_sqlite(environment())
-rws_list_tables()
+rws_write_sqlite(environment(), exists = FALSE, complete = FALSE, conn = conn)
+rws_list_tables(conn)
 ```
-Objects which are not data frames are silently filtered from enviroments but cause an error with lists.
+Objects which are not data frames are silently filtered from enviromnents but cause an error with lists.
+
+### Exists
+
+By default the `exists` argument is `TRUE` which means only existing tables can be writted to.
+
+If the user 
 
 ### Foreign Keys
 
@@ -102,16 +100,16 @@ It is worth noting that if the user wishes to read all the tables from a connect
 
 If the user wishes to read a single data frame they can use `rws_read_sqlite_table()`
 ```{r}
-rws_read_sqlite_table("rws_data")
+rws_read_sqlite_table("rws_data", conn = conn)
 ```
 
 The `rws_read_sqlite_meta()` and `rws_read_sqlite_log()` allow the user to read the meta and log tables.
 ```{r}
-rws_read_sqlite_meta()
+rws_read_sqlite_meta(conn)
 ```
 
 ```{r}
-rws_read_sqlite_log()
+rws_read_sqlite_log(conn)
 ```
 
 ## Cleaning Up

@@ -1,53 +1,47 @@
 context("validate")
 
 test_that("rws_write_sqlite.data.frame checks all columns present", {
-  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(con))
-  op <- options(rws.conn = con)
-  teardown(options(op))
-  
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+
   local <- data.frame(x = as.character(1:3), select = 1:3)
-  DBI::dbCreateTable(con, "local", local)
+  DBI::dbCreateTable(conn, "local", local)
   local <- local[1]
-  expect_error(rws_write_sqlite(local),
+  expect_error(rws_write_sqlite(local, conn = conn),
                "'local' column names must include 'X' and 'SELECT'")
 })
 
 test_that("rws_write_sqlite.data.frame checks missing values", {
-  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(con))
-  op <- options(rws.conn = con)
-  teardown(options(op))
-  
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+
   local <- data.frame(x2 = c(1:3, NA), select2 = 1:4)
   
-  DBI::dbGetQuery(con, "CREATE TABLE local (
+  DBI::dbGetQuery(conn, "CREATE TABLE local (
                   x2 INTEGER NOT NULL,
                   select2 REAL NOT NULL
               )")
   
-  expect_error(rws_write_sqlite(local),
+  expect_error(rws_write_sqlite(local, conn = conn),
                "there are unpermitted missing values in the following column in data 'local': 'X2'")
   local <- na.omit(local)
-  expect_identical(rws_write_sqlite(local), "local")
+  expect_identical(rws_write_sqlite(local, conn = conn), "local")
 })
 
 test_that("rws_write_sqlite.data.frame checks primary key on input values", {
-  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(con))
-  op <- options(rws.conn = con)
-  teardown(options(op))
-  
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+
   local <- data.frame(x2 = c(1,1,2), select2 = c(3,3,3))
   
-  DBI::dbGetQuery(con, "CREATE TABLE local (
+  DBI::dbGetQuery(conn, "CREATE TABLE local (
                   x2 INTEGER,
                   select2 INTEGER,
               PRIMARY KEY (x2, select2))")
   
-  expect_error(rws_write_sqlite(local),
+  expect_error(rws_write_sqlite(local, conn = conn),
                "columns 'X2' and 'SELECT2' in data 'local' must be a unique key")
   local$x2 <- 1:3
-  expect_identical(rws_write_sqlite(local), "local")
+  expect_identical(rws_write_sqlite(local, conn = conn), "local")
 })
 

@@ -4,7 +4,7 @@
 \alias{rws_list_tables}
 \title{Table Names}
 \usage{
-rws_list_tables(conn = getOption("rws.conn", NULL))
+rws_list_tables(conn)
 }
 \arguments{
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}

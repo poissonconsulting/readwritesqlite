@@ -4,7 +4,7 @@
 \alias{rws_read_sqlite_meta}
 \title{Read Meta Data table from SQLite Database}
 \usage{
-rws_read_sqlite_meta(conn = getOption("rws.conn", NULL))
+rws_read_sqlite_meta(conn)
 }
 \arguments{
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
@@ -16,7 +16,7 @@ A data frame of the meta table
 The table is created if it doesn't exist.
 }
 \examples{
-con <- DBI::dbConnect(RSQLite::SQLite())
-rws_read_sqlite_meta(con)
-DBI::dbDisconnect(con)
+conn <- DBI::dbConnect(RSQLite::SQLite())
+rws_read_sqlite_meta(conn)
+DBI::dbDisconnect(conn)
 }

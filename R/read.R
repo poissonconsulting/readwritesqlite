@@ -22,7 +22,7 @@ rws_read_sqlite <- function(x, meta = TRUE, ...) {
 #' @family rws_read_sqlite
 #' @export
 rws_read_sqlite.character <- function(x, meta = TRUE,
-                                      conn = getOption("rws.conn", NULL),
+                                      conn,
                                       ...) {
   check_sqlite_connection(conn, connected = TRUE)
   check_table_names(x, exists = TRUE, delete = FALSE, complete = FALSE, conn = conn)
@@ -58,6 +58,6 @@ rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
 #' @return A data frame of the table.
 #' @export
 rws_read_sqlite_table <- function(x, meta = TRUE, 
-                                  conn = getOption("rws.conn", NULL)) {
+                                  conn) {
   rws_read_sqlite(x, meta = meta, conn = conn)[[1]]
 }

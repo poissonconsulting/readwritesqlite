@@ -4,15 +4,15 @@
 \alias{rws_write_sqlite.data.frame}
 \title{Write a Data Frame to a SQLite Database}
 \usage{
-\method{rws_write_sqlite}{data.frame}(x, exists = getOption("rws.exists",
-  NA), delete = FALSE, commit = TRUE, meta = TRUE, log = TRUE,
-  conn = getOption("rws.conn", NULL), x_name = substitute(x),
-  silent = getOption("rws.silent", FALSE), ...)
+\method{rws_write_sqlite}{data.frame}(x, exists = TRUE, delete = FALSE,
+  commit = TRUE, meta = TRUE, log = TRUE, strict = TRUE,
+  x_name = substitute(x), silent = getOption("rws.silent", FALSE),
+  conn, ...)
 }
 \arguments{
 \item{x}{A data frame.}
 
-\item{exists}{A flag specifying whether the table must already exist.}
+\item{exists}{A flag specifying whether the table(s) must already exist.}
 
 \item{delete}{A flag specifying whether to delete existing rows before 
 inserting data.}
@@ -22,13 +22,15 @@ inserting data.}
 
 \item{meta}{A flag specifying whether to preserve meta data.}
 
-\item{log}{A flag specifying whether to log the operations alterations.}
+\item{log}{A flag specifying whether to log the table operations.}
 
-\item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
+\item{strict}{A flag specifying whether to error if x has extraneous columns or if exists = TRUE extraneous data frames.}
 
 \item{x_name}{A string of the name of the object.}
 
-\item{silent}{A flag specifying whether suppress messages and warnings.}
+\item{silent}{A flag specifying whether to suppress messages and warnings.}
+
+\item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 
 \item{...}{Not used.}
 }

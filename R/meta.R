@@ -57,10 +57,10 @@ confirm_meta_table <- function(conn) {
 #' @return A data frame of the meta table
 #' @export
 #' @examples
-#' con <- DBI::dbConnect(RSQLite::SQLite())
-#' rws_read_sqlite_meta(con)
-#' DBI::dbDisconnect(con)
-rws_read_sqlite_meta <- function(conn = getOption("rws.conn", NULL)) {
+#' conn <- DBI::dbConnect(RSQLite::SQLite())
+#' rws_read_sqlite_meta(conn)
+#' DBI::dbDisconnect(conn)
+rws_read_sqlite_meta <- function(conn) {
   confirm_meta_table(conn)
   data <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   as_conditional_tibble(data)

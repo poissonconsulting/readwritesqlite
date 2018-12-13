@@ -44,10 +44,10 @@ log_command <- function(table_name, command, nrow, conn) {
 #' @return A data frame of the log table
 #' @export
 #' @examples
-#' con <- DBI::dbConnect(RSQLite::SQLite())
-#' rws_read_sqlite_meta(con)
-#' DBI::dbDisconnect(con)
-rws_read_sqlite_log <- function(conn = getOption("rws.conn", NULL)) {
+#' conn <- DBI::dbConnect(RSQLite::SQLite())
+#' rws_read_sqlite_meta(conn)
+#' DBI::dbDisconnect(conn)
+rws_read_sqlite_log <- function(conn) {
   confirm_log_table(conn)
   data <- read_data(.log_table_name, meta = FALSE, conn = conn)
   data$DateTimeUTCLog <- as.POSIXct(data$DateTimeUTCLog, tz = "UTC")

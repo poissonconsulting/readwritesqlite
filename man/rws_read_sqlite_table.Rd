@@ -4,8 +4,7 @@
 \alias{rws_read_sqlite_table}
 \title{Read A Tables from a SQLite Database}
 \usage{
-rws_read_sqlite_table(x, meta = TRUE, conn = getOption("rws.conn",
-  NULL))
+rws_read_sqlite_table(x, meta = TRUE, conn)
 }
 \arguments{
 \item{x}{A string of the table name.}
