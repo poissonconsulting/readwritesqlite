@@ -6,7 +6,8 @@
 \usage{
 rws_write_sqlite(x, exists = getOption("rws.exists", NA),
   delete = FALSE, commit = TRUE, meta = TRUE, log = TRUE,
-  conn = getOption("rws.conn", NULL), x_name = substitute(x), ...)
+  conn = getOption("rws.conn", NULL), x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE), ...)
 }
 \arguments{
 \item{x}{The object to write.}
@@ -26,6 +27,8 @@ inserting data.}
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 
 \item{x_name}{A string of the name of the object.}
+
+\item{silent}{A flag specifying whether suppress messages and warnings.}
 
 \item{...}{Not used.}
 }

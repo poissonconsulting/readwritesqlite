@@ -13,7 +13,8 @@ nrows_table <- function(table_name, conn) {
   nrows
 }
 
-create_table <- function(data, table_name, log, conn) {
+create_table <- function(data, table_name, log, silent, conn) {
+  if(!isFALSE(silent)) wrn("creating table '", table_name, "'")
   DBI::dbCreateTable(conn, table_name, data)
   if(log) log_command(table_name, command = "CREATE", nrow = 0L, conn = conn)
   data

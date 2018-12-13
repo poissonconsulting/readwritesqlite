@@ -1,4 +1,4 @@
-validate_data <- function(data, table_name, conn) {
+validate_data <- function(data, table_name, silent, conn) {
   
   colnames <- to_upper(column_names(table_name, conn = conn))
   data_names <- names(data)
@@ -6,6 +6,12 @@ validate_data <- function(data, table_name, conn) {
   names(data) <- to_upper(names(data))
   
   check_colnames(data, colnames = colnames, x_name = p0("data '", table_name, "'"))
+  
+  if(isFALSE(silent)) {
+    extra <- data_names[!names(data_names) %in% colnames]
+    if(length(extra))
+      wrn(co(extra, p0("the following column%s in data '", table_name, "' %r unrecognised: %c")))
+  }
   
   data <- data[colnames]
   table_info <- table_info(table_name, conn)

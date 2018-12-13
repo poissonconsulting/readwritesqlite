@@ -155,6 +155,19 @@ test_that("rws_write_sqlite.data.frame corrects column order", {
   expect_identical(remote, rbind(local, local, local))
 })
 
+test_that("rws_write_sqlite.data.frame warns for extra columns", {
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(con))
+  op <- options(rws.conn = con)
+  teardown(options(op))
+  
+  local <- data.frame(x = 4:6, y = 1:3)
+  DBI::dbCreateTable(con, "local", local["x"])
+  expect_warning(rws_write_sqlite(local), "the following column in data 'local' is unrecognised: 'y'")
+  remote <- DBI::dbReadTable(con, "local")
+  expect_identical(remote, local["x"])
+})
+
 test_that("rws_write_sqlite.data.frame is case insensitive", {
   con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(con))

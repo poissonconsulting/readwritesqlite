@@ -8,7 +8,7 @@
   exists = getOption("rws.exists", NA), delete = FALSE,
   commit = TRUE, meta = TRUE, log = TRUE,
   conn = getOption("rws.conn", NULL), x_name = substitute(x),
-  complete = FALSE, ...)
+  silent = getOption("rws.silent", FALSE), complete = FALSE, ...)
 }
 \arguments{
 \item{x}{An environment.}
@@ -28,6 +28,8 @@ inserting data.}
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 
 \item{x_name}{A string of the name of the object.}
+
+\item{silent}{A flag specifying whether suppress messages and warnings.}
 
 \item{complete}{A flag specifying whether all the tables in the data base must be represented.
 If complete = TRUE and exists = TRUE then extra tables are ignored (with a warning).}
