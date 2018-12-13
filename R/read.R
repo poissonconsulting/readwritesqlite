@@ -25,7 +25,7 @@ rws_read_sqlite.character <- function(x, meta = TRUE,
                                       conn,
                                       ...) {
   check_sqlite_connection(conn, connected = TRUE)
-  check_table_names(x, exists = TRUE, delete = FALSE, complete = FALSE, conn = conn)
+  check_table_names(x, exists = TRUE, delete = FALSE, all = FALSE, unique = TRUE, conn = conn)
   check_flag(meta)
   check_unused(...)
   

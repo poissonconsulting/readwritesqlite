@@ -117,9 +117,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>rws_write_sqlite</span>(<span class='no'>x</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.exists"</span>, <span class='fl'>NA</span>),
-  <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>conn</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.conn"</span>, <span class='kw'>NULL</span>), <span class='kw'>x_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>x</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>rws_write_sqlite</span>(<span class='no'>x</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>x_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>x</span>),
+  <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.silent"</span>, <span class='fl'>FALSE</span>), <span class='no'>conn</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,7 +130,7 @@
     </tr>
     <tr>
       <th>exists</th>
-      <td><p>A flag specifying whether the table must already exist.</p></td>
+      <td><p>A flag specifying whether the table(s) must already exist.</p></td>
     </tr>
     <tr>
       <th>delete</th>
@@ -148,15 +148,23 @@ inserting data.</p></td>
     </tr>
     <tr>
       <th>log</th>
-      <td><p>A flag specifying whether to log the operations alterations.</p></td>
+      <td><p>A flag specifying whether to log the table operations.</p></td>
     </tr>
     <tr>
-      <th>conn</th>
-      <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
+      <th>strict</th>
+      <td><p>A flag specifying whether to error if x has extraneous columns or if exists = TRUE extraneous data frames.</p></td>
     </tr>
     <tr>
       <th>x_name</th>
       <td><p>A string of the name of the object.</p></td>
+    </tr>
+    <tr>
+      <th>silent</th>
+      <td><p>A flag specifying whether to suppress messages and warnings.</p></td>
+    </tr>
+    <tr>
+      <th>conn</th>
+      <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
     </tr>
     <tr>
       <th>...</th>

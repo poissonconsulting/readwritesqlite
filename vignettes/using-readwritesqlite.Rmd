@@ -27,15 +27,9 @@ library(readwritesqlite)
 conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 ```
 
-## Options
-
-The readwritesqlite package has one option.
-
-- `rws.silent` a flag which specifies whether package specific messages and warnings should be suppressed.
-
 ## Writing Data
 
-Individual data frames or environments or named lists of data frames can be written to a connection using `rws_write_sqlite()`.
+Individual data frames, environments or named lists of data frames can be written to a connection using `rws_write_sqlite()`.
 
 In the case of a data frame the default table name is the name of the object.
 ```{r}
@@ -48,16 +42,17 @@ write all the data frames in the current environment to a SQLiteConnection.
 a_table <- rws_data[c("date", "logical")]
 another_table <- rws_data[c("factor", "ordered")]
 not_a_table <- 1
-rws_write_sqlite(environment(), exists = FALSE, complete = FALSE, conn = conn)
+rws_write_sqlite(environment(), exists = FALSE, all = FALSE, conn = conn)
 rws_list_tables(conn)
 ```
 Objects which are not data frames are silently filtered from enviromnents but cause an error with lists.
 
 ### Exists
 
-By default the `exists` argument is `TRUE` which means only existing tables can be writted to.
-
-If the user 
+By default the `exists` argument to the `rws_write_sqlite()` function is `TRUE`.
+This means that only existing tables (which were presumably created by the database designer with appropriate checks and foreign keys) can be written to.
+If the user wishes to automatically create new tables if they don't exist before writing then they should set `exists = NA`.
+If the user only wishes to create and write to new tables then they should set `exists = FALSE`.
 
 ### Foreign Keys
 
@@ -67,36 +62,38 @@ If any data does the database is left unchanged.
 ### Commiting Data
 
 By default, if no check or key violations occur the data frame(s) are written to the database.
-If, however, the user wishes to simply confirm that data could be written to a database without actually making any changes then they
+Otherwise an error message is issued and all changes are rolled back.
+If the user wishes to simply confirm that data could be written to a database without actually making any changes then they
 can call `rws_write_sqlite()` with `commit = FALSE`.
 
 ### Deleting Data (and Meta Data)
 
 Meta data is recorded if the user uses `rws_write_sqlite()` to write data to an empty table.
-In order to the change the meta data the user should read the existing data from the table 
+In order to change the meta data the user should read the existing data from the table 
 (using `rws_read_sqlite()`), modify it accordingly and then re-write it using 
 `rws_write_sqlite()` with `delete = TRUE`. 
 The only exception is for factors and ordered factors.
-In this case the user can pass data with additional or rearranged factor or ordered factor levels without deleting the existing data.
+In this case the user can pass data with additional or rearranged levels without deleting the existing data.
 
-### Complete Data
+### Duplicate Data
 
-If the user sets `complete = TRUE` when writing enviroments or named lists of data frames
-then the function issues an informative error message if any of data frames have duplicated names or some of the existing tables are not represented.
-If it is also the case that `exists = TRUE` then extra data frames are ignored and an informative warning message is issued.
-The combination of `exists = TRUE` and `complete = TRUE` in conjunction with an environment of data frames
-is really useful for ensuring all tables are populated while automatically removing extraneous objects and data frames.
+When passing data frames to `rws_write_sqlite()` in the form of an environment or named list, each table must be represented by just one data frame if `unique = TRUE` (the default), `delete = TRUE` (because then the order matters) or `exists = FALSE` (because the table will exist when the duplicate is written).
+
+### All Data
+
+When passing data frames to `rws_write_sqlite()` in the form of an environment or named list, if `all = TRUE` (the default) and `exists` is not `FALSE` then each existing tables must be represented at least once.
+This option is useful for checking all the tables in a data frame are populated when transferring data from an old to new database.
 
 ## Reading Data
 
-Data can be read using `rws_read_sqlite()` which takes a vector of table names 
-or a connection and returns a named list of data frames (or if the `tibble` package is installed tibbles).
+Data can be read using `rws_read_sqlite()` which either takes a vector of table names or the connection as the first argument.
+`rws_read_sqlite()` returns a named list of data frames (or if the `tibble` package is installed tibbles).
+If the connection is the first argument then the named list consists of all tables in the data base.
 ```{r}
 tables <- rws_read_sqlite(conn)
 names(tables)
 tables$rws_data
 ```
-It is worth noting that if the user wishes to read all the tables from a connection then they must pass the connection as the first argument even if the connection is specified in the options.
 
 If the user wishes to read a single data frame they can use `rws_read_sqlite_table()`
 ```{r}

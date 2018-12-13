@@ -34,7 +34,7 @@ However, current solutions do not preserve meta data, log changes or provide par
 - logs 
     - the date time
     - system user
-    - number of rows deleted, or inserted by table
+    - table creation and data insertion or deletion
 - provides informative error messages if
     - columns are missing (extra columns are silently ignored and the remaining columns correctly ordered)
     - NOT NULL columns contain missing values
@@ -56,7 +56,7 @@ conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
 print(rws_data)
 
-rws_write_sqlite(rws_data, conn = conn)
+rws_write_sqlite(rws_data, exists = FALSE, conn = conn)
 
 rws_read_sqlite(conn)
 

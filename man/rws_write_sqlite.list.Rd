@@ -7,7 +7,7 @@
 \method{rws_write_sqlite}{list}(x, exists = TRUE, delete = FALSE,
   commit = TRUE, meta = TRUE, log = TRUE, strict = TRUE,
   x_name = substitute(x), silent = getOption("rws.silent", FALSE),
-  conn, complete = TRUE, ...)
+  conn, all = TRUE, unique = TRUE, ...)
 }
 \arguments{
 \item{x}{A named list of data frames.}
@@ -32,7 +32,9 @@ inserting data.}
 
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 
-\item{complete}{A flag specifying whether all the tables in the data base must be represented.}
+\item{all}{A flag specifying whether all the existing tables in the data base must be represented.}
+
+\item{unique}{A flag specifying whether each table must represented by no more than one data frame.}
 
 \item{...}{Not used.}
 }

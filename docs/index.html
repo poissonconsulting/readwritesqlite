@@ -98,7 +98,7 @@
 <ul>
 <li>the date time</li>
 <li>system user</li>
-<li>number of rows deleted, or inserted by table</li>
+<li>table creation and data insertion or deletion</li>
 </ul>
 </li>
 <li>provides informative error messages if
@@ -129,7 +129,7 @@
 <a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; 2   FALSE 2001-02-03      y       y 2006-07-08 09:10:11  11.5     1, 0</span></a>
 <a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt; 3      NA       &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;                &lt;NA&gt;    NA     1, 1</span></a>
 <a class="sourceLine" id="cb1-9" title="9"></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="kw"><a href="reference/rws_write_sqlite.html">rws_write_sqlite</a></span>(rws_data, <span class="dt">conn =</span> conn)</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw"><a href="reference/rws_write_sqlite.html">rws_write_sqlite</a></span>(rws_data, <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</a>
 <a class="sourceLine" id="cb1-11" title="11"></a>
 <a class="sourceLine" id="cb1-12" title="12"><span class="kw"><a href="reference/rws_read_sqlite.html">rws_read_sqlite</a></span>(conn)</a>
 <a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; $rws_data</span></a>

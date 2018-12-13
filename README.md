@@ -29,7 +29,7 @@ provide particularly useful error messages.
   - logs
       - the date time
       - system user
-      - number of rows deleted, or inserted by table
+      - table creation and data insertion or deletion
   - provides informative error messages if
       - columns are missing (extra columns are silently ignored and the
         remaining columns correctly ordered)
@@ -56,7 +56,7 @@ print(rws_data)
 #> 2   FALSE 2001-02-03      y       y 2006-07-08 09:10:11  11.5     1, 0
 #> 3      NA       <NA>   <NA>    <NA>                <NA>    NA     1, 1
 
-rws_write_sqlite(rws_data, conn = conn)
+rws_write_sqlite(rws_data, exists = FALSE, conn = conn)
 
 rws_read_sqlite(conn)
 #> $rws_data

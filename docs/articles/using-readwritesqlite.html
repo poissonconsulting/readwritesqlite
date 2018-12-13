@@ -73,7 +73,7 @@
       <h1>Using readwritesqlite</h1>
                         <h4 class="author">Joe Thorley</h4>
             
-            <h4 class="date">2018-12-11</h4>
+            <h4 class="date">2018-12-12</h4>
       
       
       <div class="hidden name"><code>using-readwritesqlite.Rmd</code></div>
@@ -90,35 +90,27 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readwritesqlite)</a>
 <a class="sourceLine" id="cb1-2" title="2">conn &lt;-<span class="st"> </span>DBI<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/DBI/topics/dbConnect">dbConnect</a></span>(RSQLite<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/RSQLite/topics/SQLite">SQLite</a></span>(), <span class="st">":memory:"</span>)</a></code></pre></div>
 </div>
-<div id="options" class="section level2">
-<h2 class="hasAnchor">
-<a href="#options" class="anchor"></a>Options</h2>
-<p>The readwritesqlite package has two options.</p>
-<ul>
-<li>
-<code>rws.conn</code> which can be used to specify the default connection</li>
-<li>
-<code>rws.exists</code> which can be used to specify whether by default a table must (or mustn’t) exist before writing</li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">rws.conn =</span> conn)</a></code></pre></div>
-<p>In general it is good practice to set <code><a href="https://www.rdocumentation.org/packages/base/topics/options">options(rws.exists = TRUE)</a></code> to ensure all tables have already been created by the database designer (presumably with the necessary checks and foreign keys).</p>
-</div>
 <div id="writing-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#writing-data" class="anchor"></a>Writing Data</h2>
-<p>Individual data frames or environments or named lists of data frames can be written to a connection using <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code>.</p>
+<p>Individual data frames, environments or named lists of data frames can be written to a connection using <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code>.</p>
 <p>In the case of a data frame the default table name is the name of the object.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/rws_write_sqlite.html">rws_write_sqlite</a></span>(rws_data)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span>()</a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; [1] "rws_data"</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/rws_write_sqlite.html">rws_write_sqlite</a></span>(rws_data, <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span>(conn)</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co">#&gt; [1] "rws_data"</span></a></code></pre></div>
 <p>The fact that <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> accepts environments means that the user can easily write all the data frames in the current environment to a SQLiteConnection.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">a_table &lt;-<span class="st"> </span>rws_data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"date"</span>, <span class="st">"logical"</span>)]</a>
-<a class="sourceLine" id="cb4-2" title="2">another_table &lt;-<span class="st"> </span>rws_data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"factor"</span>, <span class="st">"ordered"</span>)]</a>
-<a class="sourceLine" id="cb4-3" title="3">not_a_table &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="kw"><a href="../reference/rws_write_sqlite.html">rws_write_sqlite</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/environment">environment</a></span>())</a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="kw"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span>()</a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></a></code></pre></div>
-<p>Objects which are not data frames are silently filtered from enviroments but cause an error with lists.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">a_table &lt;-<span class="st"> </span>rws_data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"date"</span>, <span class="st">"logical"</span>)]</a>
+<a class="sourceLine" id="cb3-2" title="2">another_table &lt;-<span class="st"> </span>rws_data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"factor"</span>, <span class="st">"ordered"</span>)]</a>
+<a class="sourceLine" id="cb3-3" title="3">not_a_table &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="../reference/rws_write_sqlite.html">rws_write_sqlite</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/environment">environment</a></span>(), <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">all =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span>(conn)</a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></a></code></pre></div>
+<p>Objects which are not data frames are silently filtered from enviromnents but cause an error with lists.</p>
+<div id="exists" class="section level3">
+<h3 class="hasAnchor">
+<a href="#exists" class="anchor"></a>Exists</h3>
+<p>By default the <code>exists</code> argument to the <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> function is <code>TRUE</code>. This means that only existing tables (which were presumably created by the database designer with appropriate checks and foreign keys) can be written to. If the user wishes to automatically create new tables if they don’t exist before writing then they should set <code>exists = NA</code>. If the user only wishes to create and write to new tables then they should set <code>exists = FALSE</code>.</p>
+</div>
 <div id="foreign-keys" class="section level3">
 <h3 class="hasAnchor">
 <a href="#foreign-keys" class="anchor"></a>Foreign Keys</h3>
@@ -127,76 +119,80 @@
 <div id="commiting-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#commiting-data" class="anchor"></a>Commiting Data</h3>
-<p>By default, if no check or key violations occur the data frame(s) are written to the database. If, however, the user wishes to simply confirm that data could be written to a database without actually making any changes then they can call <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> with <code>commit = FALSE</code>.</p>
+<p>By default, if no check or key violations occur the data frame(s) are written to the database. Otherwise an error message is issued and all changes are rolled back. If the user wishes to simply confirm that data could be written to a database without actually making any changes then they can call <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> with <code>commit = FALSE</code>.</p>
 </div>
 <div id="deleting-data-and-meta-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#deleting-data-and-meta-data" class="anchor"></a>Deleting Data (and Meta Data)</h3>
-<p>Meta data is recorded if the user uses <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> to write data to an empty table. In order to the change the meta data the user should read the existing data from the table (using <code><a href="../reference/rws_read_sqlite.html">rws_read_sqlite()</a></code>), modify it accordingly and then re-write it using <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> with <code>delete = TRUE</code>. The only exception is for factors and ordered factors. In this case the user can pass data with additional or rearranged factor or ordered factor levels without deleting the existing data.</p>
+<p>Meta data is recorded if the user uses <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> to write data to an empty table. In order to change the meta data the user should read the existing data from the table (using <code><a href="../reference/rws_read_sqlite.html">rws_read_sqlite()</a></code>), modify it accordingly and then re-write it using <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> with <code>delete = TRUE</code>. The only exception is for factors and ordered factors. In this case the user can pass data with additional or rearranged levels without deleting the existing data.</p>
 </div>
-<div id="complete-data" class="section level3">
+<div id="duplicate-data" class="section level3">
 <h3 class="hasAnchor">
-<a href="#complete-data" class="anchor"></a>Complete Data</h3>
-<p>If the user sets <code>complete = TRUE</code> when writing enviroments or named lists of data frames then the function issues an informative error message if any of data frames have duplicated names or some of the existing tables are not represented. If it is also the case that <code>exists = TRUE</code> then extra data frames are ignored and an informative warning message is issued. The combination of <code>exists = TRUE</code> and <code>complete = TRUE</code> in conjunction with an environment of data frames is really useful for ensuring all tables are populated while automatically removing extraneous objects and data frames.</p>
+<a href="#duplicate-data" class="anchor"></a>Duplicate Data</h3>
+<p>When passing data frames to <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> in the form of an environment or named list, each table must be represented by just one data frame if <code>unique = TRUE</code> (the default), <code>delete = TRUE</code> (because then the order matters) or <code>exists = FALSE</code> (because the table will exist when the duplicate is written).</p>
+</div>
+<div id="all-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#all-data" class="anchor"></a>All Data</h3>
+<p>When passing data frames to <code><a href="../reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> in the form of an environment or named list, if <code>all = TRUE</code> (the default) and <code>exists</code> is not <code>FALSE</code> then each existing tables must be represented at least once. This option is useful for checking all the tables in a data frame are populated when transferring data from an old to new database.</p>
 </div>
 </div>
 <div id="reading-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reading-data" class="anchor"></a>Reading Data</h2>
-<p>Data can be read using <code><a href="../reference/rws_read_sqlite.html">rws_read_sqlite()</a></code> which takes a vector of table names or a connection and returns a named list of data frames (or if the <code>tibble</code> package is installed tibbles).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">tables &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rws_read_sqlite.html">rws_read_sqlite</a></span>(conn)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(tables)</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></a>
-<a class="sourceLine" id="cb5-4" title="4">tables<span class="op">$</span>rws_data</a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt;   logical date       factor ordered posixct             units</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;              &lt;S3:&gt;</span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…</span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                  "  N…</span></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="co">#&gt; # ... with 1 more variable: geometry &lt;POINT [°]&gt;</span></a></code></pre></div>
-<p>It is worth noting that if the user wishes to read all the tables from a connection then they must pass the connection as the first argument even if the connection is specified in the options.</p>
+<p>Data can be read using <code><a href="../reference/rws_read_sqlite.html">rws_read_sqlite()</a></code> which either takes a vector of table names or the connection as the first argument. <code><a href="../reference/rws_read_sqlite.html">rws_read_sqlite()</a></code> returns a named list of data frames (or if the <code>tibble</code> package is installed tibbles). If the connection is the first argument then the named list consists of all tables in the data base.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">tables &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rws_read_sqlite.html">rws_read_sqlite</a></span>(conn)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(tables)</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></a>
+<a class="sourceLine" id="cb4-4" title="4">tables<span class="op">$</span>rws_data</a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt;   logical date       factor ordered posixct             units</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;              &lt;S3:&gt;</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                  "  N…</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; # ... with 1 more variable: geometry &lt;POINT [°]&gt;</span></a></code></pre></div>
 <p>If the user wishes to read a single data frame they can use <code><a href="../reference/rws_read_sqlite_table.html">rws_read_sqlite_table()</a></code></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/rws_read_sqlite_table.html">rws_read_sqlite_table</a></span>(<span class="st">"rws_data"</span>)</a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="co">#&gt;   logical date       factor ordered posixct             units</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;              &lt;S3:&gt;</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…</span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                  "  N…</span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; # ... with 1 more variable: geometry &lt;POINT [°]&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/rws_read_sqlite_table.html">rws_read_sqlite_table</a></span>(<span class="st">"rws_data"</span>, <span class="dt">conn =</span> conn)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;   logical date       factor ordered posixct             units</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;              &lt;S3:&gt;</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                  "  N…</span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; # ... with 1 more variable: geometry &lt;POINT [°]&gt;</span></a></code></pre></div>
 <p>The <code><a href="../reference/rws_read_sqlite_meta.html">rws_read_sqlite_meta()</a></code> and <code><a href="../reference/rws_read_sqlite_log.html">rws_read_sqlite_log()</a></code> allow the user to read the meta and log tables.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/rws_read_sqlite_meta.html">rws_read_sqlite_meta</a></span>()</a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="co">#&gt; # A tibble: 11 x 4</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt;    TableMeta    ColumnMeta MetaMeta                        DescriptionMeta</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                           &lt;chr&gt;          </span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt;  1 A_TABLE      DATE       class: Date                     &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt;  2 A_TABLE      LOGICAL    class: logical                  &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt;  3 ANOTHER_TAB… FACTOR     factor: 'x', 'y'                &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt;  4 ANOTHER_TAB… ORDERED    ordered: 'y', 'x'               &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt;  5 RWS_DATA     DATE       class: Date                     &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt;  6 RWS_DATA     FACTOR     factor: 'x', 'y'                &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt;  7 RWS_DATA     GEOMETRY   proj: +proj=longlat +datum=WGS… &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt;  8 RWS_DATA     LOGICAL    class: logical                  &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt;  9 RWS_DATA     ORDERED    ordered: 'y', 'x'               &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt; 10 RWS_DATA     POSIXCT    tz: Etc/GMT+8                   &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; 11 RWS_DATA     UNITS      units: m                        &lt;NA&gt;</span></a></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/rws_read_sqlite_log.html">rws_read_sqlite_log</a></span>()</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; # A tibble: 6 x 5</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt;   DateTimeUTCLog      UserLog TableLog      CommandLog NRowLog</span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; 1 2018-12-12 03:35:08 joe     RWS_DATA      CREATE           0</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 2 2018-12-12 03:35:08 joe     RWS_DATA      INSERT           3</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 3 2018-12-12 03:35:08 joe     A_TABLE       CREATE           0</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 4 2018-12-12 03:35:08 joe     A_TABLE       INSERT           3</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 5 2018-12-12 03:35:08 joe     ANOTHER_TABLE CREATE           0</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 6 2018-12-12 03:35:08 joe     ANOTHER_TABLE INSERT           3</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/rws_read_sqlite_meta.html">rws_read_sqlite_meta</a></span>(conn)</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co">#&gt; # A tibble: 11 x 4</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co">#&gt;    TableMeta    ColumnMeta MetaMeta                        DescriptionMeta</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                           &lt;chr&gt;          </span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt;  1 A_TABLE      DATE       class: Date                     &lt;NA&gt;           </span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt;  2 A_TABLE      LOGICAL    class: logical                  &lt;NA&gt;           </span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt;  3 ANOTHER_TAB… FACTOR     factor: 'x', 'y'                &lt;NA&gt;           </span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt;  4 ANOTHER_TAB… ORDERED    ordered: 'y', 'x'               &lt;NA&gt;           </span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt;  5 RWS_DATA     DATE       class: Date                     &lt;NA&gt;           </span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt;  6 RWS_DATA     FACTOR     factor: 'x', 'y'                &lt;NA&gt;           </span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt;  7 RWS_DATA     GEOMETRY   proj: +proj=longlat +datum=WGS… &lt;NA&gt;           </span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt;  8 RWS_DATA     LOGICAL    class: logical                  &lt;NA&gt;           </span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt;  9 RWS_DATA     ORDERED    ordered: 'y', 'x'               &lt;NA&gt;           </span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="co">#&gt; 10 RWS_DATA     POSIXCT    tz: Etc/GMT+8                   &lt;NA&gt;           </span></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="co">#&gt; 11 RWS_DATA     UNITS      units: m                        &lt;NA&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/rws_read_sqlite_log.html">rws_read_sqlite_log</a></span>(conn)</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="co">#&gt; # A tibble: 6 x 5</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt;   DateTimeUTCLog      UserLog TableLog      CommandLog NRowLog</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt; 1 2018-12-13 05:22:35 joe     RWS_DATA      CREATE           0</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; 2 2018-12-13 05:22:35 joe     RWS_DATA      INSERT           3</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; 3 2018-12-13 05:22:35 joe     A_TABLE       CREATE           0</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; 4 2018-12-13 05:22:35 joe     A_TABLE       INSERT           3</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; 5 2018-12-13 05:22:35 joe     ANOTHER_TABLE CREATE           0</span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; 6 2018-12-13 05:22:35 joe     ANOTHER_TABLE INSERT           3</span></a></code></pre></div>
 </div>
 <div id="cleaning-up" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cleaning-up" class="anchor"></a>Cleaning Up</h2>
 <p>It’s good practice to close a connection once you have finished with it.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">DBI<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/DBI/topics/dbDisconnect">dbDisconnect</a></span>(conn)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">DBI<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/DBI/topics/dbDisconnect">dbDisconnect</a></span>(conn)</a></code></pre></div>
 </div>
   </div>
 
@@ -206,7 +202,6 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#starting">Starting</a></li>
-      <li><a href="#options">Options</a></li>
       <li><a href="#writing-data">Writing Data</a></li>
       <li><a href="#reading-data">Reading Data</a></li>
       <li><a href="#cleaning-up">Cleaning Up</a></li>

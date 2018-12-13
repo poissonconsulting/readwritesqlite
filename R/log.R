@@ -7,7 +7,7 @@ log_schema <- function () {
   NRowLog INTEGER NOT NULL,
   CHECK (
     DATETIME(DateTimeUTCLog) IS DateTimeUTCLog AND
-    CommandLog IN ('CREATE', 'UPDATE', 'DELETE', 'INSERT') AND
+    CommandLog IN ('CREATE', 'UPDATE', 'DELETE', 'INSERT', 'DROP') AND
     NRowLog >= 0
   ));")
 }

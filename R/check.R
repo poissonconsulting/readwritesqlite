@@ -44,34 +44,34 @@ check_table_name <- function(table_name, exists, conn) {
   table_name
 }
 
-check_table_names <- function(table_names, exists, delete, complete, conn) {
+check_table_names <- function(table_names, exists, delete, all, unique, conn) {
   check_character(table_names)
   if(!length(table_names)) return(table_names)
   
   vapply(table_names, check_table_name, "", exists = exists, conn = conn,
          USE.NAMES = FALSE)
   
-  if(isFALSE(exists) || isTRUE(delete) || isTRUE(complete)) {
+  if(unique || isFALSE(exists) || delete) {
     duplicates <- duplicated(to_upper(table_names))
     if(any(duplicates)) {
       table_names <- table_names[!duplicated(to_upper(table_names))]
       table_names <- sort(table_names)
       
+      unique <- if(unique) "unique = TRUE" else NULL
       exists <- if(isFALSE(exists)) "exists = FALSE" else NULL
-      delete <- if(isTRUE(delete)) "delete = TRUE" else NULL
-      complete <- if(isTRUE(complete)) "complete = TRUE" else NULL
+      delete <- if(delete) "delete = TRUE" else NULL
       
-      but <- p0(c(exists, delete, complete), collapse = " and ")
+      but <- p0(c(unique, exists, delete), collapse = " and ")
       
       err(co(table_names, one = p0(but, " but the following table name%s %r duplicated: %c"),
                conjunction = "and"))
     }
   }
-  if(isTRUE(complete)) {
+  if(all && !isFALSE(exists)) {
     missing <- 
       setdiff(to_upper(rws_list_tables(conn)), to_upper(table_names))
     if(length(missing)) {
-      err(co(missing, "complete = TRUE but the following table name%s %r not represented: %c",
+      err(co(missing, "all = TRUE and exists != FALSE but the following table name%s %r not represented: %c",
              conjunction = "and"))
     }
   }

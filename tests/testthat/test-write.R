@@ -20,7 +20,7 @@ test_that("rws_write_sqlite.data.frame checks table exists", {
   teardown(DBI::dbDisconnect(conn))
   
   local <- data.frame(x = as.character(1:3))
-  expect_error(rws_write_sqlite(local, exists = TRUE, conn = conn),
+  expect_error(rws_write_sqlite(local, conn = conn),
                "table 'local' does not exist")
 })
 
@@ -265,7 +265,7 @@ test_that("rws_write_sqlite writes list with 2 identically named data frames", {
   y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
   
   DBI::dbCreateTable(conn, "LOCAL", y$local)
-  expect_identical(rws_write_sqlite(y, conn = conn, complete = FALSE), c("local", "LOCAL"))
+  expect_identical(rws_write_sqlite(y, conn = conn, unique = FALSE), c("local", "LOCAL"))
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, rbind(y$local, y$LOCAL))
 })
@@ -277,8 +277,8 @@ test_that("rws_write_sqlite errors if list with 2 identically named data frames 
   y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
   
   DBI::dbCreateTable(conn, "LOCAL", y$local)
-  expect_error(rws_write_sqlite(y, complete = TRUE, conn = conn), 
-               "complete = TRUE but the following table name is duplicated: 'local'")
+  expect_error(rws_write_sqlite(y, unique = TRUE, conn = conn), 
+               "unique = TRUE but the following table name is duplicated: 'local'")
 })
 
 test_that("rws_write_sqlite errors if complete = TRUE and not all data frames", {
@@ -289,8 +289,8 @@ test_that("rws_write_sqlite errors if complete = TRUE and not all data frames", 
   
   DBI::dbCreateTable(conn, "LOCAL", y$local)
   DBI::dbCreateTable(conn, "LOCAL2", y$local)
-  expect_error(rws_write_sqlite(y, complete = TRUE, conn = conn), 
-               "complete = TRUE but the following table name is not represented: 'LOCAL2'")
+  expect_error(rws_write_sqlite(y, all = TRUE, conn = conn), 
+               "all = TRUE and exists != FALSE but the following table name is not represented: 'LOCAL2'")
 })
 
 test_that("rws_write_sqlite errors if strict = TRUE and exists = TRUE and extra data frames", {
@@ -300,9 +300,9 @@ test_that("rws_write_sqlite errors if strict = TRUE and exists = TRUE and extra 
   y <- list(local = data.frame(x = 1:3), local2 = data.frame(y = 1:2))
   
   DBI::dbCreateTable(conn, "LOCAL", y$local)
-  expect_error(rws_write_sqlite(y, exists = TRUE, conn = conn), 
+  expect_error(rws_write_sqlite(y, conn = conn), 
                  "exists = TRUE but the following data frame in 'y' is unrecognised: 'local2'")
-  expect_warning(rws_write_sqlite(y, exists = TRUE, complete = TRUE, strict = FALSE, conn = conn), 
+  expect_warning(rws_write_sqlite(y, strict = FALSE, conn = conn), 
                  "exists = TRUE but the following data frame in 'y' is unrecognised: 'local2'")
 })
 
@@ -324,9 +324,9 @@ test_that("rws_write_sqlite not commits", {
   
   y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
   
-  expect_identical(rws_write_sqlite(y, exists = NA, commit = FALSE, complete = FALSE, conn = conn), c("local", "LOCAL"))
+  expect_identical(rws_write_sqlite(y, exists = NA, commit = FALSE, unique = FALSE, conn = conn), c("local", "LOCAL"))
   expect_identical(DBI::dbListTables(conn), character(0))
-  expect_identical(rws_write_sqlite(y, exists = NA, commit = TRUE, complete = FALSE, conn = conn), c("local", "LOCAL"))
+  expect_identical(rws_write_sqlite(y, exists = NA, commit = TRUE, unique = FALSE, conn = conn), c("local", "LOCAL"))
   expect_identical(DBI::dbListTables(conn), c("local", "readwritesqlite_log", "readwritesqlite_meta"))
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, rbind(y$local, y$LOCAL))

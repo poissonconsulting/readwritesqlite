@@ -90,7 +90,8 @@ rws_write_sqlite.data.frame <- function(
 #'
 #' @inheritParams rws_write_sqlite
 #' @param x A named list of data frames.
-#' @param complete A flag specifying whether all the tables in the data base must be represented.
+#' @param all A flag specifying whether all the existing tables in the data base must be represented.
+#' @param unique A flag specifying whether each table must represented by no more than one data frame.
 #' @family rws_write_sqlite
 #' @export
 rws_write_sqlite.list <- function(x,
@@ -101,7 +102,8 @@ rws_write_sqlite.list <- function(x,
                                   x_name = substitute(x), 
                                   silent = getOption("rws.silent", FALSE),
                                   conn, 
-                                  complete = TRUE, ...) {
+                                  all = TRUE, 
+                                  unique = TRUE, ...) {
   check_named(x)
   check_scalar(exists, c(TRUE, NA))
   check_flag(delete)
@@ -113,7 +115,8 @@ rws_write_sqlite.list <- function(x,
   x_name <- chk_deparse(x_name)
   check_string(x_name)
   check_flag(silent)
-  check_flag(complete)
+  check_flag(all)
+  check_flag(unique)
   check_unused(...)
   
   if(!length(x)) return(character(0))
@@ -134,7 +137,8 @@ rws_write_sqlite.list <- function(x,
     if(!length(x)) return(invisible(character(0)))
   }
   
-  check_table_names(names(x), exists = exists, delete = delete, complete = complete, conn = conn)
+  check_table_names(names(x), exists = exists, delete = delete, all = all, 
+                    unique = unique, conn = conn)
   
   foreign_keys <- foreign_keys(TRUE, conn)
   defer <- defer_foreign_keys(TRUE, conn)
@@ -172,7 +176,8 @@ rws_write_sqlite.environment <- function(x,
                                          
                                          silent = getOption("rws.silent", FALSE),
                                          conn,
-                                         complete = TRUE, ...) {
+                                         all = TRUE, 
+                                         unique = TRUE, ...) {
   x_name <- chk_deparse(x_name)
   check_string(x_name)
   check_flag(silent)
@@ -190,5 +195,5 @@ rws_write_sqlite.environment <- function(x,
   invisible(
     rws_write_sqlite(x, exists = exists, delete = delete, commit = commit,
                      meta = meta, log = log, strict = strict, silent = silent, 
-                     complete = complete, conn = conn))
+                     conn = conn, all = all, unique = unique))
 }
