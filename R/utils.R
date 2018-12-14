@@ -9,7 +9,7 @@
 rws_list_tables <- function(conn) {
   check_sqlite_connection(conn, connected = TRUE)
   tables <- DBI::dbListTables(conn)
-  reserved <- to_upper(c(.log_table_name, .meta_table_name))
-  tables <- tables[!to_upper(tables) %in% reserved]
+  reserved <- reserved_tables()
+  tables <- tables[!to_upper(tables) %in% to_upper(reserved)]
   sort(tables)
 }

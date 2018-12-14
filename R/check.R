@@ -28,12 +28,9 @@ check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), e
 check_table_name <- function(table_name, exists, conn) {
   check_string(table_name)
   
-  if(to_upper(table_name) == to_upper(.log_table_name))
+  if(to_upper(table_name) %in% to_upper(reserved_tables()))
     err("'", table_name, "' is a reserved table")
-  
-  if(to_upper(table_name) == to_upper(.meta_table_name))
-    err("'", table_name, "' is a reserved table")
-  
+
   table_exists <- tables_exists(table_name, conn)
   if(isTRUE(exists) && !table_exists)
     err("table '", table_name, "' does not exist")

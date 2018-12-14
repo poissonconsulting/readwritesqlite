@@ -21,7 +21,11 @@ create_table <- function(data, table_name, log, silent, conn) {
 }
 
 write_data <- function(data, table_name, meta, log, conn) {
-  if(meta) data <- write_meta_data(data, table_name = table_name, conn = conn)
+  if(meta) {
+    data <- write_meta_data(data, table_name = table_name, conn = conn)
+    data <- write_sf_column(data, table_name, conn = conn)
+  }
+  data <- as.data.frame(data)
   if (nrow(data)) {
     DBI::dbAppendTable(conn, table_name, data)
     if(log) log_command(table_name, command = "INSERT", nrow = nrow(data), conn = conn)
@@ -40,7 +44,10 @@ delete_data <- function(table_name, meta, log, conn) {
 read_data <- function(table_name, meta, conn) {
   data <- DBI::dbReadTable(conn, table_name)
   colnames(data) <- column_names(table_name, conn)
-  if(meta) data <- read_meta_data(data, table_name, conn)
+  if(meta) {
+    data <- read_meta_data(data, table_name, conn)
+    data <- read_sf_column(data, table_name, conn)
+  }
   data
 }
 

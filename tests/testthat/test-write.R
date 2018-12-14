@@ -327,7 +327,7 @@ test_that("rws_write_sqlite not commits", {
   expect_identical(rws_write_sqlite(y, exists = NA, commit = FALSE, unique = FALSE, conn = conn), c("local", "LOCAL"))
   expect_identical(DBI::dbListTables(conn), character(0))
   expect_identical(rws_write_sqlite(y, exists = NA, commit = TRUE, unique = FALSE, conn = conn), c("local", "LOCAL"))
-  expect_identical(DBI::dbListTables(conn), c("local", "readwritesqlite_log", "readwritesqlite_meta"))
+  expect_identical(DBI::dbListTables(conn), c("local", "readwritesqlite_log", "readwritesqlite_meta", "readwritesqlite_sf"))
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, rbind(y$local, y$LOCAL))
 })
@@ -411,4 +411,73 @@ test_that("strict environment with extra data frame and extra column", {
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, rbind(local[1], local[1]))
   expect_identical(rws_list_tables(conn), "local")
+})
+
+test_that("sf data frames with single geometry passed back", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  local <- sf::st_sf(rws_data["geometry"])
+  
+  DBI::dbCreateTable(conn, "local", local)  
+  expect_identical(rws_write_sqlite(local, conn = conn), "local")
+  sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
+  expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "GEOMETRY",
+                                  stringsAsFactors = FALSE))
+  remote <- rws_read_sqlite_table("local", conn = conn)
+  expect_identical(remote, local)
+})
+
+test_that("sf data frames with two geometries and correct one passed back", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  
+  local <- rws_data["geometry"]
+  colnames(local) <- "first"
+  local$second <- local$first
+  local <- sf::st_sf(local, sf_column_name = "second")
+
+  DBI::dbCreateTable(conn, "local", local)  
+  expect_identical(rws_write_sqlite(local, conn = conn), "local")
+  sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
+  expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "SECOND",
+                                  stringsAsFactors = FALSE))
+  remote <- rws_read_sqlite_table("local", conn = conn)
+  expect_identical(remote, local)
+})
+
+test_that("sf can change sf_column", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  local <- rws_data["geometry"]
+  colnames(local) <- "first"
+  local$second <- local$first
+  local <- sf::st_sf(local, sf_column_name = "second")
+
+  DBI::dbCreateTable(conn, "local", local)  
+  expect_identical(rws_write_sqlite(local, conn = conn), "local")
+  sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
+  expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "SECOND",
+                                  stringsAsFactors = FALSE))
+  remote <- rws_read_sqlite_table("local", conn = conn)
+  expect_identical(remote, local)
+  local
+})
+
+test_that("sf data frames with two geometries and lots of other stuff and correct one passed back", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  local <- rws_data
+  local$second <- local$geometry
+  local <- sf::st_sf(local, sf_column_name = "second")
+
+  expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
+  sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
+  expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "SECOND",
+                                  stringsAsFactors = FALSE))
+  remote <- rws_read_sqlite_table("local", conn = conn)
+  expect_identical(remote, local)
 })

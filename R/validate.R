@@ -1,5 +1,7 @@
 validate_data <- function(data, table_name, strict, silent, conn) {
-  
+  sf_column_name <- sf_column_name(data)
+  data <- as.data.frame(data)
+
   colnames <- to_upper(column_names(table_name, conn = conn))
   data_names <- names(data)
   names(data_names) <- to_upper(names(data))
@@ -35,5 +37,9 @@ validate_data <- function(data, table_name, strict, silent, conn) {
   check_key(data, key = pk, x_name = p0("data '", table_name, "'"))
   
   names(data) <- data_names[names(data)]
+  if(!is.null(sf_column_name) && sf_column_name %in% names(data)) {
+    data <- sf::st_sf(data, sf_column_name = sf_column_name, 
+                      stringsAsFactors = FALSE)
+  }
   data
 }
