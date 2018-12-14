@@ -150,7 +150,8 @@ rws_write_sqlite.list <- function(x,
   
   mapply(write_sqlite_data, x, names(x),
          MoreArgs = list(exists = exists, delete = delete, 
-                         meta = meta, log = log, silent = silent, conn = conn), SIMPLIFY = FALSE)
+                         meta = meta, log = log, silent = silent, 
+                         strict = strict, conn = conn), SIMPLIFY = FALSE)
   
   if(!commit) return(invisible(names(x)))
   dbCommit(conn, name = "rws_write_sqlite")

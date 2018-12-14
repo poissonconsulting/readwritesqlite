@@ -387,3 +387,28 @@ test_that("foreign keys pick up foreign key violation for two data frames", {
   expect_false(foreign_keys(TRUE, conn))
   expect_false(defer_foreign_keys(TRUE, conn))
 })
+
+test_that("strict environment with extra data frame and extra column", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  env <- new.env()
+  
+  local <- data.frame(x = 1:2, z = 2:3)
+  
+  assign("local", local, envir = env)
+  assign("local2", local, envir = env)
+  assign("not", 1, envir = env)
+  
+  DBI::dbCreateTable(conn, "local", local[1])  
+  expect_error(rws_write_sqlite(env, conn = conn),
+               "exists = TRUE but the following data frame in 'x' is unrecognised: 'local2'")
+  
+  expect_warning(rws_write_sqlite(env, strict = FALSE, conn = conn),
+                 "exists = TRUE but the following data frame in 'x' is unrecognised: 'local2'")
+  expect_warning(rws_write_sqlite(env, strict = FALSE, conn = conn),
+                 "the following column in data 'local' is unrecognised: 'z'")
+  remote <- DBI::dbReadTable(conn, "local")
+  expect_identical(remote, rbind(local[1], local[1]))
+  expect_identical(rws_list_tables(conn), "local")
+})
