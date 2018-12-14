@@ -48,17 +48,21 @@ However, current solutions do not preserve meta data, log changes or provide par
 - confirm data can be written without commiting any changes
 - check all existing tables are written to
 
+`readwritesqlite` provides all these features through its `rws_write_sqlite()`
+and `rws_read_sqlite()` functions.
+The meta and log data are stored in separate tables from the main data which means that they do not interfere with other ways of interacting with a SQLite database.
+
 ## Demonstration
 
 ```{r}
 library(readwritesqlite)
 conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 
-print(rws_data)
+rws_data
 
 rws_write_sqlite(rws_data, exists = FALSE, conn = conn)
 
-rws_read_sqlite(conn)
+rws_read_sqlite("rws_data", conn = conn)
 
 DBI::dbDisconnect(conn)
 ```
