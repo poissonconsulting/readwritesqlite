@@ -32,8 +32,7 @@ log_command <- function(table_name, command, nrow, conn) {
                      CommandLog = command,
                      NRowLog = nrow,
                      stringsAsFactors = FALSE)
-  write_data(data, table_name = .log_table_name, log = FALSE, meta = FALSE, 
-             conn = conn)
+  DBI::dbAppendTable(conn, .log_table_name, data)
 }
 
 #' Read Log Data Table from SQLite Database

@@ -28,8 +28,8 @@ replace_meta_table <- function(meta_data, conn) {
   meta_data$TableMeta <- to_upper(meta_data$TableMeta)
   meta_data$ColumnMeta <- to_upper(meta_data$ColumnMeta)
   delete_data(.meta_table_name, meta = FALSE, log = FALSE, conn = conn)
-  meta_data <- meta_data[order(meta_data$TableMeta, meta_data$ColumnMeta),] 
-  write_data(meta_data, .meta_table_name, meta = FALSE, log = FALSE, conn = conn)
+  meta_data <- meta_data[order(meta_data$TableMeta, meta_data$ColumnMeta),]
+  DBI::dbAppendTable(conn, .meta_table_name, meta_data)
 }
 
 confirm_meta_table <- function(conn) {
@@ -174,7 +174,7 @@ validate_data_meta <- function(data, table_name, conn) {
   meta <- meta_table_meta(table_name, conn)[to_upper(names(data_meta))]
   
   data_meta[is.na(data_meta)] <- "No"
-  if(nrows_table(table_name, conn)) meta[is.na(meta)] <- "No"
+  if(is_initialized(table_name, conn)) meta[is.na(meta)] <- "No"
   
   mismatch <- which(!is.na(meta) & data_meta != meta)
   for(wch in mismatch) {

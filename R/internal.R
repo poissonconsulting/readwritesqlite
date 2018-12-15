@@ -17,7 +17,7 @@ as_conditional_tibble <- function(x) {
   sf_column_name <- sf_column_name(x)
   if(requireNamespace("tibble", quietly = TRUE)) {
     x <- tibble::as_tibble(x)
-    if(!is.null(sf_column_name)) {
+    if(!is.na(sf_column_name)) {
       x <- sf::st_sf(x, sf_column_name = sf_column_name, 
                      stringsAsFactors = FALSE)
     }
@@ -40,9 +40,11 @@ any_is_na <- function(x) {
 }
 
 reserved_tables <- function() {
-  c(.log_table_name, .meta_table_name, .sf_table_name)
+  c(.log_table_name, .meta_table_name, .init_table_name)
 }
 
 sf_column_name <- function(x) {
-  attr(x, "sf_column")
+  x <- attr(x, "sf_column")
+  if(is.null(x)) return(NA_character_)
+  x
 }

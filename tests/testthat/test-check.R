@@ -31,8 +31,8 @@ test_that("check_table_names", {
                "'readwritesqlite_log' is a reserved table")
   expect_error(check_table_names(c(.meta_table_name, "e"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE),  
                "'readwritesqlite_meta' is a reserved table")
-  expect_error(check_table_names(c("Readwritesqlite_sF", "e"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE),  
-               "'Readwritesqlite_sF' is a reserved table")
+  expect_error(check_table_names(c("Readwritesqlite_iniT", "e"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE),  
+               "'Readwritesqlite_iniT' is a reserved table")
   expect_identical(check_table_names("e", conn, exists = NA, delete = FALSE, all = FALSE, unique = FALSE), "e")
   expect_identical(check_table_names(c("e", "f"), conn, exists = FALSE, delete = FALSE, all = FALSE, unique = FALSE), c("e", "f"))
   expect_identical(check_table_names(c("e", "e"), conn, exists = NA, delete = FALSE, all = FALSE, unique = FALSE), 

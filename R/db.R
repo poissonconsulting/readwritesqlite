@@ -23,10 +23,10 @@ create_table <- function(data, table_name, log, silent, conn) {
 write_data <- function(data, table_name, meta, log, conn) {
   if(meta) {
     data <- write_meta_data(data, table_name = table_name, conn = conn)
-    data <- write_sf_column(data, table_name, conn = conn)
+    data <- write_init_data(data, table_name, conn = conn)
   }
-  data <- as.data.frame(data)
   if (nrow(data)) {
+    data <- as.data.frame(data)
     DBI::dbAppendTable(conn, table_name, data)
     if(log) log_command(table_name, command = "INSERT", nrow = nrow(data), conn = conn)
   }
@@ -38,7 +38,10 @@ delete_data <- function(table_name, meta, log, conn) {
   query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
   nrow <- dbExecute(conn, p0("DELETE FROM ",  table_name))
   if(log) log_command(table_name, command = "DELETE", nrow = nrow, conn = conn)
-  if(meta) delete_meta_data_table_name(table_name, conn)
+  if(meta) {
+    delete_init_data_table_name(table_name, conn)
+    delete_meta_data_table_name(table_name, conn)
+  }
 }
 
 read_data <- function(table_name, meta, conn) {
@@ -46,7 +49,7 @@ read_data <- function(table_name, meta, conn) {
   colnames(data) <- column_names(table_name, conn)
   if(meta) {
     data <- read_meta_data(data, table_name, conn)
-    data <- read_sf_column(data, table_name, conn)
+    data <- read_init_data(data, table_name, conn)
   }
   data
 }
