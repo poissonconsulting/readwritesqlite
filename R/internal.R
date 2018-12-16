@@ -44,6 +44,7 @@ reserved_tables <- function() {
 }
 
 sf_column_name <- function(x) {
+  if(!is.sf(x)) return(NA_character_)
   x <- attr(x, "sf_column")
   if(is.null(x)) return(NA_character_)
   x

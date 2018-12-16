@@ -1,7 +1,4 @@
-library(tibble)
-library(usethis)
-
-rws_data <- tibble(logical = c(TRUE, FALSE, NA), 
+rws_data <- tibble::tibble(logical = c(TRUE, FALSE, NA), 
                    date = as.Date(c("2000-01-01", "2001-02-03", NA)),
                    factor = factor(c("x", "y", NA)),
                    ordered = ordered(c("x", "y", NA), levels = c("y", "x", NA)),
@@ -10,5 +7,6 @@ rws_data <- tibble(logical = c(TRUE, FALSE, NA),
                    geometry = sf::st_sfc(sf::st_point(c(0,1)), 
                                          sf::st_point(c(1,0)), 
                                          sf::st_point(c(1,1)), crs = 4326))
+rws_data <- sf::st_sf(rws_data)
 
-use_data(rws_data, overwrite = TRUE)
+usethis::use_data(rws_data, overwrite = TRUE)

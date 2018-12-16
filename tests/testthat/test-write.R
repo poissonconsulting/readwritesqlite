@@ -417,14 +417,14 @@ test_that("sf data frames with single geometry passed back", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  local <- sf::st_sf(rws_data["geometry"])
+  local <- rws_data
   
   DBI::dbCreateTable(conn, "local", local)  
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
   expect_identical(init, data.frame(TableInit = "LOCAL", 
                                     IsInit = 1L, SFInit = "GEOMETRY",
-                                  stringsAsFactors = FALSE))
+                                    stringsAsFactors = FALSE))
   remote <- rws_read_sqlite_table("local", conn = conn)
   expect_identical(remote, local)
 })
@@ -433,7 +433,8 @@ test_that("sf data frames with two geometries and correct one passed back", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  
+  rws_data <- as.data.frame(rws_data)
+  rws_data <- tibble::as_tibble(rws_data)
   local <- rws_data["geometry"]
   colnames(local) <- "first"
   local$second <- local$first
@@ -443,7 +444,7 @@ test_that("sf data frames with two geometries and correct one passed back", {
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
   expect_identical(init, data.frame(TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
-                                  stringsAsFactors = FALSE))
+                                    stringsAsFactors = FALSE))
   remote <- rws_read_sqlite_table("local", conn = conn)
   expect_identical(remote, local)
 })
@@ -452,6 +453,8 @@ test_that("sf can change sf_column", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
+  rws_data <- as.data.frame(rws_data)
+  rws_data <- tibble::as_tibble(rws_data) 
   local <- rws_data["geometry"]
   colnames(local) <- "first"
   local$second <- local$first
@@ -461,7 +464,7 @@ test_that("sf can change sf_column", {
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
   expect_identical(init, data.frame(TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
-                                  stringsAsFactors = FALSE))
+                                    stringsAsFactors = FALSE))
   remote <- rws_read_sqlite_table("local", conn = conn)
   expect_identical(remote, local)
   local
@@ -471,6 +474,8 @@ test_that("sf data frames with two geometries and lots of other stuff and correc
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
+  rws_data <- as.data.frame(rws_data)
+  rws_data <- tibble::as_tibble(rws_data)
   local <- rws_data
   local$second <- local$geometry
   local <- sf::st_sf(local, sf_column_name = "second")
@@ -478,7 +483,7 @@ test_that("sf data frames with two geometries and lots of other stuff and correc
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
   expect_identical(init, data.frame(TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
-                                  stringsAsFactors = FALSE))
+                                    stringsAsFactors = FALSE))
   remote <- rws_read_sqlite_table("local", conn = conn)
   expect_identical(remote, local)
 })
@@ -487,6 +492,8 @@ test_that("initialized even with no rows of data", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
+  rws_data <- as.data.frame(rws_data)
+  rws_data <- tibble::as_tibble(rws_data)
   local <- rws_data
   local$second <- local$geometry
   local <- sf::st_sf(local, sf_column_name = "second")
@@ -495,7 +502,7 @@ test_that("initialized even with no rows of data", {
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
   expect_identical(init, data.frame(TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
-                                  stringsAsFactors = FALSE))
+                                    stringsAsFactors = FALSE))
   remote <- rws_read_sqlite_table("local", conn = conn)
   expect_identical(remote, local)
 })
@@ -504,6 +511,8 @@ test_that("initialized meta with no rows of data and not overwritten unless dele
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
+  rws_data <- as.data.frame(rws_data)
+  rws_data <- tibble::as_tibble(rws_data)
   local <- rws_data["date"]
   local <- local[integer(0),]
   
@@ -527,6 +536,8 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
+  rws_data <- as.data.frame(rws_data)
+  rws_data <- tibble::as_tibble(rws_data)
   local <- rws_data["date"]
   local[] <- lapply(local, as.character)
   local <- local[integer(0),]
