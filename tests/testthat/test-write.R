@@ -547,11 +547,76 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   expect_identical(remote, local)
   local2 <- rws_data["date"]
   local2 <- local2[integer(0),]
-  # expect_error(rws_write_sqlite(local2, conn = conn, x_name = "local"), 
-  #              "column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data")
-  # 
-  # expect_identical(rws_write_sqlite(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
-  # 
-  # remote <- rws_read_sqlite_table("local", conn = conn)
-  # expect_identical(remote, local2)
+  expect_error(rws_write_sqlite(local2, conn = conn, x_name = "local"), 
+               "column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data")
+  
+  expect_identical(rws_write_sqlite(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
+  
+  remote <- rws_read_sqlite_table("local", conn = conn)
+  expect_identical(remote, local2)
 })
+
+test_that("initialized with no rows of data and no metadata and not overwritten unless delete = TRUE", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  rws_data <- as.data.frame(rws_data)
+  rws_data <- tibble::as_tibble(rws_data)
+  local <- rws_data["date"]
+  local[] <- lapply(local, as.character)
+  local <- local[integer(0),]
+  
+  expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
+  remote <- rws_read_sqlite_table("local", conn = conn)
+  expect_identical(remote, local)
+  local2 <- rws_data["date"]
+  local2 <- local2[integer(0),]
+  expect_error(rws_write_sqlite(local2, conn = conn, x_name = "local"), 
+               "column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data")
+  
+  expect_identical(rws_write_sqlite(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
+  
+  remote <- rws_read_sqlite_table("local", conn = conn)
+  expect_identical(remote, local2)
+})
+
+test_that("meta then inconsistent data then error meta but delete reset", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  local <- readwritesqlite::rws_data  
+  local <- as.data.frame(local)
+  local$geometry <- NULL
+  attr(local, "sf_column") <- NULL
+  attr(local, "agr") <- NULL
+  local <- tibble::as_tibble(local)
+  expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
+  remote <- rws_read_sqlite_table("local", conn = conn)
+  expect_identical(remote, local)
+  
+  local2 <- local
+  local2[] <- lapply(local2, function(x) return("garbage"))
+  local2 <- local2[1,]
+  
+  expect_error(rws_write_sqlite(local2, conn = conn, x_name = "local"), 
+               "column 'logical' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data")
+  expect_identical(rws_write_sqlite(local2, conn = conn, meta = FALSE, x_name = "local"), "local")
+  expect_warning(remote <- rws_read_sqlite_table("local", conn = conn))
+  expect_identical(remote, tibble::tibble(
+    logical = c(TRUE, FALSE, NA, FALSE),
+    date = as.Date(c("2000-01-01", "2001-02-03", NA, "1970-01-01")),
+    factor = factor(c("x", "y", NA, NA), levels = c("x", "y")),
+    ordered = ordered(c("x", "y", NA, NA), levels = c("y", "x")),
+    posixct = as.POSIXct(c("2001-01-02 03:04:05", "2006-07-08 09:10:11", NA, "1969-12-31 16:00:00"),
+                         tz = "Etc/GMT+8"),
+    units = units::as_units(c(10, 11.5, NA, 0), "m")))
+  expect_warning(remote2 <- rws_read_sqlite_table("local", meta = FALSE, conn = conn))
+  expect_identical(remote2, tibble::tibble(
+    logical = c(1L, 0L, NA, 0L),
+    date = c(10957, 11356, NA, 0),
+    factor = c("x", "y", NA, "garbage"),
+    ordered = c("x", "y", NA, "garbage"),
+    posixct = c(978433445, 1152378611, NA, 0),
+    units = c(10, 11.5, NA, 0)))
+})
+
