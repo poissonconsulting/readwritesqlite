@@ -68,6 +68,12 @@ rws_write_sqlite(rws_data, exists = FALSE, conn = conn)
 
 rws_read_sqlite("rws_data", conn = conn)
 #> $rws_data
+#> Simple feature collection with 3 features and 6 fields
+#> geometry type:  POINT
+#> dimension:      XY
+#> bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1
+#> epsg (SRID):    4326
+#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
 #> # A tibble: 3 x 7
 #>   logical date       factor ordered posixct             units
 #>   <lgl>   <date>     <fct>  <ord>   <dttm>              <S3:>

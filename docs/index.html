@@ -14,7 +14,7 @@
   readwritesqlite preserves time zones (for POSIXct columns), 
   projections (for sfc columns), units (for unit columns), 
   levels (for factors and ordered factors) and classes for logical and Date columns.
-  It also logs changes to tables and provides informative error messages.">
+  It also logs changes to tables and provides more informative error messages.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9003</span>
       </span>
     </div>
 
@@ -135,15 +135,21 @@
 <a class="sourceLine" id="cb1-11" title="11"></a>
 <a class="sourceLine" id="cb1-12" title="12"><span class="kw"><a href="reference/rws_read_sqlite.html">rws_read_sqlite</a></span>(<span class="st">"rws_data"</span>, <span class="dt">conn =</span> conn)</a>
 <a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; $rws_data</span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt;   logical date       factor ordered posixct             units</span></a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;              &lt;S3:&gt;</span></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…</span></a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…</span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                  "  N…</span></a>
-<a class="sourceLine" id="cb1-20" title="20"><span class="co">#&gt; # ... with 1 more variable: geometry &lt;POINT [°]&gt;</span></a>
-<a class="sourceLine" id="cb1-21" title="21"></a>
-<a class="sourceLine" id="cb1-22" title="22">DBI<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/DBI/topics/dbDisconnect">dbDisconnect</a></span>(conn)</a></code></pre></div>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; geometry type:  POINT</span></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co">#&gt; dimension:      XY</span></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="co">#&gt; epsg (SRID):    4326</span></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="co">#&gt;   logical date       factor ordered posixct             units</span></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;              &lt;S3:&gt;</span></a>
+<a class="sourceLine" id="cb1-23" title="23"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…</span></a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…</span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                  "  N…</span></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt; # ... with 1 more variable: geometry &lt;POINT [°]&gt;</span></a>
+<a class="sourceLine" id="cb1-27" title="27"></a>
+<a class="sourceLine" id="cb1-28" title="28">DBI<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/DBI/topics/dbDisconnect">dbDisconnect</a></span>(conn)</a></code></pre></div>
 </div>
 <div id="information" class="section level2">
 <h2 class="hasAnchor">

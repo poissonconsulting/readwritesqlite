@@ -180,6 +180,8 @@ test_that("meta = FALSE same as just writing", {
     units = 10,
     factor = "fac",
     ordered = "ordered"))
+  
+    expect_error(rws_write_sqlite(local, conn = conn), "column 'logical' in table 'local' has 'class: logical' meta data for the input data but 'No' for the existing data")
 })
 
 test_that("meta logical logical different types", {

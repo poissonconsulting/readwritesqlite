@@ -37,7 +37,7 @@ test_that("rws_read_sqlite returns list with single named data frame", {
   expect_identical(tables, list(local = tibble::as_tibble(local)))
 })
 
-test_that("dbReadTablesSQLite returns list with multiple named data frames", {
+test_that("rws_read_sqlite returns list with multiple named data frames", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
@@ -48,4 +48,23 @@ test_that("dbReadTablesSQLite returns list with multiple named data frames", {
   tables <- rws_read_sqlite(conn)
   expect_identical(tables, list(local = tibble::as_tibble(local),
                                 local2 = tibble::as_tibble(local2)))
+})
+
+test_that("rws_read_sqlite with meta = FALSE ", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+
+  local <- rws_data
+  expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
+  remote <- rws_read_sqlite_table("local", meta = TRUE, conn = conn)
+  expect_identical(remote, local)
+  remote2 <- rws_read_sqlite_table("local", meta = FALSE, conn = conn)
+  remote2$geometry <- NULL
+  expect_identical(remote2, tibble::tibble(
+    logical = c(1L, 0L, NA),
+    date = c(10957, 11356, NA),
+    factor = c("x", "y", NA),
+    ordered = c("x", "y", NA),
+    posixct = c(978433445, 1152378611, NA),
+    units = c(10, 11.5, NA)))
 })
