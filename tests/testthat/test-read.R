@@ -15,7 +15,7 @@ test_that("rws_read_sqlite returns tibble", {
   DBI::dbWriteTable(conn, "local", local)
 
   skip_if_not_installed("tibble")
-  expect_identical(rws_read_sqlite("local", meta = FALSE, conn = conn), 
+  expect_identical(rws_read_sqlite("local", conn = conn), 
                  list(local = tibble::as_tibble(local)))
 })
 
@@ -33,7 +33,7 @@ test_that("rws_read_sqlite returns list with single named data frame", {
 
   local <- data.frame(x = 1:3)
   DBI::dbWriteTable(conn, "local", local)
-  tables <- rws_read_sqlite(conn, meta = FALSE)
+  tables <- rws_read_sqlite(conn)
   expect_identical(tables, list(local = tibble::as_tibble(local)))
 })
 
@@ -45,7 +45,7 @@ test_that("dbReadTablesSQLite returns list with multiple named data frames", {
   local2 <- local[1:2,,drop = FALSE]
   DBI::dbWriteTable(conn, "local", local)
   DBI::dbWriteTable(conn, "local2", local2)
-  tables <- rws_read_sqlite(conn, meta = FALSE)
+  tables <- rws_read_sqlite(conn)
   expect_identical(tables, list(local = tibble::as_tibble(local),
                                 local2 = tibble::as_tibble(local2)))
 })

@@ -83,16 +83,16 @@ is_initialized <- function(table_name, conn) {
   init_table$IsInit == 1L
 }
 
-write_init_data <- function(data, table_name, conn) {
-  if(is_initialized(table_name, conn)) return(data)
+write_init_data <- function(table_name, sf_column_name, conn) {
+  if(is_initialized(table_name, conn)) return(NULL)
   init_table <- read_data(.init_table_name, meta = FALSE, conn = conn)
   init_data <- init_table[init_table$TableInit == to_upper(table_name),]
   init_table <- init_table[init_table$TableInit != to_upper(table_name),]
   init_data$IsInit <- 1L
-  init_data$SFInit <- sf_column_name(data)
-  init_data <- rbind(init_table, init_data, stringAsFactors = FALSE)
+  init_data$SFInit <- sf_column_name
+  init_data <- rbind(init_table, init_data)
   replace_init_table(init_data, conn) 
-  return(data)
+  NULL
 }
 
 read_init_data <- function(data, table_name, conn) {
@@ -101,6 +101,6 @@ read_init_data <- function(data, table_name, conn) {
   sf_column_name <- init_table$SFInit[init_table$TableInit == to_upper(table_name)]
   if(is.na(sf_column_name)) return(data)
   sf_column_name <- names(data)[to_upper(names(data)) == sf_column_name]
-  sf::st_sf(data, init_column_name = sf_column_name, 
-            stringsAsFactors = FALSE)
+  sf::st_sf(data, sf_column_name = sf_column_name, 
+            stringsAsFactors = FALSE, sfc_last = FALSE)
 }

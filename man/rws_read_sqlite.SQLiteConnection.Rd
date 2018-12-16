@@ -4,12 +4,10 @@
 \alias{rws_read_sqlite.SQLiteConnection}
 \title{Read All Tables from a SQLite Database}
 \usage{
-\method{rws_read_sqlite}{SQLiteConnection}(x, meta = TRUE, ...)
+\method{rws_read_sqlite}{SQLiteConnection}(x, ...)
 }
 \arguments{
 \item{x}{A \code{\linkS4class{SQLiteConnection}} to a database.}
-
-\item{meta}{A flag specifying whether to preserve meta data.}
 
 \item{...}{Not used.}
 }

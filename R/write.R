@@ -1,13 +1,13 @@
-write_sqlite_data <- function(data, table_name, exists, delete, meta, 
-                              log, strict, silent, conn) {
+write_sqlite_data <- function(data, table_name, exists, delete, 
+                              strict, silent, conn) {
   if(isFALSE(exists) || (is.na(exists) && !tables_exists(table_name, conn))) {
-    create_table(data, table_name, log = log, silent = silent, conn = conn)
+    create_table(data, table_name, silent = silent, conn = conn)
   }
   
-  if(delete) delete_data(table_name, meta = meta, log = log, conn = conn)
+  if(delete) delete_data(table_name, meta = TRUE, log = TRUE, conn = conn)
   
   data <- validate_data(data, table_name, strict = strict, silent = silent, conn = conn)
-  write_data(data, table_name, meta = meta, log = log, conn = conn)
+  write_data(data, table_name, conn = conn)
   data
 }
 
@@ -19,8 +19,6 @@ write_sqlite_data <- function(data, table_name, exists, delete, meta,
 #' inserting data.
 #' @param commit A flag specifying whether to commit the operations 
 #' (calling with commit = FALSE can be useful for checking data).
-#' @param meta A flag specifying whether to preserve meta data.
-#' @param log A flag specifying whether to log the table operations.
 #' @param strict A flag specifying whether to error if x has extraneous columns or if exists = TRUE extraneous data frames.
 #' @param conn A \code{\linkS4class{SQLiteConnection}} to a database.
 #' @param x_name A string of the name of the object.
@@ -30,7 +28,6 @@ write_sqlite_data <- function(data, table_name, exists, delete, meta,
 #' @family rws_write_sqlite
 #' @export
 rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE, commit = TRUE,
-                             meta = TRUE, log = TRUE, 
                              strict = TRUE,
                              x_name = substitute(x), 
                              silent = getOption("rws.silent", FALSE),
@@ -46,17 +43,12 @@ rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE, commit = TRUE,
 #' @family rws_write_sqlite
 #' @export
 rws_write_sqlite.data.frame <- function(
-  x, exists = TRUE, delete = FALSE, commit = TRUE,
-  meta = TRUE, log = TRUE, 
-  strict = TRUE,
-  x_name = substitute(x), 
-  silent = getOption("rws.silent", FALSE), 
+  x, exists = TRUE, delete = FALSE, commit = TRUE, strict = TRUE,
+  x_name = substitute(x), silent = getOption("rws.silent", FALSE), 
   conn, ...) {
   check_scalar(exists, c(TRUE, NA))
   check_flag(delete)
   check_flag(commit)
-  check_flag(meta)
-  check_flag(log)
   check_flag(strict)
   check_sqlite_connection(conn, connected = TRUE)
   
@@ -74,7 +66,7 @@ rws_write_sqlite.data.frame <- function(
   
   write_sqlite_data(x, table_name = x_name, exists = exists, 
                     delete = delete, 
-                    meta = meta, log = log, strict = strict, 
+                    strict = strict, 
                     silent = silent, conn = conn)
   
   if(!commit) return(invisible(x_name))
@@ -96,7 +88,6 @@ rws_write_sqlite.data.frame <- function(
 rws_write_sqlite.list <- function(x,
                                   exists = TRUE,
                                   delete = FALSE, commit = TRUE,
-                                  meta = TRUE, log = TRUE, 
                                   strict = TRUE,
                                   x_name = substitute(x), 
                                   silent = getOption("rws.silent", FALSE),
@@ -107,8 +98,6 @@ rws_write_sqlite.list <- function(x,
   check_scalar(exists, c(TRUE, NA))
   check_flag(delete)
   check_flag(commit)
-  check_flag(meta)
-  check_flag(log)
   check_flag(strict)
   check_sqlite_connection(conn, connected = TRUE)
   x_name <- chk_deparse(x_name)
@@ -149,7 +138,7 @@ rws_write_sqlite.list <- function(x,
   
   mapply(write_sqlite_data, x, names(x),
          MoreArgs = list(exists = exists, delete = delete, 
-                         meta = meta, log = log, silent = silent, 
+                         silent = silent, 
                          strict = strict, conn = conn), SIMPLIFY = FALSE)
   
   if(!commit) return(invisible(names(x)))
@@ -170,10 +159,8 @@ rws_write_sqlite.list <- function(x,
 rws_write_sqlite.environment <- function(x,
                                          exists = TRUE,
                                          delete = FALSE, commit = TRUE,
-                                         meta = TRUE, log = TRUE, 
                                          strict = TRUE,
                                          x_name = substitute(x),
-                                         
                                          silent = getOption("rws.silent", FALSE),
                                          conn,
                                          all = TRUE, 
@@ -194,6 +181,6 @@ rws_write_sqlite.environment <- function(x,
   
   invisible(
     rws_write_sqlite(x, exists = exists, delete = delete, commit = commit,
-                     meta = meta, log = log, strict = strict, silent = silent, 
+                     strict = strict, silent = silent, 
                      conn = conn, all = all, unique = unique))
 }

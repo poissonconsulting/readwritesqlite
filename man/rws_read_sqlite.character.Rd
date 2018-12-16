@@ -4,12 +4,10 @@
 \alias{rws_read_sqlite.character}
 \title{Read Tables from a SQLite Database}
 \usage{
-\method{rws_read_sqlite}{character}(x, meta = TRUE, conn, ...)
+\method{rws_read_sqlite}{character}(x, conn, ...)
 }
 \arguments{
 \item{x}{A character vector of table names.}
-
-\item{meta}{A flag specifying whether to preserve meta data.}
 
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 

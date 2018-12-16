@@ -5,7 +5,7 @@
 \title{Write to a SQLite Database}
 \usage{
 rws_write_sqlite(x, exists = TRUE, delete = FALSE, commit = TRUE,
-  meta = TRUE, log = TRUE, strict = TRUE, x_name = substitute(x),
+  strict = TRUE, x_name = substitute(x),
   silent = getOption("rws.silent", FALSE), conn, ...)
 }
 \arguments{
@@ -18,10 +18,6 @@ inserting data.}
 
 \item{commit}{A flag specifying whether to commit the operations 
 (calling with commit = FALSE can be useful for checking data).}
-
-\item{meta}{A flag specifying whether to preserve meta data.}
-
-\item{log}{A flag specifying whether to log the table operations.}
 
 \item{strict}{A flag specifying whether to error if x has extraneous columns or if exists = TRUE extraneous data frames.}
 

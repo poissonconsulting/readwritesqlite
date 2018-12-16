@@ -1,5 +1,5 @@
-read_sqlite_data <- function(table_name, meta, conn) {
-  data <- read_data(table_name, meta = meta, conn = conn)
+read_sqlite_data <- function(table_name, conn) {
+  data <- read_data(table_name, meta = TRUE, conn = conn)
   as_conditional_tibble(data)
 }
 
@@ -10,7 +10,7 @@ read_sqlite_data <- function(table_name, meta, conn) {
 #' @return A named list of data frames.
 #' @family rws_read_sqlite
 #' @export
-rws_read_sqlite <- function(x, meta = TRUE, ...) {
+rws_read_sqlite <- function(x, ...) {
   UseMethod("rws_read_sqlite")
 }
 
@@ -21,15 +21,13 @@ rws_read_sqlite <- function(x, meta = TRUE, ...) {
 #' @return A named list of the data frames.
 #' @family rws_read_sqlite
 #' @export
-rws_read_sqlite.character <- function(x, meta = TRUE,
-                                      conn,
+rws_read_sqlite.character <- function(x, conn,
                                       ...) {
   check_sqlite_connection(conn, connected = TRUE)
   check_table_names(x, exists = TRUE, delete = FALSE, all = FALSE, unique = TRUE, conn = conn)
-  check_flag(meta)
   check_unused(...)
   
-  datas <- lapply(x, read_sqlite_data, meta = meta, conn = conn)
+  datas <- lapply(x, read_sqlite_data, conn = conn)
   names(datas) <- x
   datas
 }
@@ -41,14 +39,13 @@ rws_read_sqlite.character <- function(x, meta = TRUE,
 #' @return A named list of the data frames.
 #' @family rws_read_sqlite
 #' @export
-rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
+rws_read_sqlite.SQLiteConnection <- function(x, ...) {
   check_sqlite_connection(x, connected = TRUE)
-  check_flag(meta)
   check_unused(...)
   
   table_names <- rws_list_tables(x)
   if(!length(table_names)) return(named_list())
-  rws_read_sqlite(table_names, meta = meta, conn = x)
+  rws_read_sqlite(table_names, conn = x)
 }
 
 #' Read A Tables from a SQLite Database
@@ -57,7 +54,6 @@ rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
 #' @param x A string of the table name.
 #' @return A data frame of the table.
 #' @export
-rws_read_sqlite_table <- function(x, meta = TRUE, 
-                                  conn) {
-  rws_read_sqlite(x, meta = meta, conn = conn)[[1]]
+rws_read_sqlite_table <- function(x, conn) {
+  rws_read_sqlite(x, conn = conn)[[1]]
 }

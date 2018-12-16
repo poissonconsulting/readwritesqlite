@@ -13,22 +13,21 @@ nrows_table <- function(table_name, conn) {
   nrows
 }
 
-create_table <- function(data, table_name, log, silent, conn) {
-  if(!isFALSE(silent)) wrn("creating table '", table_name, "'")
+create_table <- function(data, table_name, silent, conn) {
+  if(!isFALSE(silent)) msg("creating table '", table_name, "'")
   DBI::dbCreateTable(conn, table_name, data)
-  if(log) log_command(table_name, command = "CREATE", nrow = 0L, conn = conn)
+  log_command(table_name, command = "CREATE", nrow = 0L, conn = conn)
   data
 }
 
-write_data <- function(data, table_name, meta, log, conn) {
-  if(meta) {
-    data <- write_meta_data(data, table_name = table_name, conn = conn)
-    data <- write_init_data(data, table_name, conn = conn)
-  }
+write_data <- function(data, table_name, conn) {
+  sf_column_name <- sf_column_name(data)
+  data <- write_meta_data(data, table_name = table_name, conn = conn)
+  write_init_data(table_name, sf_column_name, conn = conn)
   if (nrow(data)) {
     data <- as.data.frame(data)
     DBI::dbAppendTable(conn, table_name, data)
-    if(log) log_command(table_name, command = "INSERT", nrow = nrow(data), conn = conn)
+    log_command(table_name, command = "INSERT", nrow = nrow(data), conn = conn)
   }
   data
 }
@@ -37,7 +36,9 @@ delete_data <- function(table_name, meta, log, conn) {
   sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
   query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
   nrow <- dbExecute(conn, p0("DELETE FROM ",  table_name))
-  if(log) log_command(table_name, command = "DELETE", nrow = nrow, conn = conn)
+  if(log) {
+    log_command(table_name, command = "DELETE", nrow = nrow, conn = conn)
+  }
   if(meta) {
     delete_init_data_table_name(table_name, conn)
     delete_meta_data_table_name(table_name, conn)

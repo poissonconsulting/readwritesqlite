@@ -4,12 +4,10 @@
 \alias{rws_read_sqlite}
 \title{Read from a SQLite Database}
 \usage{
-rws_read_sqlite(x, meta = TRUE, ...)
+rws_read_sqlite(x, ...)
 }
 \arguments{
 \item{x}{An object specifying the table(s) to read.}
-
-\item{meta}{A flag specifying whether to preserve meta data.}
 
 \item{...}{Not used.}
 }

@@ -46,16 +46,7 @@ test_that("init makes table", {
                                                 "LOCAL4", "LOCAL5"), 
                                   IsInit = c(1L, 1L, 1L, 1L, 1L),
                                   SFInit = c(rep(NA_character_, 3), "GEOMETRY", "GEOMETRY")))
-  
-  local6 <- local5
-  expect_identical(rws_write_sqlite(local6, conn = conn, meta = FALSE, exists = NA),
-                   "local6")
-  expect_identical(rws_read_sqlite_init(conn = conn),
-                   tibble::tibble(TableInit = c("LOCAL", "LOCAL2", "LOCAL3", 
-                                                "LOCAL4", "LOCAL5", "LOCAL6"), 
-                                  IsInit = c(1L, 1L, 1L, 1L, 1L, 0L),
-                                  SFInit = c(rep(NA_character_, 3), 
-                                             rep("GEOMETRY", 2), NA_character_)))
+
   
   # local7 <- local4
   # expect_identical(rws_write_sqlite(local7, conn = conn, meta = FALSE, exists = NA),

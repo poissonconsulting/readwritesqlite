@@ -4,12 +4,10 @@
 \alias{rws_read_sqlite_table}
 \title{Read A Tables from a SQLite Database}
 \usage{
-rws_read_sqlite_table(x, meta = TRUE, conn)
+rws_read_sqlite_table(x, conn)
 }
 \arguments{
 \item{x}{A string of the table name.}
-
-\item{meta}{A flag specifying whether to preserve meta data.}
 
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 }

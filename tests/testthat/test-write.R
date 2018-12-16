@@ -441,8 +441,8 @@ test_that("sf data frames with two geometries and correct one passed back", {
   
   DBI::dbCreateTable(conn, "local", local)  
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
-  expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "SECOND",
+  init <- DBI::dbReadTable(conn, "readwritesqlite_init")
+  expect_identical(init, data.frame(TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
                                   stringsAsFactors = FALSE))
   remote <- rws_read_sqlite_table("local", conn = conn)
   expect_identical(remote, local)
@@ -459,8 +459,8 @@ test_that("sf can change sf_column", {
   
   DBI::dbCreateTable(conn, "local", local)  
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
-  expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "SECOND",
+  init <- DBI::dbReadTable(conn, "readwritesqlite_init")
+  expect_identical(init, data.frame(TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
                                   stringsAsFactors = FALSE))
   remote <- rws_read_sqlite_table("local", conn = conn)
   expect_identical(remote, local)
@@ -476,8 +476,8 @@ test_that("sf data frames with two geometries and lots of other stuff and correc
   local <- sf::st_sf(local, sf_column_name = "second")
   
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
-  sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
-  expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "SECOND",
+  init <- DBI::dbReadTable(conn, "readwritesqlite_init")
+  expect_identical(init, data.frame(TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
                                   stringsAsFactors = FALSE))
   remote <- rws_read_sqlite_table("local", conn = conn)
   expect_identical(remote, local)
@@ -493,8 +493,8 @@ test_that("initialized even with no rows of data", {
   local <- local[integer(0),]
   
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
-  sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
-  expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "SECOND",
+  init <- DBI::dbReadTable(conn, "readwritesqlite_init")
+  expect_identical(init, data.frame(TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
                                   stringsAsFactors = FALSE))
   remote <- rws_read_sqlite_table("local", conn = conn)
   expect_identical(remote, local)
