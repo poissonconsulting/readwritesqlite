@@ -25,6 +25,10 @@ test_that("rws_write_sqlite data.frame logs commands", {
   expect_identical(nrow(rws_read_sqlite_log(conn)), 2L)
   rws_write_sqlite(local, delete = TRUE, conn = conn)
   expect_identical(nrow(rws_read_sqlite_log(conn)), 4L)
+  rws_write_sqlite(local, delete = TRUE, log = FALSE, conn = conn)
+  expect_identical(nrow(rws_read_sqlite_log(conn)), 4L)
+  rws_write_sqlite(local, log = FALSE, conn = conn)
+  expect_identical(nrow(rws_read_sqlite_log(conn)), 4L)
   log <- rws_read_sqlite_log(conn)
   expect_identical(log$TableLog,
                    rep("LOCAL", 4L))
