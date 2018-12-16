@@ -601,7 +601,7 @@ test_that("meta then inconsistent data then error meta but delete reset", {
   expect_error(rws_write_sqlite(local2, conn = conn, x_name = "local"), 
                "column 'logical' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data")
   expect_identical(rws_write_sqlite(local2, conn = conn, meta = FALSE, x_name = "local"), "local")
-  expect_warning(remote <- rws_read_sqlite_table("local", conn = conn))
+  expect_warning(remote <- rws_read_sqlite_table("local", conn = conn), "Column `logical`: mixed type, first seen values of type integer, coercing other values of type string")
   expect_identical(remote, tibble::tibble(
     logical = c(TRUE, FALSE, NA, FALSE),
     date = as.Date(c("2000-01-01", "2001-02-03", NA, "1970-01-01")),
@@ -610,7 +610,7 @@ test_that("meta then inconsistent data then error meta but delete reset", {
     posixct = as.POSIXct(c("2001-01-02 03:04:05", "2006-07-08 09:10:11", NA, "1969-12-31 16:00:00"),
                          tz = "Etc/GMT+8"),
     units = units::as_units(c(10, 11.5, NA, 0), "m")))
-  expect_warning(remote2 <- rws_read_sqlite_table("local", meta = FALSE, conn = conn))
+  expect_warning(remote2 <- rws_read_sqlite_table("local", meta = FALSE, conn = conn), "Column `logical`: mixed type, first seen values of type integer, coercing other values of type string")
   expect_identical(remote2, tibble::tibble(
     logical = c(1L, 0L, NA, 0L),
     date = c(10957, 11356, NA, 0),
@@ -618,5 +618,8 @@ test_that("meta then inconsistent data then error meta but delete reset", {
     ordered = c("x", "y", NA, "garbage"),
     posixct = c(978433445, 1152378611, NA, 0),
     units = c(10, 11.5, NA, 0)))
+  
+  expect_identical(rws_write_sqlite(local, delete = TRUE, conn = conn), "local")
+  remote <- rws_read_sqlite_table("local", conn = conn)
+  expect_identical(remote, local)
 })
-
