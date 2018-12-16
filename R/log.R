@@ -9,7 +9,7 @@ log_schema <- function () {
     DATETIME(DateTimeUTCLog) IS DateTimeUTCLog AND
     CommandLog IN ('CREATE', 'UPDATE', 'DELETE', 'INSERT', 'DROP') AND
     NRowLog >= 0
-  ));")
+));")
 }
 
 confirm_log_table <- function(conn) {

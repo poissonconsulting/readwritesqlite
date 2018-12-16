@@ -154,7 +154,7 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
     if(is_text) return(sf::st_as_text(column))
     return(sf::st_as_binary(column, endian = "little"))
   }
-
+  
   if(is_text) return(as.character(column))
   return(as.numeric(column))
   

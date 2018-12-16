@@ -1,10 +1,12 @@
 init_schema <- function () {
   p("CREATE TABLE", .init_table_name, "(
   TableInit TEXT NOT NULL PRIMARY KEY,
-  IsInit    INTEGER NOT NULL,
+  IsInit INTEGER NOT NULL,
   SFInit TEXT,
-  CHECK((IsInit >= 0 AND IsInit <= 1)
-        AND (SFInit IS NULL OR IsInit == 1)));")
+  CHECK(
+    (IsInit >= 0 AND IsInit <= 1) AND
+    (SFInit IS NULL OR IsInit == 1)
+));")
 }
 
 make_init_data <- function(conn) {

@@ -6,7 +6,8 @@ write_sqlite_data <- function(data, table_name, exists, delete, meta, log,
   
   if(delete) delete_data(table_name, meta = meta, log = log, conn = conn)
   
-  data <- validate_data(data, table_name, strict = strict, silent = silent, conn = conn)
+  data <- validate_data(data, table_name, strict = strict, silent = silent, 
+                        conn = conn)
   write_data(data, table_name, meta = meta, log = log, conn = conn)
   data
 }
