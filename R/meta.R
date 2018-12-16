@@ -165,7 +165,14 @@ consistent_factors <- function(data_meta, meta_meta) {
   if(!grepl("^(factor|ordered):", data_meta)) return(FALSE)
   if(!grepl("^(factor|ordered):", meta_meta)) return(FALSE)
   if(grepl("^factor:", data_meta) != grepl("^factor:", data_meta)) return(FALSE)
-  return(all(read_meta_levels(meta_meta) %in% read_meta_levels(data_meta)))
+  if(grepl("^factor:", data_meta))
+    return(all(read_meta_levels(meta_meta) %in% read_meta_levels(data_meta)))
+  if(!all(read_meta_levels(meta_meta) %in% read_meta_levels(data_meta))) 
+    return(FALSE)
+  meta_levels <- read_meta_levels(meta_meta)
+  data_levels <- read_meta_levels(data_meta)
+  data_levels <- data_levels[data_levels %in% meta_levels]
+  all(data_levels == meta_levels)
 }
 
 validate_data_meta <- function(data, table_name, conn) {

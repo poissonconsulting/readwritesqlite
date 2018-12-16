@@ -23,11 +23,12 @@ knitr::opts_chunk$set(
 SQLite databases are a simple, powerful way to validate, query and store related data frames particularly when used with the RSQLite package.
 However, current solutions do not preserve meta data, log changes or provide particularly useful error messages.
 
-`readwritesqlite` is an R package that by default
+`readwritesqlite` is an R package that
 
 - preserves
   - the time zone for POSIXct columns
   - the projection for sfc columns
+  - the sf column for sf objects
   - the units for unit columns
   - the class for logical and Date columns
   - the levels for factors and ordered factors
@@ -43,7 +44,7 @@ However, current solutions do not preserve meta data, log changes or provide par
 `readwritesqlite` also allows the user to 
 
 - write named lists or environments of data frames
-- rearrange and add levels for factors and ordered factors
+- rearrange and add levels for factors and add levels for ordered factors
 - delete existing data (and meta data) before writing
 - confirm data can be written without commiting any changes
 - check all existing tables are written to

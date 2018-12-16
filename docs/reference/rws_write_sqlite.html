@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9002</span>
       </span>
     </div>
 
@@ -118,7 +118,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>rws_write_sqlite</span>(<span class='no'>x</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>x_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>x</span>),
+  <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>x_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>x</span>),
   <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.silent"</span>, <span class='fl'>FALSE</span>), <span class='no'>conn</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -141,14 +141,6 @@ inserting data.</p></td>
       <th>commit</th>
       <td><p>A flag specifying whether to commit the operations 
 (calling with commit = FALSE can be useful for checking data).</p></td>
-    </tr>
-    <tr>
-      <th>meta</th>
-      <td><p>A flag specifying whether to preserve meta data.</p></td>
-    </tr>
-    <tr>
-      <th>log</th>
-      <td><p>A flag specifying whether to log the table operations.</p></td>
     </tr>
     <tr>
       <th>strict</th>
