@@ -4,8 +4,8 @@
 \alias{rws_write_sqlite}
 \title{Write to a SQLite Database}
 \usage{
-rws_write_sqlite(x, exists = TRUE, delete = FALSE, log = TRUE,
-  commit = TRUE, strict = TRUE, x_name = substitute(x),
+rws_write_sqlite(x, exists = TRUE, delete = FALSE, meta = TRUE,
+  log = TRUE, commit = TRUE, strict = TRUE, x_name = substitute(x),
   silent = getOption("rws.silent", FALSE), conn, ...)
 }
 \arguments{
@@ -16,7 +16,9 @@ rws_write_sqlite(x, exists = TRUE, delete = FALSE, log = TRUE,
 \item{delete}{A flag specifying whether to delete existing rows before 
 inserting data.}
 
-\item{log}{A flag specifying whether to log the operation.}
+\item{meta}{A flag specifying whether to preserve meta data.}
+
+\item{log}{A flag specifying whether to log the table operations.}
 
 \item{commit}{A flag specifying whether to commit the operations 
 (calling with commit = FALSE can be useful for checking data).}

@@ -5,8 +5,9 @@
 \title{Write a Data Frame to a SQLite Database}
 \usage{
 \method{rws_write_sqlite}{data.frame}(x, exists = TRUE, delete = FALSE,
-  log = TRUE, commit = TRUE, strict = TRUE, x_name = substitute(x),
-  silent = getOption("rws.silent", FALSE), conn, ...)
+  meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
+  x_name = substitute(x), silent = getOption("rws.silent", FALSE),
+  conn, ...)
 }
 \arguments{
 \item{x}{A data frame.}
@@ -16,7 +17,9 @@
 \item{delete}{A flag specifying whether to delete existing rows before 
 inserting data.}
 
-\item{log}{A flag specifying whether to log the operation.}
+\item{meta}{A flag specifying whether to preserve meta data.}
+
+\item{log}{A flag specifying whether to log the table operations.}
 
 \item{commit}{A flag specifying whether to commit the operations 
 (calling with commit = FALSE can be useful for checking data).}

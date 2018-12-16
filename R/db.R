@@ -20,12 +20,14 @@ create_table <- function(data, table_name, silent, conn) {
   data
 }
 
-write_data <- function(data, table_name, log, conn) {
-  sf_column_name <- sf_column_name(data)
-  data <- write_meta_data(data, table_name = table_name, conn = conn)
-  write_init_data(table_name, sf_column_name, conn = conn)
+write_data <- function(data, table_name, meta, log, conn) {
+  if(meta) {
+    sf_column_name <- sf_column_name(data)
+    data <- write_meta_data(data, table_name = table_name, conn = conn)
+    write_init_data(table_name, sf_column_name, conn = conn)
+  }
   if (nrow(data)) {
-    data <- as.data.frame(data)
+    data <- convert_data(data)
     DBI::dbAppendTable(conn, table_name, data)
     if(log) 
       log_command(table_name, command = "INSERT", nrow = nrow(data), conn = conn)

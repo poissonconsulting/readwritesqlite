@@ -154,6 +154,34 @@ test_that("meta reads all classes", {
   expect_identical(remote, tibble::as_tibble(local))
 })
 
+test_that("meta = FALSE same as just writing", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  local <- data.frame(logical = TRUE, 
+                      date = as.Date("2000-01-01"),
+                      posixct = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"),
+                      units = units::as_units(10, "m"),
+                      geometry = sf::st_sfc(sf::st_point(c(0,1)), crs = 4326),
+                      factor = factor("fac"),
+                      ordered = ordered("ordered"))
+  
+  expect_identical(rws_write_sqlite(local, meta = FALSE, exists = FALSE, conn = conn), "local")
+  expect_identical(readwritesqlite:::table_schema("local", conn),
+                   paste0("CREATE TABLE `local` (\n  `logical` INTEGER,\n  ",
+                          "`date` REAL,\n  `posixct` REAL,\n  `units` REAL,\n  ",
+                          "`geometry` BLOB,\n  `factor` TEXT,\n  `ordered` TEXT\n)"))    
+  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote$geometry <- NULL
+  expect_identical(remote, tibble::tibble(
+    logical = 1L,
+    date = 10957,
+    posixct = 978433445,
+    units = 10,
+    factor = "fac",
+    ordered = "ordered"))
+})
+
 test_that("meta logical logical different types", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

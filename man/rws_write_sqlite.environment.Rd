@@ -5,9 +5,10 @@
 \title{Write the Data Frames in an Environment to a SQLite Database}
 \usage{
 \method{rws_write_sqlite}{environment}(x, exists = TRUE,
-  delete = FALSE, log = TRUE, commit = TRUE, strict = TRUE,
-  x_name = substitute(x), silent = getOption("rws.silent", FALSE),
-  conn, all = TRUE, unique = TRUE, ...)
+  delete = FALSE, meta = TRUE, log = TRUE, commit = TRUE,
+  strict = TRUE, x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE), conn, all = TRUE,
+  unique = TRUE, ...)
 }
 \arguments{
 \item{x}{An environment.}
@@ -17,7 +18,9 @@
 \item{delete}{A flag specifying whether to delete existing rows before 
 inserting data.}
 
-\item{log}{A flag specifying whether to log the operation.}
+\item{meta}{A flag specifying whether to preserve meta data.}
+
+\item{log}{A flag specifying whether to log the table operations.}
 
 \item{commit}{A flag specifying whether to commit the operations 
 (calling with commit = FALSE can be useful for checking data).}
