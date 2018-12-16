@@ -3,9 +3,9 @@ init_schema <- function () {
   TableInit TEXT NOT NULL PRIMARY KEY,
   IsInit    INTEGER NOT NULL,
   SFInit TEXT,
-  CHECK(IsInit >= 0 AND IsInit <= 1));")
+  CHECK((IsInit >= 0 AND IsInit <= 1)
+        AND (SFInit IS NULL OR IsInit == 1)));")
 }
-## also need to check that if columnsf then isinit = 1
 
 make_init_data <- function(conn) {
   table_names <- rws_list_tables(conn)
