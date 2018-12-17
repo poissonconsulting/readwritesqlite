@@ -15,42 +15,58 @@ MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org
 
 SQLite databases are a simple, powerful way to validate, query and store
 related data frames particularly when used with the RSQLite package.
-However, current solutions do not preserve meta data, log changes or
-provide particularly useful error messages.
+However, current solutions do not preserve (or check) meta data, log
+changes or provide particularly useful error messages.
 
-`readwritesqlite` is an R package that
+## What readwritesqlite Is
 
-  - preserves
-      - the time zone for POSIXct columns
-      - the projection for sfc columns
-      - the sf column for sf objects
-      - the units for unit columns
+`readwritesqlite` is an R package that by default
+
+  - preserves (and subsequently checks)
       - the class for logical and Date columns
       - the levels for factors and ordered factors
+      - the time zone for POSIXct columns
+      - the units for unit columns
+      - the projection for sfc columns
+      - the sf column for sf objects
   - logs
       - the date time
       - system user
       - table creation and data insertion or deletion
   - provides informative error messages if
-      - columns are missing (extra columns are silently ignored and the
-        remaining columns correctly ordered)
+      - columns are missing
       - NOT NULL columns contain missing values
       - PRIMARY KEY column values in the input data are not unique
 
 `readwritesqlite` also allows the user to
 
-  - write named lists or environments of data frames
+  - write environments (or named lists) of data frames (useful for
+    populating databases)
+  - delete existing data (and meta data) before writing (useful for
+    converting an existing database)
+  - confirm data can be written without commiting any changes (useful
+    for checking data)
+  - check all existing tables are written to (useful for data transfers)
   - rearrange and add levels for factors and add levels for ordered
     factors
-  - delete existing data (and meta data) before writing
-  - confirm data can be written without commiting any changes
-  - check all existing tables are written to
+  - initialize the meta data for a new table by writing a data frame or
+    sf data frame with no rows but logical, Date, factor, ordered,
+    POSIXct, sfc or unit columns (useful for creating an empty database
+    with additional informative checks)
 
 `readwritesqlite` provides all these features through its
-`rws_write_sqlite()` and `rws_read_sqlite()` functions. The meta and log
-data are stored in separate tables from the main data which means that
-they do not interfere with other ways of interacting with a SQLite
-database.
+`rws_write_sqlite()` and `rws_read_sqlite()` functions.
+
+The init, meta and log data are stored in separate tables from the main
+data which means that they do not interfere with other ways of
+interacting with a SQLite database.
+
+## What readwritesqlite Is Not
+
+Currently, `readwritesqlite` does not preserve meta data in queries.
+Meta data (logical, Date, factor, ordered, POSIXct, unit and sfc
+columns) are only preserved when entire tables are downloaded through
+the `rws_read_sqlite()` functions.
 
 ## Demonstration
 
