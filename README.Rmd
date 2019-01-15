@@ -65,7 +65,7 @@ Meta data (logical, Date, factor, ordered, POSIXct, unit and sfc columns) are on
 
 ```{r}
 library(readwritesqlite)
-conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+conn <- rws_open_connection(":memory:")
 
 rws_data
 
@@ -73,7 +73,7 @@ rws_write_sqlite(rws_data, exists = FALSE, conn = conn)
 
 rws_read_sqlite("rws_data", conn = conn)
 
-DBI::dbDisconnect(conn)
+rws_close_connection(conn)
 ```
 
 ## Information

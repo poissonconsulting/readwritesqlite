@@ -518,7 +518,7 @@ test_that("initialized meta with no rows of data and not overwritten unless dele
   
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
   remote <- rws_read_sqlite_table("local", conn = conn)
-  expect_identical(remote, local)
+  expect_equal(remote, local)
   local[] <- lapply(local, as.character)
   expect_error(rws_write_sqlite(local, conn = conn),
                "column 'date' in table 'local' has 'No' meta data for the input data but 'class: Date' for the existing data")
@@ -544,7 +544,7 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
   remote <- rws_read_sqlite_table("local", conn = conn)
-  expect_identical(remote, local)
+  expect_equal(remote, local)
   local2 <- rws_data["date"]
   local2 <- local2[integer(0),]
   expect_error(rws_write_sqlite(local2, conn = conn, x_name = "local"), 
@@ -553,7 +553,7 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   expect_identical(rws_write_sqlite(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
   
   remote <- rws_read_sqlite_table("local", conn = conn)
-  expect_identical(remote, local2)
+  expect_equal(remote, local2)
 })
 
 test_that("initialized with no rows of data and no metadata and not overwritten unless delete = TRUE", {
@@ -568,7 +568,7 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
   remote <- rws_read_sqlite_table("local", conn = conn)
-  expect_identical(remote, local)
+  expect_equal(remote, local)
   local2 <- rws_data["date"]
   local2 <- local2[integer(0),]
   expect_error(rws_write_sqlite(local2, conn = conn, x_name = "local"), 
@@ -577,7 +577,7 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   expect_identical(rws_write_sqlite(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
   
   remote <- rws_read_sqlite_table("local", conn = conn)
-  expect_identical(remote, local2)
+  expect_equal(remote, local2)
 })
 
 test_that("meta then inconsistent data then error meta but delete reset", {
