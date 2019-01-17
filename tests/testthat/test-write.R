@@ -417,7 +417,7 @@ test_that("sf data frames with single geometry passed back", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  local <- rws_data
+  local <- readwritesqlite::rws_data
   
   DBI::dbCreateTable(conn, "local", local)  
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
@@ -433,9 +433,9 @@ test_that("sf data frames with two geometries and correct one passed back", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  rws_data <- as.data.frame(rws_data)
-  rws_data <- tibble::as_tibble(rws_data)
-  local <- rws_data["geometry"]
+  local <- as.data.frame(readwritesqlite::rws_data)
+  local <- tibble::as_tibble(local)
+  local <- local["geometry"]
   colnames(local) <- "first"
   local$second <- local$first
   local <- sf::st_sf(local, sf_column_name = "second")
@@ -453,9 +453,9 @@ test_that("sf can change sf_column", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  rws_data <- as.data.frame(rws_data)
-  rws_data <- tibble::as_tibble(rws_data) 
-  local <- rws_data["geometry"]
+  local <- as.data.frame(readwritesqlite::rws_data)
+  local <- tibble::as_tibble(local) 
+  local <- local["geometry"]
   colnames(local) <- "first"
   local$second <- local$first
   local <- sf::st_sf(local, sf_column_name = "second")
@@ -473,10 +473,9 @@ test_that("sf can change sf_column", {
 test_that("sf data frames with two geometries and lots of other stuff and correct one passed back", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
-  
-  rws_data <- as.data.frame(rws_data)
-  rws_data <- tibble::as_tibble(rws_data)
-  local <- rws_data
+ 
+  local <- as.data.frame(readwritesqlite::rws_data) 
+  local <- tibble::as_tibble(local)
   local$second <- local$geometry
   local <- sf::st_sf(local, sf_column_name = "second")
   
@@ -492,9 +491,8 @@ test_that("initialized even with no rows of data", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  rws_data <- as.data.frame(rws_data)
-  rws_data <- tibble::as_tibble(rws_data)
-  local <- rws_data
+  local <- as.data.frame(readwritesqlite::rws_data)
+  local <- tibble::as_tibble(local)
   local$second <- local$geometry
   local <- sf::st_sf(local, sf_column_name = "second")
   local <- local[integer(0),]
@@ -511,14 +509,14 @@ test_that("initialized meta with no rows of data and not overwritten unless dele
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  rws_data <- as.data.frame(rws_data)
-  rws_data <- tibble::as_tibble(rws_data)
-  local <- rws_data["date"]
+  local <- as.data.frame(readwritesqlite::rws_data)
+  local <- local["date"]
+  local <- tibble::as_tibble(local)
   local <- local[integer(0),]
   
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
   remote <- rws_read_sqlite_table("local", conn = conn)
-  expect_equal(remote, local)
+  expect_identical(remote, local)
   local[] <- lapply(local, as.character)
   expect_error(rws_write_sqlite(local, conn = conn),
                "column 'date' in table 'local' has 'No' meta data for the input data but 'class: Date' for the existing data")
@@ -536,16 +534,19 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  rws_data <- as.data.frame(rws_data)
-  rws_data <- tibble::as_tibble(rws_data)
-  local <- rws_data["date"]
+  local <- as.data.frame(readwritesqlite::rws_data)
+  local <- local["date"]
+  local <- tibble::as_tibble(local)
   local[] <- lapply(local, as.character)
   local <- local[integer(0),]
   
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
   remote <- rws_read_sqlite_table("local", conn = conn)
-  expect_equal(remote, local)
-  local2 <- rws_data["date"]
+  expect_identical(remote, local)
+  
+  local2 <- as.data.frame(readwritesqlite::rws_data)
+  local2 <- local2["date"]
+  local2 <- tibble::as_tibble(local2)
   local2 <- local2[integer(0),]
   expect_error(rws_write_sqlite(local2, conn = conn, x_name = "local"), 
                "column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data")
@@ -553,23 +554,25 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   expect_identical(rws_write_sqlite(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
   
   remote <- rws_read_sqlite_table("local", conn = conn)
-  expect_equal(remote, local2)
+  expect_identical(remote, local2)
 })
 
 test_that("initialized with no rows of data and no metadata and not overwritten unless delete = TRUE", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  rws_data <- as.data.frame(rws_data)
-  rws_data <- tibble::as_tibble(rws_data)
-  local <- rws_data["date"]
+  local <- as.data.frame(readwritesqlite::rws_data)
+  local <- local["date"]
+  local <- tibble::as_tibble(local)
   local[] <- lapply(local, as.character)
   local <- local[integer(0),]
   
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
   remote <- rws_read_sqlite_table("local", conn = conn)
-  expect_equal(remote, local)
-  local2 <- rws_data["date"]
+  expect_identical(remote, local)
+  local2 <- as.data.frame(readwritesqlite::rws_data)
+  local2 <- local2["date"]
+  local2 <- tibble::as_tibble(local2)
   local2 <- local2[integer(0),]
   expect_error(rws_write_sqlite(local2, conn = conn, x_name = "local"), 
                "column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data")
@@ -577,15 +580,14 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   expect_identical(rws_write_sqlite(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
   
   remote <- rws_read_sqlite_table("local", conn = conn)
-  expect_equal(remote, local2)
+  expect_identical(remote, local2)
 })
 
 test_that("meta then inconsistent data then error meta but delete reset", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  local <- readwritesqlite::rws_data  
-  local <- as.data.frame(local)
+  local <- as.data.frame(readwritesqlite::rws_data)  
   local$geometry <- NULL
   attr(local, "sf_column") <- NULL
   attr(local, "agr") <- NULL
