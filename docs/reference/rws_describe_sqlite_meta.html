@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Table Names — rws_list_tables • readwritesqlite</title>
+<title>Add Descriptions to SQL Meta Data Table — rws_describe_sqlite_meta • readwritesqlite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Table Names — rws_list_tables" />
+<meta property="og:title" content="Add Descriptions to SQL Meta Data Table — rws_describe_sqlite_meta" />
 
-<meta property="og:description" content="Gets the table names excluding the names of the meta and log tables." />
+<meta property="og:description" content="Add Descriptions to SQL Meta Data Table" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,22 +106,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Table Names</h1>
+    <h1>Add Descriptions to SQL Meta Data Table</h1>
     
-    <div class="hidden name"><code>rws_list_tables.Rd</code></div>
+    <div class="hidden name"><code>rws_describe_sqlite_meta.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Gets the table names excluding the names of the meta and log tables.</p>
+    <p>Add Descriptions to SQL Meta Data Table</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>rws_list_tables</span>(<span class='no'>conn</span>)</pre>
+    <pre class="usage"><span class='fu'>rws_describe_sqlite_meta</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>conn</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>An object specifying the table(s) to read.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Not used.</p></td>
+    </tr>
     <tr>
       <th>conn</th>
       <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
@@ -130,7 +138,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector of table names.</p>
+    <p>xx</p>
     
 
   </div>

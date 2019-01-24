@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Table Names — rws_list_tables • readwritesqlite</title>
+<title>Opens SQLite Database Connection — rws_open_connection • readwritesqlite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Table Names — rws_list_tables" />
+<meta property="og:title" content="Opens SQLite Database Connection — rws_open_connection" />
 
-<meta property="og:description" content="Gets the table names excluding the names of the meta and log tables." />
+<meta property="og:description" content="Opens a SQLiteConnection to a SQLite database with
+foreign key constraints enabled." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,31 +107,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Table Names</h1>
+    <h1>Opens SQLite Database Connection</h1>
     
-    <div class="hidden name"><code>rws_list_tables.Rd</code></div>
+    <div class="hidden name"><code>rws_open_connection.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Gets the table names excluding the names of the meta and log tables.</p>
+    <p>Opens a <code>SQLiteConnection</code> to a SQLite database with
+foreign key constraints enabled.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>rws_list_tables</span>(<span class='no'>conn</span>)</pre>
+    <pre class="usage"><span class='fu'>rws_open_connection</span>(<span class='kw'>dbname</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>conn</th>
-      <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
+      <th>dbname</th>
+      <td><p>The path to the database file. SQLite keeps each database
+instance in one single file. The name of the database <em>is</em> the file
+name, thus database names should be legal file names in the running
+platform. There are two exceptions:</p>
+<ul>
+<li><p><code>""</code> will create a temporary on-disk database. The file
+will be deleted when the connection is closed.</p></li>
+<li><p><code>":memory:"</code> or <code>"file::memory:"</code> will create a temporary
+in-memory database.</p></li>
+</ul></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A character vector of table names.</p>
     
 
   </div>
@@ -138,9 +145,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

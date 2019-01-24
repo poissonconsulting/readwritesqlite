@@ -18,7 +18,9 @@ A named list of data frames.
 Read from a SQLite Database
 }
 \seealso{
-Other rws_read_sqlite: \code{\link{rws_read_sqlite.SQLiteConnection}},
+Other rws_read_sqlite: \code{\link{rws_describe_sqlite_meta.character}},
+  \code{\link{rws_describe_sqlite_meta.data.frame}},
+  \code{\link{rws_read_sqlite.SQLiteConnection}},
   \code{\link{rws_read_sqlite.character}}
 }
 \concept{rws_read_sqlite}

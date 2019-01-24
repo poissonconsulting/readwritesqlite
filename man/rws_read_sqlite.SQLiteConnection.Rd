@@ -20,7 +20,9 @@ A named list of the data frames.
 Read All Tables from a SQLite Database
 }
 \seealso{
-Other rws_read_sqlite: \code{\link{rws_read_sqlite.character}},
+Other rws_read_sqlite: \code{\link{rws_describe_sqlite_meta.character}},
+  \code{\link{rws_describe_sqlite_meta.data.frame}},
+  \code{\link{rws_read_sqlite.character}},
   \code{\link{rws_read_sqlite}}
 }
 \concept{rws_read_sqlite}

@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis build
 status](https://travis-ci.org/poissonconsulting/readwritesqlite.svg?branch=master)](https://travis-ci.org/poissonconsulting/readwritesqlite)
 [![AppVeyor build
@@ -72,7 +72,9 @@ the `rws_read_sqlite()` functions.
 
 ``` r
 library(readwritesqlite)
-conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+conn <- rws_open_connection(":memory:")
+#> Warning in result_fetch(res@ptr, n = n): Don't need to call dbFetch() for
+#> statements, only for queries
 
 rws_data
 #>   logical       date factor ordered             posixct units geometry
@@ -95,10 +97,10 @@ rws_read_sqlite("rws_data", conn = conn)
 #>   <lgl>   <date>     <fct>  <ord>   <dttm>              <S3:>
 #> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…
 #> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…
-#> 3 NA      NA         <NA>   <NA>    NA                  "  N…
-#> # ... with 1 more variable: geometry <POINT [°]>
+#> 3 NA      NA         <NA>   <NA>    NA                    NA…
+#> # … with 1 more variable: geometry <POINT [°]>
 
-DBI::dbDisconnect(conn)
+rws_close_connection(conn)
 ```
 
 ## Information
