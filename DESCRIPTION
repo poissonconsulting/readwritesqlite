@@ -25,6 +25,7 @@ Suggests:
     knitr,
     rmarkdown
 Remotes:
+    poissonconsulting/checkr,
     poissonconsulting/dttr
 Encoding: UTF-8
 LazyData: true
