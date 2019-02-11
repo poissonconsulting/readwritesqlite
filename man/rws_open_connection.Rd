@@ -4,7 +4,7 @@
 \alias{rws_open_connection}
 \title{Opens SQLite Database Connection}
 \usage{
-rws_open_connection(dbname = "")
+rws_open_connection(dbname = "", exists = NA)
 }
 \arguments{
 \item{dbname}{The path to the database file. SQLite keeps each database
@@ -18,6 +18,8 @@ will be deleted when the connection is closed.
 \item \code{":memory:"} or \code{"file::memory:"} will create a temporary
 in-memory database.
 }}
+
+\item{exists}{A flag specifying whether the table(s) must already exist.}
 }
 \description{
 Opens a \code{\linkS4class{SQLiteConnection}} to a SQLite database with

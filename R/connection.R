@@ -4,9 +4,18 @@
 #' foreign key constraints enabled.
 #'
 #' @inheritParams RSQLite::SQLite
+#' @param exists A flag specifying whether the table(s) must already exist.
 #' @export
-rws_open_connection <- function(dbname = "") {
+rws_open_connection <- function(dbname = "", exists = NA) {
   check_string(dbname)
+  check_scalar(exists, c(TRUE, NA))
+  
+  if(isTRUE(exists) && !file.exists(dbname))
+    err("File '", dbname,"' must already exist.")
+
+  if(isFALSE(exists) && file.exists(dbname))
+    err("File '", dbname,"' must not already exist.")
+  
   conn <- DBI::dbConnect(RSQLite::SQLite(), dbname = dbname)
   DBI::dbGetQuery(conn, "PRAGMA foreign_keys = ON;")
   conn
