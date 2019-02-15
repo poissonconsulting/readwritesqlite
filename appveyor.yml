@@ -33,6 +33,8 @@ notifications:
     auth_token:
       secure: k01wonjiVGV2Je8nDQ4ISIkX1HjakJKtR636gmIjtSJy+G1F9uw+doX511zxHLIlqoB0iMURrKyzoHR+lyFO7XCHacQgpFLCOdPcRENglAo=
     channel: '#appveyor'
+    on_build_failure: true
+    on_build_status_changed: true
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
