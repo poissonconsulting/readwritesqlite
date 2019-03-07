@@ -22,8 +22,8 @@ changes or provide particularly useful error messages.
 
 `readwritesqlite` is an R package that by default
 
-  - preserves (and subsequently checks)
-      - the class for logical and Date columns
+  - preserves (and subsequently checks) the following metadata
+      - the class for logical, Date and hms columns
       - the levels for factors and ordered factors
       - the time zone for POSIXct columns
       - the units for unit columns
@@ -57,16 +57,16 @@ changes or provide particularly useful error messages.
 `readwritesqlite` provides all these features through its
 `rws_write_sqlite()` and `rws_read_sqlite()` functions.
 
+The `rws_query_sqlite()` function allows the user to pass a SQL query.
+By default, the metadata (except the setting of the sf column) is, if
+unambigously defined, preserved for each column in the final query. To
+facilitate this functionality the user should ensure that columns (in
+different tables) with the same name have the same metadata and column
+names in the final query match those in the base tables.
+
 The init, meta and log data are stored in separate tables from the main
 data which means that they do not interfere with other ways of
 interacting with a SQLite database.
-
-## What readwritesqlite Is Not
-
-Currently, `readwritesqlite` does not preserve meta data in queries.
-Meta data (logical, Date, factor, ordered, POSIXct, unit and sfc
-columns) are only preserved when entire tables are downloaded through
-the `rws_read_sqlite()` functions.
 
 ## Demonstration
 

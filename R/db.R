@@ -58,6 +58,14 @@ read_data <- function(table_name, meta, conn) {
   data
 }
 
+query_data <- function(query, meta, conn) {
+  data <- DBI::dbGetQuery(conn, query)
+  if(meta) {
+    data <- read_meta_data_query(data, conn)
+  }
+  data
+}
+
 table_schema <- function(table_name, conn) {
   sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
   query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)

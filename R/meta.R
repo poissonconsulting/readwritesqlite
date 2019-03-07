@@ -227,3 +227,29 @@ read_meta_data <- function(data, table_name, conn) {
                               meta, SIMPLIFY = FALSE)
   data
 }
+
+read_meta_data_query <- function(data, conn) {
+  confirm_meta_table(conn)
+
+  meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- unique(meta_table[c("ColumnMeta", "MetaMeta")])
+  meta <- meta_table$MetaMeta
+  names(meta) <- meta_table$ColumnMeta
+
+  duplicates <- unique(names(meta)[duplicated(names(meta))])
+  if(length(duplicates)) 
+    meta <- meta[!names(meta) %in% duplicates]
+  
+  names <- intersect(to_upper(names(data)), names(meta))
+
+  if(!length(names)) return(data)
+  
+  meta <- meta[names]
+  names(meta) <- names(data)[to_upper(names(data)) %in% names]
+  meta <- meta[!is.na(meta)]
+  if(!length(meta)) return(data)
+  
+  data[names(meta)] <- mapply(FUN = read_meta_data_column, data[names(meta)], 
+                              meta, SIMPLIFY = FALSE)
+  data
+}
