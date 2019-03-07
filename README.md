@@ -60,9 +60,10 @@ changes or provide particularly useful error messages.
 The `rws_query_sqlite()` function allows the user to pass a SQL query.
 By default, the metadata (except the setting of the sf column) is, if
 unambigously defined, preserved for each column in the final query. To
-facilitate this functionality the user should ensure that columns (in
-different tables) with the same name have the same metadata and column
-names in the final query match those in the base tables.
+enable this functionality the user should ensure that a) columns in
+tables which will be referenced in the same query should have different
+names or identical metadata and b) column names in the final query
+should match those in the referenced base tables.
 
 The init, meta and log data are stored in separate tables from the main
 data which means that they do not interfere with other ways of

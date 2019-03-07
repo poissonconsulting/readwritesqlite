@@ -63,9 +63,11 @@ test_that("rws_get_sqlite_query teases apart two", {
   expect_identical(rws_write_sqlite(local3, exists = FALSE, conn = conn), "local3")
   data <- rws_query_sqlite("SELECT * FROM local", conn = conn)
   
-  expect_identical(data, as_conditional_tibble(data.frame(x = 1:3, z = c(TRUE, FALSE, NA), a = c(1L, 1L, 0L))))
+  expect_identical(data, local)
   
-  data2 <- rws_query_sqlite("SELECT * FROM local2", conn = conn)
+  data <- rws_query_sqlite("SELECT local.a AS a FROM local INNER JOIN local2 ON local.x = local2.x", conn = conn)
+  expect_identical(data, as_conditional_tibble(data.frame(a = c(TRUE, FALSE))))
   
-  expect_identical(data2, as_conditional_tibble(data.frame(x = 2:4, z2 = c(1, 2, NA), a = c(1L, 0L, 1L))))
+  data <- rws_query_sqlite("SELECT local.a AS a FROM local INNER JOIN local3 ON local.x = local3.x", conn = conn)
+  expect_identical(data, as_conditional_tibble(data.frame(a = c(1L, 0L))))
 })

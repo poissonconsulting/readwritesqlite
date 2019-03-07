@@ -61,7 +61,8 @@ read_data <- function(table_name, meta, conn) {
 query_data <- function(query, meta, conn) {
   data <- DBI::dbGetQuery(conn, query)
   if(meta) {
-    data <- read_meta_data_query(data, conn)
+    table_names <- query_table_names(query)
+    data <- read_meta_data_query(data, table_names, conn)
   }
   data
 }

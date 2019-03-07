@@ -243,8 +243,10 @@ read_meta_data_data <- function(data, meta) {
   data
 }
 
-unambigous_meta_meta <- function(conn) {
+unambigous_meta_meta <- function(table_names, conn) {
   meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- meta_table[meta_table$TableMeta %in% to_upper(table_names),]
+
   meta_table <- unique(meta_table[c("ColumnMeta", "MetaMeta")])
   meta <- meta_table$MetaMeta
   names(meta) <- meta_table$ColumnMeta
@@ -254,10 +256,10 @@ unambigous_meta_meta <- function(conn) {
   meta
 }
 
-read_meta_data_query <- function(data, conn) {
+read_meta_data_query <- function(data, table_names, conn) {
   confirm_meta_table(conn)
   
-  meta <- unambigous_meta_meta(conn)
+  meta <- unambigous_meta_meta(table_names, conn)
   data <- read_meta_data_data(data, meta)
   data
 }

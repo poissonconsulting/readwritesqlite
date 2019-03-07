@@ -49,3 +49,16 @@ sf_column_name <- function(x) {
   if(is.null(x)) return(NA_character_)
   x
 }
+
+str_extract_all <- function(x, y) {
+  regmatches(x, gregexpr(y, x, ignore.case = TRUE, perl = TRUE))
+}
+
+query_table_names <- function(x) {
+  from <- unlist(str_extract_all(x, "(?<=FROM\\s)\\s*\\w+(\\s*,\\s*\\w+)*"))
+  join <- unlist(str_extract_all(x, "(?<=JOIN\\s)\\s*\\w+"))
+  from <- unlist(strsplit(from, ","))
+  tables <- c(from, join)
+  tables <- gsub("\\s", "", tables)
+  sort(unique(to_upper(tables)))
+}
