@@ -1,6 +1,6 @@
 Package: readwritesqlite
 Title: Enhanced Reading and Writing for SQLite Databases
-Version: 0.0.1.9007
+Version: 0.0.1.9008
 Authors@R: 
     person("Joe", "Thorley", role = c("aut", "cre"), email = "joe@poissonconsulting.ca", comment = c(ORCID = "0000-0002-7683-4592"))
 Description: 
@@ -14,6 +14,7 @@ Imports:
     err,
     checkr,
     dttr,
+    hms,
     DBI,
     RSQLite,
     sf,
