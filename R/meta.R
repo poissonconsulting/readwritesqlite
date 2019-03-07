@@ -228,18 +228,7 @@ read_meta_data <- function(data, table_name, conn) {
   data
 }
 
-read_meta_data_query <- function(data, conn) {
-  confirm_meta_table(conn)
-
-  meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
-  meta_table <- unique(meta_table[c("ColumnMeta", "MetaMeta")])
-  meta <- meta_table$MetaMeta
-  names(meta) <- meta_table$ColumnMeta
-
-  duplicates <- unique(names(meta)[duplicated(names(meta))])
-  if(length(duplicates)) 
-    meta <- meta[!names(meta) %in% duplicates]
-  
+read_meta_data_data <- function(data, meta) {
   names <- intersect(to_upper(names(data)), names(meta))
 
   if(!length(names)) return(data)
@@ -251,5 +240,24 @@ read_meta_data_query <- function(data, conn) {
   
   data[names(meta)] <- mapply(FUN = read_meta_data_column, data[names(meta)], 
                               meta, SIMPLIFY = FALSE)
+  data
+}
+
+unambigous_meta_meta <- function(conn) {
+  meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
+  meta_table <- unique(meta_table[c("ColumnMeta", "MetaMeta")])
+  meta <- meta_table$MetaMeta
+  names(meta) <- meta_table$ColumnMeta
+
+  duplicates <- unique(names(meta)[duplicated(names(meta))])
+  if(length(duplicates)) meta <- meta[!names(meta) %in% duplicates]
+  meta
+}
+
+read_meta_data_query <- function(data, conn) {
+  confirm_meta_table(conn)
+  
+  meta <- unambigous_meta_meta(conn)
+  data <- read_meta_data_data(data, meta)
   data
 }
