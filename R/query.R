@@ -12,6 +12,6 @@ rws_query_sqlite <- function(query, meta = TRUE, conn) {
   check_sqlite_connection(conn, connected = TRUE)
 
   data <- DBI::dbGetQuery(conn, query)
-  if(!meta) return(data)
+  if(!meta) return(as_conditional_tibble(data))
   .NotYetImplemented()
 }
