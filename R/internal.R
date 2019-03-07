@@ -55,9 +55,12 @@ str_extract_all <- function(x, y) {
 }
 
 query_table_names <- function(x) {
-  from <- unlist(str_extract_all(x, "(?<=FROM\\s)\\s*\\w+(\\s*,\\s*\\w+)*"))
-  join <- unlist(str_extract_all(x, "(?<=JOIN\\s)\\s*\\w+"))
+  w <- "((\\w+)|(`\\w+`)|([[]\\w+[]])|(\"\\w+\"))"
+  from <- p0("(?<=FROM\\s)\\s*", w, "(\\s*,\\s*", w, ")*")
+  from <- unlist(str_extract_all(x, from))
   from <- unlist(strsplit(from, ","))
+  join <- p0("(?<=JOIN\\s)\\s*", w)
+  join <- unlist(str_extract_all(x, join))
   tables <- c(from, join)
   tables <- gsub("\\s", "", tables)
   sort(unique(to_upper(tables)))

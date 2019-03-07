@@ -36,7 +36,6 @@ validate_data <- function(data, table_name, strict, silent, conn) {
   pk <- table_info$name[table_info$pk != 0L]
   check_key(data, key = pk, x_name = p0("data '", table_name, "'"), 
             na_distinct = TRUE)
-  
   names(data) <- data_names[names(data)]
   if(!is.na(sf_column_name) && sf_column_name %in% names(data)) {
     data <- sf::st_sf(data, sf_column_name = sf_column_name, 
