@@ -50,7 +50,9 @@ test_that("meta handles all classes", {
   local <- data.frame(logical = TRUE, date = as.Date("2000-01-01"),
                       posixct = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"),
                       units = units::as_units(10, "m"),
-                      hms = hms::as.hms(as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8")))
+                      hms = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"))
+  
+  local$hms <- as.hms(local$hms, tz = "Etc/GMT+8")
   
   expect_identical(rws_write_sqlite(local, exists = FALSE, conn = conn), "local")
   meta <- rws_read_sqlite_meta(conn)
@@ -142,11 +144,13 @@ test_that("meta reads all classes", {
                       date = as.Date("2000-01-01"),
                       posixct = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"),
                       units = units::as_units(10, "m"),
-                      hms = hms::as.hms(as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8")),
+                      hms = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"),
                       geometry = sf::st_sfc(sf::st_point(c(0,1)), crs = 4326),
                       factor = factor("fac"),
                       ordered = ordered("ordered"))
   
+  local$hms <- as.hms(local$hms, tz = "Etc/GMT+8")
+
   expect_identical(rws_write_sqlite(local, exists = FALSE, conn = conn), "local")
   expect_identical(readwritesqlite:::table_schema("local", conn),
                    paste0("CREATE TABLE `local` (\n  `logical` INTEGER,\n  ",
@@ -165,10 +169,13 @@ test_that("meta = FALSE same as just writing", {
                       date = as.Date("2000-01-01"),
                       posixct = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"),
                       units = units::as_units(10, "m"),
-                      hms = hms::as.hms(as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8")),
+                      hms = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"),
                       geometry = sf::st_sfc(sf::st_point(c(0,1)), crs = 4326),
                       factor = factor("fac"),
                       ordered = ordered("ordered"))
+  
+  local$hms <- as.hms(local$hms, tz = "Etc/GMT+8")
+
   
   expect_identical(rws_write_sqlite(local, meta = FALSE, exists = FALSE, conn = conn), "local")
   expect_identical(readwritesqlite:::table_schema("local", conn),
