@@ -2,7 +2,7 @@
 % Please edit documentation in R/read.R
 \name{rws_read_sqlite_table}
 \alias{rws_read_sqlite_table}
-\title{Read A Tables from a SQLite Database}
+\title{Read A Table from a SQLite Database}
 \usage{
 rws_read_sqlite_table(x, meta = TRUE, conn)
 }
@@ -17,5 +17,5 @@ rws_read_sqlite_table(x, meta = TRUE, conn)
 A data frame of the table.
 }
 \description{
-Read A Tables from a SQLite Database
+Read A Table from a SQLite Database
 }
