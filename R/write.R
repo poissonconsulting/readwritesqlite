@@ -1,7 +1,7 @@
 write_sqlite_data <- function(data, table_name, exists, delete, replace, meta, log,
                               strict, silent, conn) {
   if(isFALSE(exists) || (is.na(exists) && !tables_exists(table_name, conn))) {
-    create_table(data, table_name, silent = silent, conn = conn)
+    create_table(data, table_name, log = log, silent = silent, conn = conn)
   }
   
   if(delete) 
@@ -9,7 +9,8 @@ write_sqlite_data <- function(data, table_name, exists, delete, replace, meta, l
   
   data <- validate_data(data, table_name, strict = strict, silent = silent, 
                         conn = conn)
-  write_data(data, table_name, replace = replace, meta = meta, log = log, conn = conn)
+  write_data(data, table_name, replace = replace, meta = meta, log = log, 
+             conn = conn)
   data
 }
 

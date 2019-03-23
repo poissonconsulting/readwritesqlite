@@ -344,6 +344,23 @@ test_that("rws_write not commits", {
   expect_identical(remote, rbind(y$local, y$LOCAL))
 })
 
+test_that("replace rows UNIQUE constraints in primary key", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  DBI::dbGetQuery(conn, "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL,
+                  y INTEGER)")
+
+  local <- data.frame(x = 1:3, y = 2:4)
+  expect_identical(rws_write(local, conn = conn), "local")
+  local <- local[1:2,]
+  local$y <- local$y + 10L
+  expect_error(rws_write(local, conn = conn), "UNIQUE constraint failed: local.x")
+  expect_identical(rws_write(local, replace = TRUE, conn = conn), "local")
+#  rws_read_table("local", conn = conn)
+})
+
 test_that("foreign keys switched on one data frame at a time", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

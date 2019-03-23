@@ -7,17 +7,27 @@ tables_exists <- function(table_names, conn) {
   to_upper(table_names) %in% to_upper(tables)
 }
 
+sql_interpolate <- function(sql, table_name, conn) {
+  DBI::sqlInterpolate(conn, sql, table_name = table_name)
+}
+
 nrows_table <- function(table_name, conn) {
   nrows <- DBI::dbGetQuery(conn, p0("SELECT COUNT(*) FROM ", table_name, ";"))
   nrows <- nrows[1,1]
   nrows
 }
 
-create_table <- function(data, table_name, silent, conn) {
+create_table <- function(data, table_name, log, silent, conn) {
   if(!isFALSE(silent)) msg("creating table '", table_name, "'")
   DBI::dbCreateTable(conn, table_name, data)
-  log_command(table_name, command = "CREATE", nrow = 0L, conn = conn)
+  if(log) log_command(table_name, command = "CREATE", nrow = 0L, conn = conn)
   data
+}
+
+drop_table <- function(table_name, conn) {
+  sql <- "DROP TABLE IF EXISTS ?table_name;"
+  sql <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
+  DBI::dbGetQuery(conn, statement = sql)
 }
 
 write_data <- function(data, table_name, replace, meta, log, conn) {
@@ -29,7 +39,14 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
   if (nrow(data)) {
     data <- convert_data(data)
     if(replace && nrows_table(table_name, conn)) {
-      .NotYetImplemented()
+      sql <- table_schema(table_name, conn)
+      sql <- sub("CREATE TABLE", "CREATE TEMP TABLE", sql)
+      dbExecute(conn, sql)
+      on.exit(drop_table(table_name = p0("temp.", table_name), conn = conn))
+      DBI::dbAppendTable(conn, table_name, data)
+      sql <- "REPLACE INTO ?table_name SELECT * FROM temp.?table_name;"
+      sql <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
+      dbExecute(conn, sql)
     } else {
       DBI::dbAppendTable(conn, table_name, data)
       if(log) 
@@ -40,9 +57,9 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
 }
 
 delete_data <- function(table_name, meta, log, conn) {
-  sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
-  query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
-  nrow <- dbExecute(conn, p0("DELETE FROM ",  table_name))
+  sql <- "DELETE FROM ?table_name;"
+  sql <- sql_interpolate(sql, table_name, conn)
+  nrow <- dbExecute(conn, sql)
   if(log) {
     log_command(table_name, command = "DELETE", nrow = nrow, conn = conn)
   }
@@ -73,14 +90,14 @@ query_data <- function(query, meta, conn) {
 
 table_schema <- function(table_name, conn) {
   sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
-  query <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
-  schema <- DBI::dbGetQuery(conn, statement = query)[[1]]
+  sql <- sql_interpolate(sql, table_name, conn)
+  schema <- DBI::dbGetQuery(conn, statement = sql)[[1]]
   schema
 }
 
 table_info <- function(table_name, conn) {
-  query <- p0("PRAGMA table_info('", table_name, "');")
-  table_info <- DBI::dbGetQuery(conn, query)
+  sql <- p0("PRAGMA table_info('", table_name, "');")
+  table_info <- DBI::dbGetQuery(conn, sql)
   table_info
 }
 
