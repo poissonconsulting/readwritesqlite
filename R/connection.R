@@ -17,7 +17,7 @@ rws_open_connection <- function(dbname = "", exists = NA) {
     err("File '", dbname,"' must not already exist.")
   
   conn <- DBI::dbConnect(RSQLite::SQLite(), dbname = dbname)
-  DBI::dbGetQuery(conn, "PRAGMA foreign_keys = ON;")
+  get_query("PRAGMA foreign_keys = ON;", conn)
   conn
 }
 

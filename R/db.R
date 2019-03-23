@@ -7,12 +7,21 @@ tables_exists <- function(table_names, conn) {
   to_upper(table_names) %in% to_upper(tables)
 }
 
+	
+get_query <- function(sql, conn) {
+  DBI::dbGetQuery(conn, sql)
+}
+
+execute <- function(sql, conn) {
+  DBI::dbExecute(conn, sql)
+}
+
 sql_interpolate <- function(sql, table_name, conn) {
   DBI::sqlInterpolate(conn, sql, table_name = table_name)
 }
 
 nrows_table <- function(table_name, conn) {
-  nrows <- DBI::dbGetQuery(conn, p0("SELECT COUNT(*) FROM ", table_name, ";"))
+  nrows <- get_query(p0("SELECT COUNT(*) FROM ", table_name, ";"), conn)
   nrows <- nrows[1,1]
   nrows
 }
@@ -27,7 +36,7 @@ create_table <- function(data, table_name, log, silent, conn) {
 drop_table <- function(table_name, conn) {
   sql <- "DROP TABLE IF EXISTS ?table_name;"
   sql <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
-  DBI::dbGetQuery(conn, statement = sql)
+  get_query(sql, conn)
 }
 
 write_data <- function(data, table_name, replace, meta, log, conn) {
@@ -80,7 +89,7 @@ read_data <- function(table_name, meta, conn) {
 }
 
 query_data <- function(query, meta, conn) {
-  data <- DBI::dbGetQuery(conn, query)
+  data <- get_query(query, conn)
   if(meta) {
     table_names <- query_table_names(query)
     data <- read_meta_data_query(data, table_names, conn)
@@ -91,13 +100,13 @@ query_data <- function(query, meta, conn) {
 table_schema <- function(table_name, conn) {
   sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
   sql <- sql_interpolate(sql, table_name, conn)
-  schema <- DBI::dbGetQuery(conn, statement = sql)[[1]]
+  schema <- get_query(sql, conn)[[1]]
   schema
 }
 
 table_info <- function(table_name, conn) {
   sql <- p0("PRAGMA table_info('", table_name, "');")
-  table_info <- DBI::dbGetQuery(conn, sql)
+  table_info <- get_query(sql, conn)
   table_info
 }
 
@@ -111,7 +120,7 @@ is_table_column_text <- function(column_name, table_name, conn) {
 }
 
 foreign_keys <- function(on, conn) {
-  old <- DBI::dbGetQuery(conn, "PRAGMA foreign_keys;")
+  old <- get_query("PRAGMA foreign_keys;", conn)
   old <- as.logical(old[1,1])
   
   if(on && !old)
@@ -122,7 +131,7 @@ foreign_keys <- function(on, conn) {
 }
 
 defer_foreign_keys <- function(on, conn) {
-  old <- DBI::dbGetQuery(conn, "PRAGMA defer_foreign_keys;")
+  old <- get_query("PRAGMA defer_foreign_keys;", conn)
   old <- as.logical(old[1,1])
   
   if(on && !old)
