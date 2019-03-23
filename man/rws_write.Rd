@@ -2,6 +2,7 @@
 % Please edit documentation in R/write.R
 \name{rws_write}
 \alias{rws_write}
+\alias{rws_write_sqlite}
 \title{Write to a SQLite Database}
 \usage{
 rws_write(x, exists = TRUE, delete = FALSE, replace = FALSE,

@@ -3,10 +3,17 @@
 #' @param x An object specifying the table(s) to read.
 #' @inheritParams rws_write
 #' @return xx
+#' @aliases rws_describe_sqlite_meta
 #' @family rws_describe_sqlite_meta
 #' @export
+rws_describe_meta <- function(x, ..., conn) {
+  UseMethod("rws_describe_meta")
+}
+
+#' @export
 rws_describe_sqlite_meta <- function(x, ..., conn) {
-  UseMethod("rws_describe_sqlite_meta")
+  .Deprecated("rws_describe_meta")
+  UseMethod("rws_describe_meta")
 }
 
 #' Add Descriptions to SQL Meta Data Table
@@ -20,18 +27,17 @@ rws_describe_sqlite_meta <- function(x, ..., conn) {
 #' @return An invisible character vector of the previous descriptions.
 #' @family rws_read_sqlite
 #' @export
-rws_describe_sqlite_meta.character <- function(x, column, description, ..., conn) {
+rws_describe_meta.character <- function(x, column, description, ..., conn) {
   check_vector(x, "")
   check_vector(column, "")
   check_vector(description, c("", NA))
   check_sqlite_connection(conn)
   check_unused(...)
   
-  rws_describe_sqlite_meta(data.frame(
+  rws_describe_meta(data.frame(
     Table = x, Column = column, Description = description, 
     stringsAsFactors = FALSE))
 }
-
 
 #' Add Data Frame of Descriptions to SQL Meta Data Table
 #'
@@ -41,7 +47,7 @@ rws_describe_sqlite_meta.character <- function(x, column, description, ..., conn
 #' @return An invisible character vector of the previous descriptions.
 #' @family rws_read_sqlite
 #' @export
-rws_describe_sqlite_meta.data.frame <- function(x, ..., conn) {
+rws_describe_meta.data.frame <- function(x, ..., conn) {
   check_data(x, values = list(Table = "", Column = "", Description = c("", NA)))
   check_sqlite_connection(conn, connected = TRUE)
   check_unused(...)

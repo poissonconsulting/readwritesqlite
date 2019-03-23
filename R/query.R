@@ -5,7 +5,7 @@
 #' @param query A string of a SQLite query.
 #' @inheritParams rws_write
 #' @return A data frame of the query.
-#' @name rws_query_sqlite
+#' @aliases rws_query_sqlite
 #' @export
 rws_query <- function(query, meta = TRUE, conn) {
   check_string(query)

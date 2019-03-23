@@ -30,6 +30,7 @@ write_sqlite_data <- function(data, table_name, exists, delete, replace, meta, l
 #' @param silent A flag specifying whether to suppress messages and warnings.
 #' @param ... Not used.
 #' @return An invisible character vector of the name(s) of the table(s).
+#' @aliases rws_write_sqlite
 #' @family rws_write
 #' @export
 rws_write <- function(x, exists = TRUE, delete = FALSE, 
@@ -42,6 +43,21 @@ rws_write <- function(x, exists = TRUE, delete = FALSE,
                              silent = getOption("rws.silent", FALSE),
                              conn, 
                              ...) {
+  UseMethod("rws_write")
+}
+
+#' @export
+rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE, 
+                             replace = FALSE,
+                             meta = TRUE,
+                             log = TRUE,
+                             commit = TRUE,
+                             strict = TRUE,
+                             x_name = substitute(x), 
+                             silent = getOption("rws.silent", FALSE),
+                             conn, 
+                             ...) {
+  .Deprecated("rws_write")
   UseMethod("rws_write")
 }
 

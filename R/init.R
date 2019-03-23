@@ -67,7 +67,7 @@ confirm_init_table <- function(conn) {
 #'
 #' @inheritParams rws_write
 #' @return A data frame of the init table
-#' @name rws_read_sqlite_init
+#' @aliases rws_read_sqlite_init
 #' @export
 #' @examples
 #' conn <- DBI::dbConnect(RSQLite::SQLite())

@@ -41,7 +41,7 @@ log_command <- function(table_name, command, nrow, conn) {
 #'
 #' @inheritParams rws_write
 #' @return A data frame of the log table
-#' @name rws_read_sqlite_log
+#' @aliases rws_read_sqlite_log
 #' @export
 #' @examples
 #' conn <- DBI::dbConnect(RSQLite::SQLite())
