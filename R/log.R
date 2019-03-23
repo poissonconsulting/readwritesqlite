@@ -15,7 +15,7 @@ log_schema <- function () {
 confirm_log_table <- function(conn) {
   log_schema <- log_schema()
   if (!tables_exists(.log_table_name, conn)) {
-    dbExecute(conn, log_schema)
+    execute(log_schema, conn)
   } else {
     log_schema <- sub(";$", "", log_schema)
     schema <- table_schema(.log_table_name, conn)

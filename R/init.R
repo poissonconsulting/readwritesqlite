@@ -42,7 +42,7 @@ delete_init_data_table_name <- function(table_name, conn) {
 confirm_init_table <- function(conn) {
   init_schema <- init_schema()
   if (!tables_exists(.init_table_name, conn)) {
-    dbExecute(conn, init_schema)
+    execute(init_schema, conn)
   } else {
     init_schema <- sub(";$", "", init_schema)
     schema <- table_schema(.init_table_name, conn)

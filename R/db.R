@@ -7,7 +7,6 @@ tables_exists <- function(table_names, conn) {
   to_upper(table_names) %in% to_upper(tables)
 }
 
-	
 get_query <- function(sql, conn) {
   DBI::dbGetQuery(conn, sql)
 }
@@ -50,12 +49,12 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
     if(replace && nrows_table(table_name, conn)) {
       sql <- table_schema(table_name, conn)
       sql <- sub("CREATE TABLE", "CREATE TEMP TABLE", sql)
-      dbExecute(conn, sql)
+      execute(sql, conn)
       on.exit(drop_table(table_name = p0("temp.", table_name), conn = conn))
       DBI::dbAppendTable(conn, table_name, data)
       sql <- "REPLACE INTO ?table_name SELECT * FROM temp.?table_name;"
       sql <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
-      dbExecute(conn, sql)
+      execute(sql, conn)
     } else {
       DBI::dbAppendTable(conn, table_name, data)
       if(log) 
@@ -68,7 +67,7 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
 delete_data <- function(table_name, meta, log, conn) {
   sql <- "DELETE FROM ?table_name;"
   sql <- sql_interpolate(sql, table_name, conn)
-  nrow <- dbExecute(conn, sql)
+  nrow <- execute(sql, conn)
   if(log) {
     log_command(table_name, command = "DELETE", nrow = nrow, conn = conn)
   }
@@ -124,9 +123,9 @@ foreign_keys <- function(on, conn) {
   old <- as.logical(old[1,1])
   
   if(on && !old)
-    DBI::dbExecute(conn, "PRAGMA foreign_keys = ON;")
+    execute("PRAGMA foreign_keys = ON;", conn)
   if(!on && old)
-    DBI::dbExecute(conn, "PRAGMA foreign_keys = OFF;")
+    execute("PRAGMA foreign_keys = OFF;", conn)
   old
 }
 
@@ -135,8 +134,8 @@ defer_foreign_keys <- function(on, conn) {
   old <- as.logical(old[1,1])
   
   if(on && !old)
-    DBI::dbExecute(conn, "PRAGMA defer_foreign_keys = ON;")
+    execute("PRAGMA defer_foreign_keys = ON;", conn)
   if(!on && old)
-    DBI::dbExecute(conn, "PRAGMA defer_foreign_keys = OFF;")
+    execute("PRAGMA defer_foreign_keys = OFF;", conn)
   old
 }

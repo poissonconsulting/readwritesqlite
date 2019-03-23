@@ -35,7 +35,7 @@ replace_meta_table <- function(meta_data, conn) {
 confirm_meta_table <- function(conn) {
   meta_schema <- meta_schema()
   if (!tables_exists(.meta_table_name, conn)) {
-    dbExecute(conn, meta_schema)
+    execute(meta_schema, conn)
   } else {
     meta_schema <- sub(";$", "", meta_schema)
     schema <- table_schema(.meta_table_name, conn)
