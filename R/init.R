@@ -67,15 +67,22 @@ confirm_init_table <- function(conn) {
 #'
 #' @inheritParams rws_write_sqlite
 #' @return A data frame of the init table
+#' @name rws_read_sqlite_init
 #' @export
 #' @examples
 #' conn <- DBI::dbConnect(RSQLite::SQLite())
-#' rws_read_sqlite_init(conn)
+#' rws_read_init(conn)
 #' DBI::dbDisconnect(conn)
-rws_read_sqlite_init <- function(conn) {
+rws_read_init <- function(conn) {
   confirm_init_table(conn)
   data <- read_data(.init_table_name, meta = FALSE, conn = conn)
   as_conditional_tibble(data)
+}
+
+#' @export
+rws_read_sqlite_init <- function(conn) {
+  .Deprecated("rws_read_init")
+  rws_read_init(conn)
 }
 
 is_initialized <- function(table_name, conn) {

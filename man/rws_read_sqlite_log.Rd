@@ -2,9 +2,10 @@
 % Please edit documentation in R/log.R
 \name{rws_read_sqlite_log}
 \alias{rws_read_sqlite_log}
+\alias{rws_read_log}
 \title{Read Log Data Table from SQLite Database}
 \usage{
-rws_read_sqlite_log(conn)
+rws_read_log(conn)
 }
 \arguments{
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
@@ -17,6 +18,6 @@ The table is created if it doesn't exist.
 }
 \examples{
 conn <- DBI::dbConnect(RSQLite::SQLite())
-rws_read_sqlite_meta(conn)
+rws_read_log(conn)
 DBI::dbDisconnect(conn)
 }

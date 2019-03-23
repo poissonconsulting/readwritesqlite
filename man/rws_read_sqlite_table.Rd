@@ -2,9 +2,10 @@
 % Please edit documentation in R/read.R
 \name{rws_read_sqlite_table}
 \alias{rws_read_sqlite_table}
+\alias{rws_read_table}
 \title{Read A Table from a SQLite Database}
 \usage{
-rws_read_sqlite_table(x, meta = TRUE, conn)
+rws_read_table(x, meta = TRUE, conn)
 }
 \arguments{
 \item{x}{A string of the table name.}

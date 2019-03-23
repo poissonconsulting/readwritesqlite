@@ -56,9 +56,11 @@ test_that("rws_read_sqlite with meta = FALSE ", {
 
   local <- readwritesqlite::rws_data
   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
-  remote <- rws_read_sqlite_table("local", meta = TRUE, conn = conn)
+  expect_identical(rws_read_sqlite_table("local", meta = TRUE, conn = conn),
+                   rws_read_table("local", meta = TRUE, conn = conn))
+  remote <- rws_read_table("local", meta = TRUE, conn = conn)
   expect_identical(remote, local)
-  remote2 <- rws_read_sqlite_table("local", meta = FALSE, conn = conn)
+  remote2 <- rws_read_table("local", meta = FALSE, conn = conn)
   remote2$geometry <- NULL
   expect_identical(remote2, tibble::tibble(
     logical = c(1L, 0L, NA),

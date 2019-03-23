@@ -53,7 +53,14 @@ rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
 #' @inheritParams rws_write_sqlite
 #' @param x A string of the table name.
 #' @return A data frame of the table.
+#' @name rws_read_sqlite_table
+#' @export
+rws_read_table <- function(x, meta = TRUE, conn) {
+  rws_read_sqlite(x, meta = meta, conn = conn)[[1]]
+}
+
 #' @export
 rws_read_sqlite_table <- function(x, meta = TRUE, conn) {
-  rws_read_sqlite(x, meta = meta, conn = conn)[[1]]
+  .Deprecated("rws_read_table")
+  rws_read_table(x, meta = meta, conn = conn)
 }

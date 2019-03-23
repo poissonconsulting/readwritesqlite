@@ -8,9 +8,12 @@ test_that("rws_get_sqlite_query works with meta = FALSE", {
   local2 <- as_conditional_tibble(local[1:2,,drop = FALSE])
   DBI::dbWriteTable(conn, "local", local)
   DBI::dbWriteTable(conn, "local2", local2)
-  data<- rws_query_sqlite("SELECT * FROM local", meta = FALSE, conn = conn)
+  expect_identical(rws_query_sqlite("SELECT * FROM local", meta = FALSE, conn = conn),
+                   rws_query("SELECT * FROM local", meta = FALSE, conn = conn))
+
+  data<- rws_query("SELECT * FROM local", meta = FALSE, conn = conn)
   expect_equal(data, local, check.attributes = FALSE)
-  data2 <- rws_query_sqlite("SELECT * FROM local2", meta = FALSE, conn = conn)
+  data2 <- rws_query("SELECT * FROM local2", meta = FALSE, conn = conn)
   expect_identical(data2, local2)
 })
 
@@ -21,9 +24,9 @@ test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
   local <- as_conditional_tibble(data.frame(z = c(TRUE, FALSE, NA)))
   expect_identical(rws_write_sqlite(local, exists = FALSE, conn = conn), "local")
 
-  data <- rws_query_sqlite("SELECT * FROM local", meta = FALSE, conn = conn)
+  data <- rws_query("SELECT * FROM local", meta = FALSE, conn = conn)
   expect_equal(data, data.frame(z = c(1L, 0L, NA_integer_)), check.attributes = FALSE)
-  data2 <- rws_query_sqlite("SELECT * FROM local", meta = TRUE, conn = conn)
+  data2 <- rws_query("SELECT * FROM local", meta = TRUE, conn = conn)
   expect_identical(data2, local)
 })
 
@@ -44,7 +47,7 @@ test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
   local$hms <- as.hms(local$hms, tz = "Etc/GMT+8")
 
   expect_identical(rws_write_sqlite(local, exists = FALSE, conn = conn), "local")
-  remote <- rws_query_sqlite("SELECT * FROM local", conn = conn)
+  remote <- rws_query("SELECT * FROM local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
 })
 
@@ -57,17 +60,17 @@ test_that("rws_get_sqlite_query teases apart two", {
   local2 <- as_conditional_tibble(data.frame(x = 2:4, z2 = c(1, 2, NA), a = c(TRUE, FALSE, TRUE)))
   expect_identical(rws_write_sqlite(local2, exists = FALSE, conn = conn), "local2")
 
-  data <- rws_query_sqlite("SELECT * FROM local", conn = conn)
+  data <- rws_query("SELECT * FROM local", conn = conn)
   expect_identical(data, local)
   local3 <- as_conditional_tibble(data.frame(x = 2:4, z2 = c(FALSE, NA, TRUE), a = 2:4))
   expect_identical(rws_write_sqlite(local3, exists = FALSE, conn = conn), "local3")
-  data <- rws_query_sqlite("SELECT * FROM local", conn = conn)
+  data <- rws_query("SELECT * FROM local", conn = conn)
   
   expect_identical(data, local)
   
-  data <- rws_query_sqlite("SELECT local.a AS a FROM local INNER JOIN local2 ON local.x = local2.x", conn = conn)
+  data <- rws_query("SELECT local.a AS a FROM local INNER JOIN local2 ON local.x = local2.x", conn = conn)
   expect_identical(data, as_conditional_tibble(data.frame(a = c(TRUE, FALSE))))
   
-  data <- rws_query_sqlite("SELECT local.a AS a FROM local INNER JOIN local3 ON local.x = local3.x", conn = conn)
+  data <- rws_query("SELECT local.a AS a FROM local INNER JOIN local3 ON local.x = local3.x", conn = conn)
   expect_identical(data, as_conditional_tibble(data.frame(a = c(1L, 0L))))
 })

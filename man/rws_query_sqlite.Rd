@@ -2,9 +2,10 @@
 % Please edit documentation in R/query.R
 \name{rws_query_sqlite}
 \alias{rws_query_sqlite}
+\alias{rws_query}
 \title{Query SQLite Database}
 \usage{
-rws_query_sqlite(query, meta = TRUE, conn)
+rws_query(query, meta = TRUE, conn)
 }
 \arguments{
 \item{query}{A string of a SQLite query.}

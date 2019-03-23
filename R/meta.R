@@ -55,15 +55,22 @@ confirm_meta_table <- function(conn) {
 #'
 #' @inheritParams rws_write_sqlite
 #' @return A data frame of the meta table
+#' @name rws_read_sqlite_meta
 #' @export
 #' @examples
 #' conn <- DBI::dbConnect(RSQLite::SQLite())
-#' rws_read_sqlite_meta(conn)
+#' rws_read_meta(conn)
 #' DBI::dbDisconnect(conn)
-rws_read_sqlite_meta <- function(conn) {
+rws_read_meta <- function(conn) {
   confirm_meta_table(conn)
   data <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   as_conditional_tibble(data)
+}
+
+#' @export
+rws_read_sqlite_meta <- function(conn) {
+  .Deprecated("rws_read_meta")
+  rws_read_meta(conn)
 }
 
 data_column_meta <- function(column) {

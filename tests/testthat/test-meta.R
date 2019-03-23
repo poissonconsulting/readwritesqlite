@@ -23,7 +23,8 @@ test_that("read_sqlite_meta creates table", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  meta <- rws_read_sqlite_meta(conn)
+  expect_identical(rws_read_meta(conn), rws_read_meta(conn))
+  meta <- rws_read_meta(conn)
   expect_identical(colnames(meta),
                    c("TableMeta", "ColumnMeta", "MetaMeta", "DescriptionMeta"))
   expect_identical(nrow(meta), 0L)
@@ -36,7 +37,7 @@ test_that("meta handles logical", {
   local <- data.frame(z = c(TRUE, FALSE, NA))
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  meta <- rws_read_sqlite_meta(conn)
+  meta <- rws_read_meta(conn)
   expect_identical(meta, tibble::tibble(TableMeta = "LOCAL",
                                         ColumnMeta = "Z",
                                         MetaMeta = "class: logical",
@@ -55,7 +56,7 @@ test_that("meta handles all classes", {
   local$hms <- as.hms(local$hms, tz = "Etc/GMT+8")
   
   expect_identical(rws_write_sqlite(local, exists = FALSE, conn = conn), "local")
-  meta <- rws_read_sqlite_meta(conn)
+  meta <- rws_read_meta(conn)
   expect_identical(meta, tibble::tibble(TableMeta = rep("LOCAL", 5),
                                         ColumnMeta = c("DATE", "HMS", "LOGICAL", "POSIXCT", "UNITS"),
                                         MetaMeta = c("class: Date", "class: hms", "class: logical", "tz: Etc/GMT+8", "units: m"),
@@ -132,7 +133,7 @@ test_that("meta reads logical", {
   
   expect_identical(rws_write_sqlite(local, exists = FALSE, conn = conn), "local")
   
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
 })
 
@@ -157,7 +158,7 @@ test_that("meta reads all classes", {
                           "`date` REAL,\n  `posixct` REAL,\n  ",
                           "`units` REAL,\n  `hms` REAL,\n  ",
                           "`geometry` BLOB,\n  `factor` TEXT,\n  `ordered` TEXT\n)"))    
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
 })
 
@@ -182,7 +183,7 @@ test_that("meta = FALSE same as just writing", {
                    paste0("CREATE TABLE `local` (\n  `logical` INTEGER,\n  ",
                           "`date` REAL,\n  `posixct` REAL,\n  `units` REAL,\n  `hms` REAL,\n  ",
                           "`geometry` BLOB,\n  `factor` TEXT,\n  `ordered` TEXT\n)"))    
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   remote$geometry <- NULL
   expect_equal(remote, tibble::tibble(
     logical = 1L,
@@ -217,7 +218,7 @@ test_that("meta logical logical different types", {
               )")
   
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(remote2, data.frame(
@@ -249,7 +250,7 @@ test_that("meta Date different types", {
               )")
   
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(remote2, data.frame(
@@ -283,7 +284,7 @@ test_that("meta POSIXct different types", {
               )")
   
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(remote2, data.frame(
@@ -320,7 +321,7 @@ test_that("meta hms different types", {
               )")
   
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(remote2, data.frame(
@@ -358,7 +359,7 @@ test_that("meta hms preserves decimal", {
               )")
   
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(remote2, data.frame(
@@ -392,7 +393,7 @@ test_that("meta units different types", {
               )")
   
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(remote2, data.frame(
@@ -430,7 +431,7 @@ test_that("meta sfc different types", {
               )")
   
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(vapply(remote2, is.blob, TRUE), 
@@ -460,7 +461,7 @@ test_that("meta factor different types", {
               )")
   
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(remote2, data.frame(
@@ -493,7 +494,7 @@ test_that("meta ordered different types", {
               )")
   
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(remote2, data.frame(
@@ -525,7 +526,7 @@ test_that("meta factor without meta then meta errors", {
               )")
   
   DBI::dbWriteTable(conn, "local", local, append = TRUE)
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(lapply(local, as.character)))
   
   remote2 <- DBI::dbReadTable(conn, "local")
@@ -536,7 +537,7 @@ test_that("meta factor without meta then meta errors", {
     ztext = c("x", "y", NA),
     zblob = c("x", "y", NA), stringsAsFactors = FALSE))
   
-  remote2 <- rws_read_sqlite_table("local", conn = conn)
+  remote2 <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(lapply(local, as.character)))
   expect_error(rws_write_sqlite(local, conn = conn), 
                "column 'zinteger' in table 'local' has 'factor: 'y', 'x'' meta data for the input data but 'No' for the existing data")
@@ -575,7 +576,7 @@ test_that("meta factor rearrange levels", {
   
   expect_identical(rws_write_sqlite(local, conn = conn), "local")
   
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(rbind(local, local, local)))
 })
 
@@ -611,7 +612,7 @@ test_that("meta factor add levels", {
   
   expect_identical(rws_write_sqlite(local2, x_name = "local", conn = conn), "local")
   
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(levels(remote$zinteger), c("z", "y", "x"))
   expect_identical(remote$zinteger, factor(c("x", "y", NA, "x", "y", "z"), 
                                            levels = c("z", "y", "x")))
@@ -660,7 +661,7 @@ test_that("meta ordered add and rearrange levels", {
   
   expect_identical(rws_write_sqlite(local2, x_name = "local", conn = conn), "local")
   
-  remote <- rws_read_sqlite_table("local", conn = conn)
+  remote <- rws_read_table("local", conn = conn)
   expect_identical(levels(remote$zinteger), c("z", "y", "x"))
   expect_identical(remote$zinteger, ordered(c("x", "y", NA, "x", "y", "z"), 
                                             levels = c("z", "y", "x")))

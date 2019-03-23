@@ -2,9 +2,10 @@
 % Please edit documentation in R/init.R
 \name{rws_read_sqlite_init}
 \alias{rws_read_sqlite_init}
+\alias{rws_read_init}
 \title{Read Initialization Data table from SQLite Database}
 \usage{
-rws_read_sqlite_init(conn)
+rws_read_init(conn)
 }
 \arguments{
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
@@ -17,6 +18,6 @@ The table is created if it doesn't exist.
 }
 \examples{
 conn <- DBI::dbConnect(RSQLite::SQLite())
-rws_read_sqlite_init(conn)
+rws_read_init(conn)
 DBI::dbDisconnect(conn)
 }

@@ -41,14 +41,21 @@ log_command <- function(table_name, command, nrow, conn) {
 #'
 #' @inheritParams rws_write_sqlite
 #' @return A data frame of the log table
+#' @name rws_read_sqlite_log
 #' @export
 #' @examples
 #' conn <- DBI::dbConnect(RSQLite::SQLite())
-#' rws_read_sqlite_meta(conn)
+#' rws_read_log(conn)
 #' DBI::dbDisconnect(conn)
-rws_read_sqlite_log <- function(conn) {
+rws_read_log <- function(conn) {
   confirm_log_table(conn)
   data <- read_data(.log_table_name, meta = FALSE, conn = conn)
   data$DateTimeUTCLog <- as.POSIXct(data$DateTimeUTCLog, tz = "UTC")
   as_conditional_tibble(data)
+}
+
+#' @export
+rws_read_sqlite_log <- function(conn) {
+  .Deprecated("rws_read_log")
+  rws_read_log(conn)
 }

@@ -54,7 +54,7 @@ rws_describe_sqlite_meta.data.frame <- function(x, ..., conn) {
 
   x$RowX <- 1:nrow(x)
   
-  meta <- rws_read_sqlite_meta(conn)
+  meta <- rws_read_meta(conn)
   meta$RowMeta <- 1:nrow(meta)
   
   meta <- merge(meta, x, by.x = c("TableMeta", "ColumnMeta"), 
