@@ -53,7 +53,7 @@ confirm_meta_table <- function(conn) {
 #'
 #' The table is created if it doesn't exist.
 #'
-#' @inheritParams rws_write_sqlite
+#' @inheritParams rws_write
 #' @return A data frame of the meta table
 #' @name rws_read_sqlite_meta
 #' @export

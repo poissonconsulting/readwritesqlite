@@ -30,9 +30,9 @@ write_sqlite_data <- function(data, table_name, exists, delete, replace, meta, l
 #' @param silent A flag specifying whether to suppress messages and warnings.
 #' @param ... Not used.
 #' @return An invisible character vector of the name(s) of the table(s).
-#' @family rws_write_sqlite
+#' @family rws_write
 #' @export
-rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE, 
+rws_write <- function(x, exists = TRUE, delete = FALSE, 
                              replace = FALSE,
                              meta = TRUE,
                              log = TRUE,
@@ -42,16 +42,16 @@ rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE,
                              silent = getOption("rws.silent", FALSE),
                              conn, 
                              ...) {
-  UseMethod("rws_write_sqlite")
+  UseMethod("rws_write")
 }
 
 #' Write a Data Frame to a SQLite Database
 #'
 #' @param x A data frame.
-#' @inheritParams rws_write_sqlite
-#' @family rws_write_sqlite
+#' @inheritParams rws_write
+#' @family rws_write
 #' @export
-rws_write_sqlite.data.frame <- function(
+rws_write.data.frame <- function(
   x, exists = TRUE, delete = FALSE, replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
   x_name = substitute(x), silent = getOption("rws.silent", FALSE), 
   conn, ...) {
@@ -72,8 +72,8 @@ rws_write_sqlite.data.frame <- function(
   
   foreign_keys <- foreign_keys(TRUE, conn)
   
-  dbBegin(conn, name = "rws_write_sqlite")
-  on.exit(dbRollback(conn, name = "rws_write_sqlite"))
+  dbBegin(conn, name = "rws_write")
+  on.exit(dbRollback(conn, name = "rws_write"))
   on.exit(foreign_keys(foreign_keys, conn), add = TRUE)
   
   write_sqlite_data(x, table_name = x_name, exists = exists, 
@@ -84,7 +84,7 @@ rws_write_sqlite.data.frame <- function(
   
   if(!commit) return(invisible(x_name))
   
-  dbCommit(conn, name = "rws_write_sqlite")
+  dbCommit(conn, name = "rws_write")
   on.exit(NULL)
   foreign_keys(foreign_keys, conn)
   invisible(x_name)
@@ -92,13 +92,13 @@ rws_write_sqlite.data.frame <- function(
 
 #' Write a Named List of Data Frames to a SQLite Database
 #'
-#' @inheritParams rws_write_sqlite
+#' @inheritParams rws_write
 #' @param x A named list of data frames.
 #' @param all A flag specifying whether all the existing tables in the data base must be represented.
 #' @param unique A flag specifying whether each table must represented by no more than one data frame.
-#' @family rws_write_sqlite
+#' @family rws_write
 #' @export
-rws_write_sqlite.list <- function(x,
+rws_write.list <- function(x,
                                   exists = TRUE,
                                   delete = FALSE, 
                                   replace = FALSE,
@@ -151,8 +151,8 @@ rws_write_sqlite.list <- function(x,
   foreign_keys <- foreign_keys(TRUE, conn)
   defer <- defer_foreign_keys(TRUE, conn)
   
-  dbBegin(conn, name = "rws_write_sqlite")
-  on.exit(dbRollback(conn, name = "rws_write_sqlite"))
+  dbBegin(conn, name = "rws_write")
+  on.exit(dbRollback(conn, name = "rws_write"))
   on.exit(foreign_keys(foreign_keys, conn), add = TRUE)
   on.exit(defer_foreign_keys(defer, conn), add = TRUE)
   
@@ -164,7 +164,7 @@ rws_write_sqlite.list <- function(x,
                          strict = strict, conn = conn), SIMPLIFY = FALSE)
   
   if(!commit) return(invisible(names(x)))
-  dbCommit(conn, name = "rws_write_sqlite")
+  dbCommit(conn, name = "rws_write")
   on.exit(NULL)
   foreign_keys(foreign_keys, conn)
   defer_foreign_keys(defer, conn)
@@ -173,12 +173,12 @@ rws_write_sqlite.list <- function(x,
 
 #' Write the Data Frames in an Environment to a SQLite Database
 #'
-#' @inheritParams rws_write_sqlite
-#' @inheritParams rws_write_sqlite.list
+#' @inheritParams rws_write
+#' @inheritParams rws_write.list
 #' @param x An environment.
-#' @family rws_write_sqlite
+#' @family rws_write
 #' @export
-rws_write_sqlite.environment <- function(x,
+rws_write.environment <- function(x,
                                          exists = TRUE,
                                          delete = FALSE, 
                                          replace = FALSE,
@@ -206,7 +206,7 @@ rws_write_sqlite.environment <- function(x,
   }
   
   invisible(
-    rws_write_sqlite(x, exists = exists, delete = delete, replace = replace,
+    rws_write(x, exists = exists, delete = delete, replace = replace,
                      meta = meta, log = log, commit = commit,
                      strict = strict, silent = silent, 
                      conn = conn, all = all, unique = unique))

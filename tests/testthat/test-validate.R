@@ -1,17 +1,17 @@
 context("validate")
 
-test_that("rws_write_sqlite.data.frame checks all columns present", {
+test_that("rws_write.data.frame checks all columns present", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3), select = 1:3)
   DBI::dbCreateTable(conn, "local", local)
   local <- local[1]
-  expect_error(rws_write_sqlite(local, conn = conn),
+  expect_error(rws_write(local, conn = conn),
                "'local' column names must include 'X' and 'SELECT'")
 })
 
-test_that("rws_write_sqlite.data.frame checks missing values", {
+test_that("rws_write.data.frame checks missing values", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
@@ -22,13 +22,13 @@ test_that("rws_write_sqlite.data.frame checks missing values", {
                   select2 REAL NOT NULL
               )")
   
-  expect_error(rws_write_sqlite(local, conn = conn),
+  expect_error(rws_write(local, conn = conn),
                "there are unpermitted missing values in the following column in data 'local': 'X2'")
   local <- na.omit(local)
-  expect_identical(rws_write_sqlite(local, conn = conn), "local")
+  expect_identical(rws_write(local, conn = conn), "local")
 })
 
-test_that("rws_write_sqlite.data.frame checks primary key on input values", {
+test_that("rws_write.data.frame checks primary key on input values", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
@@ -39,9 +39,9 @@ test_that("rws_write_sqlite.data.frame checks primary key on input values", {
                   select2 INTEGER,
               PRIMARY KEY (x2, select2))")
   
-  expect_error(rws_write_sqlite(local, conn = conn),
+  expect_error(rws_write(local, conn = conn),
                "columns 'X2' and 'SELECT2' in data 'local' must be a unique key")
   local$x2 <- 1:3
-  expect_identical(rws_write_sqlite(local, conn = conn), "local")
+  expect_identical(rws_write(local, conn = conn), "local")
 })
 

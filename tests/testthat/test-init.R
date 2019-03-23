@@ -19,7 +19,7 @@ test_that("init makes table", {
                    tibble::tibble(TableInit = "LOCAL", IsInit = 1L,
                                   SFInit = NA_character_))
   local2 <- local[integer(0),,drop = FALSE]
-  expect_identical(rws_write_sqlite(local2, conn = conn, exists = NA),
+  expect_identical(rws_write(local2, conn = conn, exists = NA),
                    "local2")
   expect_identical(rws_read_init(conn = conn),
                    tibble::tibble(TableInit = c("LOCAL", "LOCAL2"), 
@@ -28,7 +28,7 @@ test_that("init makes table", {
   rws_data <- as.data.frame(rws_data)
   rws_data <- tibble::as_tibble(rws_data)
   local3 <- rws_data
-  expect_identical(rws_write_sqlite(local3, conn = conn, exists = NA),
+  expect_identical(rws_write(local3, conn = conn, exists = NA),
                    "local3")
   expect_identical(rws_read_init(conn = conn),
                    tibble::tibble(TableInit = c("LOCAL", "LOCAL2", "LOCAL3"), 
@@ -36,14 +36,14 @@ test_that("init makes table", {
                                   SFInit = rep(NA_character_, 3)))
   local4 <- rws_data
   local4 <- sf::st_sf(local4, sf_column_name = "geometry")
-  expect_identical(rws_write_sqlite(local4, conn = conn, exists = NA),
+  expect_identical(rws_write(local4, conn = conn, exists = NA),
                    "local4")
   expect_identical(rws_read_init(conn = conn),
                    tibble::tibble(TableInit = c("LOCAL", "LOCAL2", "LOCAL3", "LOCAL4"), 
                                   IsInit = c(1L, 1L, 1L, 1L),
                                   SFInit = c(rep(NA_character_, 3), "GEOMETRY")))
   local5 <- local4[integer(0),]
-  expect_identical(rws_write_sqlite(local5, conn = conn, exists = NA),
+  expect_identical(rws_write(local5, conn = conn, exists = NA),
                    "local5")
   expect_identical(rws_read_init(conn = conn),
                    tibble::tibble(TableInit = c("LOCAL", "LOCAL2", "LOCAL3", 
@@ -53,7 +53,7 @@ test_that("init makes table", {
   
   
   # local7 <- local4
-  # expect_identical(rws_write_sqlite(local7, conn = conn, meta = FALSE, exists = NA),
+  # expect_identical(rws_write(local7, conn = conn, meta = FALSE, exists = NA),
   #                  "local7")
   # expect_identical(rws_read_init(conn = conn),
   #                  tibble::tibble(TableInit = c("LOCAL", "LOCAL2", "LOCAL3", 
@@ -69,7 +69,7 @@ test_that("init makes table", {
 #   teardown(DBI::dbDisconnect(conn))
 #   
 #   local <- rws_data
-#   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
+#   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
 #   sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
 #   expect_identical(sf, data.frame(TableSF = character(0), ColumnSF = character(0),
 #                                   stringsAsFactors = FALSE))
@@ -78,7 +78,7 @@ test_that("init makes table", {
 #   expect_identical(remote, local)
 #   
 #   local2 <- sf::st_sf(local, sf_column_name = "geometry")
-#   expect_identical(rws_write_sqlite(local2, conn = conn, x_name = "local"), "local")
+#   expect_identical(rws_write(local2, conn = conn, x_name = "local"), "local")
 #   expect_identical(sf, data.frame(TableSF = character(0), ColumnSF = character(0),
 #                                   stringsAsFactors = FALSE))
 #   
@@ -94,14 +94,14 @@ test_that("init makes table", {
 #   local <- rws_data
 #   local <- sf::st_sf(local, sf_column_name = "geometry")
 #   
-#   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
+#   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
 #   sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
 #   expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "GEOMETRY",
 #                                   stringsAsFactors = FALSE))
 #   
 #   local2 <- as.data.frame(local)
 #   
-#   expect_identical(rws_write_sqlite(local2, exists = NA, conn = conn, 
+#   expect_identical(rws_write(local2, exists = NA, conn = conn, 
 #                                     x_name = "local"), "local")
 #   sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
 #   
@@ -120,14 +120,14 @@ test_that("init makes table", {
 #   local <- rws_data
 #   local <- sf::st_sf(local, sf_column_name = "geometry")
 #   
-#   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
+#   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
 #   sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
 #   expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "GEOMETRY",
 #                                   stringsAsFactors = FALSE))
 #   
 #   local2 <- as.data.frame(local)
 #   
-#   expect_identical(rws_write_sqlite(local2, exists = NA, conn = conn, 
+#   expect_identical(rws_write(local2, exists = NA, conn = conn, 
 #                                     x_name = "local"), "local")
 #   sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
 #   
@@ -146,14 +146,14 @@ test_that("init makes table", {
 #   local <- rws_data
 #   local <- sf::st_sf(local, sf_column_name = "geometry")
 #   
-#   expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
+#   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
 #   sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
 #   expect_identical(sf, data.frame(TableSF = "LOCAL", ColumnSF = "GEOMETRY",
 #                                   stringsAsFactors = FALSE))
 #   
 #   local2 <- as.data.frame(local)
 #   
-#   expect_identical(rws_write_sqlite(local2, exists = NA, conn = conn, 
+#   expect_identical(rws_write(local2, exists = NA, conn = conn, 
 #                                     delete = TRUE, x_name = "local"), "local")
 #   sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
 #   

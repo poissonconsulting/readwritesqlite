@@ -52,9 +52,9 @@ However, current solutions do not preserve (or check) meta data, log changes or 
 - rearrange and add levels for factors and add levels for ordered factors
 - initialize the meta data for a new table by writing a data frame or sf data frame with no rows but logical, Date, factor, ordered, POSIXct, sfc or unit columns (useful for creating an empty database with additional informative checks)
 
-`readwritesqlite` provides all these features through its `rws_write_sqlite()` and `rws_read_sqlite()` functions.
+`readwritesqlite` provides all these features through its `rws_write()` and `rws_read()` functions.
 
-The `rws_query_sqlite()` function allows the user to pass a SQL query.
+The `rws_query()` function allows the user to pass a SQL query.
 By default, the metadata (except the setting of the sf column) is, if unambigously defined, preserved for each column in the final query.
 To enable this functionality the user should ensure that a) columns in tables which will be referenced in the same query should have different names or identical metadata and b) column names in the final query should match those in the referenced base tables.
 
@@ -68,9 +68,9 @@ conn <- rws_open_connection(":memory:")
 
 rws_data
 
-rws_write_sqlite(rws_data, exists = FALSE, conn = conn)
+rws_write(rws_data, exists = FALSE, conn = conn)
 
-rws_read_sqlite("rws_data", conn = conn)
+rws_read("rws_data", conn = conn)
 
 rws_close_connection(conn)
 ```

@@ -39,7 +39,7 @@ log_command <- function(table_name, command, nrow, conn) {
 #'
 #' The table is created if it doesn't exist.
 #'
-#' @inheritParams rws_write_sqlite
+#' @inheritParams rws_write
 #' @return A data frame of the log table
 #' @name rws_read_sqlite_log
 #' @export

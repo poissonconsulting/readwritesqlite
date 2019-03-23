@@ -55,7 +55,7 @@ test_that("rws_read_sqlite with meta = FALSE ", {
   teardown(DBI::dbDisconnect(conn))
 
   local <- readwritesqlite::rws_data
-  expect_identical(rws_write_sqlite(local, exists = NA, conn = conn), "local")
+  expect_identical(rws_write(local, exists = NA, conn = conn), "local")
   expect_identical(rws_read_sqlite_table("local", meta = TRUE, conn = conn),
                    rws_read_table("local", meta = TRUE, conn = conn))
   remote <- rws_read_table("local", meta = TRUE, conn = conn)

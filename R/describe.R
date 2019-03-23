@@ -1,7 +1,7 @@
 #' Add Descriptions to SQL Meta Data Table
 #'
 #' @param x An object specifying the table(s) to read.
-#' @inheritParams rws_write_sqlite
+#' @inheritParams rws_write
 #' @return xx
 #' @family rws_describe_sqlite_meta
 #' @export
@@ -11,11 +11,11 @@ rws_describe_sqlite_meta <- function(x, ..., conn) {
 
 #' Add Descriptions to SQL Meta Data Table
 #'
-#' @inheritParams rws_write_sqlite
+#' @inheritParams rws_write
 #' @param x A character vector of table name(s).
 #' @param column A character vector of column name(s).
 #' @param description A character vector of the description(s)
-#' @inheritParams rws_write_sqlite
+#' @inheritParams rws_write
 #' 
 #' @return An invisible character vector of the previous descriptions.
 #' @family rws_read_sqlite
@@ -35,7 +35,7 @@ rws_describe_sqlite_meta.character <- function(x, column, description, ..., conn
 
 #' Add Data Frame of Descriptions to SQL Meta Data Table
 #'
-#' @inheritParams rws_write_sqlite
+#' @inheritParams rws_write
 #' @param x A data frame with columns Table, Column, Description.
 #' 
 #' @return An invisible character vector of the previous descriptions.

@@ -3,7 +3,7 @@
 #' Gets a query from a SQLite database.
 #' 
 #' @param query A string of a SQLite query.
-#' @inheritParams rws_write_sqlite
+#' @inheritParams rws_write
 #' @return A data frame of the query.
 #' @name rws_query_sqlite
 #' @export

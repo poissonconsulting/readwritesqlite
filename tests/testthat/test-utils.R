@@ -8,6 +8,6 @@ test_that("rws_table_names",{
   local = data.frame(x = 1:3)
   z <- 1
   
-  rws_write_sqlite(local, exists = FALSE, conn = conn)
+  rws_write(local, exists = FALSE, conn = conn)
   expect_identical(rws_list_tables(conn), "local")
 })

@@ -14,22 +14,22 @@ test_that("rws_read_log creates table", {
   expect_identical(attr(log$DateTimeUTCLog, "tzone"), "UTC")
 })
 
-test_that("rws_write_sqlite data.frame logs commands", {
+test_that("rws_write data.frame logs commands", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3))
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(nrow(rws_read_log(conn)), 0L)
-  rws_write_sqlite(local, conn = conn)
+  rws_write(local, conn = conn)
   expect_identical(nrow(rws_read_log(conn)), 1L)
-  rws_write_sqlite(local, conn = conn)
+  rws_write(local, conn = conn)
   expect_identical(nrow(rws_read_log(conn)), 2L)
-  rws_write_sqlite(local, delete = TRUE, conn = conn)
+  rws_write(local, delete = TRUE, conn = conn)
   expect_identical(nrow(rws_read_log(conn)), 4L)
-  rws_write_sqlite(local, delete = TRUE, log = FALSE, conn = conn)
+  rws_write(local, delete = TRUE, log = FALSE, conn = conn)
   expect_identical(nrow(rws_read_log(conn)), 4L)
-  rws_write_sqlite(local, log = FALSE, conn = conn)
+  rws_write(local, log = FALSE, conn = conn)
   expect_identical(nrow(rws_read_log(conn)), 4L)
   log <- rws_read_log(conn)
   expect_identical(log$TableLog,
@@ -40,22 +40,22 @@ test_that("rws_write_sqlite data.frame logs commands", {
 })
 
 
-test_that("rws_write_sqlite list logs commands", {
+test_that("rws_write list logs commands", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
   y <- list(local = data.frame(x = as.character(1:3)),
             LOCAl = data.frame(x = as.character(1:3)))
   expect_identical(nrow(rws_read_log(conn)), 0L)
-  rws_write_sqlite(y["local"], exists = FALSE, conn = conn)
+  rws_write(y["local"], exists = FALSE, conn = conn)
   expect_identical(nrow(rws_read_log(conn)), 2L)
-  expect_error(rws_write_sqlite(y, conn = conn),
+  expect_error(rws_write(y, conn = conn),
                "unique = TRUE but the following table name is duplicated: 'local'")
-  rws_write_sqlite(y, conn = conn, unique = FALSE)
+  rws_write(y, conn = conn, unique = FALSE)
   expect_identical(nrow(rws_read_log(conn)), 4L)
-  expect_error(rws_write_sqlite(y, delete = TRUE, conn = conn),
+  expect_error(rws_write(y, delete = TRUE, conn = conn),
   "unique = TRUE and delete = TRUE but the following table name is duplicated: 'local'")
-  rws_write_sqlite(y["LOCAl"], delete = TRUE, conn = conn)
+  rws_write(y["LOCAl"], delete = TRUE, conn = conn)
   expect_identical(nrow(rws_read_log(conn)), 6L)
   log <- rws_read_log(conn)
   expect_identical(log$TableLog, rep("LOCAL", 6L))
