@@ -5,9 +5,10 @@
 \title{Write a Named List of Data Frames to a SQLite Database}
 \usage{
 \method{rws_write_sqlite}{list}(x, exists = TRUE, delete = FALSE,
-  meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
-  x_name = substitute(x), silent = getOption("rws.silent", FALSE),
-  conn, all = TRUE, unique = TRUE, ...)
+  replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE,
+  strict = TRUE, x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE), conn, all = TRUE,
+  unique = TRUE, ...)
 }
 \arguments{
 \item{x}{A named list of data frames.}
@@ -15,7 +16,9 @@
 \item{exists}{A flag specifying whether the table(s) must already exist.}
 
 \item{delete}{A flag specifying whether to delete existing rows before 
-inserting data.}
+inserting data. If \code{meta = TRUE} the meta data is deleted.}
+
+\item{replace}{A flag specifying whether to replace any existing rows whose inclusion would violate unique or primary key constraints.}
 
 \item{meta}{A flag specifying whether to preserve meta data.}
 

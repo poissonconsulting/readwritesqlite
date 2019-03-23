@@ -5,9 +5,9 @@
 \title{Write a Data Frame to a SQLite Database}
 \usage{
 \method{rws_write_sqlite}{data.frame}(x, exists = TRUE, delete = FALSE,
-  meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
-  x_name = substitute(x), silent = getOption("rws.silent", FALSE),
-  conn, ...)
+  replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE,
+  strict = TRUE, x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE), conn, ...)
 }
 \arguments{
 \item{x}{A data frame.}
@@ -15,7 +15,9 @@
 \item{exists}{A flag specifying whether the table(s) must already exist.}
 
 \item{delete}{A flag specifying whether to delete existing rows before 
-inserting data.}
+inserting data. If \code{meta = TRUE} the meta data is deleted.}
+
+\item{replace}{A flag specifying whether to replace any existing rows whose inclusion would violate unique or primary key constraints.}
 
 \item{meta}{A flag specifying whether to preserve meta data.}
 

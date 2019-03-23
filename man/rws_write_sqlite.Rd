@@ -4,9 +4,10 @@
 \alias{rws_write_sqlite}
 \title{Write to a SQLite Database}
 \usage{
-rws_write_sqlite(x, exists = TRUE, delete = FALSE, meta = TRUE,
-  log = TRUE, commit = TRUE, strict = TRUE, x_name = substitute(x),
-  silent = getOption("rws.silent", FALSE), conn, ...)
+rws_write_sqlite(x, exists = TRUE, delete = FALSE, replace = FALSE,
+  meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
+  x_name = substitute(x), silent = getOption("rws.silent", FALSE),
+  conn, ...)
 }
 \arguments{
 \item{x}{The object to write.}
@@ -14,7 +15,9 @@ rws_write_sqlite(x, exists = TRUE, delete = FALSE, meta = TRUE,
 \item{exists}{A flag specifying whether the table(s) must already exist.}
 
 \item{delete}{A flag specifying whether to delete existing rows before 
-inserting data.}
+inserting data. If \code{meta = TRUE} the meta data is deleted.}
+
+\item{replace}{A flag specifying whether to replace any existing rows whose inclusion would violate unique or primary key constraints.}
 
 \item{meta}{A flag specifying whether to preserve meta data.}
 
