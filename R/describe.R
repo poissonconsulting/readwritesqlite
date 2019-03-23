@@ -25,7 +25,7 @@ rws_describe_sqlite_meta <- function(x, ..., conn) {
 #' @inheritParams rws_write
 #' 
 #' @return An invisible character vector of the previous descriptions.
-#' @family rws_read_sqlite
+#' @family rws_read
 #' @export
 rws_describe_meta.character <- function(x, column, description, ..., conn) {
   check_vector(x, "")
@@ -45,7 +45,7 @@ rws_describe_meta.character <- function(x, column, description, ..., conn) {
 #' @param x A data frame with columns Table, Column, Description.
 #' 
 #' @return An invisible character vector of the previous descriptions.
-#' @family rws_read_sqlite
+#' @family rws_read
 #' @export
 rws_describe_meta.data.frame <- function(x, ..., conn) {
   check_data(x, values = list(Table = "", Column = "", Description = c("", NA)))

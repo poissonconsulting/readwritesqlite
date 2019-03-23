@@ -8,10 +8,17 @@ read_sqlite_data <- function(table_name, meta = meta, conn) {
 #' @param x An object specifying the table(s) to read.
 #' @inheritParams rws_write
 #' @return A named list of data frames.
-#' @family rws_read_sqlite
+#' @aliases rws_read_sqlite
+#' @family rws_read
+#' @export
+rws_read <- function(x, ...) {
+  UseMethod("rws_read")
+}
+
 #' @export
 rws_read_sqlite <- function(x, ...) {
-  UseMethod("rws_read_sqlite")
+  .Deprecated("rws_read")
+  UseMethod("rws_read")
 }
 
 #' Read Tables from a SQLite Database
@@ -19,9 +26,9 @@ rws_read_sqlite <- function(x, ...) {
 #' @inheritParams rws_write
 #' @param x A character vector of table names.
 #' @return A named list of the data frames.
-#' @family rws_read_sqlite
+#' @family rws_read
 #' @export
-rws_read_sqlite.character <- function(x, meta = TRUE, conn,
+rws_read.character <- function(x, meta = TRUE, conn,
                                       ...) {
   check_sqlite_connection(conn, connected = TRUE)
   check_table_names(x, exists = TRUE, delete = FALSE, all = FALSE, unique = TRUE, conn = conn)
@@ -37,15 +44,15 @@ rws_read_sqlite.character <- function(x, meta = TRUE, conn,
 #' @inheritParams rws_write
 #' @param x A \code{\linkS4class{SQLiteConnection}} to a database.
 #' @return A named list of the data frames.
-#' @family rws_read_sqlite
+#' @family rws_read
 #' @export
-rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
+rws_read.SQLiteConnection <- function(x, meta = TRUE, ...) {
   check_sqlite_connection(x, connected = TRUE)
   check_unused(...)
   
   table_names <- rws_list_tables(x)
   if(!length(table_names)) return(named_list())
-  rws_read_sqlite(table_names, meta = meta, conn = x)
+  rws_read(table_names, meta = meta, conn = x)
 }
 
 #' Read A Table from a SQLite Database
@@ -56,7 +63,7 @@ rws_read_sqlite.SQLiteConnection <- function(x, meta = TRUE, ...) {
 #' @aliases rws_read_sqlite_table
 #' @export
 rws_read_table <- function(x, meta = TRUE, conn) {
-  rws_read_sqlite(x, meta = meta, conn = conn)[[1]]
+  rws_read(x, meta = meta, conn = conn)[[1]]
 }
 
 #' @export
