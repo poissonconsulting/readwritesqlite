@@ -1,8 +1,8 @@
 context("describe")
 
 test_that("describe with scalars works", {
-  conn <- rws_open_connection(":memory:")
-  teardown(rws_close_connection(conn))
+  conn <- rws_connect(":memory:")
+  teardown(rws_disconnect(conn))
   
   local <- data.frame(z = c(TRUE, FALSE, NA))
   DBI::dbCreateTable(conn, "local", local)
@@ -16,8 +16,8 @@ test_that("describe with scalars works", {
 })
 
 test_that("describe with vector works", {
-  conn <- rws_open_connection(":memory:")
-  teardown(rws_close_connection(conn))
+  conn <- rws_connect(":memory:")
+  teardown(rws_disconnect(conn))
   
   local <- data.frame(z = c(TRUE, FALSE, NA), y = 1:3)
   DBI::dbCreateTable(conn, "local", local)
@@ -31,8 +31,8 @@ test_that("describe with vector works", {
 })
 
 test_that("describe errors with strict", {
-  conn <- rws_open_connection(":memory:")
-  teardown(rws_close_connection(conn))
+  conn <- rws_connect(":memory:")
+  teardown(rws_disconnect(conn))
   
   local <- data.frame(z = c(TRUE, FALSE, NA), y = 1:3)
   DBI::dbCreateTable(conn, "local", local)
@@ -49,8 +49,8 @@ test_that("describe errors with strict", {
 })
 
 test_that("describe replace works", {
-  conn <- rws_open_connection(":memory:")
-  teardown(rws_close_connection(conn))
+  conn <- rws_connect(":memory:")
+  teardown(rws_disconnect(conn))
   
   local <- data.frame(z = c(TRUE, FALSE, NA))
   DBI::dbCreateTable(conn, "local", local)

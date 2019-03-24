@@ -66,7 +66,7 @@ The init, meta and log data are stored in separate tables from the main data whi
 ```{r}
 library(tibble)
 library(readwritesqlite)
-conn <- rws_open_connection(":memory:")
+conn <- rws_connect(":memory:")
 
 rws_data
 
@@ -74,7 +74,7 @@ rws_write(rws_data, exists = FALSE, conn = conn)
 
 rws_read_table("rws_data", conn = conn)
 
-rws_close_connection(conn)
+rws_disconnect(conn)
 ```
 
 ## Information

@@ -24,7 +24,7 @@ The first task after loading `readwritesqlite` is to create an object of class S
 Below we create one in memory although in general the user will want to specify a path.
 ```{r}
 library(readwritesqlite)
-conn <- rws_open_connection(":memory:")
+conn <- rws_connect(":memory:")
 ```
 
 ## Writing Data
@@ -136,5 +136,5 @@ rws_read_log(conn)
 
 It's good practice to close a connection once you have finished with it.
 ```{r}
-rws_close_connection(conn)
+rws_disconnect(conn)
 ```
