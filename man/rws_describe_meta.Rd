@@ -2,22 +2,24 @@
 % Please edit documentation in R/describe.R
 \name{rws_describe_meta}
 \alias{rws_describe_meta}
-\alias{rws_describe_sqlite_meta}
 \title{Add Descriptions to SQL Meta Data Table}
 \usage{
 rws_describe_meta(x, ..., conn)
 }
 \arguments{
-\item{x}{An object specifying the table(s) to read.}
+\item{x}{An object specifying the descriptions.}
 
 \item{...}{Not used.}
 
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 }
 \value{
-xx
+An invisible copy of the updated meta table.
 }
 \description{
 Add Descriptions to SQL Meta Data Table
 }
-\concept{rws_describe_sqlite_meta}
+\seealso{
+Other rws_describe_meta: \code{\link{rws_describe_meta.character}}
+}
+\concept{rws_describe_meta}

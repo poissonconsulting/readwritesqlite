@@ -4,7 +4,8 @@
 \alias{rws_describe_meta.character}
 \title{Add Descriptions to SQL Meta Data Table}
 \usage{
-\method{rws_describe_meta}{character}(x, column, description, ..., conn)
+\method{rws_describe_meta}{character}(x, column, description,
+  strict = TRUE, ..., conn)
 }
 \arguments{
 \item{x}{A character vector of table name(s).}
@@ -13,19 +14,19 @@
 
 \item{description}{A character vector of the description(s)}
 
+\item{strict}{A flag specifying whether to error if tables and/or columns do not exist.}
+
 \item{...}{Not used.}
 
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 }
 \value{
-An invisible character vector of the previous descriptions.
+An invisible copy of the updated meta table.
 }
 \description{
 Add Descriptions to SQL Meta Data Table
 }
 \seealso{
-Other rws_read: \code{\link{rws_describe_meta.data.frame}},
-  \code{\link{rws_read.SQLiteConnection}},
-  \code{\link{rws_read.character}}, \code{\link{rws_read}}
+Other rws_describe_meta: \code{\link{rws_describe_meta}}
 }
-\concept{rws_read}
+\concept{rws_describe_meta}

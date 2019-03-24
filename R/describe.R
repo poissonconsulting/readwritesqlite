@@ -1,18 +1,11 @@
 #' Add Descriptions to SQL Meta Data Table
 #'
-#' @param x An object specifying the table(s) to read.
+#' @param x An object specifying the descriptions.
 #' @inheritParams rws_write
-#' @return xx
-#' @aliases rws_describe_sqlite_meta
-#' @family rws_describe_sqlite_meta
+#' @return An invisible copy of the updated meta table.
+#' @family rws_describe_meta
 #' @export
 rws_describe_meta <- function(x, ..., conn) {
-  UseMethod("rws_describe_meta")
-}
-
-#' @export
-rws_describe_sqlite_meta <- function(x, ..., conn) {
-  .Deprecated("rws_describe_meta")
   UseMethod("rws_describe_meta")
 }
 
@@ -22,60 +15,65 @@ rws_describe_sqlite_meta <- function(x, ..., conn) {
 #' @param x A character vector of table name(s).
 #' @param column A character vector of column name(s).
 #' @param description A character vector of the description(s)
+#' @param strict A flag specifying whether to error if tables and/or columns do not exist.
 #' @inheritParams rws_write
 #' 
-#' @return An invisible character vector of the previous descriptions.
-#' @family rws_read
+#' @return An invisible copy of the updated meta table.
+#' @family rws_describe_meta
 #' @export
-rws_describe_meta.character <- function(x, column, description, ..., conn) {
+rws_describe_meta.character <- function(x, column, description, strict = TRUE, ..., conn) {
   check_vector(x, "")
   check_vector(column, "")
   check_vector(description, c("", NA))
-  check_sqlite_connection(conn)
+  check_flag(strict)
+  check_sqlite_connection(conn, connected = TRUE)
   check_unused(...)
   
   rws_describe_meta(data.frame(
     Table = x, Column = column, Description = description, 
-    stringsAsFactors = FALSE))
+    stringsAsFactors = FALSE), strict = strict, conn = conn)
 }
 
 #' Add Data Frame of Descriptions to SQL Meta Data Table
 #'
 #' @inheritParams rws_write
 #' @param x A data frame with columns Table, Column, Description.
-#' 
+#' @param strict A flag specifying whether to error if tables and/or columns do not exist.
 #' @return An invisible character vector of the previous descriptions.
 #' @family rws_read
 #' @export
-rws_describe_meta.data.frame <- function(x, ..., conn) {
+rws_describe_meta.data.frame <- function(x, strict = TRUE, ..., conn) {
   check_data(x, values = list(Table = "", Column = "", Description = c("", NA)))
+  check_flag(strict)
   check_sqlite_connection(conn, connected = TRUE)
   check_unused(...)
   
-  if(!nrow(x)) return(character(0))
+  if(!nrow(x)) return(invisible(rws_read_meta(conn)))
   
   x <- x[c("Table", "Column", "Description")]
+  x$Table <- to_upper(x$Table)
+  x$Column <- to_upper(x$Column)
+    
   if(anyDuplicated(x[c("Table", "Column")])) 
     err("columns 'Table' and 'Column' in data 'x' must be unique")
 
-  x$RowX <- 1:nrow(x)
+  x$Row <- 1:nrow(x)
   
   meta <- rws_read_meta(conn)
   meta$RowMeta <- 1:nrow(meta)
   
   meta <- merge(meta, x, by.x = c("TableMeta", "ColumnMeta"), 
                 by.y = c("Table", "Column"), all = TRUE)
-  
-  if(any(is.na(meta$MetaX))) 
-    err("columns 'Table' and 'Column' in data 'x' must all match 'TableMeta' and 'ColumnMeta' in the meta table")
-  
-  meta <- meta[order(meta$RowX),]
-  description <- meta$DescriptionMeta[!is.na(meta$RowMeta)]
-  
+
+  if(strict && any(is.na(meta$RowMeta))) 
+    err("all description tables and columns must exist in the meta table")
+
+  meta <- meta[!is.na(meta$RowMeta),]
+  meta$DescriptionMeta[!is.na(meta$Row)] <- meta$Description[!is.na(meta$Row)]
   meta <- meta[order(meta$RowMeta),]
   
   meta <- meta[c("TableMeta", "ColumnMeta", "MetaMeta", "DescriptionMeta")]
 
-  replace_meta_table(meta)
-  invisible(description)
+  replace_meta_table(meta, conn = conn)
+  invisible(as_conditional_tibble(meta))
 }

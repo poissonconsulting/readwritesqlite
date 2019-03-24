@@ -22,8 +22,7 @@ A named list of the data frames.
 Read Tables from a SQLite Database
 }
 \seealso{
-Other rws_read: \code{\link{rws_describe_meta.character}},
-  \code{\link{rws_describe_meta.data.frame}},
+Other rws_read: \code{\link{rws_describe_meta.data.frame}},
   \code{\link{rws_read.SQLiteConnection}},
   \code{\link{rws_read}}
 }

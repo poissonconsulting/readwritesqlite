@@ -372,6 +372,8 @@ test_that("replace rows UNIQUE constraints in primary key", {
   expect_identical(rws_write(local, delete = TRUE, conn = conn), "local")
   remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
+  expect_identical(sort(DBI::dbListTables(conn)), 
+                   c("local", "readwritesqlite_init", "readwritesqlite_log", "readwritesqlite_meta"))
 })
 
 test_that("replace rows UNIQUE constraints in unique key", {

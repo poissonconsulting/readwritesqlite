@@ -4,10 +4,12 @@
 \alias{rws_describe_meta.data.frame}
 \title{Add Data Frame of Descriptions to SQL Meta Data Table}
 \usage{
-\method{rws_describe_meta}{data.frame}(x, ..., conn)
+\method{rws_describe_meta}{data.frame}(x, strict = TRUE, ..., conn)
 }
 \arguments{
 \item{x}{A data frame with columns Table, Column, Description.}
+
+\item{strict}{A flag specifying whether to error if tables and/or columns do not exist.}
 
 \item{...}{Not used.}
 
@@ -20,8 +22,7 @@ An invisible character vector of the previous descriptions.
 Add Data Frame of Descriptions to SQL Meta Data Table
 }
 \seealso{
-Other rws_read: \code{\link{rws_describe_meta.character}},
-  \code{\link{rws_read.SQLiteConnection}},
+Other rws_read: \code{\link{rws_read.SQLiteConnection}},
   \code{\link{rws_read.character}}, \code{\link{rws_read}}
 }
 \concept{rws_read}
