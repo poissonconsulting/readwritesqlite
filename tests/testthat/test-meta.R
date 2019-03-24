@@ -674,3 +674,35 @@ test_that("read_meta_levels", {
   expect_identical(read_meta_levels(character(0)), character(0))
   expect_identical(read_meta_levels("factor:  "), character(0))
 })
+
+test_that("meta TRUE then FALSE then read with TRUE", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  local <- data.frame(fac = factor(c("this", "that", NA)))
+  DBI::dbCreateTable(conn, "local", local)
+  expect_identical(rws_write(local, conn = conn), "local")
+  remote <- rws_read_table("local", meta = TRUE, conn = conn)
+  expect_equal(remote, tibble::as_tibble(local))
+  remote <- rws_read_table("local", meta = FALSE, conn = conn)
+  expect_identical(remote,
+                   tibble::tibble(fac = c("this", "that", NA)))
+  local <- data.frame(fac = factor("other"))
+  expect_error(rws_write(local, meta = TRUE, conn = conn), 
+               "column 'fac' in table 'local' has 'factor: 'other'' meta data for the input data but 'factor: 'that', 'this'' for the existing data")
+  expect_identical(rws_write(local, meta = FALSE, conn = conn), "local")
+  remote <- rws_read_table("local", meta = FALSE, conn = conn)
+  expect_identical(remote,
+                   tibble::tibble(fac = c("this", "that", NA, "other")))
+  remote <- rws_read_table("local", meta = TRUE, conn = conn)
+  expect_identical(remote,
+                   tibble::tibble(fac = factor(c("this", "that", NA, NA))))
+  local <- data.frame(fac = 4)
+  expect_identical(rws_write(local, meta = FALSE, conn = conn), "local")
+  remote <- rws_read_table("local", meta = FALSE, conn = conn)
+  expect_identical(remote,
+                   tibble::tibble(fac = c("this", "that", NA, "other", "4.0")))
+  remote <- rws_read_table("local", meta = TRUE, conn = conn)
+  expect_identical(remote,
+                   tibble::tibble(fac = factor(c("this", "that", NA, NA, NA))))
+})

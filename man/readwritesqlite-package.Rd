@@ -8,7 +8,7 @@
 \description{
 readwritesqlite preserves time zones (for POSIXct columns), 
   projections (for sfc columns), units (for unit columns), 
-  levels (for factors and ordered factors) and classes for logical and Date columns.
+  levels (for factors and ordered factors) and classes for logical, Date and hms columns.
   It also logs changes to tables and provides more informative error messages.
 }
 \author{
