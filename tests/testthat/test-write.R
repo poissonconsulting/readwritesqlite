@@ -344,7 +344,7 @@ test_that("rws_write not commits", {
   expect_identical(remote, rbind(y$local, y$LOCAL))
 })
 
-test_that("replace rows UNIQUE constraints in primary key", {
+test_that("replace rows PRIMARY KEY constraints", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   

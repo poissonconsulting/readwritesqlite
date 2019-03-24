@@ -63,3 +63,21 @@ test_that("rws_write list logs commands", {
                    c("CREATE", "INSERT", "INSERT", "INSERT", "DELETE", "INSERT"))
   expect_identical(log$NRowLog, c(0L, 3L, 3L, 3L, 9L, 3L))
 })
+
+test_that("log replace rows UNIQUE constraints", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  DBI::dbGetQuery(conn, "CREATE TABLE local (
+                  x INTEGER UNIQUE NOT NULL,
+                  y INTEGER)")
+
+  local <- data.frame(x = 1:3, y = 2:4)
+  expect_identical(rws_write(local, conn = conn), "local")
+  local$x <- c(1:2,4L)
+  local$y <- local$y + 10L
+  expect_identical(rws_write(local, replace = TRUE, conn = conn), "local")
+  log <- rws_read_log(conn = conn)
+  expect_identical(log$CommandLog, c("INSERT", "UPDATE", "INSERT"))
+  expect_identical(log$NRowLog, c(3L, 2L, 1L))
+})

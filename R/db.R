@@ -56,7 +56,17 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
       DBI::dbAppendTable(conn, "temp", data)
       sql <- "REPLACE INTO ?table_name SELECT * FROM temp;"
       sql <- sql_interpolate(sql, table_name, conn)
+      nrow1 <- nrows_table(table_name, conn)
       execute(sql, conn)
+      nrow2 <- nrows_table(table_name, conn)
+      if(log) {
+        nrow_insert <- nrow2 - nrow1
+        nrow_replace <- nrow(data) - nrow_insert
+        if(nrow_replace > 0)
+          log_command(table_name, command = "UPDATE", nrow = nrow_replace, conn = conn)
+        if(nrow_insert)
+          log_command(table_name, command = "INSERT", nrow = nrow_insert, conn = conn)
+      }
     } else {
       DBI::dbAppendTable(conn, table_name, data)
       if(log) 
