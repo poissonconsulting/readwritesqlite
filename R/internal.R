@@ -13,15 +13,13 @@ set_class <- function(x, value) {
   x
 }
 
-as_conditional_tibble <- function(x) {
+as_tibble_sf <- function(x) {
   sf_column_name <- sf_column_name(x)
-  if(requireNamespace("tibble", quietly = TRUE)) {
     x <- tibble::as_tibble(x)
     if(!is.na(sf_column_name)) {
       x <- sf::st_sf(x, sf_column_name = sf_column_name, 
                      stringsAsFactors = FALSE)
     }
-  }
   x
 }
 

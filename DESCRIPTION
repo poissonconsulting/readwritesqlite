@@ -18,11 +18,11 @@ Imports:
     DBI,
     RSQLite,
     sf,
+    tibble,
     units
 Suggests: 
     covr,
     testthat,
-    tibble,
     knitr,
     rmarkdown
 Remotes:

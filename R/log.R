@@ -51,7 +51,7 @@ rws_read_log <- function(conn) {
   confirm_log_table(conn)
   data <- read_data(.log_table_name, meta = FALSE, conn = conn)
   data$DateTimeUTCLog <- as.POSIXct(data$DateTimeUTCLog, tz = "UTC")
-  as_conditional_tibble(data)
+  as_tibble_sf(data)
 }
 
 #' @export

@@ -88,5 +88,5 @@ rws_describe_meta.data.frame <- function(x, ..., paste0 = FALSE, strict = TRUE, 
   meta <- meta[c("TableMeta", "ColumnMeta", "MetaMeta", "DescriptionMeta")]
   
   replace_meta_table(meta, conn = conn)
-  invisible(as_conditional_tibble(meta))
+  invisible(as_tibble_sf(meta))
 }

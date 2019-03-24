@@ -104,7 +104,7 @@ As the default value is `silent = getOption("rws.silent", FALSE)` the user can s
 ## Reading Data
 
 Data can be read using `rws_read()` which either takes a vector of table names or the connection as the first argument.
-`rws_read()` returns a named list of data frames (or if the `tibble` package is installed tibbles).
+`rws_read()` returns a named list of tibbles.
 If the connection is the first argument then the named list consists of all tables in the data base.
 ```{r}
 tables <- rws_read(conn)

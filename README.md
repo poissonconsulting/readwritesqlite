@@ -74,16 +74,19 @@ interacting with a SQLite database.
 ## Demonstration
 
 ``` r
+library(tibble)
 library(readwritesqlite)
 conn <- rws_open_connection(":memory:")
 #> Warning in result_fetch(res@ptr, n = n): Don't need to call dbFetch() for
 #> statements, only for queries
 
 rws_data
-#>   logical       date factor ordered             posixct units geometry
-#> 1    TRUE 2000-01-01      x       x 2001-01-02 03:04:05  10.0     0, 1
-#> 2   FALSE 2001-02-03      y       y 2006-07-08 09:10:11  11.5     1, 0
-#> 3      NA       <NA>   <NA>    <NA>                <NA>    NA     1, 1
+#> # A tibble: 3 x 7
+#>   logical date       factor ordered posixct             units geometry
+#>   <lgl>   <date>     <fct>  <ord>   <dttm>              <dbl> <list>  
+#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10   <S3: XY>
+#> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5 <S3: XY>
+#> 3 NA      NA         <NA>   <NA>    NA                   NA   <S3: XY>
 
 rws_write(rws_data, exists = FALSE, conn = conn)
 

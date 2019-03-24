@@ -64,7 +64,7 @@ confirm_meta_table <- function(conn) {
 rws_read_meta <- function(conn) {
   confirm_meta_table(conn)
   data <- read_data(.meta_table_name, meta = FALSE, conn = conn)
-  as_conditional_tibble(data)
+  as_tibble_sf(data)
 }
 
 #' @export

@@ -76,7 +76,7 @@ confirm_init_table <- function(conn) {
 rws_read_init <- function(conn) {
   confirm_init_table(conn)
   data <- read_data(.init_table_name, meta = FALSE, conn = conn)
-  as_conditional_tibble(data)
+  as_tibble_sf(data)
 }
 
 #' @export
