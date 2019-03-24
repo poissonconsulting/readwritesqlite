@@ -20,7 +20,9 @@ sql_interpolate <- function(sql, table_name, conn) {
 }
 
 nrows_table <- function(table_name, conn) {
-  nrows <- get_query(p0("SELECT COUNT(*) FROM ", table_name, ";"), conn)
+  sql <- "SELECT COUNT(*) FROM ?table_name;"
+  sql <- sql_interpolate(sql, table_name, conn)
+  nrows <- get_query(sql, conn)
   nrows <- nrows[1,1]
   nrows
 }
@@ -34,7 +36,7 @@ create_table <- function(data, table_name, log, silent, conn) {
 
 drop_table <- function(table_name, conn) {
   sql <- "DROP TABLE IF EXISTS ?table_name;"
-  sql <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
+  sql <- sql_interpolate(sql, table_name, conn)
   get_query(sql, conn)
 }
 
@@ -53,7 +55,7 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
       on.exit(drop_table(table_name = p0("temp.", table_name), conn = conn))
       DBI::dbAppendTable(conn, table_name, data)
       sql <- "REPLACE INTO ?table_name SELECT * FROM temp.?table_name;"
-      sql <- DBI::sqlInterpolate(conn, sql, table_name = table_name)
+      sql <- sql_interpolate(sql, table_name, conn)
       execute(sql, conn)
     } else {
       DBI::dbAppendTable(conn, table_name, data)
