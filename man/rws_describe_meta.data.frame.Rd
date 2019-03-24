@@ -4,14 +4,18 @@
 \alias{rws_describe_meta.data.frame}
 \title{Add Data Frame of Descriptions to SQL Meta Data Table}
 \usage{
-\method{rws_describe_meta}{data.frame}(x, strict = TRUE, ..., conn)
+\method{rws_describe_meta}{data.frame}(x, ..., paste0 = FALSE,
+  strict = TRUE, conn)
 }
 \arguments{
 \item{x}{A data frame with columns Table, Column, Description.}
 
-\item{strict}{A flag specifying whether to error if tables and/or columns do not exist.}
-
 \item{...}{Not used.}
+
+\item{paste0}{A flag specifying whether to replace existing descriptions (FALSE)
+or append using paste0 to existing descriptions (TRUE).}
+
+\item{strict}{A flag specifying whether to error if tables and/or columns do not exist.}
 
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 }

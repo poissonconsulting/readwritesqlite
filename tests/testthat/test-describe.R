@@ -47,3 +47,38 @@ test_that("describe errors with strict", {
                                         DescriptionMeta = c("stuff", NA)))
   expect_identical(rws_read_meta(conn), meta)
 })
+
+test_that("describe replace works", {
+  conn <- rws_open_connection(":memory:")
+  teardown(rws_close_connection(conn))
+  
+  local <- data.frame(z = c(TRUE, FALSE, NA))
+  DBI::dbCreateTable(conn, "local", local)
+  expect_identical(rws_write(local, conn = conn), "local")
+  meta <- rws_describe_meta("local", "Z", "A logical vector.", conn = conn)
+  expect_identical(meta, tibble::tibble(TableMeta = "LOCAL",
+                                        ColumnMeta = "Z",
+                                        MetaMeta = "class: logical",
+                                        DescriptionMeta = "A logical vector."))
+  meta <- rws_describe_meta("local", "Z", " More info.", conn = conn)
+  expect_identical(meta, tibble::tibble(TableMeta = "LOCAL",
+                                        ColumnMeta = "Z",
+                                        MetaMeta = "class: logical",
+                                        DescriptionMeta = " More info."))
+  meta <- rws_describe_meta("local", "Z", " More info.", paste0 = TRUE, conn = conn)
+  expect_identical(meta, tibble::tibble(TableMeta = "LOCAL",
+                                        ColumnMeta = "Z",
+                                        MetaMeta = "class: logical",
+                                        DescriptionMeta = " More info. More info."))
+  
+  meta <- rws_describe_meta("local", "Z", NA_character_, paste0 = TRUE, conn = conn)
+  expect_identical(meta, tibble::tibble(TableMeta = "LOCAL",
+                                        ColumnMeta = "Z",
+                                        MetaMeta = "class: logical",
+                                        DescriptionMeta = " More info. More info."))
+  meta <- rws_describe_meta("local", "Z", NA_character_, paste0 = FALSE, conn = conn)
+  expect_identical(meta, tibble::tibble(TableMeta = "LOCAL",
+                                        ColumnMeta = "Z",
+                                        MetaMeta = "class: logical",
+                                        DescriptionMeta = NA_character_))
+})

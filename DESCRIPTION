@@ -1,12 +1,12 @@
 Package: readwritesqlite
 Title: Enhanced Reading and Writing for SQLite Databases
-Version: 0.0.1.9014
+Version: 0.0.1.9015
 Authors@R: 
     person("Joe", "Thorley", role = c("aut", "cre"), email = "joe@poissonconsulting.ca", comment = c(ORCID = "0000-0002-7683-4592"))
 Description: 
   readwritesqlite preserves time zones (for POSIXct columns), 
   projections (for sfc columns), units (for unit columns), 
-  levels (for factors and ordered factors) and classes for logical and Date columns.
+  levels (for factors and ordered factors) and classes for logical, Date and hms columns.
   It also logs changes to tables and provides more informative error messages.
 License: MIT + file LICENSE
 Depends: R (>= 3.4)
