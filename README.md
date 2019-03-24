@@ -44,6 +44,8 @@ changes or provide particularly useful error messages.
     populating databases)
   - delete existing data (and meta data) before writing (useful for
     converting an existing database)
+  - replace existing data which causes unique or primary key conflicts
+    (useful for updating databases)
   - confirm data can be written without commiting any changes (useful
     for checking data)
   - check all existing tables are written to (useful for data transfers)
@@ -54,11 +56,11 @@ changes or provide particularly useful error messages.
     POSIXct, sfc or unit columns (useful for creating an empty database
     with additional informative checks)
 
-`readwritesqlite` provides all these features through its
-`rws_write_sqlite()` and `rws_read_sqlite()` functions.
+`readwritesqlite` provides all these features through its `rws_write()`
+and `rws_read()` functions.
 
-The `rws_query_sqlite()` function allows the user to pass a SQL query.
-By default, the metadata (except the setting of the sf column) is, if
+The `rws_query()` function allows the user to pass a SQL query. By
+default, the metadata (except the setting of the sf column) is, if
 unambigously defined, preserved for each column in the final query. To
 enable this functionality the user should ensure that a) columns in
 tables which will be referenced in the same query should have different
@@ -83,9 +85,9 @@ rws_data
 #> 2   FALSE 2001-02-03      y       y 2006-07-08 09:10:11  11.5     1, 0
 #> 3      NA       <NA>   <NA>    <NA>                <NA>    NA     1, 1
 
-rws_write_sqlite(rws_data, exists = FALSE, conn = conn)
+rws_write(rws_data, exists = FALSE, conn = conn)
 
-rws_read_sqlite("rws_data", conn = conn)
+rws_read("rws_data", conn = conn)
 #> $rws_data
 #> Simple feature collection with 3 features and 6 fields
 #> geometry type:  POINT

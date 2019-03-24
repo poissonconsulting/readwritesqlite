@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add Data Frame of Descriptions to SQL Meta Data Table — rws_describe_sqlite_meta.data.frame • readwritesqlite</title>
+<title>Read Log Data Table from SQLite Database — rws_read_log • readwritesqlite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Add Data Frame of Descriptions to SQL Meta Data Table — rws_describe_sqlite_meta.data.frame" />
+<meta property="og:title" content="Read Log Data Table from SQLite Database — rws_read_log" />
 
-<meta property="og:description" content="Add Data Frame of Descriptions to SQL Meta Data Table" />
+<meta property="og:description" content="The table is created if it doesn't exist." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9013</span>
       </span>
     </div>
 
@@ -106,31 +106,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add Data Frame of Descriptions to SQL Meta Data Table</h1>
+    <h1>Read Log Data Table from SQLite Database</h1>
     
-    <div class="hidden name"><code>rws_describe_sqlite_meta.data.frame.Rd</code></div>
+    <div class="hidden name"><code>rws_read_log.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Add Data Frame of Descriptions to SQL Meta Data Table</p>
+    <p>The table is created if it doesn't exist.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for data.frame</span>
-<span class='fu'><a href='rws_describe_sqlite_meta.html'>rws_describe_sqlite_meta</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>conn</span>)</pre>
+    <pre class="usage"><span class='fu'>rws_read_log</span>(<span class='no'>conn</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>A data frame with columns Table, Column, Description.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Not used.</p></td>
-    </tr>
     <tr>
       <th>conn</th>
       <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
@@ -139,16 +130,14 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An invisible character vector of the previous descriptions.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other rws_read_sqlite: <code><a href='rws_describe_sqlite_meta.character.html'>rws_describe_sqlite_meta.character</a></code>,
-  <code><a href='rws_read_sqlite.SQLiteConnection.html'>rws_read_sqlite.SQLiteConnection</a></code>,
-  <code><a href='rws_read_sqlite.character.html'>rws_read_sqlite.character</a></code>,
-  <code><a href='rws_read_sqlite.html'>rws_read_sqlite</a></code></p></div>
+    <p>A data frame of the log table</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>conn</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DBI/topics/dbConnect'>dbConnect</a></span>(<span class='kw pkg'>RSQLite</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLite'>SQLite</a></span>())
+<span class='fu'>rws_read_log</span>(<span class='no'>conn</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 0 x 5</span><span>
+#&gt; </span><span style='color: #555555;'># … with 5 variables: DateTimeUTCLog </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span style='color: #555555;'>, UserLog </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, TableLog </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   CommandLog </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, NRowLog </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'><span class='kw pkg'>DBI</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/DBI/topics/dbDisconnect'>dbDisconnect</a></span>(<span class='no'>conn</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -156,9 +145,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

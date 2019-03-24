@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9013</span>
       </span>
     </div>
 
@@ -88,9 +88,9 @@
 <a href="#what-readwritesqlite-is" class="anchor"></a>What readwritesqlite Is</h2>
 <p><code>readwritesqlite</code> is an R package that by default</p>
 <ul>
-<li>preserves (and subsequently checks)
+<li>preserves (and subsequently checks) the following metadata
 <ul>
-<li>the class for logical and Date columns</li>
+<li>the class for logical, Date and hms columns</li>
 <li>the levels for factors and ordered factors</li>
 <li>the time zone for POSIXct columns</li>
 <li>the units for unit columns</li>
@@ -117,18 +117,15 @@
 <ul>
 <li>write environments (or named lists) of data frames (useful for populating databases)</li>
 <li>delete existing data (and meta data) before writing (useful for converting an existing database)</li>
+<li>replace existing data which causes unique or primary key conflicts (useful for updating databases)</li>
 <li>confirm data can be written without commiting any changes (useful for checking data)</li>
 <li>check all existing tables are written to (useful for data transfers)</li>
 <li>rearrange and add levels for factors and add levels for ordered factors</li>
 <li>initialize the meta data for a new table by writing a data frame or sf data frame with no rows but logical, Date, factor, ordered, POSIXct, sfc or unit columns (useful for creating an empty database with additional informative checks)</li>
 </ul>
-<p><code>readwritesqlite</code> provides all these features through its <code><a href="reference/rws_write_sqlite.html">rws_write_sqlite()</a></code> and <code><a href="reference/rws_read_sqlite.html">rws_read_sqlite()</a></code> functions.</p>
+<p><code>readwritesqlite</code> provides all these features through its <code><a href="reference/rws_write.html">rws_write()</a></code> and <code><a href="reference/rws_read.html">rws_read()</a></code> functions.</p>
+<p>The <code><a href="reference/rws_query.html">rws_query()</a></code> function allows the user to pass a SQL query. By default, the metadata (except the setting of the sf column) is, if unambigously defined, preserved for each column in the final query. To enable this functionality the user should ensure that a) columns in tables which will be referenced in the same query should have different names or identical metadata and b) column names in the final query should match those in the referenced base tables.</p>
 <p>The init, meta and log data are stored in separate tables from the main data which means that they do not interfere with other ways of interacting with a SQLite database.</p>
-</div>
-<div id="what-readwritesqlite-is-not" class="section level2">
-<h2 class="hasAnchor">
-<a href="#what-readwritesqlite-is-not" class="anchor"></a>What readwritesqlite Is Not</h2>
-<p>Currently, <code>readwritesqlite</code> does not preserve meta data in queries. Meta data (logical, Date, factor, ordered, POSIXct, unit and sfc columns) are only preserved when entire tables are downloaded through the <code><a href="reference/rws_read_sqlite.html">rws_read_sqlite()</a></code> functions.</p>
 </div>
 <div id="demonstration" class="section level2">
 <h2 class="hasAnchor">
@@ -144,9 +141,9 @@
 <a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; 2   FALSE 2001-02-03      y       y 2006-07-08 09:10:11  11.5     1, 0</span></a>
 <a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; 3      NA       &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;                &lt;NA&gt;    NA     1, 1</span></a>
 <a class="sourceLine" id="cb1-11" title="11"></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="kw"><a href="reference/rws_write_sqlite.html">rws_write_sqlite</a></span>(rws_data, <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="kw"><a href="reference/rws_write.html">rws_write</a></span>(rws_data, <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</a>
 <a class="sourceLine" id="cb1-13" title="13"></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="kw"><a href="reference/rws_read_sqlite.html">rws_read_sqlite</a></span>(<span class="st">"rws_data"</span>, <span class="dt">conn =</span> conn)</a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="kw"><a href="reference/rws_read.html">rws_read</a></span>(<span class="st">"rws_data"</span>, <span class="dt">conn =</span> conn)</a>
 <a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; $rws_data</span></a>
 <a class="sourceLine" id="cb1-16" title="16"><span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span></a>
 <a class="sourceLine" id="cb1-17" title="17"><span class="co">#&gt; geometry type:  POINT</span></a>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write the Data Frames in an Environment to a SQLite Database — rws_write_sqlite.environment • readwritesqlite</title>
+<title>Write a Named List of Data Frames to a SQLite Database — rws_write.list • readwritesqlite</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Write the Data Frames in an Environment to a SQLite Database — rws_write_sqlite.environment" />
+<meta property="og:title" content="Write a Named List of Data Frames to a SQLite Database — rws_write.list" />
 
-<meta property="og:description" content="Write the Data Frames in an Environment to a SQLite Database" />
+<meta property="og:description" content="Write a Named List of Data Frames to a SQLite Database" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9013</span>
       </span>
     </div>
 
@@ -106,20 +106,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write the Data Frames in an Environment to a SQLite Database</h1>
+    <h1>Write a Named List of Data Frames to a SQLite Database</h1>
     
-    <div class="hidden name"><code>rws_write_sqlite.environment.Rd</code></div>
+    <div class="hidden name"><code>rws_write.list.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Write the Data Frames in an Environment to a SQLite Database</p>
+    <p>Write a Named List of Data Frames to a SQLite Database</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for environment</span>
-<span class='fu'><a href='rws_write_sqlite.html'>rws_write_sqlite</a></span>(<span class='no'>x</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <pre class="usage"><span class='co'># S3 method for list</span>
+<span class='fu'><a href='rws_write.html'>rws_write</a></span>(<span class='no'>x</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>x_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>x</span>),
   <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"rws.silent"</span>, <span class='fl'>FALSE</span>), <span class='no'>conn</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>unique</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
@@ -129,7 +129,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An environment.</p></td>
+      <td><p>A named list of data frames.</p></td>
     </tr>
     <tr>
       <th>exists</th>
@@ -138,7 +138,11 @@
     <tr>
       <th>delete</th>
       <td><p>A flag specifying whether to delete existing rows before 
-inserting data.</p></td>
+inserting data. If <code>meta = TRUE</code> the meta data is deleted.</p></td>
+    </tr>
+    <tr>
+      <th>replace</th>
+      <td><p>A flag specifying whether to replace any existing rows whose inclusion would violate unique or primary key constraints.</p></td>
     </tr>
     <tr>
       <th>meta</th>
@@ -185,9 +189,9 @@ inserting data.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other rws_write_sqlite: <code><a href='rws_write_sqlite.data.frame.html'>rws_write_sqlite.data.frame</a></code>,
-  <code><a href='rws_write_sqlite.list.html'>rws_write_sqlite.list</a></code>,
-  <code><a href='rws_write_sqlite.html'>rws_write_sqlite</a></code></p></div>
+    <div class='dont-index'><p>Other rws_write: <code><a href='rws_write.data.frame.html'>rws_write.data.frame</a></code>,
+  <code><a href='rws_write.environment.html'>rws_write.environment</a></code>,
+  <code><a href='rws_write.html'>rws_write</a></code></p></div>
     
 
   </div>

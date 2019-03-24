@@ -47,6 +47,7 @@ However, current solutions do not preserve (or check) meta data, log changes or 
 
 - write environments (or named lists) of data frames (useful for populating databases)
 - delete existing data (and meta data) before writing (useful for converting an existing database)
+- replace existing data which causes unique or primary key conflicts (useful for updating databases)
 - confirm data can be written without commiting any changes (useful for checking data)
 - check all existing tables are written to (useful for data transfers)
 - rearrange and add levels for factors and add levels for ordered factors

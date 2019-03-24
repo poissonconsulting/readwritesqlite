@@ -24,7 +24,7 @@ The first task after loading `readwritesqlite` is to create an object of class S
 Below we create one in memory although in general the user will want to specify a path.
 ```{r}
 library(readwritesqlite)
-conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+conn <- rws_open_connection(":memory:")
 ```
 
 ## Writing Data
@@ -75,6 +75,11 @@ In order to change or add meta data the user should read the existing data from 
 The only exception is for factors and ordered factors.
 If the existing factor levels are already recorded in the meta data then the user can pass data with additional or rearranged levels for factor and with additional levels for ordered factors without deleting the existing data.
 
+### Replacing Data
+
+If writing data violates a unique or primary key an error message is returned and the table is unaltered. 
+The only exception to this is if `replace = TRUE` in which case existing rows which cause unique or primary key violations are removed.
+
 ### Duplicate Data
 
 When passing data frames to `rws_write()` in the form of an environment or named list, each table must be represented by just one data frame if `unique = TRUE` (the default).
@@ -98,11 +103,11 @@ As the default value is `silent = getOption("rws.silent", FALSE)` the user can s
 
 ## Reading Data
 
-Data can be read using `rws_read_sqlite()` which either takes a vector of table names or the connection as the first argument.
-`rws_read_sqlite()` returns a named list of data frames (or if the `tibble` package is installed tibbles).
+Data can be read using `rws_read()` which either takes a vector of table names or the connection as the first argument.
+`rws_read()` returns a named list of data frames (or if the `tibble` package is installed tibbles).
 If the connection is the first argument then the named list consists of all tables in the data base.
 ```{r}
-tables <- rws_read_sqlite(conn)
+tables <- rws_read(conn)
 names(tables)
 tables$rws_data
 ```
@@ -113,23 +118,23 @@ names(tables) <- toupper(names(tables))
 list2env(tables, environment())
 ```
 
-If the user wishes to read a single data frame they can use `rws_read_sqlite_table()`
+If the user wishes to read a single data frame they can use `rws_read_table()`
 ```{r}
-rws_read_sqlite_table("rws_data", conn = conn)
+rws_read_table("rws_data", conn = conn)
 ```
 
-The `rws_read_sqlite_meta()` and `rws_read_sqlite_log()` allow the user to read the meta and log tables.
+The `rws_read_meta()` and `rws_read_log()` allow the user to read the meta and log tables.
 ```{r}
-rws_read_sqlite_meta(conn)
+rws_read_meta(conn)
 ```
 
 ```{r}
-rws_read_sqlite_log(conn)
+rws_read_log(conn)
 ```
 
 ## Cleaning Up
 
 It's good practice to close a connection once you have finished with it.
 ```{r}
-DBI::dbDisconnect(conn)
+rws_close_connection(conn)
 ```
