@@ -37,7 +37,7 @@ create_table <- function(data, table_name, log, silent, conn) {
 drop_table <- function(table_name, conn) {
   sql <- "DROP TABLE IF EXISTS ?table_name;"
   sql <- sql_interpolate(sql, table_name, conn)
-  get_query(sql, conn)
+  execute(sql, conn)
 }
 
 write_data <- function(data, table_name, replace, meta, log, conn) {
@@ -50,11 +50,11 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
     data <- convert_data(data)
     if(replace && nrows_table(table_name, conn)) {
       sql <- table_schema(table_name, conn)
-      sql <- sub("CREATE TABLE", "CREATE TEMP TABLE", sql)
+      sql <- sub("CREATE TABLE\\s+\\w+\\s*[(]", "CREATE TEMP TABLE temp (", sql)
       execute(sql, conn)
-      on.exit(drop_table(table_name = p0("temp.", table_name), conn = conn))
-      DBI::dbAppendTable(conn, table_name, data)
-      sql <- "REPLACE INTO ?table_name SELECT * FROM temp.?table_name;"
+      on.exit(drop_table("temp", conn = conn))
+      DBI::dbAppendTable(conn, "temp", data)
+      sql <- "REPLACE INTO ?table_name SELECT * FROM temp;"
       sql <- sql_interpolate(sql, table_name, conn)
       execute(sql, conn)
     } else {
