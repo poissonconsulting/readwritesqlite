@@ -374,6 +374,38 @@ test_that("replace rows UNIQUE constraints in primary key", {
   expect_identical(remote, tibble::as_tibble(local))
 })
 
+test_that("replace rows UNIQUE constraints in unique key", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  DBI::dbGetQuery(conn, "CREATE TABLE local (
+                  x INTEGER UNIQUE NOT NULL,
+                  y INTEGER)")
+
+  local <- data.frame(x = 1:3, y = 2:4)
+  expect_identical(rws_write(local, conn = conn), "local")
+  local$x <- c(1:2,4L)
+  local$y <- local$y + 10L
+  expect_error(rws_write(local, conn = conn), "UNIQUE constraint failed: local.x")
+  expect_identical(rws_write(local, replace = TRUE, conn = conn), "local")
+  remote <- rws_read_table("local", conn = conn)
+  expect_identical(sort(remote$x), 1:4)
+  expect_identical(sort(remote$y), c(4L, 12L, 13L, 14L))
+  expect_identical(rws_write(local, replace = TRUE, conn = conn), "local")
+  remote <- rws_read_table("local", conn = conn)
+  expect_identical(sort(remote$x), 1:4)
+  expect_identical(sort(remote$y), c(4L, 12L, 13L, 14L))
+  expect_error(rws_write(local, conn = conn), "UNIQUE constraint failed: local.x")
+  
+  expect_identical(rws_write(local, delete = TRUE, replace = TRUE, conn = conn), "local")
+  remote <- rws_read_table("local", conn = conn)
+  expect_identical(remote, tibble::as_tibble(local))
+  remote$x[1] <- 5L
+  expect_identical(rws_write(local, delete = TRUE, conn = conn), "local")
+  remote <- rws_read_table("local", conn = conn)
+  expect_identical(remote, tibble::as_tibble(local))
+})
+
 test_that("foreign keys switched on one data frame at a time", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
