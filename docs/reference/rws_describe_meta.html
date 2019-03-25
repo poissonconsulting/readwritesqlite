@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -117,18 +117,22 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>rws_describe_meta</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>conn</span>)</pre>
+    <pre class="usage"><span class='fu'>rws_describe_meta</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>conn</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An object specifying the table(s) to read.</p></td>
+      <td><p>An object specifying the descriptions.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Not used.</p></td>
+    </tr>
+    <tr>
+      <th>strict</th>
+      <td><p>A flag specifying whether to error if x has extraneous columns or if exists = TRUE extraneous data frames.</p></td>
     </tr>
     <tr>
       <th>conn</th>
@@ -138,7 +142,11 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>xx</p>
+    <p>An invisible copy of the updated meta table.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other rws_describe_meta: <code><a href='rws_describe_meta.character.html'>rws_describe_meta.character</a></code></p></div>
     
 
   </div>
@@ -148,6 +156,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
           </ul>
 
   </div>

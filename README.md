@@ -18,8 +18,6 @@ related data frames particularly when used with the RSQLite package.
 However, current solutions do not preserve (or check) meta data, log
 changes or provide particularly useful error messages.
 
-## What readwritesqlite Is
-
 `readwritesqlite` is an R package that by default
 
   - preserves (and subsequently checks) the following metadata
@@ -75,23 +73,16 @@ interacting with a SQLite database.
 
 ``` r
 library(tibble)
+library(units)
+#> udunits system database from /usr/local/share/udunits
+library(sf)
+#> Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3
+
 library(readwritesqlite)
-conn <- rws_open_connection(":memory:")
-#> Warning in result_fetch(res@ptr, n = n): Don't need to call dbFetch() for
-#> statements, only for queries
+
+conn <- rws_connect()
 
 rws_data
-#> # A tibble: 3 x 7
-#>   logical date       factor ordered posixct             units geometry
-#>   <lgl>   <date>     <fct>  <ord>   <dttm>              <dbl> <list>  
-#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10   <S3: XY>
-#> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5 <S3: XY>
-#> 3 NA      NA         <NA>   <NA>    NA                   NA   <S3: XY>
-
-rws_write(rws_data, exists = FALSE, conn = conn)
-
-rws_read("rws_data", conn = conn)
-#> $rws_data
 #> Simple feature collection with 3 features and 6 fields
 #> geometry type:  POINT
 #> dimension:      XY
@@ -99,14 +90,35 @@ rws_read("rws_data", conn = conn)
 #> epsg (SRID):    4326
 #> proj4string:    +proj=longlat +datum=WGS84 +no_defs
 #> # A tibble: 3 x 7
-#>   logical date       factor ordered posixct             units
-#>   <lgl>   <date>     <fct>  <ord>   <dttm>              <S3:>
-#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…
-#> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…
-#> 3 NA      NA         <NA>   <NA>    NA                    NA…
-#> # … with 1 more variable: geometry <POINT [°]>
+#>   logical date       factor ordered posixct             units    geometry
+#>   <lgl>   <date>     <fct>  <ord>   <dttm>                [m] <POINT [°]>
+#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)
+#> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)
+#> 3 NA      NA         <NA>   <NA>    NA                     NA       (1 1)
 
-rws_close_connection(conn)
+rws_write(rws_data, exists = FALSE, conn = conn)
+
+DBI::dbReadTable(conn, "rws_data")
+#>   logical  date factor ordered    posixct units   geometry
+#> 1       1 10957      x       x  978433445  10.0 blob[21 B]
+#> 2       0 11356      y       y 1152378611  11.5 blob[21 B]
+#> 3      NA    NA   <NA>    <NA>         NA    NA blob[21 B]
+
+rws_read_table("rws_data", conn = conn)
+#> Simple feature collection with 3 features and 6 fields
+#> geometry type:  POINT
+#> dimension:      XY
+#> bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1
+#> epsg (SRID):    4326
+#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#> # A tibble: 3 x 7
+#>   logical date       factor ordered posixct             units    geometry
+#>   <lgl>   <date>     <fct>  <ord>   <dttm>                [m] <POINT [°]>
+#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)
+#> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)
+#> 3 NA      NA         <NA>   <NA>    NA                     NA       (1 1)
+
+rws_disconnect(conn)
 ```
 
 ## Information

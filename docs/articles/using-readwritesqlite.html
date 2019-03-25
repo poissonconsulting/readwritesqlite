@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -73,7 +73,7 @@
       <h1>Using readwritesqlite</h1>
                         <h4 class="author">Joe Thorley</h4>
             
-            <h4 class="date">2019-03-23</h4>
+            <h4 class="date">2019-03-25</h4>
       
       
       <div class="hidden name"><code>using-readwritesqlite.Rmd</code></div>
@@ -88,9 +88,7 @@
 <a href="#starting" class="anchor"></a>Starting</h2>
 <p>The first task after loading <code>readwritesqlite</code> is to create an object of class SQLiteConnection. Below we create one in memory although in general the user will want to specify a path.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readwritesqlite)</a>
-<a class="sourceLine" id="cb1-2" title="2">conn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rws_open_connection.html">rws_open_connection</a></span>(<span class="st">":memory:"</span>)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="co">#&gt; Warning in result_fetch(res@ptr, n = n): Don't need to call dbFetch() for</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; statements, only for queries</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">conn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rws_connect.html">rws_connect</a></span>(<span class="st">":memory:"</span>)</a></code></pre></div>
 </div>
 <div id="writing-data" class="section level2">
 <h2 class="hasAnchor">
@@ -157,7 +155,7 @@
 <div id="reading-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reading-data" class="anchor"></a>Reading Data</h2>
-<p>Data can be read using <code><a href="../reference/rws_read.html">rws_read()</a></code> which either takes a vector of table names or the connection as the first argument. <code><a href="../reference/rws_read.html">rws_read()</a></code> returns a named list of data frames (or if the <code>tibble</code> package is installed tibbles). If the connection is the first argument then the named list consists of all tables in the data base.</p>
+<p>Data can be read using <code><a href="../reference/rws_read.html">rws_read()</a></code> which either takes a vector of table names or the connection as the first argument. <code><a href="../reference/rws_read.html">rws_read()</a></code> returns a named list of tibbles. If the connection is the first argument then the named list consists of all tables in the data base.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">tables &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rws_read.html">rws_read</a></span>(conn)</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(tables)</a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></a>
@@ -215,18 +213,18 @@
 <a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; # A tibble: 6 x 5</span></a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt;   DateTimeUTCLog      UserLog TableLog      CommandLog NRowLog</span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; 1 2019-03-24 01:18:49 joe     RWS_DATA      CREATE           0</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 2 2019-03-24 01:18:49 joe     RWS_DATA      INSERT           3</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 3 2019-03-24 01:18:49 joe     A_TABLE       CREATE           0</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 4 2019-03-24 01:18:49 joe     A_TABLE       INSERT           3</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 5 2019-03-24 01:18:49 joe     ANOTHER_TABLE CREATE           0</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 6 2019-03-24 01:18:49 joe     ANOTHER_TABLE INSERT           3</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; 1 2019-03-25 16:15:35 joe     RWS_DATA      CREATE           0</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 2 2019-03-25 16:15:36 joe     RWS_DATA      INSERT           3</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 3 2019-03-25 16:15:36 joe     A_TABLE       CREATE           0</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 4 2019-03-25 16:15:36 joe     A_TABLE       INSERT           3</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 5 2019-03-25 16:15:36 joe     ANOTHER_TABLE CREATE           0</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 6 2019-03-25 16:15:36 joe     ANOTHER_TABLE INSERT           3</span></a></code></pre></div>
 </div>
 <div id="cleaning-up" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cleaning-up" class="anchor"></a>Cleaning Up</h2>
 <p>It’s good practice to close a connection once you have finished with it.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/rws_close_connection.html">rws_close_connection</a></span>(conn)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/rws_disconnect.html">rws_disconnect</a></span>(conn)</a></code></pre></div>
 </div>
   </div>
 

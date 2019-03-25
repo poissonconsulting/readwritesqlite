@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -118,7 +118,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for character</span>
-<span class='fu'><a href='rws_describe_meta.html'>rws_describe_meta</a></span>(<span class='no'>x</span>, <span class='no'>column</span>, <span class='no'>description</span>, <span class='no'>...</span>, <span class='no'>conn</span>)</pre>
+<span class='fu'><a href='rws_describe_meta.html'>rws_describe_meta</a></span>(<span class='no'>x</span>, <span class='no'>column</span>, <span class='no'>description</span>, <span class='no'>...</span>,
+  <span class='kw'>paste0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>conn</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,6 +141,15 @@
       <td><p>Not used.</p></td>
     </tr>
     <tr>
+      <th>paste0</th>
+      <td><p>A flag specifying whether to replace existing descriptions (FALSE)
+or append using paste0 to existing descriptions (TRUE).</p></td>
+    </tr>
+    <tr>
+      <th>strict</th>
+      <td><p>A flag specifying whether to error if tables and/or columns do not exist (or ignore).</p></td>
+    </tr>
+    <tr>
       <th>conn</th>
       <td><p>A <code>SQLiteConnection</code> to a database.</p></td>
     </tr>
@@ -147,13 +157,11 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An invisible character vector of the previous descriptions.</p>
+    <p>An invisible copy of the updated meta table.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other rws_read: <code><a href='rws_describe_meta.data.frame.html'>rws_describe_meta.data.frame</a></code>,
-  <code><a href='rws_read.SQLiteConnection.html'>rws_read.SQLiteConnection</a></code>,
-  <code><a href='rws_read.character.html'>rws_read.character</a></code>, <code><a href='rws_read.html'>rws_read</a></code></p></div>
+    <div class='dont-index'><p>Other rws_describe_meta: <code><a href='rws_describe_meta.html'>rws_describe_meta</a></code></p></div>
     
 
   </div>

@@ -5,7 +5,7 @@
 \alias{rws_open_connection}
 \title{Opens SQLite Database Connection}
 \usage{
-rws_connect(dbname = "", exists = NA)
+rws_connect(dbname = ":memory:", exists = NA)
 }
 \arguments{
 \item{dbname}{The path to the database file. SQLite keeps each database

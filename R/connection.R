@@ -9,7 +9,7 @@
 #' foreign key constraints enabled.
 #' @aliases rws_open_connection
 #' @export
-rws_connect <- function(dbname = "", exists = NA) {
+rws_connect <- function(dbname = ":memory:", exists = NA) {
   check_string(dbname)
   check_scalar(exists, c(TRUE, NA))
   
@@ -20,7 +20,7 @@ rws_connect <- function(dbname = "", exists = NA) {
     err("File '", dbname,"' must not already exist.")
   
   conn <- DBI::dbConnect(RSQLite::SQLite(), dbname = dbname)
-  get_query("PRAGMA foreign_keys = ON;", conn)
+  execute("PRAGMA foreign_keys = ON;", conn)
   conn
 }
 

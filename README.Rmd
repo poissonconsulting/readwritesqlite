@@ -23,8 +23,6 @@ knitr::opts_chunk$set(
 SQLite databases are a simple, powerful way to validate, query and store related data frames particularly when used with the RSQLite package.
 However, current solutions do not preserve (or check) meta data, log changes or provide particularly useful error messages.
 
-## What readwritesqlite Is
-
 `readwritesqlite` is an R package that by default
 
 - preserves (and subsequently checks) the following metadata
@@ -65,12 +63,18 @@ The init, meta and log data are stored in separate tables from the main data whi
 
 ```{r}
 library(tibble)
+library(units)
+library(sf)
+
 library(readwritesqlite)
-conn <- rws_connect(":memory:")
+
+conn <- rws_connect()
 
 rws_data
 
 rws_write(rws_data, exists = FALSE, conn = conn)
+
+DBI::dbReadTable(conn, "rws_data")
 
 rws_read_table("rws_data", conn = conn)
 
