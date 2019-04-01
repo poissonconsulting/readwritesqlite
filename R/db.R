@@ -19,6 +19,10 @@ sql_interpolate <- function(sql, table_name, conn) {
   DBI::sqlInterpolate(conn, sql, table_name = table_name)
 }
 
+sql_strip_foreign_keys <- function(sql) {
+  sql <- gsub(",\\s*FOREIGN\\s+KEY\\s*\\(\\s*\\w+\\s*(,\\s*\\w+)*\\s*\\)\\s*REFERENCES\\s+\\w+\\s*\\(\\s*\\w+\\s*(,\\s*\\w+)*\\s*\\)", "", sql, ignore.case = TRUE)
+}
+
 nrows_table <- function(table_name, conn) {
   sql <- "SELECT COUNT(*) FROM ?table_name;"
   sql <- sql_interpolate(sql, table_name, conn)
@@ -51,6 +55,7 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
     if(replace && nrows_table(table_name, conn)) {
       sql <- table_schema(table_name, conn)
       sql <- sub("CREATE TABLE\\s+\\w+\\s*[(]", "CREATE TEMP TABLE temp (", sql)
+      sql <- sql_strip_foreign_keys(sql)
       execute(sql, conn)
       on.exit(drop_table("temp", conn = conn))
       DBI::dbAppendTable(conn, "temp", data)
