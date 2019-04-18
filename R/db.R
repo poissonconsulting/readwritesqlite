@@ -132,7 +132,7 @@ table_column_type <- function(column_name, table_name, conn) {
 }
 
 is_table_column_text <- function(column_name, table_name, conn) {
-  table_column_type(column_name, table_name, conn) == "TEXT"
+  toupper(table_column_type(column_name, table_name, conn)) == "TEXT"
 }
 
 foreign_keys <- function(on, conn) {
