@@ -473,6 +473,32 @@ test_that("meta factor different types", {
     stringsAsFactors = FALSE))
 })
 
+test_that("meta factor 11 level", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  z <- factor(c(1:11, NA), levels = c(1:11))
+  local <- data.frame(
+    zinteger = z,
+    zreal = z,
+    znumeric = z,
+    ztext = z,
+    zblob = z)
+  
+  DBI::dbGetQuery(conn, "CREATE TABLE local (
+                  zinteger INTEGER,
+                  zreal REAL,
+                  znumeric NUMERIC,
+                  ztext TEXT,
+                  zblob BLOB
+              )")
+  
+  expect_identical(rws_write(local, conn = conn), "local")
+  remote <- rws_read_table("local", conn = conn)
+  expect_identical(remote, tibble::as_tibble(local))
+})
+
+
 test_that("meta ordered different types", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
