@@ -150,15 +150,15 @@ rws_write.list <- function(x,
     err("list '", x_name, "' includes objects which are not data frames")
   
   if(isTRUE(exists)) {
-    exists <- tables_exists(names(x), conn)
-    if(any(!exists)) {
-      extra <- names(x)[!exists]
+    exists2 <- tables_exists(names(x), conn)
+    if(any(!exists2)) {
+      extra <- names(x)[!exists2]
       msg <- co(extra, p0("exists = TRUE but the following data frame%s in '", 
                           x_name, "' %r unrecognised: %c"), conjunction = "and")
       if(strict) err(msg)
       if(!silent) wrn(msg)
     }
-    x <- x[exists]
+    x <- x[exists2]
     if(!length(x)) return(invisible(character(0)))
   }
   
