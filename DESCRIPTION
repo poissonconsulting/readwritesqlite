@@ -28,7 +28,8 @@ Suggests:
 Remotes:
     poissonconsulting/err,
     poissonconsulting/checkr,
-    poissonconsulting/dttr2
+    poissonconsulting/dttr2,
+    tidyverse/hms
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
