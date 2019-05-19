@@ -13,7 +13,7 @@ Depends: R (>= 3.4)
 Imports: 
     err,
     checkr,
-    dttr,
+    dttr2,
     hms,
     DBI,
     RSQLite,
@@ -28,7 +28,7 @@ Suggests:
 Remotes:
     poissonconsulting/err,
     poissonconsulting/checkr,
-    poissonconsulting/dttr
+    poissonconsulting/dttr2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
