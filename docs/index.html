@@ -120,13 +120,13 @@
 <li>write environments (or named lists) of data frames (useful for populating databases)</li>
 <li>delete existing data (and meta data) before writing (useful for converting an existing database)</li>
 <li>replace existing data which causes unique or primary key conflicts (useful for updating databases)</li>
-<li>confirm data can be written without commiting any changes (useful for checking data)</li>
+<li>confirm data can be written without committing any changes (useful for checking data)</li>
 <li>check all existing tables are written to (useful for data transfers)</li>
 <li>rearrange and add levels for factors and add levels for ordered factors</li>
 <li>initialize the meta data for a new table by writing a data frame or sf data frame with no rows but logical, Date, factor, ordered, POSIXct, sfc or unit columns (useful for creating an empty database with additional informative checks)</li>
 </ul>
 <p><code>readwritesqlite</code> provides all these features through its <code><a href="reference/rws_write.html">rws_write()</a></code> and <code><a href="reference/rws_read.html">rws_read()</a></code> functions.</p>
-<p>The <code><a href="reference/rws_query.html">rws_query()</a></code> function allows the user to pass a SQL query. By default, the metadata (except the setting of the sf column) is, if unambigously defined, preserved for each column in the final query. To enable this functionality the user should ensure that a) columns in tables which will be referenced in the same query should have different names or identical metadata and b) column names in the final query should match those in the referenced base tables.</p>
+<p>The <code><a href="reference/rws_query.html">rws_query()</a></code> function allows the user to pass a SQL query. By default, the metadata (except the setting of the sf column) is, if unambiguously defined, preserved for each column in the final query. To enable this functionality the user should ensure that a) columns in tables which will be referenced in the same query should have different names or identical metadata and b) column names in the final query should match those in the referenced base tables.</p>
 <p>The init, meta and log data are stored in separate tables from the main data which means that they do not interfere with other ways of interacting with a SQLite database.</p>
 <div id="demonstration" class="section level2">
 <h2 class="hasAnchor">
@@ -187,10 +187,10 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
+<p>To install the latest official release from <a href="https://CRAN.R-project.org/package=readwritesqlite">CRAN</a></p>
+<pre><code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("readwritesqlite")</a></code></pre>
 <p>To install the latest development version from the Poisson drat <a href="https://github.com/poissonconsulting/drat">repository</a></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"drat"</span>)</a>
-<a class="sourceLine" id="cb2-2" title="2">drat<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/drat/topics/addRepo">addRepo</a></span>(<span class="st">"poissonconsulting"</span>)</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"readwritesqlite"</span>)</a></code></pre></div>
+<pre><code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("readwritesqlite", repos = "http://poissonconsulting.github.io/drat")</a></code></pre>
 </div>
 <div id="contribution" class="section level2">
 <h2 class="hasAnchor">

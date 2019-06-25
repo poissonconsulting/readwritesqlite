@@ -119,9 +119,9 @@
 <a href="#foreign-keys" class="anchor"></a>Foreign Keys</h3>
 <p>The <code><a href="../reference/rws_write.html">rws_write()</a></code> function ensures that writing the new data frame(s) to the database does not violate foreign keys. If any data does the database is left unchanged.</p>
 </div>
-<div id="commiting-data" class="section level3">
+<div id="committing-data" class="section level3">
 <h3 class="hasAnchor">
-<a href="#commiting-data" class="anchor"></a>Commiting Data</h3>
+<a href="#committing-data" class="anchor"></a>Committing Data</h3>
 <p>By default, if no check or key violations occur the data frame(s) are written to the database. Otherwise an error message is issued and all changes are rolled back. If the user wishes to simply check whether data could be written to a database without actually making any changes then they can call <code><a href="../reference/rws_write.html">rws_write()</a></code> with <code>commit = FALSE</code>.</p>
 </div>
 <div id="deleting-data-and-meta-data" class="section level3">
@@ -214,12 +214,12 @@
 <a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; # A tibble: 6 x 5</span></a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt;   DateTimeUTCLog      UserLog TableLog      CommandLog NRowLog</span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; 1 2019-06-25 21:04:59 joe     RWS_DATA      CREATE           0</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 2 2019-06-25 21:04:59 joe     RWS_DATA      INSERT           3</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 3 2019-06-25 21:04:59 joe     A_TABLE       CREATE           0</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 4 2019-06-25 21:05:00 joe     A_TABLE       INSERT           3</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 5 2019-06-25 21:05:00 joe     ANOTHER_TABLE CREATE           0</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 6 2019-06-25 21:05:00 joe     ANOTHER_TABLE INSERT           3</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; 1 2019-06-25 21:11:03 joe     RWS_DATA      CREATE           0</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 2 2019-06-25 21:11:03 joe     RWS_DATA      INSERT           3</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 3 2019-06-25 21:11:03 joe     A_TABLE       CREATE           0</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 4 2019-06-25 21:11:03 joe     A_TABLE       INSERT           3</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 5 2019-06-25 21:11:03 joe     ANOTHER_TABLE CREATE           0</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 6 2019-06-25 21:11:03 joe     ANOTHER_TABLE INSERT           3</span></a></code></pre></div>
 </div>
 <div id="cleaning-up" class="section level2">
 <h2 class="hasAnchor">

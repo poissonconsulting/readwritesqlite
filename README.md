@@ -49,7 +49,7 @@ changes or provide particularly useful error messages.
     converting an existing database)
   - replace existing data which causes unique or primary key conflicts
     (useful for updating databases)
-  - confirm data can be written without commiting any changes (useful
+  - confirm data can be written without committing any changes (useful
     for checking data)
   - check all existing tables are written to (useful for data transfers)
   - rearrange and add levels for factors and add levels for ordered
@@ -64,7 +64,7 @@ and `rws_read()` functions.
 
 The `rws_query()` function allows the user to pass a SQL query. By
 default, the metadata (except the setting of the sf column) is, if
-unambigously defined, preserved for each column in the final query. To
+unambiguously defined, preserved for each column in the final query. To
 enable this functionality the user should ensure that a) columns in
 tables which will be referenced in the same query should have different
 names or identical metadata and b) column names in the final query
@@ -133,14 +133,15 @@ For more information on using `readwritesqlite` see the vignette
 
 ## Installation
 
+To install the latest official release from
+[CRAN](https://CRAN.R-project.org/package=readwritesqlite)
+
+    install.packages("readwritesqlite")
+
 To install the latest development version from the Poisson drat
 [repository](https://github.com/poissonconsulting/drat)
 
-``` r
-install.packages("drat")
-drat::addRepo("poissonconsulting")
-install.packages("readwritesqlite")
-```
+    install.packages("readwritesqlite", repos = "http://poissonconsulting.github.io/drat")
 
 ## Contribution
 

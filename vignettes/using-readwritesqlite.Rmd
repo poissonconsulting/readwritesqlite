@@ -59,7 +59,7 @@ If the user wishes to only write to previously non-existent tables then they sho
 The `rws_write()` function ensures that writing the new data frame(s) to the database does not violate foreign keys.
 If any data does the database is left unchanged.
 
-### Commiting Data
+### Committing Data
 
 By default, if no check or key violations occur the data frame(s) are written to the database.
 Otherwise an error message is issued and all changes are rolled back.
