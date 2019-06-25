@@ -6,7 +6,7 @@
 \alias{readwritesqlite-package}
 \title{readwritesqlite: Enhanced Reading and Writing for SQLite Databases}
 \description{
-readwritesqlite preserves time zones (for POSIXct columns), 
+Preserves time zones (for POSIXct columns), 
   projections (for sfc columns), units (for unit columns), 
   levels (for factors and ordered factors) and classes for 
   logical, Date and hms columns.
