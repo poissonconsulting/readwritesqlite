@@ -11,3 +11,4 @@
 ^\.Rproj\.user$
 ^build\.R$
 ^\.covrignore$
+^cran-comments\.md$
