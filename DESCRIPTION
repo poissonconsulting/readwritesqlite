@@ -1,6 +1,6 @@
 Package: readwritesqlite
 Title: Enhanced Reading and Writing for SQLite Databases
-Version: 0.2.3
+Version: 0.2.3.9000
 Authors@R: 
     person("Joe", "Thorley", role = c("aut", "cre"), email = "joe@poissonconsulting.ca", comment = c(ORCID = "0000-0002-7683-4592"))
 Description: 
@@ -26,10 +26,7 @@ Suggests:
     knitr,
     rmarkdown
 Remotes:
-    poissonconsulting/err,
-    poissonconsulting/checkr,
-    poissonconsulting/dttr2,
-    tidyverse/hms
+    poissonconsulting/dttr2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
