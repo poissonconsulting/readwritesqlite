@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -73,7 +73,7 @@
       <h1>Using readwritesqlite</h1>
                         <h4 class="author">Joe Thorley</h4>
             
-            <h4 class="date">2019-03-25</h4>
+            <h4 class="date">2019-06-25</h4>
       
       
       <div class="hidden name"><code>using-readwritesqlite.Rmd</code></div>
@@ -167,12 +167,11 @@
 <a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; epsg (SRID):    4326</span></a>
 <a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
 <a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt;   logical date       factor ordered posixct             units</span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;              &lt;S3:&gt;</span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…</span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…</span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                    NA…</span></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; # … with 1 more variable: geometry &lt;POINT [°]&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span></a></code></pre></div>
 <p>The table names can of course be manipulated and <code><a href="https://www.rdocumentation.org/packages/base/topics/list2env">list2env()</a></code> used to assign the data frames to the current environment.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(tables) &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/chartr">toupper</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(tables))</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list2env">list2env</a></span>(tables, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/environment">environment</a></span>())</a></code></pre></div>
@@ -185,12 +184,11 @@
 <a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt; epsg (SRID):    4326</span></a>
 <a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
 <a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt;   logical date       factor ordered posixct             units</span></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;              &lt;S3:&gt;</span></a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05 10.0…</span></a>
-<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11 11.5…</span></a>
-<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                    NA…</span></a>
-<a class="sourceLine" id="cb6-14" title="14"><span class="co">#&gt; # … with 1 more variable: geometry &lt;POINT [°]&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span></a></code></pre></div>
 <p>The <code><a href="../reference/rws_read_meta.html">rws_read_meta()</a></code> and <code><a href="../reference/rws_read_log.html">rws_read_log()</a></code> allow the user to read the meta and log tables.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/rws_read_meta.html">rws_read_meta</a></span>(conn)</a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="co">#&gt; # A tibble: 13 x 4</span></a>
@@ -213,12 +211,12 @@
 <a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; # A tibble: 6 x 5</span></a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt;   DateTimeUTCLog      UserLog TableLog      CommandLog NRowLog</span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; 1 2019-03-25 16:15:35 joe     RWS_DATA      CREATE           0</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 2 2019-03-25 16:15:36 joe     RWS_DATA      INSERT           3</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 3 2019-03-25 16:15:36 joe     A_TABLE       CREATE           0</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 4 2019-03-25 16:15:36 joe     A_TABLE       INSERT           3</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 5 2019-03-25 16:15:36 joe     ANOTHER_TABLE CREATE           0</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 6 2019-03-25 16:15:36 joe     ANOTHER_TABLE INSERT           3</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; 1 2019-06-25 20:17:03 joe     RWS_DATA      CREATE           0</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 2 2019-06-25 20:17:04 joe     RWS_DATA      INSERT           3</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 3 2019-06-25 20:17:04 joe     A_TABLE       CREATE           0</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 4 2019-06-25 20:17:04 joe     A_TABLE       INSERT           3</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 5 2019-06-25 20:17:04 joe     ANOTHER_TABLE CREATE           0</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 6 2019-06-25 20:17:04 joe     ANOTHER_TABLE INSERT           3</span></a></code></pre></div>
 </div>
 <div id="cleaning-up" class="section level2">
 <h2 class="hasAnchor">
