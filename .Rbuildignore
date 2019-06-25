@@ -10,3 +10,4 @@
 ^readwritesqlite\.Rproj$
 ^\.Rproj\.user$
 ^build\.R$
+^\.covrignore$

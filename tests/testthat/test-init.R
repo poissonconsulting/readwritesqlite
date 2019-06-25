@@ -4,8 +4,6 @@ test_that("init makes table", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  expect_identical(rws_read_init(conn = conn), rws_read_sqlite_init(conn = conn))
-  
   expect_identical(rws_read_init(conn = conn),
                    tibble::tibble(TableInit = character(0), IsInit = integer(0),
                                   SFInit = character(0)))

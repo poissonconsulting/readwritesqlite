@@ -67,12 +67,6 @@ rws_read_meta <- function(conn) {
   as_tibble_sf(data)
 }
 
-#' @export
-rws_read_sqlite_meta <- function(conn) {
-  .Deprecated("rws_read_meta")
-  rws_read_meta(conn)
-}
-
 data_column_meta <- function(column) {
   if (is.logical(column)) return("class: logical")
   if (is.Date(column)) return("class: Date")

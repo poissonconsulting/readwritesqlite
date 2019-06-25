@@ -79,12 +79,6 @@ rws_read_init <- function(conn) {
   as_tibble_sf(data)
 }
 
-#' @export
-rws_read_sqlite_init <- function(conn) {
-  .Deprecated("rws_read_init")
-  rws_read_init(conn)
-}
-
 is_initialized <- function(table_name, conn) {
   confirm_init_table(conn)
   init_table <- read_data(.init_table_name, meta = FALSE, conn = conn)

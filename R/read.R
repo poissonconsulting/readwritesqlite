@@ -15,12 +15,6 @@ rws_read <- function(x, ...) {
   UseMethod("rws_read")
 }
 
-#' @export
-rws_read_sqlite <- function(x, ...) {
-  .Deprecated("rws_read")
-  UseMethod("rws_read")
-}
-
 #' Read Tables from a SQLite Database
 #'
 #' @inheritParams rws_write
@@ -64,10 +58,4 @@ rws_read.SQLiteConnection <- function(x, meta = TRUE, ...) {
 #' @export
 rws_read_table <- function(x, meta = TRUE, conn) {
   rws_read(x, meta = meta, conn = conn)[[1]]
-}
-
-#' @export
-rws_read_sqlite_table <- function(x, meta = TRUE, conn) {
-  .Deprecated("rws_read_table")
-  rws_read_table(x, meta = meta, conn = conn)
 }

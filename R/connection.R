@@ -24,12 +24,6 @@ rws_connect <- function(dbname = ":memory:", exists = NA) {
   conn
 }
 
-#' @export
-rws_open_connection <- function(dbname = "", exists = NA) {
-  .Deprecated("rws_connect")
-  rws_connect(dbname = dbname, exists = exists)
-}
-
 #' Close SQLite Database Connection
 #'
 #' Closes a \code{\linkS4class{SQLiteConnection}} to a SQLite database.
@@ -40,10 +34,4 @@ rws_open_connection <- function(dbname = "", exists = NA) {
 rws_disconnect <- function(conn) {
   check_sqlite_connection(conn)
   DBI::dbDisconnect(conn)
-}
-
-#' @export
-rws_close_connection <- function(conn) {
-  .Deprecated("rws_disconnect")
-  rws_disconnect(conn)
 }

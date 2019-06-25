@@ -5,7 +5,6 @@ test_that("rws_read requires table", {
   teardown(DBI::dbDisconnect(conn))
 
   expect_error(rws_read("local2", conn = conn), "table 'local2' does not exist")
-  expect_error(rws_read_sqlite("local2", conn = conn), "table 'local2' does not exist")
 })
 
 test_that("rws_read returns tibble", {

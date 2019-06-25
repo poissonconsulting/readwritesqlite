@@ -53,9 +53,3 @@ rws_read_log <- function(conn) {
   data$DateTimeUTCLog <- as.POSIXct(data$DateTimeUTCLog, tz = "UTC")
   as_tibble_sf(data)
 }
-
-#' @export
-rws_read_sqlite_log <- function(conn) {
-  .Deprecated("rws_read_log")
-  rws_read_log(conn)
-}

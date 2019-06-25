@@ -7,6 +7,4 @@ test_that("rws_connect", {
   expect_identical(check_sqlite_connection(conn, connected = TRUE), conn)
   rws_disconnect(conn)
   expect_identical(check_sqlite_connection(conn, connected = FALSE), conn)
-  expect_identical(rws_close_connection(rws_open_connection(":memory:")), 
-                   rws_disconnect(rws_connect(":memory:")))
 })

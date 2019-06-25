@@ -3,8 +3,6 @@ context("log")
 test_that("rws_read_log creates table", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
-  
-  expect_identical(rws_read_sqlite_log(conn), rws_read_log(conn))
 
   log <- rws_read_log(conn)
   

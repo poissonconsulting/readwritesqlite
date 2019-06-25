@@ -47,21 +47,6 @@ rws_write <- function(x, exists = TRUE, delete = FALSE,
   UseMethod("rws_write")
 }
 
-#' @export
-rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE, 
-                             replace = FALSE,
-                             meta = TRUE,
-                             log = TRUE,
-                             commit = TRUE,
-                             strict = TRUE,
-                             x_name = substitute(x), 
-                             silent = getOption("rws.silent", FALSE),
-                             conn, 
-                             ...) {
-  .Deprecated("rws_write")
-  UseMethod("rws_write")
-}
-
 #' Write a Data Frame to a SQLite Database
 #'
 #' @param x A data frame.

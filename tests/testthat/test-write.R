@@ -35,18 +35,6 @@ test_that("rws_write.data.frame writes to existing table", {
   expect_identical(remote, local)
 })
 
-
-test_that("deprecated rws_write_sqlite.data.frame writes to existing table", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
-  
-  local <- data.frame(x = 1:3, select = 1:3)
-  DBI::dbCreateTable(conn, "local", local)
-  expect_identical(rws_write_sqlite(local, conn = conn), "local")
-  remote <- DBI::dbReadTable(conn, "local")
-  expect_identical(remote, local)
-})
-
 test_that("rws_write.data.frame errors if exists = FALSE and already exists", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

@@ -8,8 +8,6 @@ test_that("rws_get_sqlite_query works with meta = FALSE", {
   local2 <- as_tibble_sf(local[1:2,,drop = FALSE])
   DBI::dbWriteTable(conn, "local", local)
   DBI::dbWriteTable(conn, "local2", local2)
-  expect_identical(rws_query_sqlite("SELECT * FROM local", meta = FALSE, conn = conn),
-                   rws_query("SELECT * FROM local", meta = FALSE, conn = conn))
 
   data<- rws_query("SELECT * FROM local", meta = FALSE, conn = conn)
   expect_equal(data, local, check.attributes = FALSE)
