@@ -13,7 +13,7 @@ Depends: R (>= 3.4)
 Imports: 
     err,
     checkr,
-    dttr2,
+    dttr2 (>= 0.0.0.9008),
     hms,
     DBI,
     RSQLite,
