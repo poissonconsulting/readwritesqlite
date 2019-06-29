@@ -7,11 +7,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enhanced Reading and Writing for SQLite Databases • readwritesqlite</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Enhanced Reading and Writing for SQLite Databases">
 <meta property="og:description" content="
-  Preserves time zones (for POSIXct columns), 
+  Reads and writes data frames to SQLite databases while 
+  preserving time zones (for POSIXct columns), 
   projections (for sfc columns), units (for unit columns), 
   levels (for factors and ordered factors) and classes for 
   logical, Date and hms columns.
@@ -43,7 +45,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -66,7 +68,14 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/poissonconsulting/readwritesqlite">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -75,6 +84,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     
@@ -128,92 +138,108 @@
 <p><code>readwritesqlite</code> provides all these features through its <code><a href="reference/rws_write.html">rws_write()</a></code> and <code><a href="reference/rws_read.html">rws_read()</a></code> functions.</p>
 <p>The <code><a href="reference/rws_query.html">rws_query()</a></code> function allows the user to pass a SQL query. By default, the metadata (except the setting of the sf column) is, if unambiguously defined, preserved for each column in the final query. To enable this functionality the user should ensure that a) columns in tables which will be referenced in the same query should have different names or identical metadata and b) column names in the final query should match those in the referenced base tables.</p>
 <p>The init, meta and log data are stored in separate tables from the main data which means that they do not interfere with other ways of interacting with a SQLite database.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>To install the latest development version from <a href="https://github.com/poissonconsulting/readwritesqlite">GitHub</a></p>
+<pre><code><a href="https://rdrr.io/pkg/remotes/man/install_github.html">remotes::install_github("poissonconsulting/readwritesqlite")</a></code></pre>
+<p>To install the latest development version from the Poisson drat <a href="https://github.com/poissonconsulting/drat">repository</a></p>
+<pre><code><a href="https://rdrr.io/pkg/drat/man/addRepo.html">drat::addRepo("poissonconsulting")
+install.packages("readwritesqlite")</a></code></pre>
+</div>
 <div id="demonstration" class="section level2">
 <h2 class="hasAnchor">
 <a href="#demonstration" class="anchor"></a>Demonstration</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tibble)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(units)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="co">#&gt; udunits system database from /Library/Frameworks/R.framework/Versions/3.6/Resources/library/units/share/udunits</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3</span></a>
-<a class="sourceLine" id="cb1-6" title="6"></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readwritesqlite)</a>
-<a class="sourceLine" id="cb1-8" title="8"></a>
-<a class="sourceLine" id="cb1-9" title="9">conn &lt;-<span class="st"> </span><span class="kw"><a href="reference/rws_connect.html">rws_connect</a></span>()</a>
-<a class="sourceLine" id="cb1-10" title="10"></a>
-<a class="sourceLine" id="cb1-11" title="11">rws_data</a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; geometry type:  POINT</span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; dimension:      XY</span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span></a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="co">#&gt; epsg (SRID):    4326</span></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span></a>
-<a class="sourceLine" id="cb1-20" title="20"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span></a>
-<a class="sourceLine" id="cb1-21" title="21"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span></a>
-<a class="sourceLine" id="cb1-22" title="22"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span></a>
-<a class="sourceLine" id="cb1-23" title="23"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span></a>
-<a class="sourceLine" id="cb1-24" title="24"></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="kw"><a href="reference/rws_write.html">rws_write</a></span>(rws_data, <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</a>
-<a class="sourceLine" id="cb1-26" title="26"></a>
-<a class="sourceLine" id="cb1-27" title="27">DBI<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/DBI/topics/dbReadTable">dbReadTable</a></span>(conn, <span class="st">"rws_data"</span>)</a>
-<a class="sourceLine" id="cb1-28" title="28"><span class="co">#&gt;   logical  date factor ordered    posixct units   geometry</span></a>
-<a class="sourceLine" id="cb1-29" title="29"><span class="co">#&gt; 1       1 10957      x       x  978433445  10.0 blob[21 B]</span></a>
-<a class="sourceLine" id="cb1-30" title="30"><span class="co">#&gt; 2       0 11356      y       y 1152378611  11.5 blob[21 B]</span></a>
-<a class="sourceLine" id="cb1-31" title="31"><span class="co">#&gt; 3      NA    NA   &lt;NA&gt;    &lt;NA&gt;         NA    NA blob[21 B]</span></a>
-<a class="sourceLine" id="cb1-32" title="32"></a>
-<a class="sourceLine" id="cb1-33" title="33"><span class="kw"><a href="reference/rws_read_table.html">rws_read_table</a></span>(<span class="st">"rws_data"</span>, <span class="dt">conn =</span> conn)</a>
-<a class="sourceLine" id="cb1-34" title="34"><span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span></a>
-<a class="sourceLine" id="cb1-35" title="35"><span class="co">#&gt; geometry type:  POINT</span></a>
-<a class="sourceLine" id="cb1-36" title="36"><span class="co">#&gt; dimension:      XY</span></a>
-<a class="sourceLine" id="cb1-37" title="37"><span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span></a>
-<a class="sourceLine" id="cb1-38" title="38"><span class="co">#&gt; epsg (SRID):    4326</span></a>
-<a class="sourceLine" id="cb1-39" title="39"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
-<a class="sourceLine" id="cb1-40" title="40"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
-<a class="sourceLine" id="cb1-41" title="41"><span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span></a>
-<a class="sourceLine" id="cb1-42" title="42"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span></a>
-<a class="sourceLine" id="cb1-43" title="43"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span></a>
-<a class="sourceLine" id="cb1-44" title="44"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span></a>
-<a class="sourceLine" id="cb1-45" title="45"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span></a>
-<a class="sourceLine" id="cb1-46" title="46"></a>
-<a class="sourceLine" id="cb1-47" title="47"><span class="kw"><a href="reference/rws_disconnect.html">rws_disconnect</a></span>(conn)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tibble)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(units)</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; udunits system database from /Library/Frameworks/R.framework/Versions/3.6/Resources/library/units/share/udunits</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sf)</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3</span></a>
+<a class="sourceLine" id="cb3-6" title="6"></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readwritesqlite)</a>
+<a class="sourceLine" id="cb3-8" title="8"></a>
+<a class="sourceLine" id="cb3-9" title="9">conn &lt;-<span class="st"> </span><span class="kw"><a href="reference/rws_connect.html">rws_connect</a></span>()</a>
+<a class="sourceLine" id="cb3-10" title="10"></a>
+<a class="sourceLine" id="cb3-11" title="11">rws_data</a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; geometry type:  POINT</span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt; dimension:      XY</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt; epsg (SRID):    4326</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span></a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span></a>
+<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span></a>
+<a class="sourceLine" id="cb3-24" title="24"></a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="kw"><a href="reference/rws_write.html">rws_write</a></span>(rws_data, <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</a>
+<a class="sourceLine" id="cb3-26" title="26"></a>
+<a class="sourceLine" id="cb3-27" title="27">DBI<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/DBI/man/dbReadTable.html">dbReadTable</a></span>(conn, <span class="st">"rws_data"</span>)</a>
+<a class="sourceLine" id="cb3-28" title="28"><span class="co">#&gt;   logical  date factor ordered    posixct units   geometry</span></a>
+<a class="sourceLine" id="cb3-29" title="29"><span class="co">#&gt; 1       1 10957      x       x  978433445  10.0 blob[21 B]</span></a>
+<a class="sourceLine" id="cb3-30" title="30"><span class="co">#&gt; 2       0 11356      y       y 1152378611  11.5 blob[21 B]</span></a>
+<a class="sourceLine" id="cb3-31" title="31"><span class="co">#&gt; 3      NA    NA   &lt;NA&gt;    &lt;NA&gt;         NA    NA blob[21 B]</span></a>
+<a class="sourceLine" id="cb3-32" title="32"></a>
+<a class="sourceLine" id="cb3-33" title="33"><span class="kw"><a href="reference/rws_read_table.html">rws_read_table</a></span>(<span class="st">"rws_data"</span>, <span class="dt">conn =</span> conn)</a>
+<a class="sourceLine" id="cb3-34" title="34"><span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span></a>
+<a class="sourceLine" id="cb3-35" title="35"><span class="co">#&gt; geometry type:  POINT</span></a>
+<a class="sourceLine" id="cb3-36" title="36"><span class="co">#&gt; dimension:      XY</span></a>
+<a class="sourceLine" id="cb3-37" title="37"><span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span></a>
+<a class="sourceLine" id="cb3-38" title="38"><span class="co">#&gt; epsg (SRID):    4326</span></a>
+<a class="sourceLine" id="cb3-39" title="39"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
+<a class="sourceLine" id="cb3-40" title="40"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
+<a class="sourceLine" id="cb3-41" title="41"><span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span></a>
+<a class="sourceLine" id="cb3-42" title="42"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span></a>
+<a class="sourceLine" id="cb3-43" title="43"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span></a>
+<a class="sourceLine" id="cb3-44" title="44"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span></a>
+<a class="sourceLine" id="cb3-45" title="45"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span></a>
+<a class="sourceLine" id="cb3-46" title="46"></a>
+<a class="sourceLine" id="cb3-47" title="47"><span class="kw"><a href="reference/rws_disconnect.html">rws_disconnect</a></span>(conn)</a></code></pre></div>
 </div>
 <div id="information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#information" class="anchor"></a>Information</h2>
 <p>For more information on using <code>readwritesqlite</code> see the vignette <a href="https://poissonconsulting.github.io/readwritesqlite/articles/using-readwritesqlite.html">using-readwritesqlite</a>.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>To install the latest official release from <a href="https://CRAN.R-project.org/package=readwritesqlite">CRAN</a></p>
-<pre><code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("readwritesqlite")</a></code></pre>
-<p>To install the latest development version from the Poisson drat <a href="https://github.com/poissonconsulting/drat">repository</a></p>
-<pre><code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("readwritesqlite", repos = "http://poissonconsulting.github.io/drat")</a></code></pre>
-</div>
 <div id="contribution" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contribution" class="anchor"></a>Contribution</h2>
 <p>Please report any <a href="https://github.com/poissonconsulting/readwritesqlite/issues">issues</a>.</p>
 <p><a href="https://github.com/poissonconsulting/readwritesqlite/pulls">Pull requests</a> are always welcome.</p>
-<p>Please note that this project is released with a <a href="CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
+<p>Please note that this project is released with a <a href="https://poissonconsulting.github.io/readwritesqlite/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/poissonconsulting/readwritesqlite">https://​github.com/​poissonconsulting/​readwritesqlite</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/poissonconsulting/readwritesqlite/issues">https://​github.com/​poissonconsulting/​readwritesqlite/​issues</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+</ul>
+</div>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Joe Thorley <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-7683-4592" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>Joe Thorley <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-7683-4592" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 </ul>
 </div>
 
@@ -233,17 +259,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Joe Thorley.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
