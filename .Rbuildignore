@@ -12,3 +12,4 @@
 ^build\.R$
 ^\.covrignore$
 ^cran-comments\.md$
+^CRAN-RELEASE$
