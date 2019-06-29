@@ -6,11 +6,20 @@
 \alias{readwritesqlite-package}
 \title{readwritesqlite: Enhanced Reading and Writing for SQLite Databases}
 \description{
-Preserves time zones (for POSIXct columns), 
+Reads and writes data frames to SQLite databases while 
+  preserving time zones (for POSIXct columns), 
   projections (for sfc columns), units (for unit columns), 
   levels (for factors and ordered factors) and classes for 
   logical, Date and hms columns.
   It also logs changes to tables and provides more informative error messages.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/poissonconsulting/readwritesqlite}
+  \item Report bugs at \url{https://github.com/poissonconsulting/readwritesqlite/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Joe Thorley \email{joe@poissonconsulting.ca} (0000-0002-7683-4592)
