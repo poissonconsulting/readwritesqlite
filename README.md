@@ -89,17 +89,19 @@ To install the latest development version from the Poisson drat
 
 ## Demonstration
 
+Key attribute information is preserved for many classes.
+
 ``` r
-library(tibble)
-library(units)
-#> udunits system database from /Library/Frameworks/R.framework/Versions/3.6/Resources/library/units/share/udunits
+library(readwritesqlite)
+
+# for nicer printing of data frames
+library(tibble) 
 library(sf)
 #> Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3
 
-library(readwritesqlite)
-
 conn <- rws_connect()
 
+rws_data <- readwritesqlite::rws_data
 rws_data
 #> Simple feature collection with 3 features and 6 fields
 #> geometry type:  POINT
@@ -116,12 +118,6 @@ rws_data
 
 rws_write(rws_data, exists = FALSE, conn = conn)
 
-DBI::dbReadTable(conn, "rws_data")
-#>   logical  date factor ordered    posixct units   geometry
-#> 1       1 10957      x       x  978433445  10.0 blob[21 B]
-#> 2       0 11356      y       y 1152378611  11.5 blob[21 B]
-#> 3      NA    NA   <NA>    <NA>         NA    NA blob[21 B]
-
 rws_read_table("rws_data", conn = conn)
 #> Simple feature collection with 3 features and 6 fields
 #> geometry type:  POINT
@@ -135,7 +131,57 @@ rws_read_table("rws_data", conn = conn)
 #> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)
 #> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)
 #> 3 NA      NA         <NA>   <NA>    NA                     NA       (1 1)
+```
 
+The attribute information is stored in the metadata table
+
+``` r
+rws_read_meta(conn = conn)
+#> # A tibble: 7 x 4
+#>   TableMeta ColumnMeta MetaMeta                             DescriptionMeta
+#>   <chr>     <chr>      <chr>                                <chr>          
+#> 1 RWS_DATA  DATE       class: Date                          <NA>           
+#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                     <NA>           
+#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +n… <NA>           
+#> 4 RWS_DATA  LOGICAL    class: logical                       <NA>           
+#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                    <NA>           
+#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                        <NA>           
+#> 7 RWS_DATA  UNITS      units: m                             <NA>
+```
+
+The user can add descriptions if they wish.
+
+``` r
+rws_describe_meta("rws_data", "posixct", "The time of a visit", conn = conn)
+rws_describe_meta("rws_data", "units", "The site length.", conn = conn)
+rws_read_meta(conn = conn)
+#> # A tibble: 7 x 4
+#>   TableMeta ColumnMeta MetaMeta                          DescriptionMeta   
+#>   <chr>     <chr>      <chr>                             <chr>             
+#> 1 RWS_DATA  DATE       class: Date                       <NA>              
+#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                  <NA>              
+#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84… <NA>              
+#> 4 RWS_DATA  LOGICAL    class: logical                    <NA>              
+#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                 <NA>              
+#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                     The time of a vis…
+#> 7 RWS_DATA  UNITS      units: m                          The site length.
+```
+
+The log provides a record of data changes that have been made using
+readwritesqlite.
+
+``` r
+rws_read_log(conn = conn)
+#> # A tibble: 2 x 5
+#>   DateTimeUTCLog      UserLog TableLog CommandLog NRowLog
+#>   <dttm>              <chr>   <chr>    <chr>        <int>
+#> 1 2019-07-03 18:36:43 joe     RWS_DATA CREATE           0
+#> 2 2019-07-03 18:36:43 joe     RWS_DATA INSERT           3
+```
+
+Don’t forget to disconnect when done.
+
+``` r
 rws_disconnect(conn)
 ```
 

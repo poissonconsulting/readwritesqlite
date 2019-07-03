@@ -77,23 +77,43 @@ install.packages("readwritesqlite")
 
 ## Demonstration
 
+Key attribute information is preserved for many classes.
 ```{r}
-library(tibble)
-library(units)
-library(sf)
-
 library(readwritesqlite)
+
+# for nicer printing of data frames
+library(tibble) 
+library(sf)
 
 conn <- rws_connect()
 
+rws_data <- readwritesqlite::rws_data
 rws_data
 
 rws_write(rws_data, exists = FALSE, conn = conn)
 
-DBI::dbReadTable(conn, "rws_data")
-
 rws_read_table("rws_data", conn = conn)
+```
 
+The attribute information is stored in the metadata table
+```{r}
+rws_read_meta(conn = conn)
+```
+
+The user can add descriptions if they wish.
+```{r}
+rws_describe_meta("rws_data", "posixct", "The time of a visit", conn = conn)
+rws_describe_meta("rws_data", "units", "The site length.", conn = conn)
+rws_read_meta(conn = conn)
+```
+
+The log provides a record of data changes that have been made using readwritesqlite.
+```{r}
+rws_read_log(conn = conn)
+```
+
+Don't forget to disconnect when done.
+```{r}
 rws_disconnect(conn)
 ```
 
