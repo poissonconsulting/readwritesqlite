@@ -4,14 +4,12 @@
 \alias{rws_describe_meta}
 \title{Add Descriptions to SQL Meta Data Table}
 \usage{
-rws_describe_meta(x, ..., strict = TRUE, conn)
+rws_describe_meta(x, ..., conn)
 }
 \arguments{
 \item{x}{An object specifying the descriptions.}
 
 \item{...}{Not used.}
-
-\item{strict}{A flag specifying whether to error if x has extraneous columns or if exists = TRUE extraneous data frames.}
 
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 }

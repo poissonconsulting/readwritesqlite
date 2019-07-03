@@ -4,8 +4,7 @@
 \alias{rws_describe_meta.character}
 \title{Add Descriptions to SQL Meta Data Table}
 \usage{
-\method{rws_describe_meta}{character}(x, column, description, ...,
-  paste0 = FALSE, strict = TRUE, conn)
+\method{rws_describe_meta}{character}(x, column, description, ..., conn)
 }
 \arguments{
 \item{x}{A character vector of table name(s).}
@@ -15,11 +14,6 @@
 \item{description}{A character vector of the description(s)}
 
 \item{...}{Not used.}
-
-\item{paste0}{A flag specifying whether to replace existing descriptions (FALSE)
-or append using paste0 to existing descriptions (TRUE).}
-
-\item{strict}{A flag specifying whether to error if tables and/or columns do not exist (or ignore).}
 
 \item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
 }
