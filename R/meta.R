@@ -58,9 +58,11 @@ confirm_meta_table <- function(conn) {
 #' @aliases rws_read_sqlite_meta
 #' @export
 #' @examples
-#' conn <- DBI::dbConnect(RSQLite::SQLite())
+#' conn <- rws_connect()
 #' rws_read_meta(conn)
-#' DBI::dbDisconnect(conn)
+#' rws_write(rws_data, exists = FALSE, conn = conn)
+#' rws_read_meta(conn)
+#' rws_disconnect(conn)
 rws_read_meta <- function(conn) {
   confirm_meta_table(conn)
   data <- read_data(.meta_table_name, meta = FALSE, conn = conn)

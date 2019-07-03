@@ -29,6 +29,15 @@ An invisible copy of the updated meta table.
 \description{
 Add Descriptions to SQL Meta Data Table
 }
+\examples{
+conn <- rws_connect()
+rws_write(rws_data, exists = FALSE, conn = conn)
+rws_read_meta(conn)
+rws_describe_meta("rws_data", "Units", "The site length.", conn = conn)
+rws_describe_meta("rws_data", "POSIXct", "Time of the visit", conn =conn)
+rws_read_meta(conn)
+rws_disconnect(conn)
+}
 \seealso{
 Other rws_describe_meta: \code{\link{rws_describe_meta}}
 }

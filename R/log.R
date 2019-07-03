@@ -44,9 +44,11 @@ log_command <- function(table_name, command, nrow, conn) {
 #' @aliases rws_read_sqlite_log
 #' @export
 #' @examples
-#' conn <- DBI::dbConnect(RSQLite::SQLite())
+#' conn <- rws_connect()
 #' rws_read_log(conn)
-#' DBI::dbDisconnect(conn)
+#' rws_write(rws_data, exists = FALSE, conn = conn)
+#' rws_read_log(conn)
+#' rws_disconnect(conn)
 rws_read_log <- function(conn) {
   confirm_log_table(conn)
   data <- read_data(.log_table_name, meta = FALSE, conn = conn)

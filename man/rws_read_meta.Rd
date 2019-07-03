@@ -17,7 +17,9 @@ A data frame of the meta table
 The table is created if it doesn't exist.
 }
 \examples{
-conn <- DBI::dbConnect(RSQLite::SQLite())
+conn <- rws_connect()
 rws_read_meta(conn)
-DBI::dbDisconnect(conn)
+rws_write(rws_data, exists = FALSE, conn = conn)
+rws_read_meta(conn)
+rws_disconnect(conn)
 }

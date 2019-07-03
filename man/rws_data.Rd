@@ -11,4 +11,7 @@ rws_data
 \description{
 An sf tibble of example data.
 }
+\examples{
+rws_data
+}
 \keyword{datasets}

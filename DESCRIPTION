@@ -1,14 +1,14 @@
 Package: readwritesqlite
-Title: Enhanced Reading and Writing for SQLite Databases
+Title: Enhanced Reading and Writing for 'SQLite' Databases
 Version: 0.0.1
 Authors@R: 
     person("Joe", "Thorley", role = c("aut", "cre"), email = "joe@poissonconsulting.ca", comment = c(ORCID = "0000-0002-7683-4592"))
 Description: 
-  Reads and writes data frames to SQLite databases while 
+  Reads and writes data frames to 'SQLite' databases while 
   preserving time zones (for POSIXct columns), 
-  projections (for sfc columns), units (for unit columns), 
+  projections (for 'sfc' columns), units (for 'units' columns), 
   levels (for factors and ordered factors) and classes for 
-  logical, Date and hms columns.
+  logical, Date and 'hms' columns.
   It also logs changes to tables and provides more informative error messages.
 License: MIT + file LICENSE
 Depends: R (>= 3.4)

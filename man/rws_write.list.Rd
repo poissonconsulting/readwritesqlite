@@ -44,6 +44,13 @@ inserting data. If \code{meta = TRUE} the meta data is deleted.}
 \description{
 Write a Named List of Data Frames to a SQLite Database
 }
+\examples{
+conn <- rws_connect()
+rws_list_tables(conn)
+rws_write(list(somedata = rws_data, anothertable = rws_data), exists = FALSE, conn = conn)
+rws_list_tables(conn)
+rws_disconnect(conn)
+}
 \seealso{
 Other rws_write: \code{\link{rws_write.data.frame}},
   \code{\link{rws_write.environment}},

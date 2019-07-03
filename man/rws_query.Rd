@@ -20,3 +20,9 @@ A data frame of the query.
 \description{
 Gets a query from a SQLite database.
 }
+\examples{
+conn <- rws_connect()
+rws_write(rws_data, exists = FALSE, conn = conn)
+rws_query("SELECT date, posixct, factor FROM rws_data", conn = conn)
+rws_disconnect(conn)
+}

@@ -15,3 +15,11 @@ will be cloned.}
 \description{
 Closes a \code{\linkS4class{SQLiteConnection}} to a SQLite database.
 }
+\examples{
+conn <- rws_connect()
+rws_disconnect(conn)
+print(conn)
+}
+\seealso{
+\code{\link{rws_connect}()}
+}

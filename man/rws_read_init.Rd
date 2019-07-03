@@ -17,7 +17,9 @@ A data frame of the init table
 The table is created if it doesn't exist.
 }
 \examples{
-conn <- DBI::dbConnect(RSQLite::SQLite())
+conn <- rws_connect()
 rws_read_init(conn)
-DBI::dbDisconnect(conn)
+rws_write(rws_data, exists = FALSE, conn = conn)
+rws_read_init(conn)
+rws_disconnect(conn)
 }

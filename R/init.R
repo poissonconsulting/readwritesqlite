@@ -70,9 +70,11 @@ confirm_init_table <- function(conn) {
 #' @aliases rws_read_sqlite_init
 #' @export
 #' @examples
-#' conn <- DBI::dbConnect(RSQLite::SQLite())
+#' conn <- rws_connect()
 #' rws_read_init(conn)
-#' DBI::dbDisconnect(conn)
+#' rws_write(rws_data, exists = FALSE, conn = conn)
+#' rws_read_init(conn)
+#' rws_disconnect(conn)
 rws_read_init <- function(conn) {
   confirm_init_table(conn)
   data <- read_data(.init_table_name, meta = FALSE, conn = conn)

@@ -23,6 +23,15 @@ rws_describe_meta <- function(x, ..., strict = TRUE, conn) {
 #' @return An invisible copy of the updated meta table.
 #' @family rws_describe_meta
 #' @export
+#' 
+#' @examples 
+#' conn <- rws_connect()
+#' rws_write(rws_data, exists = FALSE, conn = conn)
+#' rws_read_meta(conn)
+#' rws_describe_meta("rws_data", "Units", "The site length.", conn = conn)
+#' rws_describe_meta("rws_data", "POSIXct", "Time of the visit", conn =conn)
+#' rws_read_meta(conn)
+#' rws_disconnect(conn)
 rws_describe_meta.character <- function(x, column, description, ..., paste0 = FALSE, strict = TRUE, conn) {
   check_vector(x, "")
   check_vector(column, "")

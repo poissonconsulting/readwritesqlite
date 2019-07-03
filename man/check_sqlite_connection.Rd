@@ -23,9 +23,9 @@ An invisible copy of the original object.
 Checks whether an R object is a SQLite Connection.
 }
 \examples{
-con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-check_sqlite_connection(con)
-DBI::dbDisconnect(con)
-check_sqlite_connection(con, error = FALSE)
-check_sqlite_connection(con, connected = TRUE, error = FALSE)
+conn <- rws_connect()
+check_sqlite_connection(conn)
+rws_disconnect(conn)
+check_sqlite_connection(conn, error = FALSE)
+check_sqlite_connection(conn, connected = TRUE, error = FALSE)
 }

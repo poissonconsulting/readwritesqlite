@@ -22,6 +22,14 @@ rws_read <- function(x, ...) {
 #' @return A named list of the data frames.
 #' @family rws_read
 #' @export
+#' 
+#' @examples
+#' conn <- rws_connect()
+#' rws_write(rws_data, exists = FALSE, conn = conn)
+#' rws_write(rws_data[c("date", "ordered")], x_name = "data2", 
+#'   exists = FALSE, conn = conn)
+#' rws_read(c("rws_data", "data2"), conn = conn)
+#' rws_disconnect(conn)
 rws_read.character <- function(x, meta = TRUE, conn,
                                       ...) {
   check_sqlite_connection(conn, connected = TRUE)
@@ -40,6 +48,14 @@ rws_read.character <- function(x, meta = TRUE, conn,
 #' @return A named list of the data frames.
 #' @family rws_read
 #' @export
+#' 
+#' @examples
+#' conn <- rws_connect()
+#' rws_write(rws_data, exists = FALSE, conn = conn)
+#' rws_write(rws_data[c("date", "ordered")], 
+#'   x_name = "data2", exists = FALSE, conn = conn)
+#' rws_read(conn)
+#' rws_disconnect(conn)
 rws_read.SQLiteConnection <- function(x, meta = TRUE, ...) {
   check_sqlite_connection(x, connected = TRUE)
   check_unused(...)
@@ -56,6 +72,15 @@ rws_read.SQLiteConnection <- function(x, meta = TRUE, ...) {
 #' @return A data frame of the table.
 #' @aliases rws_read_sqlite_table
 #' @export
+#' 
+#' @examples
+#' conn <- rws_connect()
+#' rws_write(rws_data, exists = FALSE, conn = conn)
+#' rws_write(rws_data[c("date", "ordered")], 
+#'   x_name = "data2", exists = FALSE, conn = conn)
+#' rws_read_table("data2", conn = conn)
+#' rws_disconnect(conn)
 rws_read_table <- function(x, meta = TRUE, conn) {
+  check_string(x)
   rws_read(x, meta = meta, conn = conn)[[1]]
 }

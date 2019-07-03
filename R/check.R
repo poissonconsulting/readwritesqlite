@@ -8,11 +8,11 @@
 #' @export
 #'
 #' @examples
-#' con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-#' check_sqlite_connection(con)
-#' DBI::dbDisconnect(con)
-#' check_sqlite_connection(con, error = FALSE)
-#' check_sqlite_connection(con, connected = TRUE, error = FALSE)
+#' conn <- rws_connect()
+#' check_sqlite_connection(conn)
+#' rws_disconnect(conn)
+#' check_sqlite_connection(conn, error = FALSE)
+#' check_sqlite_connection(conn, connected = TRUE, error = FALSE)
 check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), error = TRUE) {
   x_name <- chk_deparse(x_name)
   check_scalar(connected, values = c(TRUE, NA))

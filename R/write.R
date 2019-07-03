@@ -34,6 +34,11 @@ write_sqlite_data <- function(data, table_name, exists, delete, replace, meta, l
 #' @aliases rws_write_sqlite
 #' @family rws_write
 #' @export
+#' 
+#' @examples
+#' conn <- rws_connect()
+#' rws_write(rws_data, exists = FALSE, conn = conn)
+#' rws_disconnect(conn)
 rws_write <- function(x, exists = TRUE, delete = FALSE, 
                              replace = FALSE,
                              meta = TRUE,
@@ -53,6 +58,14 @@ rws_write <- function(x, exists = TRUE, delete = FALSE,
 #' @inheritParams rws_write
 #' @family rws_write
 #' @export
+#' 
+#' @examples
+#' conn <- rws_connect()
+#' rws_list_tables(conn)
+#' rws_write(rws_data, exists = FALSE, conn = conn)
+#' rws_write(rws_data, x_name = "moredata", exists = FALSE, conn = conn)
+#' rws_list_tables(conn)
+#' rws_disconnect(conn)
 rws_write.data.frame <- function(
   x, exists = TRUE, delete = FALSE, replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
   x_name = substitute(x), silent = getOption("rws.silent", FALSE), 
@@ -100,6 +113,13 @@ rws_write.data.frame <- function(
 #' @param unique A flag specifying whether each table must represented by no more than one data frame.
 #' @family rws_write
 #' @export
+#' 
+#' @examples
+#' conn <- rws_connect()
+#' rws_list_tables(conn)
+#' rws_write(list(somedata = rws_data, anothertable = rws_data), exists = FALSE, conn = conn)
+#' rws_list_tables(conn)
+#' rws_disconnect(conn)
 rws_write.list <- function(x,
                                   exists = TRUE,
                                   delete = FALSE, 
@@ -180,6 +200,16 @@ rws_write.list <- function(x,
 #' @param x An environment.
 #' @family rws_write
 #' @export
+#' 
+#' @examples 
+#' conn <- rws_connect()
+#' rws_list_tables(conn)
+#' atable <- readwritesqlite::rws_data
+#' another_table <- readwritesqlite::rws_data
+#' not_atable <- 1L
+#' rws_write(environment(), exists = FALSE, conn = conn)
+#' rws_list_tables(conn)
+#' rws_disconnect(conn)
 rws_write.environment <- function(x,
                                          exists = TRUE,
                                          delete = FALSE, 

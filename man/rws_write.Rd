@@ -43,6 +43,11 @@ An invisible character vector of the name(s) of the table(s).
 \description{
 Write to a SQLite Database
 }
+\examples{
+conn <- rws_connect()
+rws_write(rws_data, exists = FALSE, conn = conn)
+rws_disconnect(conn)
+}
 \seealso{
 Other rws_write: \code{\link{rws_write.data.frame}},
   \code{\link{rws_write.environment}},

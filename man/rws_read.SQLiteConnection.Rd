@@ -19,6 +19,14 @@ A named list of the data frames.
 \description{
 Read All Tables from a SQLite Database
 }
+\examples{
+conn <- rws_connect()
+rws_write(rws_data, exists = FALSE, conn = conn)
+rws_write(rws_data[c("date", "ordered")], 
+  x_name = "data2", exists = FALSE, conn = conn)
+rws_read(conn)
+rws_disconnect(conn)
+}
 \seealso{
 Other rws_read: \code{\link{rws_describe_meta.data.frame}},
   \code{\link{rws_read.character}}, \code{\link{rws_read}}

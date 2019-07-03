@@ -30,3 +30,11 @@ foreign key constraints enabled.
 Opens a \code{\linkS4class{SQLiteConnection}} to a SQLite database with
 foreign key constraints enabled.
 }
+\examples{
+conn <- rws_connect()
+print(conn)
+rws_disconnect(conn)
+}
+\seealso{
+\code{\link{rws_disconnect}()}
+}

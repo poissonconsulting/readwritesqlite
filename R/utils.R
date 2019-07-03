@@ -6,6 +6,13 @@
 #'
 #' @return A character vector of table names.
 #' @export
+#' 
+#' @examples
+#' conn <- rws_connect()
+#' rws_list_tables(conn)
+#' rws_write(rws_data, exists = FALSE, conn = conn)
+#' rws_list_tables(conn)
+#' rws_disconnect(conn)
 rws_list_tables <- function(conn) {
   check_sqlite_connection(conn, connected = TRUE)
   tables <- DBI::dbListTables(conn)
