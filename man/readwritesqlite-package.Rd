@@ -24,5 +24,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Joe Thorley \email{joe@poissonconsulting.ca} (0000-0002-7683-4592)
 
+Other contributors:
+\itemize{
+  \item Poisson Consulting [copyright holder, funder]
+}
+
 }
 \keyword{internal}

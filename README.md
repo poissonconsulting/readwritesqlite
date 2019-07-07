@@ -175,8 +175,8 @@ rws_read_log(conn = conn)
 #> # A tibble: 2 x 5
 #>   DateTimeUTCLog      UserLog TableLog CommandLog NRowLog
 #>   <dttm>              <chr>   <chr>    <chr>        <int>
-#> 1 2019-07-03 18:36:43 joe     RWS_DATA CREATE           0
-#> 2 2019-07-03 18:36:43 joe     RWS_DATA INSERT           3
+#> 1 2019-07-07 15:20:59 joe     RWS_DATA CREATE           0
+#> 2 2019-07-07 15:20:59 joe     RWS_DATA INSERT           3
 ```
 
 Don’t forget to disconnect when done.
@@ -201,4 +201,4 @@ are always welcome.
 
 Please note that this project is released with a [Contributor Code of
 Conduct](https://poissonconsulting.github.io/readwritesqlite/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms.
+By contributing to this project, you agree to abide by its terms

@@ -13,6 +13,11 @@
 
 ## Previous Submission 
 
+Please add all authors and copyright holders in the Authors@R field with the appropriate roles.
+f.i. "Poisson Consulting"
+
+* Done
+
 Thanks, please write package names, software names and API names in single quotes (e.g. 'SQLite') in Title and Description.
 
 * Done
