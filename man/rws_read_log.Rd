@@ -20,6 +20,8 @@ The table is created if it doesn't exist.
 conn <- rws_connect()
 rws_read_log(conn)
 rws_write(rws_data, exists = FALSE, conn = conn)
+\dontrun{
 rws_read_log(conn)
+}
 rws_disconnect(conn)
 }

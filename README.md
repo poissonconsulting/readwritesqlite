@@ -175,8 +175,8 @@ rws_read_log(conn = conn)
 #> # A tibble: 2 x 5
 #>   DateTimeUTCLog      UserLog TableLog CommandLog NRowLog
 #>   <dttm>              <chr>   <chr>    <chr>        <int>
-#> 1 2019-07-07 15:20:59 joe     RWS_DATA CREATE           0
-#> 2 2019-07-07 15:20:59 joe     RWS_DATA INSERT           3
+#> 1 2019-07-07 16:05:10 joe     RWS_DATA CREATE           0
+#> 2 2019-07-07 16:05:11 joe     RWS_DATA INSERT           3
 ```
 
 Don’t forget to disconnect when done.
