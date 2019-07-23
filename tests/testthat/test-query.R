@@ -42,7 +42,7 @@ test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
                       factor = factor("fac"),
                       ordered = ordered("ordered"))
   
-  local$hms <- as.hms(local$hms, tz = "Etc/GMT+8")
+  local$hms <- hms::as_hms(local$hms)
 
   expect_identical(rws_write(local, exists = FALSE, conn = conn), "local")
   remote <- rws_query("SELECT * FROM local", conn = conn)

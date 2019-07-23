@@ -53,7 +53,7 @@ test_that("meta handles all classes", {
                       units = units::as_units(10, "m"),
                       hms = as.POSIXct("2001-01-02 03:04:05", tz = "Etc/GMT+8"))
   
-  local$hms <- as.hms(local$hms, tz = "Etc/GMT+8")
+  local$hms <- hms::as_hms(local$hms)
   
   expect_identical(rws_write(local, exists = FALSE, conn = conn), "local")
   meta <- rws_read_meta(conn)
@@ -150,7 +150,7 @@ test_that("meta reads all classes", {
                       factor = factor("fac"),
                       ordered = ordered("ordered"))
   
-  local$hms <- as.hms(local$hms, tz = "Etc/GMT+8")
+  local$hms <- hms::as_hms(local$hms)
 
   expect_identical(rws_write(local, exists = FALSE, conn = conn), "local")
   expect_identical(readwritesqlite:::table_schema("local", conn),
@@ -175,7 +175,7 @@ test_that("meta = FALSE same as just writing", {
                       factor = factor("fac"),
                       ordered = ordered("ordered"))
   
-  local$hms <- as.hms(local$hms, tz = "Etc/GMT+8")
+  local$hms <- hms::as_hms(local$hms)
 
   
   expect_identical(rws_write(local, meta = FALSE, exists = FALSE, conn = conn), "local")
@@ -303,7 +303,7 @@ test_that("meta hms different types", {
   z <- as.POSIXct(c(
     "2001-01-02 03:04:05", "2007-08-09 10:11:12", NA), tz = "Etc/GMT+8")
 
-  z <- as.hms(z, tz = "Etc/GMT+8")
+  z <- hms::as_hms(z)
   
   local <- data.frame(
     zinteger = z,
@@ -341,7 +341,7 @@ test_that("meta hms preserves decimal", {
     "2001-01-02 03:04:05", "2007-08-09 10:11:12", NA), tz = "Etc/GMT+8")
 
   z[1] <- z[1] + 0.5
-  z <- as.hms(z, tz = "Etc/GMT+8")
+  z <- hms::as_hms(z)
   
   local <- data.frame(
     zinteger = z,
