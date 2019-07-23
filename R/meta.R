@@ -72,7 +72,7 @@ rws_read_meta <- function(conn) {
 data_column_meta <- function(column) {
   if (is.logical(column)) return("class: logical")
   if (is.Date(column)) return("class: Date")
-  if (is.hms(column)) return("class: hms")
+  if (is_hms(column)) return("class: hms")
   if (is.POSIXct(column)) return(p("tz:", dttr2::dtt_tz(column)))
   if (is.sfc(column)) return(p("proj:", sf::st_crs(column)$proj4string))
   if (is.units(column)) return(p("units:", units::deparse_unit(column)))
