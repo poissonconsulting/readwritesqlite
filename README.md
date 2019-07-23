@@ -14,6 +14,7 @@ status](https://codecov.io/gh/poissonconsulting/readwritesqlite/branch/master/gr
 MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/readwritesqlite)](https://cran.r-project.org/package=readwritesqlite)
+![CRAN Downloads](http://cranlogs.r-pkg.org/badges/readwritesqlite)
 <!-- badges: end -->
 
 # readwritesqlite

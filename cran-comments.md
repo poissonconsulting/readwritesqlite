@@ -7,21 +7,8 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 note
 
-* This is a new release.
+This is a new release that fixes test errors associated with the upcoming release of RSQLite.
 
-## Previous Submission 
-
-Please add all authors and copyright holders in the Authors@R field with the appropriate roles.
-f.i. "Poisson Consulting"
-
-* Done
-
-Thanks, please write package names, software names and API names in single quotes (e.g. 'SQLite') in Title and Description.
-
-* Done
-
-Please add more small examples for the package users in your Rd-files:
-
-* Done
+https://github.com/poissonconsulting/readwritesqlite/issues/9
