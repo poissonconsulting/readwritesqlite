@@ -43,17 +43,14 @@ test_that("``quoted table names case sensitive in RSQLite", {
   expect_true(DBI::dbCreateTable(conn, "`loCal`", local))
   expect_identical(DBI::dbListTables(conn), "`loCal`")
 
-  # this is weird as says not exists!!
-  expect_false(DBI::dbExistsTable(conn, "`loCal`"))
-  # but creation fails with error already exists
-  expect_error(DBI::dbCreateTable(conn, "`loCal`", local),
-               "table ```loCal``` already exists")
-
   expect_false(DBI::dbExistsTable(conn, "``loCal``"))
   expect_false(DBI::dbExistsTable(conn, "loCal"))
   expect_false(DBI::dbExistsTable(conn, "[loCal]"))
   expect_false(DBI::dbExistsTable(conn, "\"loCal\""))
   expect_false(DBI::dbExistsTable(conn, '"loCal"'))
+  
+  skip_if_not_installed("RSQLite", "2.1.1.9003")
+  expect_true(DBI::dbExistsTable(conn, "`loCal`"))
 })
 
 test_that("[] quoted table names case sensitive in RSQLite", {
