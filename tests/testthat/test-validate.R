@@ -17,7 +17,7 @@ test_that("rws_write.data.frame checks missing values", {
 
   local <- data.frame(x2 = c(1:3, NA), select2 = 1:4)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   x2 INTEGER NOT NULL,
                   select2 REAL NOT NULL
               )")
@@ -34,7 +34,7 @@ test_that("rws_write.data.frame checks primary key on input values", {
 
   local <- data.frame(x2 = c(1,1,2), select2 = c(3,3,3))
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   x2 INTEGER,
                   select2 INTEGER,
               PRIMARY KEY (x2, select2))")

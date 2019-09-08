@@ -336,7 +336,7 @@ test_that("replace rows PRIMARY KEY constraints", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   x INTEGER PRIMARY KEY NOT NULL,
                   y INTEGER)")
 
@@ -368,7 +368,7 @@ test_that("replace rows UNIQUE constraints in unique key", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   x INTEGER UNIQUE NOT NULL,
                   y INTEGER)")
 
@@ -400,10 +400,10 @@ test_that("replace rows with FOREIGN key", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   x INTEGER PRIMARY KEY NOT NULL)")
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(conn, "CREATE TABLE local2 (
                   x INTEGER NOT NULL PRIMARY KEY,
                   y INTEGER NOT NULL,
                 FOREIGN KEY (x) REFERENCES local (x))")
@@ -423,10 +423,10 @@ test_that("foreign keys switched on one data frame at a time", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   x INTEGER PRIMARY KEY NOT NULL)")
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(conn, "CREATE TABLE local2 (
                   x INTEGER NOT NULL,
                 FOREIGN KEY (x) REFERENCES local (x))")
   
@@ -443,10 +443,10 @@ test_that("foreign keys switched off for two data frame", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   x INTEGER PRIMARY KEY NOT NULL)")
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(conn, "CREATE TABLE local2 (
                   x INTEGER NOT NULL,
                 FOREIGN KEY (x) REFERENCES local (x))")
   
@@ -460,10 +460,10 @@ test_that("foreign keys pick up foreign key violation for two data frames", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   x INTEGER PRIMARY KEY NOT NULL)")
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(conn, "CREATE TABLE local2 (
                   x INTEGER NOT NULL,
                 FOREIGN KEY (x) REFERENCES local (x))")
   

@@ -66,7 +66,7 @@ test_that("log replace rows UNIQUE constraints", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   x INTEGER UNIQUE NOT NULL,
                   y INTEGER)")
 

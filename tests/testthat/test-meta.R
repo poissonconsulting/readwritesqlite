@@ -209,7 +209,7 @@ test_that("meta logical logical different types", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -241,7 +241,7 @@ test_that("meta Date different types", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -275,7 +275,7 @@ test_that("meta POSIXct different types", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -312,7 +312,7 @@ test_that("meta hms different types", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -350,7 +350,7 @@ test_that("meta hms preserves decimal", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -384,7 +384,7 @@ test_that("meta units different types", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -422,7 +422,7 @@ test_that("meta sfc different types", {
   
   colnames(local) <- c("zinteger", "zreal", "znumeric", "ztext", "zblob")
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -452,7 +452,7 @@ test_that("meta factor different types", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -485,7 +485,7 @@ test_that("meta factor 11 level", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -511,7 +511,7 @@ test_that("meta ordered different types", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -543,7 +543,7 @@ test_that("meta factor without meta then meta errors", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -581,7 +581,7 @@ test_that("meta factor rearrange levels", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -618,7 +618,7 @@ test_that("meta factor add levels", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
@@ -656,7 +656,7 @@ test_that("meta ordered add and rearrange levels", {
     ztext = z,
     zblob = z)
   
-  DBI::dbGetQuery(conn, "CREATE TABLE local (
+  DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
