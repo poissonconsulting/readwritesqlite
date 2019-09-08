@@ -21,13 +21,13 @@ Imports:
     DBI,
     RSQLite,
     sf,
-    tibble,
     units
 Suggests: 
     covr,
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    tibble
 Remotes:
     poissonconsulting/chk
 URL: https://github.com/poissonconsulting/readwritesqlite

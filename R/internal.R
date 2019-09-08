@@ -36,7 +36,7 @@ set_class <- function(x, value) {
 
 as_tibble_sf <- function(x) {
   sf_column_name <- sf_column_name(x)
-  x <- tibble::as_tibble(x)
+  class(x) <- c("tbl_df", "tbl", "data.frame")
   if(!is.na(sf_column_name)) {
     x <- sf::st_sf(x, sf_column_name = sf_column_name, 
                    stringsAsFactors = FALSE)
