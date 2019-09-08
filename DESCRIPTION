@@ -15,7 +15,6 @@ Description:
 License: MIT + file LICENSE
 Depends: R (>= 3.4)
 Imports: 
-    err,
     checkr,
     chk,
     dttr2,

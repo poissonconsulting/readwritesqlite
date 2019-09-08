@@ -17,7 +17,7 @@ check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), e
   x_name <- chk_deparse(x_name)
   check_scalar(connected, values = c(TRUE, NA))
   chk_flag(error)
-  check_inherits(x, "SQLiteConnection", x_name = x_name)
+  chk_is(x, "SQLiteConnection", x_name = x_name)
   if(isTRUE(connected) && !dbIsValid(x)) {
     chk_fail(x_name, " must be connected", error = error)
   } else if(isFALSE(connected) && dbIsValid(x))
@@ -59,17 +59,16 @@ check_table_names <- function(table_names, exists, delete, all, unique, conn) {
       delete <- if(delete) "delete = TRUE" else NULL
       
       but <- p0(c(unique, exists, delete), collapse = " and ")
-      
-      err(co(table_names, one = p0(but, " but the following table name%s %r duplicated: %c"),
-               conjunction = "and"))
+      err(but, " but the following table names are duplicated: ", 
+          cc(table_names, " and "))
     }
   }
   if(all && !isFALSE(exists)) {
     missing <- 
       setdiff(to_upper(rws_list_tables(conn)), to_upper(table_names))
     if(length(missing)) {
-      err(co(missing, "all = TRUE and exists != FALSE but the following table name%s %r not represented: %c",
-             conjunction = "and"))
+      err("all = TRUE and exists != FALSE but the following table names are not represented: ", 
+          cc(missing, " and "))
     }
   }
   table_names

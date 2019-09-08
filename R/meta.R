@@ -76,8 +76,8 @@ data_column_meta <- function(column) {
   if (is.POSIXct(column)) return(p("tz:", dttr2::dtt_tz(column)))
   if (is.sfc(column)) return(p("proj:", sf::st_crs(column)$proj4string))
   if (is.units(column)) return(p("units:", units::deparse_unit(column)))
-  if (is.ordered(column)) return(p("ordered:", err::cc(levels(column), ellipsis = .Machine$integer.max)))
-  if (is.factor(column)) return(p("factor:", err::cc(levels(column), ellipsis = .Machine$integer.max)))
+  if (is.ordered(column)) return(p("ordered:", cc(levels(column), ellipsis = .Machine$integer.max)))
+  if (is.factor(column)) return(p("factor:", cc(levels(column), ellipsis = .Machine$integer.max)))
   NA_character_
 }
 

@@ -12,8 +12,8 @@ validate_data <- function(data, table_name, strict, silent, conn) {
   if(isFALSE(silent)) {
     extra <- data_names[!names(data_names) %in% colnames]
     if(length(extra)) {
-      msg <- co(extra, p0("the following column%s in data '", 
-                          table_name, "' %r unrecognised: %c")) 
+      msg <- p0("the following columns in data '", 
+                          table_name, "' are unrecognised: ", cc(extra, " and ")) 
       if(strict) err(msg)
       if(!silent) wrn(msg)
     }
@@ -28,9 +28,8 @@ validate_data <- function(data, table_name, strict, silent, conn) {
   table_info$is_na <- vapply(data, any_is_na, TRUE)
   invalid_nas <- table_info$name[table_info$notnull & table_info$is_na]
   if(length(invalid_nas)) {
-    err(co(invalid_nas, 
-           p0("there are unpermitted missing values in the following ",
-           "column%s in data '", table_name, "': %c"), conjunction = "and"))
+    err("there are unpermitted missing values in the following ",
+           "columns in data '", table_name, "': ", cc(invalid_nas, " and "))
   }
   
   pk <- table_info$name[table_info$pk != 0L]

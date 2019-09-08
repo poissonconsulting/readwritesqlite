@@ -23,7 +23,7 @@ test_that("rws_write.data.frame checks missing values", {
               )")
   
   expect_error(rws_write(local, conn = conn),
-               "there are unpermitted missing values in the following column in data 'local': 'X2'")
+               "there are unpermitted missing values in the following columns in data 'local': 'X2'")
   local <- na.omit(local)
   expect_identical(rws_write(local, conn = conn), "local")
 })

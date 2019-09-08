@@ -70,7 +70,7 @@ rws_write.data.frame <- function(
   x, exists = TRUE, delete = FALSE, replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
   x_name = substitute(x), silent = getOption("rws.silent", FALSE), 
   conn, ...) {
-  check_scalar(exists, c(TRUE, NA))
+  chk_lgl(exists)
   chk_flag(delete)
   chk_flag(replace)
   chk_flag(meta)
@@ -133,8 +133,8 @@ rws_write.list <- function(x,
                                   conn, 
                                   all = TRUE, 
                                   unique = TRUE, ...) {
-  check_named(x)
-  check_scalar(exists, c(TRUE, NA))
+  chk_named(x)
+  chk_lgl(exists)
   chk_flag(delete)
   chk_flag(replace)
   chk_flag(meta)
@@ -158,8 +158,8 @@ rws_write.list <- function(x,
     exists2 <- tables_exists(names(x), conn)
     if(any(!exists2)) {
       extra <- names(x)[!exists2]
-      msg <- co(extra, p0("exists = TRUE but the following data frame%s in '", 
-                          x_name, "' %r unrecognised: %c"), conjunction = "and")
+      msg <- p0("exists = TRUE but the following data frames in '", 
+                          x_name, "' are unrecognised: ", cc(extra, " and "))
       if(strict) err(msg)
       if(!silent) wrn(msg)
     }

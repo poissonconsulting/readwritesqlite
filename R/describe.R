@@ -30,9 +30,9 @@ rws_describe_meta <- function(x, ..., conn) {
 #' rws_read_meta(conn)
 #' rws_disconnect(conn)
 rws_describe_meta.character <- function(x, column, description, ..., conn) {
-  check_vector(x, "")
-  check_vector(column, "")
-  check_vector(description, c("", NA))
+  chk_is(x, "character")
+  chk_is(column, "character"); chk_no_missing(column)
+  chk_is(description, "character")
   check_sqlite_connection(conn, connected = TRUE)
   chk_unused(...)
   
