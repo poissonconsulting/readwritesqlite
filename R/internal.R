@@ -1,3 +1,15 @@
+is.Date <- function(x) inherits(x, "Date")
+
+is.POSIXct <- function(x) inherits(x, "POSIXct")
+
+tz <- function (x) {
+  tz <- attr(x, "tzone")
+  if (is.null(tz) || identical(tz, "")) 
+    return(Sys.timezone())
+  tz
+}
+
+
 sys_date_time_utc <- function() {
   date_time <- Sys.time()
   attr(date_time, "tzone") <- "UTC"
@@ -15,11 +27,11 @@ set_class <- function(x, value) {
 
 as_tibble_sf <- function(x) {
   sf_column_name <- sf_column_name(x)
-    x <- tibble::as_tibble(x)
-    if(!is.na(sf_column_name)) {
-      x <- sf::st_sf(x, sf_column_name = sf_column_name, 
-                     stringsAsFactors = FALSE)
-    }
+  x <- tibble::as_tibble(x)
+  if(!is.na(sf_column_name)) {
+    x <- sf::st_sf(x, sf_column_name = sf_column_name, 
+                   stringsAsFactors = FALSE)
+  }
   x
 }
 
