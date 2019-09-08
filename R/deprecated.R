@@ -60,3 +60,20 @@ rws_read_sqlite_table <- function(x, meta = TRUE, conn) {
   .Deprecated("rws_read_table")
   rws_read_table(x, meta = meta, conn = conn)
 }
+
+#' @describeIn chk_sqlite_conn Check SQLite Connection
+#'
+#' @export
+check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), error = TRUE) {
+  .Deprecated("chk_sqlite_conn")
+
+  x_name <- chk_deparse(x_name)
+  chk_lgl(connected)
+  chk_flag(error)
+  chk_is(x, "SQLiteConnection", x_name = x_name)
+  if(isTRUE(connected) && !dbIsValid(x)) {
+    chk_fail(x_name, " must be connected", error = error)
+  } else if(isFALSE(connected) && dbIsValid(x))
+    chk_fail(x_name, " must be disconnected", error = error)
+  invisible(x)
+}

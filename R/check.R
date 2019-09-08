@@ -2,27 +2,27 @@
 #' 
 #' Checks whether an R object is a SQLite Connection.
 #'
-#' @inheritParams checkr::check_vector
-#' @param connected A flag specifying whether x should be connected.
-#' @return An invisible copy of the original object.
+#' @inheritParams chk::chk_flag
+#' @param connected A logical scalar specifying whether x should be connected.
+#' @param error A flag indicating whether to throw an informative error 
+#' or immediately generate an informative message if the check fails.
+#' @return TRUE if passes check. Otherwise if throws an informative error unless
+#' \code{err = FALSE} in which case it returns FALSE.
 #' @export
 #'
 #' @examples
 #' conn <- rws_connect()
-#' check_sqlite_connection(conn)
+#' chk_sqlite_conn(conn)
 #' rws_disconnect(conn)
-#' check_sqlite_connection(conn, error = FALSE)
-#' check_sqlite_connection(conn, connected = TRUE, error = FALSE)
-check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), error = TRUE) {
-  x_name <- chk_deparse(x_name)
-  check_scalar(connected, values = c(TRUE, NA))
-  chk_flag(error)
+#' try(chk_sqlite_conn(conn, connected = TRUE))
+chk_sqlite_conn <- function(x, connected = NA, err = TRUE, x_name = NULL) {
+  if(inherits(x, "SQLiteConnection") && (is.na(connected) || connected == dbIsValid(x)))
+    return(TRUE)
+  if(!err) return(FALSE)
+  if(is.null(x_name))  x_name <- paste0("`", deparse(substitute(x)), "`")
   chk_is(x, "SQLiteConnection", x_name = x_name)
-  if(isTRUE(connected) && !dbIsValid(x)) {
-    chk_fail(x_name, " must be connected", error = error)
-  } else if(isFALSE(connected) && dbIsValid(x))
-    chk_fail(x_name, " must be disconnected", error = error)
-  invisible(x)
+  if(isTRUE(connected)) err(x_name, " must be connected.")
+  err(x_name, " must be disconnected.")
 }
 
 check_table_name <- function(table_name, exists, conn) {
@@ -42,7 +42,7 @@ check_table_name <- function(table_name, exists, conn) {
 }
 
 check_table_names <- function(table_names, exists, delete, all, unique, conn) {
-  check_character(table_names)
+  chk_is(table_names, "character", x_name = "table_names")
   if(!length(table_names)) return(table_names)
   
   vapply(table_names, check_table_name, "", exists = exists, conn = conn,

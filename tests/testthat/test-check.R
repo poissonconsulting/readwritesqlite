@@ -1,19 +1,20 @@
 context("check")
 
-test_that("check_sqlite_connection", {
-  expect_error(check_sqlite_connection(1), 
-               "1 must inherit from class 'SQLiteConnection'")
+test_that("chk_sqlite_conn", {
+  expect_error(chk_sqlite_conn(1), 
+               "^`1` must inherit from class 'SQLiteConnection'[.]$")
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  expect_identical(check_sqlite_connection(conn), conn)
-  expect_identical(check_sqlite_connection(conn, connected = TRUE), conn)
-  expect_error(check_sqlite_connection(conn, connected = FALSE), 
-               "conn must be disconnected")
+  expect_true(chk_sqlite_conn(conn))
+  expect_true(chk_sqlite_conn(conn, connected = TRUE))
+  expect_error(chk_sqlite_conn(conn, connected = FALSE), 
+               "`conn` must be disconnected[.]$")
   DBI::dbDisconnect(conn)
 
-  expect_identical(check_sqlite_connection(conn), conn)
-  expect_error(check_sqlite_connection(conn, connected = TRUE), 
-               "conn must be connected")
-  expect_identical(check_sqlite_connection(conn, connected = FALSE), conn)
+  expect_true(chk_sqlite_conn(conn))
+  expect_false(chk_sqlite_conn(conn, connected = TRUE, err = FALSE))
+  expect_error(chk_sqlite_conn(conn, connected = TRUE), 
+               "`conn` must be connected[.]$")
+  expect_true(chk_sqlite_conn(conn, connected = FALSE))
 })
 
 test_that("check_table_names", {
@@ -24,7 +25,7 @@ test_that("check_table_names", {
   expect_true(DBI::dbCreateTable(conn, "local", local))
 
   expect_error(check_table_names(1, conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE), 
-               "table_names must be class character")
+               "^table_names must inherit from class 'character'[.]$")
   expect_error(check_table_names(c("e", "f"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE), 
                "table 'e' does not exist")
   expect_error(check_table_names(c(.log_table_name, "e"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE),  

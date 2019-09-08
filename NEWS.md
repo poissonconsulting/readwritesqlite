@@ -1,3 +1,6 @@
+- Deprecated `check_sqlite_connection()` for `chk_sqlite_conn()`.
+- Removed dependency on err.
+
 # readwritesqlite 0.0.2
 
 - Update for release hms 0.5.0 

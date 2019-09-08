@@ -44,6 +44,6 @@ rws_connect <- function(dbname = ":memory:", exists = NA) {
 #' rws_disconnect(conn)
 #' print(conn)
 rws_disconnect <- function(conn) {
-  check_sqlite_connection(conn)
+  chk_sqlite_conn(conn)
   DBI::dbDisconnect(conn)
 }

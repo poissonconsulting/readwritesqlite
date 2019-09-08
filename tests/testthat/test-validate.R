@@ -8,7 +8,7 @@ test_that("rws_write.data.frame checks all columns present", {
   DBI::dbCreateTable(conn, "local", local)
   local <- local[1]
   expect_error(rws_write(local, conn = conn),
-               "'local' column names must include 'X' and 'SELECT'")
+               "'local' column names must include 'SELECT'")
 })
 
 test_that("rws_write.data.frame checks missing values", {

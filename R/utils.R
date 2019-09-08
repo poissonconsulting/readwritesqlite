@@ -14,7 +14,7 @@
 #' rws_list_tables(conn)
 #' rws_disconnect(conn)
 rws_list_tables <- function(conn) {
-  check_sqlite_connection(conn, connected = TRUE)
+  chk_sqlite_conn(conn, connected = TRUE)
   tables <- DBI::dbListTables(conn)
   tables <- tables[!to_upper(tables) %in% to_upper(reserved_tables())]
   sort(tables)

@@ -77,7 +77,7 @@ rws_write.data.frame <- function(
   chk_flag(log)
   chk_flag(commit)
   chk_flag(strict)
-  check_sqlite_connection(conn, connected = TRUE)
+  chk_sqlite_conn(conn, connected = TRUE)
   
   x_name <- chk_deparse(x_name)
   chk_string(x_name)
@@ -141,7 +141,7 @@ rws_write.list <- function(x,
   chk_flag(log)
   chk_flag(commit)
   chk_flag(strict)
-  check_sqlite_connection(conn, connected = TRUE)
+  chk_sqlite_conn(conn, connected = TRUE)
   x_name <- chk_deparse(x_name)
   chk_string(x_name)
   chk_flag(silent)

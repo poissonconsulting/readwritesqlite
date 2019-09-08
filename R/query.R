@@ -16,7 +16,7 @@
 rws_query <- function(query, meta = TRUE, conn) {
   chk_string(query)
   chk_flag(meta)
-  check_sqlite_connection(conn, connected = TRUE)
+  chk_sqlite_conn(conn, connected = TRUE)
 
   data <- query_data(query, meta, conn)
   as_tibble_sf(data)
