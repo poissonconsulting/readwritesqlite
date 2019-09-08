@@ -83,7 +83,7 @@ rws_write.data.frame <- function(
   check_string(x_name)
   check_table_name(x_name, exists = exists, conn = conn)
   chk_flag(silent)
-  check_unused(...)
+  chk_unused(...)
   
   foreign_keys <- foreign_keys(TRUE, conn)
   
@@ -147,7 +147,7 @@ rws_write.list <- function(x,
   chk_flag(silent)
   chk_flag(all)
   chk_flag(unique)
-  check_unused(...)
+  chk_unused(...)
   
   if(!length(x)) return(character(0))
   
@@ -226,7 +226,7 @@ rws_write.environment <- function(x,
   x_name <- chk_deparse(x_name)
   check_string(x_name)
   chk_flag(silent)
-  check_unused(...)
+  chk_unused(...)
   x <- as.list(x)
   
   x <- x[vapply(x, is.data.frame, TRUE)]

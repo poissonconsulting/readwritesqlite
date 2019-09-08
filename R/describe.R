@@ -34,7 +34,7 @@ rws_describe_meta.character <- function(x, column, description, ..., conn) {
   check_vector(column, "")
   check_vector(description, c("", NA))
   check_sqlite_connection(conn, connected = TRUE)
-  check_unused(...)
+  chk_unused(...)
   
   rws_describe_meta(data.frame(
     Table = x, Column = column, Description = description, 
@@ -51,7 +51,7 @@ rws_describe_meta.character <- function(x, column, description, ..., conn) {
 rws_describe_meta.data.frame <- function(x, ..., conn) {
   check_data(x, values = list(Table = "", Column = "", Description = c("", NA)))
   check_sqlite_connection(conn, connected = TRUE)
-  check_unused(...)
+  chk_unused(...)
   
   if(!nrow(x)) return(invisible(rws_read_meta(conn)))
   
