@@ -81,6 +81,6 @@ rws_read.SQLiteConnection <- function(x, meta = TRUE, ...) {
 #' rws_read_table("data2", conn = conn)
 #' rws_disconnect(conn)
 rws_read_table <- function(x, meta = TRUE, conn) {
-  check_string(x)
+  chk_string(x)
   rws_read(x, meta = meta, conn = conn)[[1]]
 }

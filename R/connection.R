@@ -16,7 +16,7 @@
 #' print(conn)
 #' rws_disconnect(conn)
 rws_connect <- function(dbname = ":memory:", exists = NA) {
-  check_string(dbname)
+  chk_string(dbname)
   check_scalar(exists, c(TRUE, NA))
   
   if(isTRUE(exists) && !file.exists(dbname))

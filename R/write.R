@@ -80,7 +80,7 @@ rws_write.data.frame <- function(
   check_sqlite_connection(conn, connected = TRUE)
   
   x_name <- chk_deparse(x_name)
-  check_string(x_name)
+  chk_string(x_name)
   check_table_name(x_name, exists = exists, conn = conn)
   chk_flag(silent)
   chk_unused(...)
@@ -143,7 +143,7 @@ rws_write.list <- function(x,
   chk_flag(strict)
   check_sqlite_connection(conn, connected = TRUE)
   x_name <- chk_deparse(x_name)
-  check_string(x_name)
+  chk_string(x_name)
   chk_flag(silent)
   chk_flag(all)
   chk_flag(unique)
@@ -224,7 +224,7 @@ rws_write.environment <- function(x,
                                          all = TRUE, 
                                          unique = TRUE, ...) {
   x_name <- chk_deparse(x_name)
-  check_string(x_name)
+  chk_string(x_name)
   chk_flag(silent)
   chk_unused(...)
   x <- as.list(x)

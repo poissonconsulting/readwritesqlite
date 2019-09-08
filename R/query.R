@@ -14,7 +14,7 @@
 #' rws_query("SELECT date, posixct, factor FROM rws_data", conn = conn)
 #' rws_disconnect(conn)
 rws_query <- function(query, meta = TRUE, conn) {
-  check_string(query)
+  chk_string(query)
   chk_flag(meta)
   check_sqlite_connection(conn, connected = TRUE)
 
