@@ -117,6 +117,6 @@ read_init_data <- function(data, table_name, conn) {
   sf_column_name <- init_table$SFInit[init_table$TableInit == to_upper(table_name)]
   if(is.na(sf_column_name)) return(data)
   sf_column_name <- names(data)[to_upper(names(data)) == sf_column_name]
-  sf::st_sf(data, sf_column_name = sf_column_name, 
-            stringsAsFactors = FALSE, sfc_last = FALSE)
+  st_sf(data, sf_column_name = sf_column_name, stringsAsFactors = FALSE, 
+        sfc_last = FALSE)
 }

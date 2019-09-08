@@ -74,8 +74,14 @@ data_column_meta <- function(column) {
   if (is.Date(column)) return("class: Date")
   if (is_hms(column)) return("class: hms")
   if (is.POSIXct(column)) return(p("tz:", tz(column)))
-  if (is.sfc(column)) return(p("proj:", sf::st_crs(column)$proj4string))
-  if (is.units(column)) return(p("units:", units::deparse_unit(column)))
+  if (is.sfc(column)) {
+    if(!requireNamespace("sf")) err("package 'sf' must be installed.")
+    return(p("proj:", sf::st_crs(column)$proj4string))
+  }
+  if (is.units(column)) {
+    if(!requireNamespace("units")) err("package 'units' must be installed.")
+    return(p("units:", units::deparse_unit(column)))
+  }
   if (is.ordered(column)) return(p("ordered:", cc(levels(column), ellipsis = .Machine$integer.max)))
   if (is.factor(column)) return(p("factor:", cc(levels(column), ellipsis = .Machine$integer.max)))
   NA_character_
@@ -98,11 +104,13 @@ read_meta_data_column <- function(column, meta) {
     return(as_POSIXct(column, tz = tz))
   } 
   if(grepl("^units:", meta)) {
+    if(!requireNamespace("units")) err("package 'units' must be installed.")
     units <- sub("(^units:\\s*)(.*)", "\\2", meta)
     column <- as.double(column)
     return(units::as_units(column, units))
   }
   if(grepl("^proj:", meta)) {
+    if(!requireNamespace("sf")) err("package 'sf' must be installed.")
     proj <- sub("(^proj:\\s*)(.*)", "\\2", meta)
     return(sf::st_set_crs(sf::st_as_sfc(column), proj))
   }
@@ -156,6 +164,7 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
   is_text <- is_table_column_text(column_name, table_name, conn)
   
   if(grepl("^proj:", meta)) {
+    if(!requireNamespace("sf")) err("package 'sf' must be installed.")
     if(is_text) return(sf::st_as_text(column))
     return(sf::st_as_binary(column, endian = "little"))
   }

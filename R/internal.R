@@ -1,12 +1,19 @@
+st_sf <- function(data, sf_column_name = NULL, 
+                  stringsAsFactors = FALSE, sfc_last = TRUE) {
+  if(!requireNamespace("sf")) err("package 'sf' must be installed.")
+  sf::st_sf(data, sf_column_name = sf_column_name, 
+            stringsAsFactors = stringsAsFactors, sfc_last = sfc_last)
+}
+
 as_Date <- function(x) as.Date(x, origin = as.Date("1970-01-01"))
 
 as_POSIXct <- function(x, tz) {
   as.POSIXct(x, tz = tz, origin = as.POSIXct("1970-01-01", 
-        tz = "GMT"))
+                                             tz = "GMT"))
 }
 
 origin = as.POSIXct("1970-01-01", 
-        tz = "GMT")
+                    tz = "GMT")
 is.Date <- function(x) inherits(x, "Date")
 
 is.POSIXct <- function(x) inherits(x, "POSIXct")
@@ -38,8 +45,7 @@ as_tibble_sf <- function(x) {
   sf_column_name <- sf_column_name(x)
   class(x) <- c("tbl_df", "tbl", "data.frame")
   if(!is.na(sf_column_name)) {
-    x <- sf::st_sf(x, sf_column_name = sf_column_name, 
-                   stringsAsFactors = FALSE)
+    x <- st_sf(x, sf_column_name = sf_column_name, stringsAsFactors = FALSE)
   }
   x
 }

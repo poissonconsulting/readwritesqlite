@@ -1,3 +1,4 @@
+- Moved `sf` and `units` packages to Suggests.
 - Deprecated `check_sqlite_connection()` for `chk_sqlite_conn()`.
 - Removed dependency on err.
 

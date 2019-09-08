@@ -37,8 +37,8 @@ validate_data <- function(data, table_name, strict, silent, conn) {
             na_distinct = TRUE)
   names(data) <- data_names[names(data)]
   if(!is.na(sf_column_name) && sf_column_name %in% names(data)) {
-    data <- sf::st_sf(data, sf_column_name = sf_column_name, 
-                      stringsAsFactors = FALSE)
+    data <- st_sf(data, sf_column_name = sf_column_name, 
+                  stringsAsFactors = FALSE)
   }
   data
 }
