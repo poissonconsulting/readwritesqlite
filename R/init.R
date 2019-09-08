@@ -46,8 +46,19 @@ confirm_init_table <- function(conn) {
   } else {
     init_schema <- sub(";$", "", init_schema)
     schema <- table_schema(.init_table_name, conn)
-    if(!identical(schema, init_schema))
+    if(!identical(schema, init_schema)) {
+# add code to update schema....
+#4      if(!grepl()) {
+#    regexp <- 
+#4    if!grepl()
+#4      if(!grelCREATE TABLE", .init_table_name, "(
+  # TableInit TEXT NOT NULL PRIMARY KEY,
+  # IsInit INTEGER NOT NULL,
+  # SFInit TEXT,
+  # CHECK(
+    
       err("table '", .init_table_name, "' has an invalid schema")
+    }
   }
   init_table <- read_data(.init_table_name, meta = FALSE, conn = conn)
   init_table <- init_table[init_table$IsInit == 1,]

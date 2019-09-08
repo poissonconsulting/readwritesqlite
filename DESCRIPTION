@@ -1,6 +1,6 @@
 Package: readwritesqlite
 Title: Enhanced Reading and Writing for 'SQLite' Databases
-Version: 0.0.2.9000
+Version: 0.0.2.9001
 Authors@R: c(
     person("Joe", "Thorley", , "joe@poissonconsulting.ca", c("aut", "cre"), comment = c(ORCID = "0000-0002-7683-4592")),
     person("Poisson Consulting", role = c("cph", "fnd"))
@@ -17,6 +17,7 @@ Depends: R (>= 3.4)
 Imports: 
     err,
     checkr,
+    chk,
     dttr2,
     hms (>= 0.5.0),
     DBI,
@@ -29,6 +30,8 @@ Suggests:
     testthat,
     knitr,
     rmarkdown
+Remotes:
+    poissonconsulting/chk
 URL: https://github.com/poissonconsulting/readwritesqlite
 BugReports: https://github.com/poissonconsulting/readwritesqlite/issues
 Encoding: UTF-8

@@ -15,7 +15,7 @@
 #' rws_disconnect(conn)
 rws_query <- function(query, meta = TRUE, conn) {
   check_string(query)
-  check_flag(meta)
+  chk_flag(meta)
   check_sqlite_connection(conn, connected = TRUE)
 
   data <- query_data(query, meta, conn)
