@@ -34,11 +34,6 @@ user <- function() {
   unname(Sys.info()["user"])
 }
 
-set_class <- function(x, value) {
-  class(x) <- value
-  x
-}
-
 as_tibble_sf <- function(x) {
   sf_column_name <- sf_column_name(x)
   class(x) <- c("tbl_df", "tbl", "data.frame")

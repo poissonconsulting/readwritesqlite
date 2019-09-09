@@ -61,6 +61,24 @@ rws_read_sqlite_table <- function(x, meta = TRUE, conn) {
   rws_read_table(x, meta = meta, conn = conn)
 }
 
+is_string <- function (x) (is.character(x) || is.factor(x)) && length(x) == 1 && !is.na(x)
+
+chk_deparse <- function (x) {
+    if (!is.character(x)) 
+        x <- deparse(x)
+    if (isTRUE(is.na(x))) 
+        x <- "NA"
+    if (!is_string(x)) 
+        err(substitute(x), " must be a string")
+    x
+}
+
+chk_fail <- function (..., error) {
+    if (missing(error) || isTRUE(error)) 
+        err(...)
+    wrn(...)
+}
+
 #' @describeIn chk_sqlite_conn Check SQLite Connection
 #'
 #' @export
