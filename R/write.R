@@ -152,7 +152,7 @@ rws_write.list <- function(x,
   if(!length(x)) return(character(0))
   
   if(!all(vapply(x, is.data.frame, TRUE)))
-    err("list '", x_name, "' includes objects which are not data frames")
+    err("List `", x_name, "` includes objects which are not data frames.")
   
   if(isTRUE(exists)) {
     exists2 <- tables_exists(names(x), conn)

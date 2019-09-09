@@ -28,8 +28,9 @@ validate_data <- function(data, table_name, strict, silent, conn) {
   table_info$is_na <- vapply(data, any_is_na, TRUE)
   invalid_nas <- table_info$name[table_info$notnull & table_info$is_na]
   if(length(invalid_nas)) {
-    err("there are unpermitted missing values in the following ",
-           "columns in data '", table_name, "': ", cc(invalid_nas, " and "))
+    err("There are unpermitted missing values in the following %n ",
+           "column%s in data '", table_name, "': ", cc(invalid_nas, " and "),
+        n = length(invalid_nas))
   }
   
   pk <- table_info$name[table_info$pk != 0L]

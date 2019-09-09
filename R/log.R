@@ -20,7 +20,7 @@ confirm_log_table <- function(conn) {
     log_schema <- sub(";$", "", log_schema)
     schema <- table_schema(.log_table_name, conn)
     if(!identical(schema, log_schema))
-      err("table '", .log_table_name, "' has an invalid schema")
+      err("Table '", .log_table_name, "' has an invalid schema.")
   }
 }
 

@@ -37,7 +37,7 @@ test_that("describe errors if extra", {
   local <- data.frame(z = c(TRUE, FALSE, NA), y = 1:3)
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
-  expect_error(rws_describe_meta("local", c("y", "Z2"), c("stuff", "A logical vector."), conn = conn), "all description tables and columns must exist in the meta table")
+  expect_error(rws_describe_meta("local", c("y", "Z2"), c("stuff", "A logical vector."), conn = conn), "^All description tables and columns must exist in the meta table[.]$")
 })
 
 test_that("describe replace works", {

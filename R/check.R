@@ -29,14 +29,14 @@ check_table_name <- function(table_name, exists, conn) {
   chk_string(table_name)
   
   if(to_upper(table_name) %in% to_upper(reserved_tables()))
-    err("'", table_name, "' is a reserved table")
+    err("Table '", table_name, "' is a reserved table.")
 
   table_exists <- tables_exists(table_name, conn)
   if(isTRUE(exists) && !table_exists)
-    err("table '", table_name, "' does not exist")
+    err("Table '", table_name, "' does not exist.")
   
   if(isFALSE(exists) && table_exists)
-    err("table '", table_name, "' already exists")
+    err("Table '", table_name, "' already exists.")
   
   table_name
 }

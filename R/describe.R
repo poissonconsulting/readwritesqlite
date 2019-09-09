@@ -65,7 +65,7 @@ rws_describe_meta.data.frame <- function(x, ..., conn) {
   x$Column <- to_upper(x$Column)
   
   if(anyDuplicated(x[c("Table", "Column")])) 
-    err("columns 'Table' and 'Column' in data 'x' must be unique")
+    err("Columns 'Table' and 'Column' in data 'x' must be unique.")
   
   x$Row <- 1:nrow(x)
   
@@ -76,7 +76,7 @@ rws_describe_meta.data.frame <- function(x, ..., conn) {
                 by.y = c("Table", "Column"), all = TRUE)
   
   if(any(is.na(meta$RowMeta))) 
-    err("all description tables and columns must exist in the meta table")
+    err("All description tables and columns must exist in the meta table.")
   
   meta$DescriptionMeta[!is.na(meta$Row)] <- meta$Description[!is.na(meta$Row)]
   meta <- meta[order(meta$RowMeta),]

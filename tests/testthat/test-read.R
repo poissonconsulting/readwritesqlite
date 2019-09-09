@@ -4,7 +4,7 @@ test_that("rws_read requires table", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
-  expect_error(rws_read("local2", conn = conn), "table 'local2' does not exist")
+  expect_error(rws_read("local2", conn = conn), "^Table 'local2' does not exist[.]$")
 })
 
 test_that("rws_read returns tibble", {

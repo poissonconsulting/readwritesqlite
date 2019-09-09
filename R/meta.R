@@ -40,7 +40,7 @@ confirm_meta_table <- function(conn) {
     meta_schema <- sub(";$", "", meta_schema)
     schema <- table_schema(.meta_table_name, conn)
     if(!identical(schema, meta_schema))
-      err("table '", .meta_table_name, "' has an invalid schema")
+      err("Table '", .meta_table_name, "' has an invalid schema.")
   }
   meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_data <- make_meta_data(conn)
@@ -75,11 +75,11 @@ data_column_meta <- function(column) {
   if (is_hms(column)) return("class: hms")
   if (is.POSIXct(column)) return(p("tz:", tz(column)))
   if (is.sfc(column)) {
-    if(!requireNamespace("sf")) err("package 'sf' must be installed.")
+    if(!requireNamespace("sf")) err("Package 'sf' must be installed.")
     return(p("proj:", sf::st_crs(column)$proj4string))
   }
   if (is.units(column)) {
-    if(!requireNamespace("units")) err("package 'units' must be installed.")
+    if(!requireNamespace("units")) err("Package 'units' must be installed.")
     return(p("units:", units::deparse_unit(column)))
   }
   if (is.ordered(column)) return(p("ordered:", cc(levels(column), ellipsis = .Machine$integer.max)))
@@ -104,13 +104,13 @@ read_meta_data_column <- function(column, meta) {
     return(as_POSIXct(column, tz = tz))
   } 
   if(grepl("^units:", meta)) {
-    if(!requireNamespace("units")) err("package 'units' must be installed.")
+    if(!requireNamespace("units")) err("Package 'units' must be installed.")
     units <- sub("(^units:\\s*)(.*)", "\\2", meta)
     column <- as.double(column)
     return(units::as_units(column, units))
   }
   if(grepl("^proj:", meta)) {
-    if(!requireNamespace("sf")) err("package 'sf' must be installed.")
+    if(!requireNamespace("sf")) err("Package 'sf' must be installed.")
     proj <- sub("(^proj:\\s*)(.*)", "\\2", meta)
     return(sf::st_set_crs(sf::st_as_sfc(column), proj))
   }
@@ -164,7 +164,7 @@ write_meta_data_column <- function (column, column_name, table_name, conn) {
   is_text <- is_table_column_text(column_name, table_name, conn)
   
   if(grepl("^proj:", meta)) {
-    if(!requireNamespace("sf")) err("package 'sf' must be installed.")
+    if(!requireNamespace("sf")) err("Package 'sf' must be installed.")
     if(is_text) return(sf::st_as_text(column))
     return(sf::st_as_binary(column, endian = "little"))
   }
@@ -204,9 +204,9 @@ validate_data_meta <- function(data, table_name, conn) {
     if(!consistent_factors(dmeta, mmeta)) {
       column_name <- names(dmeta)
       
-      err("column '", column_name, "' in table '", table_name, 
+      err("Column '", column_name, "' in table '", table_name, 
           "' has '", dmeta, "' meta data for the input data", 
-          " but '", mmeta, "' for the existing data")
+          " but '", mmeta, "' for the existing data.")
     }
   }
   data_meta[data_meta != "No"]

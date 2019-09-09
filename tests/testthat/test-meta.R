@@ -74,7 +74,7 @@ test_that("meta errors if meta and then no meta", {
   
   local$z <- as.character(local$z)
   expect_error(rws_write(local, conn = conn), 
-               "column 'z' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data")
+               "^Column 'z' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data[.]$")
 })
 
 test_that("meta errors if no meta and then meta", {
@@ -88,7 +88,7 @@ test_that("meta errors if no meta and then meta", {
   
   local$z <- as.logical(local$z)
   expect_error(rws_write(local, conn = conn), 
-               "column 'z' in table 'local' has 'class: logical' meta data for the input data but 'No' for the existing data")
+               "^Column 'z' in table 'local' has 'class: logical' meta data for the input data but 'No' for the existing data[.]$")
 })
 
 test_that("meta errors if inconsistent meta", {
@@ -102,7 +102,7 @@ test_that("meta errors if inconsistent meta", {
   
   local$z <- Sys.Date()
   expect_error(rws_write(local, conn = conn), 
-               "column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data")
+               "^Column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data[.]$")
 })
 
 test_that("fix meta inconsistent by deleting", {
@@ -116,13 +116,13 @@ test_that("fix meta inconsistent by deleting", {
   
   local$z <- Sys.Date()
   expect_error(rws_write(local, conn = conn), 
-               "column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data")
+               "^Column 'z' in table 'local' has 'class: Date' meta data for the input data but 'class: logical' for the existing data[.]$")
   expect_identical(rws_write(local, delete = TRUE, conn = conn), "local")
   expect_identical(rws_write(local, conn = conn), "local")
   
   local <- data.frame(z = c(TRUE, FALSE, NA))
   expect_error(rws_write(local, conn = conn), 
-               "column 'z' in table 'local' has 'class: logical' meta data for the input data but 'class: Date' for the existing data")
+               "^Column 'z' in table 'local' has 'class: logical' meta data for the input data but 'class: Date' for the existing data[.]$")
 })
 
 test_that("meta reads logical", {
@@ -194,7 +194,7 @@ test_that("meta = FALSE same as just writing", {
     factor = "fac",
     ordered = "ordered"))
   
-  expect_error(rws_write(local, conn = conn), "column 'logical' in table 'local' has 'class: logical' meta data for the input data but 'No' for the existing data")
+  expect_error(rws_write(local, conn = conn), "Column 'logical' in table 'local' has 'class: logical' meta data for the input data but 'No' for the existing data[.]")
 })
 
 test_that("meta logical logical different types", {
@@ -566,7 +566,7 @@ test_that("meta factor without meta then meta errors", {
   remote2 <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(lapply(local, as.character)))
   expect_error(rws_write(local, conn = conn), 
-               "column 'zinteger' in table 'local' has 'factor: 'y', 'x'' meta data for the input data but 'No' for the existing data")
+               "Column 'zinteger' in table 'local' has 'factor: 'y', 'x'' meta data for the input data but 'No' for the existing data[.]")
 })
 
 test_that("meta factor rearrange levels", {
@@ -675,7 +675,7 @@ test_that("meta ordered add and rearrange levels", {
     zblob = z)
   
   expect_error(rws_write(local2, x_name = "local", conn = conn), 
-               "column 'zinteger' in table 'local' has 'ordered: 'z', 'x', 'y'' meta data for the input data but 'ordered: 'y', 'x'' for the existing data")
+               "^Column 'zinteger' in table 'local' has 'ordered: 'z', 'x', 'y'' meta data for the input data but 'ordered: 'y', 'x'' for the existing data[.]$")
   
   z <- ordered(c("x", "y", "z"), levels = c("z", "y", "x"))
   local2 <- data.frame(
@@ -715,7 +715,7 @@ test_that("meta TRUE then FALSE then read with TRUE", {
                    tibble::tibble(fac = c("this", "that", NA)))
   local <- data.frame(fac = factor("other"))
   expect_error(rws_write(local, meta = TRUE, conn = conn), 
-               "column 'fac' in table 'local' has 'factor: 'other'' meta data for the input data but 'factor: 'that', 'this'' for the existing data")
+               "^Column 'fac' in table 'local' has 'factor: 'other'' meta data for the input data but 'factor: 'that', 'this'' for the existing data[.]$")
   expect_identical(rws_write(local, meta = FALSE, conn = conn), "local")
   remote <- rws_read_table("local", meta = FALSE, conn = conn)
   expect_identical(remote,

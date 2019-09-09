@@ -57,7 +57,7 @@ confirm_init_table <- function(conn) {
   # SFInit TEXT,
   # CHECK(
     
-      err("table '", .init_table_name, "' has an invalid schema")
+      err("Table '", .init_table_name, "' has an invalid schema.")
     }
   }
   init_table <- read_data(.init_table_name, meta = FALSE, conn = conn)

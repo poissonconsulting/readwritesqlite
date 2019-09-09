@@ -21,7 +21,7 @@ test_that("rws_write.data.frame checks table exists", {
   
   local <- data.frame(x = as.character(1:3))
   expect_error(rws_write(local, conn = conn),
-               "table 'local' does not exist")
+               "^Table 'local' does not exist[.]$")
 })
 
 test_that("rws_write.data.frame writes to existing table", {
@@ -41,7 +41,7 @@ test_that("rws_write.data.frame errors if exists = FALSE and already exists", {
   
   local <- data.frame(x = 1:3, select = 1:3)
   DBI::dbCreateTable(conn, "local", local)
-  expect_error(rws_write(local, exists = FALSE, conn = conn), "table 'local' already exists")
+  expect_error(rws_write(local, exists = FALSE, conn = conn), "^Table 'local' already exists[.]$")
 })
 
 test_that("rws_write.data.frame creates table", {
@@ -211,7 +211,7 @@ test_that("rws_write.list errors with none data frames", {
   teardown(DBI::dbDisconnect(conn))
   
   y <- list(x = 1)
-  expect_error(rws_write(y, conn = conn), "list 'y' includes objects which are not data frames")
+  expect_error(rws_write(y, conn = conn), "^List `y` includes objects which are not data frames[.]$")
 })
 
 test_that("rws_write.environment issues warning with no data frames", {
@@ -606,11 +606,11 @@ test_that("initialized meta with no rows of data and not overwritten unless dele
   expect_identical(remote, local)
   local[] <- lapply(local, as.character)
   expect_error(rws_write(local, conn = conn),
-               "column 'date' in table 'local' has 'No' meta data for the input data but 'class: Date' for the existing data")
+               "^Column 'date' in table 'local' has 'No' meta data for the input data but 'class: Date' for the existing data[.]$")
   local <- data.frame(date = "2000-01-01", stringsAsFactors = FALSE)
   
   expect_error(rws_write(local, conn = conn),
-               "column 'date' in table 'local' has 'No' meta data for the input data but 'class: Date' for the existing data")
+               "^Column 'date' in table 'local' has 'No' meta data for the input data but 'class: Date' for the existing data[.]$")
   
   expect_identical(rws_write(local, delete = TRUE, conn = conn), "local")
   remote <- rws_read_table("local", conn = conn)
@@ -636,7 +636,7 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   local2 <- tibble::as_tibble(local2)
   local2 <- local2[integer(0),]
   expect_error(rws_write(local2, conn = conn, x_name = "local"), 
-               "column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data")
+               "^Column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data[.]$")
   
   expect_identical(rws_write(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
   
@@ -662,7 +662,7 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
   local2 <- tibble::as_tibble(local2)
   local2 <- local2[integer(0),]
   expect_error(rws_write(local2, conn = conn, x_name = "local"), 
-               "column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data")
+               "^Column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data[.]$")
   
   expect_identical(rws_write(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
   
@@ -688,7 +688,7 @@ test_that("meta then inconsistent data then error meta but delete reset", {
   local2 <- local2[1,]
   
   expect_error(rws_write(local2, conn = conn, x_name = "local"), 
-               "column 'logical' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data")
+               "^Column 'logical' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data[.]$")
   expect_identical(rws_write(local2, conn = conn, meta = FALSE, x_name = "local"), "local")
   expect_warning(remote <- rws_read_table("local", conn = conn), "Column `logical`: mixed type, first seen values of type integer, coercing other values of type string")
   expect_identical(remote, tibble::tibble(

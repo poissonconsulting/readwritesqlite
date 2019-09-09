@@ -27,7 +27,7 @@ test_that("check_table_names", {
   expect_error(check_table_names(1, conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE), 
                "^table_names must inherit from class 'character'[.]$")
   expect_error(check_table_names(c("e", "f"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE), 
-               "table 'e' does not exist")
+               "^Table 'e' does not exist[.]$")
   expect_error(check_table_names(c(.log_table_name, "e"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE),  
                "'readwritesqlite_log' is a reserved table")
   expect_error(check_table_names(c(.meta_table_name, "e"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE),  
