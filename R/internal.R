@@ -12,8 +12,6 @@ as_POSIXct <- function(x, tz) {
                                              tz = "GMT"))
 }
 
-origin = as.POSIXct("1970-01-01", 
-                    tz = "GMT")
 is.Date <- function(x) inherits(x, "Date")
 
 is.POSIXct <- function(x) inherits(x, "POSIXct")
