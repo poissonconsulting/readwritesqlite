@@ -158,10 +158,11 @@ rws_write.list <- function(x,
     exists2 <- tables_exists(names(x), conn)
     if(any(!exists2)) {
       extra <- names(x)[!exists2]
-      msg <- p0("exists = TRUE but the following data frames in '", 
-                          x_name, "' are unrecognised: ", cc(extra, " and "))
-      if(strict) err(msg)
-      if(!silent) wrn(msg)
+      msg <- p0("The following data frame%s in '", 
+                          x_name, "' %r unrecognised: ", cc(extra, " and "),
+                "; but exists = TRUE.")
+      if(strict) err(msg, n = length(extra))
+      if(!silent) wrn(msg, n = length(extra))
     }
     x <- x[exists2]
     if(!length(x)) return(invisible(character(0)))
@@ -232,7 +233,7 @@ rws_write.environment <- function(x,
   x <- x[vapply(x, is.data.frame, TRUE)]
   if(!length(x)) {
     if(!silent) {
-      wrn(p0("environment '", x_name, "' has no data frames"))
+      wrn(p0("Environment '", x_name, "' has no data frames."))
     }
     return(invisible(character(0)))
   }

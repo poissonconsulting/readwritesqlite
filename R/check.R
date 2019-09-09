@@ -59,16 +59,17 @@ check_table_names <- function(table_names, exists, delete, all, unique, conn) {
       delete <- if(delete) "delete = TRUE" else NULL
       
       but <- p0(c(unique, exists, delete), collapse = " and ")
-      err(but, " but the following table names are duplicated: ", 
-          cc(table_names, " and "))
+      err("The following table name%s %r duplicated: ", 
+          cc(table_names, " and "), "; but ", but, ".", n = length(table_names))
     }
   }
   if(all && !isFALSE(exists)) {
     missing <- 
       setdiff(to_upper(rws_list_tables(conn)), to_upper(table_names))
     if(length(missing)) {
-      err("all = TRUE and exists != FALSE but the following table names are not represented: ", 
-          cc(missing, " and "))
+      err("The following table name%s %r not represented: ", 
+          cc(missing, " and "), "; but all = TRUE and exists != FALSE.", 
+          n = length(missing))
     }
   }
   table_names

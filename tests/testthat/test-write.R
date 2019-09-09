@@ -131,9 +131,9 @@ test_that("rws_write.data.frame corrects column order", {
   expect_identical(rws_write(local, conn = conn), "local")
   expect_identical(rws_write(local[2:1], x_name = "local", conn = conn), "local")
   expect_error(rws_write(local[c(1,1,2)], x_name = "local", conn = conn), 
-               "the following columns in data 'local' are unrecognised: 'x.1'")
+               "^The following column in data 'local' is unrecognised: 'x.1'[.]$")
   expect_warning(rws_write(local[c(1,1,2)], x_name = "local", conn = conn, strict = FALSE), 
-                 "the following columns in data 'local' are unrecognised: 'x.1'")
+                 "^The following column in data 'local' is unrecognised: 'x.1'")
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, rbind(local, local, local))
 })
@@ -145,9 +145,9 @@ test_that("rws_write.data.frame warns for extra columns", {
   local <- data.frame(x = 4:6, y = 1:3)
   DBI::dbCreateTable(conn, "local", local["x"])
   expect_error(rws_write(local, conn = conn), 
-               "the following columns in data 'local' are unrecognised: 'y'")
+               "^The following column in data 'local' is unrecognised: 'y'[.]$")
   expect_warning(rws_write(local, conn = conn, strict = FALSE), 
-                 "the following columns in data 'local' are unrecognised: 'y'")
+                 "^The following column in data 'local' is unrecognised: 'y'[.]$")
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, local["x"])
 })
@@ -220,7 +220,7 @@ test_that("rws_write.environment issues warning with no data frames", {
   
   y <- new.env()
   assign("x", 1, envir = y)
-  expect_warning(rws_write(y, conn = conn), "environment 'y' has no data frames")
+  expect_warning(rws_write(y, conn = conn), "^Environment 'y' has no data frames[.]$")
 })
 
 test_that("rws_write.list requires named list", {
@@ -228,7 +228,7 @@ test_that("rws_write.list requires named list", {
   teardown(DBI::dbDisconnect(conn))
   
   y <- list(data.frame(x = 1:3))
-  expect_error(rws_write(y, conn = conn), "`x` must be named")
+  expect_error(rws_write(y, conn = conn), "^`x` must be named[.]$")
 })
 
 test_that("rws_write writes list with 1 data frame", {
@@ -278,7 +278,7 @@ test_that("rws_write errors if list with 2 identically named data frames and com
   
   DBI::dbCreateTable(conn, "LOCAL", y$local)
   expect_error(rws_write(y, unique = TRUE, conn = conn), 
-               "unique = TRUE but the following table names are duplicated: 'local'")
+               "^The following table name is duplicated: 'local'; but unique = TRUE[.]$")
 })
 
 test_that("rws_write errors if complete = TRUE and not all data frames", {
@@ -290,7 +290,7 @@ test_that("rws_write errors if complete = TRUE and not all data frames", {
   DBI::dbCreateTable(conn, "LOCAL", y$local)
   DBI::dbCreateTable(conn, "LOCAL2", y$local)
   expect_error(rws_write(y, all = TRUE, conn = conn), 
-               "all = TRUE and exists != FALSE but the following table names are not represented: 'LOCAL2'")
+               "^The following table name is not represented: 'LOCAL2'; but all = TRUE and exists != FALSE[.]$")
 })
 
 test_that("rws_write errors if strict = TRUE and exists = TRUE and extra data frames", {
@@ -301,9 +301,9 @@ test_that("rws_write errors if strict = TRUE and exists = TRUE and extra data fr
   
   DBI::dbCreateTable(conn, "LOCAL", y$local)
   expect_error(rws_write(y, conn = conn), 
-               "exists = TRUE but the following data frames in 'y' are unrecognised: 'local2'")
+               "^The following data frame in 'y' is unrecognised: 'local2'; but exists = TRUE[.]$")
   expect_warning(rws_write(y, strict = FALSE, conn = conn), 
-                 "exists = TRUE but the following data frames in 'y' are unrecognised: 'local2'")
+                 "^The following data frame in 'y' is unrecognised: 'local2'; but exists = TRUE[.]$")
 })
 
 test_that("rws_write writes environment", {
@@ -489,12 +489,12 @@ test_that("strict environment with extra data frame and extra column", {
   
   DBI::dbCreateTable(conn, "local", local[1])  
   expect_error(rws_write(env, conn = conn),
-               "exists = TRUE but the following data frames in 'x' are unrecognised: 'local2'")
+               "^The following data frame in 'x' is unrecognised: 'local2'; but exists = TRUE[.]$")
   
   expect_warning(rws_write(env, strict = FALSE, conn = conn),
-                 "exists = TRUE but the following data frames in 'x' are unrecognised: 'local2'")
+                 "^The following data frame in 'x' is unrecognised: 'local2'; but exists = TRUE[.]$")
   expect_warning(rws_write(env, strict = FALSE, conn = conn),
-                 "the following columns in data 'local' are unrecognised: 'z'")
+                 "^The following column in data 'local' is unrecognised: 'z'[.]$")
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, rbind(local[1], local[1]))
   expect_identical(rws_list_tables(conn), "local")

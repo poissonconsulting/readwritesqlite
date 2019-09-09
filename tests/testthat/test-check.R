@@ -39,19 +39,19 @@ test_that("check_table_names", {
   expect_identical(check_table_names(c("e", "e"), conn, exists = NA, delete = FALSE, all = FALSE, unique = FALSE), 
                    c("e", "e"))
   expect_error(check_table_names(c("e", "e"), conn, exists = FALSE, delete = FALSE, all = FALSE, unique = FALSE), 
-                   "exists = FALSE but the following table names are duplicated: 'e'")
+                   "^The following table name is duplicated: 'e'; but exists = FALSE[.]$")
   expect_error(check_table_names(c("e", "f", "f", "e"), conn, exists = FALSE, delete = TRUE, all = FALSE, unique = FALSE), 
-                   "exists = FALSE and delete = TRUE but the following table names are duplicated: 'e' and 'f'")
+                   "^The following table names are duplicated: 'e' and 'f'; but exists = FALSE and delete = TRUE[.]$")
   expect_error(check_table_names(c("e", "f", "f", "e", "e"), conn, exists = FALSE, delete = TRUE, all = FALSE, unique = FALSE), 
-                   "exists = FALSE and delete = TRUE but the following table names are duplicated: 'e' and 'f'")
+                   "^The following table names are duplicated: 'e' and 'f'; but exists = FALSE and delete = TRUE[.]$")
   expect_error(check_table_names(c("e", "E"), conn, exists = NA, delete = TRUE, all = FALSE, unique = FALSE), 
-                   "delete = TRUE but the following table names are duplicated: 'e'")
+                   "^The following table name is duplicated: 'e'; but delete = TRUE[.]$")
   expect_error(check_table_names(c("e", "E"), conn, exists = NA, delete = TRUE, all = FALSE, unique = TRUE), 
-                   "unique = TRUE and delete = TRUE but the following table names are duplicated: 'e'")
+                   "^The following table name is duplicated: 'e'; but unique = TRUE and delete = TRUE[.]$")
   expect_identical(check_table_names(c("e", "E"), conn, exists = NA, delete = FALSE, all = FALSE, unique = FALSE), 
                    c("e", "E"))
   expect_error(check_table_names(c("e"), conn, exists = NA, delete = FALSE, all = TRUE, unique = FALSE),
-               "all = TRUE and exists != FALSE but the following table names are not represented: 'LOCAL'")
+               "^The following table name is not represented: 'LOCAL'; but all = TRUE and exists != FALSE[.]$")
   expect_identical(check_table_names("local", conn, exists = NA, delete = FALSE, all = TRUE, unique = TRUE), 
                    "local")
 })

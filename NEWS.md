@@ -1,6 +1,7 @@
+- Updated error messages to tidyverse style.
 - Moved `sf` and `units` packages to Suggests.
 - Deprecated `check_sqlite_connection()` for `chk_sqlite_conn()`.
-- Removed dependency on err.
+- Replaced dependency on `err` and `checkr` with `chk`.
 
 # readwritesqlite 0.0.2
 

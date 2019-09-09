@@ -7,7 +7,7 @@ factor_to_character <- function(data, warn = FALSE) {
 raw_to_character <- function(data) {
   is_raw <- vapply(data, is.raw, TRUE)
   if (any(is_raw)) {
-    wrn("Creating a TEXT column from raw, use lists of raw to create BLOB columns")
+    wrn("Creating a TEXT column from raw, use lists of raw to create BLOB columns.")
     data[is_raw] <- lapply(data[is_raw], as.character)
   }
   data

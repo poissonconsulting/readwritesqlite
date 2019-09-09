@@ -48,11 +48,11 @@ test_that("rws_write list logs commands", {
   rws_write(y["local"], exists = FALSE, conn = conn)
   expect_identical(nrow(rws_read_log(conn)), 2L)
   expect_error(rws_write(y, conn = conn),
-               "unique = TRUE but the following table names are duplicated: 'local'")
+               "^The following table name is duplicated: 'local'; but unique = TRUE[.]$")
   rws_write(y, conn = conn, unique = FALSE)
   expect_identical(nrow(rws_read_log(conn)), 4L)
   expect_error(rws_write(y, delete = TRUE, conn = conn),
-  "unique = TRUE and delete = TRUE but the following table names are duplicated: 'local'")
+  "^The following table name is duplicated: 'local'; but unique = TRUE and delete = TRUE[.]$")
   rws_write(y["LOCAl"], delete = TRUE, conn = conn)
   expect_identical(nrow(rws_read_log(conn)), 6L)
   log <- rws_read_log(conn)
