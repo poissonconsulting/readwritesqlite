@@ -65,13 +65,20 @@ The init, meta and log data are stored in separate tables from the main data whi
 
 ## Installation
 
-To install the latest development version from [GitHub](https://github.com/poissonconsulting/readwritesqlite)
+To install the latest release from [CRAN](https://cran.r-project.org)
+```r
+install.packages("readwritesqlite")
 ```
+
+To install the developmental version from [GitHub](https://github.com/poissonconsulting/readwritesqlite)
+```r
+# install.packages("remotes")
 remotes::install_github("poissonconsulting/readwritesqlite")
 ```
 
-To install the latest development version from the Poisson drat [repository](https://github.com/poissonconsulting/drat)
-```
+To install the latest developmental release from the Poisson drat [repository](https://github.com/poissonconsulting/drat)
+```r
+# install.packages("drat")
 drat::addRepo("poissonconsulting")
 install.packages("readwritesqlite")
 ```
@@ -127,7 +134,6 @@ rws_disconnect(conn)
 
 For more information on using `readwritesqlite` see the vignette [using-readwritesqlite](https://poissonconsulting.github.io/readwritesqlite/articles/using-readwritesqlite.html).
 
-
 ## Contribution
 
 Please report any [issues](https://github.com/poissonconsulting/readwritesqlite/issues).
@@ -135,4 +141,4 @@ Please report any [issues](https://github.com/poissonconsulting/readwritesqlite/
 [Pull requests](https://github.com/poissonconsulting/readwritesqlite/pulls) are always welcome.
 
 Please note that this project is released with a [Contributor Code of Conduct](https://poissonconsulting.github.io/readwritesqlite/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms
+By contributing to this project, you agree to abide by its terms.

@@ -77,16 +77,28 @@ interacting with a SQLite database.
 
 ## Installation
 
-To install the latest development version from
+To install the latest release from [CRAN](https://cran.r-project.org)
+
+``` r
+install.packages("readwritesqlite")
+```
+
+To install the developmental version from
 [GitHub](https://github.com/poissonconsulting/readwritesqlite)
 
-    remotes::install_github("poissonconsulting/readwritesqlite")
+``` r
+# install.packages("remotes")
+remotes::install_github("poissonconsulting/readwritesqlite")
+```
 
-To install the latest development version from the Poisson drat
+To install the latest developmental release from the Poisson drat
 [repository](https://github.com/poissonconsulting/drat)
 
-    drat::addRepo("poissonconsulting")
-    install.packages("readwritesqlite")
+``` r
+# install.packages("drat")
+drat::addRepo("poissonconsulting")
+install.packages("readwritesqlite")
+```
 
 ## Demonstration
 
@@ -202,4 +214,4 @@ are always welcome.
 
 Please note that this project is released with a [Contributor Code of
 Conduct](https://poissonconsulting.github.io/readwritesqlite/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms
+By contributing to this project, you agree to abide by its terms.
