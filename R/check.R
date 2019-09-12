@@ -4,6 +4,8 @@
 #'
 #' @inheritParams chk::chk_flag
 #' @param connected A logical scalar specifying whether x should be connected.
+#' @param err A flag indicating whether to throw an informative error 
+#' or immediately generate an informative message if the check fails.
 #' @param error A flag indicating whether to throw an informative error 
 #' or immediately generate an informative message if the check fails.
 #' @return TRUE if passes check. Otherwise if throws an informative error unless
@@ -20,7 +22,7 @@ chk_sqlite_conn <- function(x, connected = NA, err = TRUE, x_name = NULL) {
     return(TRUE)
   if(!err) return(FALSE)
   if(is.null(x_name))  x_name <- paste0("`", deparse(substitute(x)), "`")
-  chk_is(x, "SQLiteConnection", x_name = x_name)
+  chk_s4_class(x, "SQLiteConnection", x_name = x_name)
   if(isTRUE(connected)) err(x_name, " must be connected.")
   err(x_name, " must be disconnected.")
 }
@@ -42,7 +44,7 @@ check_table_name <- function(table_name, exists, conn) {
 }
 
 check_table_names <- function(table_names, exists, delete, all, unique, conn) {
-  chk_is(table_names, "character", x_name = "table_names")
+  chk_s3_class(table_names, "character", x_name = "table_names")
   if(!length(table_names)) return(table_names)
   
   vapply(table_names, check_table_name, "", exists = exists, conn = conn,

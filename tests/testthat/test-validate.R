@@ -8,7 +8,8 @@ test_that("rws_write.data.frame checks all columns present", {
   DBI::dbCreateTable(conn, "local", local)
   local <- local[1]
   expect_error(rws_write(local, conn = conn),
-               "'local' column names must include 'SELECT'")
+               "'local' column names must include 'SELECT'",
+               class = "chk_error")
 })
 
 test_that("rws_write.data.frame checks missing values", {
@@ -40,7 +41,8 @@ test_that("rws_write.data.frame checks primary key on input values", {
               PRIMARY KEY (x2, select2))")
   
   expect_error(rws_write(local, conn = conn),
-               "columns 'X2' and 'SELECT2' in data 'local' must be unique[.]$")
+               "columns 'X2' and 'SELECT2' in data 'local' must be unique[.]$",
+               class = "chk_error")
   local$x2 <- 1:3
   expect_identical(rws_write(local, conn = conn), "local")
 })

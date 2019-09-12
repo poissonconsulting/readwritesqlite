@@ -7,7 +7,7 @@ validate_data <- function(data, table_name, strict, silent, conn) {
   names(data_names) <- to_upper(names(data))
   names(data) <- to_upper(names(data))
   
-  chk_has(colnames(data), colnames, x_name = p0("'", table_name, "' column names"))
+  chk_superset(colnames(data), colnames, x_name = p0("'", table_name, "' column names"))
   
   if(isFALSE(silent)) {
     extra <- data_names[!names(data_names) %in% colnames]

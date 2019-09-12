@@ -228,7 +228,8 @@ test_that("rws_write.list requires named list", {
   teardown(DBI::dbDisconnect(conn))
   
   y <- list(data.frame(x = 1:3))
-  expect_error(rws_write(y, conn = conn), "^`x` must be named[.]$")
+  expect_error(rws_write(y, conn = conn), "^`x` must be named[.]$",
+               class = "chk_error")
 })
 
 test_that("rws_write writes list with 1 data frame", {

@@ -15,8 +15,8 @@ check_sqlite_connection(x, connected = NA, x_name = substitute(x),
 
 \item{connected}{A logical scalar specifying whether x should be connected.}
 
-\item{err}{A flag specifying whether to generate an error
-message if the check fails.}
+\item{err}{A flag indicating whether to throw an informative error 
+or immediately generate an informative message if the check fails.}
 
 \item{x_name}{A string of the name of object x or NULL.}
 

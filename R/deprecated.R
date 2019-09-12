@@ -88,7 +88,7 @@ check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), e
   x_name <- chk_deparse(x_name)
   chk_lgl(connected)
   chk_flag(error)
-  chk_is(x, "SQLiteConnection", x_name = x_name)
+  chk_s3_class(x, "SQLiteConnection", x_name = x_name)
   if(isTRUE(connected) && !dbIsValid(x)) {
     chk_fail(x_name, " must be connected", error = error)
   } else if(isFALSE(connected) && dbIsValid(x))

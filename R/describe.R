@@ -30,9 +30,9 @@ rws_describe_meta <- function(x, ..., conn) {
 #' rws_read_meta(conn)
 #' rws_disconnect(conn)
 rws_describe_meta.character <- function(x, column, description, ..., conn) {
-  chk_is(x, "character"); chk_no_missing(x)
-  chk_is(column, "character"); chk_no_missing(column)
-  chk_is(description, "character")
+  chk_s3_class(x, "character"); chk_no_missing(x)
+  chk_s3_class(column, "character"); chk_no_missing(column)
+  chk_s3_class(description, "character")
   chk_sqlite_conn(conn, connected = TRUE)
   chk_unused(...)
   
@@ -50,11 +50,11 @@ rws_describe_meta.character <- function(x, column, description, ..., conn) {
 #' @export
 rws_describe_meta.data.frame <- function(x, ..., conn) {
   if(is_chk_on()) {
-    chk_is(x, "data.frame")
-    chk_has(colnames(x), c("Table", "Column", "Description"));
-    chk_is(x$Table, "character"); chk_no_missing(x$Table)
-    chk_is(x$Column, "character"); chk_no_missing(x$Column)
-    chk_is(x$Description, "character")
+    chk_s3_class(x, "data.frame")
+    chk_superset(colnames(x), c("Table", "Column", "Description"));
+    chk_s3_class(x$Table, "character"); chk_no_missing(x$Table)
+    chk_s3_class(x$Column, "character"); chk_no_missing(x$Column)
+    chk_s3_class(x$Description, "character")
     chk_sqlite_conn(conn, connected = TRUE)
     chk_unused(...)
   }

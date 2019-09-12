@@ -2,7 +2,8 @@ context("check")
 
 test_that("chk_sqlite_conn", {
   expect_error(chk_sqlite_conn(1), 
-               "^`1` must inherit from class 'SQLiteConnection'[.]$")
+               "^`1` must inherit from S4 class 'SQLiteConnection'[.]$",
+               class = "chk_error")
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   expect_true(chk_sqlite_conn(conn))
   expect_true(chk_sqlite_conn(conn, connected = TRUE))
@@ -25,7 +26,8 @@ test_that("check_table_names", {
   expect_true(DBI::dbCreateTable(conn, "local", local))
 
   expect_error(check_table_names(1, conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE), 
-               "^table_names must inherit from class 'character'[.]$")
+               "^table_names must inherit from S3 class 'character'[.]$",
+               class = "chk_error")
   expect_error(check_table_names(c("e", "f"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE), 
                "^Table 'e' does not exist[.]$")
   expect_error(check_table_names(c(.log_table_name, "e"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE),  

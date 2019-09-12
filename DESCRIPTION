@@ -15,7 +15,7 @@ Description:
 License: MIT + file LICENSE
 Depends: R (>= 3.4)
 Imports: 
-    chk (>= 0.0.1.9012),
+    chk (>= 0.0.1.9019),
     hms (>= 0.5.0),
     DBI,
     RSQLite
