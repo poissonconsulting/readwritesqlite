@@ -15,7 +15,7 @@ rws_write(x, exists = TRUE, delete = FALSE, replace = FALSE,
 
 \item{exists}{A flag specifying whether the table(s) must already exist.}
 
-\item{delete}{A flag specifying whether to delete existing rows before 
+\item{delete}{A flag specifying whether to delete existing rows before
 inserting data. If \code{meta = TRUE} the meta data is deleted.}
 
 \item{replace}{A flag specifying whether to replace any existing rows whose inclusion would violate unique or primary key constraints.}
@@ -24,7 +24,7 @@ inserting data. If \code{meta = TRUE} the meta data is deleted.}
 
 \item{log}{A flag specifying whether to log the table operations.}
 
-\item{commit}{A flag specifying whether to commit the operations 
+\item{commit}{A flag specifying whether to commit the operations
 (calling with commit = FALSE can be useful for checking data).}
 
 \item{strict}{A flag specifying whether to error if x has extraneous columns or if exists = TRUE extraneous data frames.}

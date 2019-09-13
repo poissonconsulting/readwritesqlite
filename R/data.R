@@ -1,6 +1,6 @@
 #' Example Data
-#' 
+#'
 #' An sf tibble of example data.
-#' @examples 
+#' @examples
 #' rws_data
 "rws_data"

@@ -1,6 +1,6 @@
 #' @export
 rws_query_sqlite <- function(query, meta = TRUE, conn) {
-.Deprecated("rws_query")
+  .Deprecated("rws_query")
   rws_query(query, meta = meta, conn = conn)
 }
 
@@ -17,15 +17,15 @@ rws_close_connection <- function(conn) {
 }
 
 #' @export
-rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE, 
+rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE,
                              replace = FALSE,
                              meta = TRUE,
                              log = TRUE,
                              commit = TRUE,
                              strict = TRUE,
-                             x_name = substitute(x), 
+                             x_name = substitute(x),
                              silent = getOption("rws.silent", FALSE),
-                             conn, 
+                             conn,
                              ...) {
   .Deprecated("rws_write")
   UseMethod("rws_write")
@@ -61,22 +61,26 @@ rws_read_sqlite_table <- function(x, meta = TRUE, conn) {
   rws_read_table(x, meta = meta, conn = conn)
 }
 
-is_string <- function (x) (is.character(x) || is.factor(x)) && length(x) == 1 && !is.na(x)
+is_string <- function(x) (is.character(x) || is.factor(x)) && length(x) == 1 && !is.na(x)
 
-chk_deparse <- function (x) {
-    if (!is.character(x)) 
-        x <- deparse(x)
-    if (isTRUE(is.na(x))) 
-        x <- "NA"
-    if (!is_string(x)) 
-        err(substitute(x), " must be a string")
-    x
+chk_deparse <- function(x) {
+  if (!is.character(x)) {
+    x <- deparse(x)
+  }
+  if (isTRUE(is.na(x))) {
+    x <- "NA"
+  }
+  if (!is_string(x)) {
+    err(substitute(x), " must be a string")
+  }
+  x
 }
 
-chk_fail <- function (..., error) {
-    if (missing(error) || isTRUE(error)) 
-        err(...)
-    wrn(...)
+chk_fail <- function(..., error) {
+  if (missing(error) || isTRUE(error)) {
+    err(...)
+  }
+  wrn(...)
 }
 
 #' @describeIn chk_sqlite_conn Check SQLite Connection
@@ -89,9 +93,10 @@ check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), e
   chk_lgl(connected)
   chk_flag(error)
   chk_s3_class(x, "SQLiteConnection", x_name = x_name)
-  if(isTRUE(connected) && !dbIsValid(x)) {
+  if (isTRUE(connected) && !dbIsValid(x)) {
     chk_fail(x_name, " must be connected", error = error)
-  } else if(isFALSE(connected) && dbIsValid(x))
+  } else if (isFALSE(connected) && dbIsValid(x)) {
     chk_fail(x_name, " must be disconnected", error = error)
+  }
   invisible(x)
 }

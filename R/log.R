@@ -1,4 +1,4 @@
-log_schema <- function () {
+log_schema <- function() {
   p("CREATE TABLE", .log_table_name, "(
   DateTimeUTCLog TEXT NOT NULL,
   UserLog TEXT NOT NULL,
@@ -19,19 +19,22 @@ confirm_log_table <- function(conn) {
   } else {
     log_schema <- sub(";$", "", log_schema)
     schema <- table_schema(.log_table_name, conn)
-    if(!identical(schema, log_schema))
+    if (!identical(schema, log_schema)) {
       err("Table '", .log_table_name, "' has an invalid schema.")
+    }
   }
 }
 
 log_command <- function(table_name, command, nrow, conn) {
   confirm_log_table(conn)
-  data <- data.frame(DateTimeUTCLog = sys_date_time_utc(),
-                     UserLog = user(),
-                     TableLog = to_upper(table_name),
-                     CommandLog = command,
-                     NRowLog = nrow,
-                     stringsAsFactors = FALSE)
+  data <- data.frame(
+    DateTimeUTCLog = sys_date_time_utc(),
+    UserLog = user(),
+    TableLog = to_upper(table_name),
+    CommandLog = command,
+    NRowLog = nrow,
+    stringsAsFactors = FALSE
+  )
   DBI::dbAppendTable(conn, .log_table_name, data)
 }
 

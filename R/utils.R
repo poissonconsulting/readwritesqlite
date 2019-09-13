@@ -1,12 +1,12 @@
 #' Table Names
-#' 
+#'
 #' Gets the table names excluding the names of the meta and log tables.
 #'
 #' @inheritParams rws_write
 #'
 #' @return A character vector of table names.
 #' @export
-#' 
+#'
 #' @examples
 #' conn <- rws_connect()
 #' rws_list_tables(conn)

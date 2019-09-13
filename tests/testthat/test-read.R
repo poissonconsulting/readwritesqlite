@@ -15,8 +15,10 @@ test_that("rws_read returns tibble", {
   DBI::dbWriteTable(conn, "local", local)
 
   skip_if_not_installed("tibble")
-  expect_identical(rws_read("local", conn = conn), 
-                 list(local = tibble::as_tibble(local)))
+  expect_identical(
+    rws_read("local", conn = conn),
+    list(local = tibble::as_tibble(local))
+  )
 })
 
 test_that("rws_read returns empty named list", {
@@ -42,12 +44,14 @@ test_that("rws_read returns list with multiple named data frames", {
   teardown(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = 1:3)
-  local2 <- local[1:2,,drop = FALSE]
+  local2 <- local[1:2, , drop = FALSE]
   DBI::dbWriteTable(conn, "local", local)
   DBI::dbWriteTable(conn, "local2", local2)
   tables <- rws_read(conn)
-  expect_identical(tables, list(local = tibble::as_tibble(local),
-                                local2 = tibble::as_tibble(local2)))
+  expect_identical(tables, list(
+    local = tibble::as_tibble(local),
+    local2 = tibble::as_tibble(local2)
+  ))
 })
 
 test_that("rws_read with meta = FALSE ", {
@@ -56,8 +60,10 @@ test_that("rws_read with meta = FALSE ", {
 
   local <- readwritesqlite::rws_data
   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
-  expect_identical(rws_read_table("local", meta = TRUE, conn = conn),
-                   rws_read_table("local", meta = TRUE, conn = conn))
+  expect_identical(
+    rws_read_table("local", meta = TRUE, conn = conn),
+    rws_read_table("local", meta = TRUE, conn = conn)
+  )
   remote <- rws_read_table("local", meta = TRUE, conn = conn)
   expect_identical(remote, local)
   remote2 <- rws_read_table("local", meta = FALSE, conn = conn)
@@ -68,5 +74,6 @@ test_that("rws_read with meta = FALSE ", {
     factor = c("x", "y", NA),
     ordered = c("x", "y", NA),
     posixct = c(978433445, 1152378611, NA),
-    units = c(10, 11.5, NA)))
+    units = c(10, 11.5, NA)
+  ))
 })

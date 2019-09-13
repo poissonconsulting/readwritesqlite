@@ -10,21 +10,23 @@
 #' @aliases rws_open_connection
 #' @seealso \code{\link{rws_disconnect}()}
 #' @export
-#' 
-#' @examples 
+#'
+#' @examples
 #' conn <- rws_connect()
 #' print(conn)
 #' rws_disconnect(conn)
 rws_connect <- function(dbname = ":memory:", exists = NA) {
   chk_string(dbname)
   chk_lgl(exists)
-  
-  if(isTRUE(exists) && !file.exists(dbname))
-    err("File '", dbname,"' must already exist.")
 
-  if(isFALSE(exists) && file.exists(dbname))
-    err("File '", dbname,"' must not already exist.")
-  
+  if (isTRUE(exists) && !file.exists(dbname)) {
+    err("File '", dbname, "' must already exist.")
+  }
+
+  if (isFALSE(exists) && file.exists(dbname)) {
+    err("File '", dbname, "' must not already exist.")
+  }
+
   conn <- DBI::dbConnect(RSQLite::SQLite(), dbname = dbname)
   execute("PRAGMA foreign_keys = ON;", conn)
   conn
@@ -38,8 +40,8 @@ rws_connect <- function(dbname = ":memory:", exists = NA) {
 #' @aliases rws_close_connection
 #' @seealso \code{\link{rws_connect}()}
 #' @export
-#' 
-#' @examples 
+#'
+#' @examples
 #' conn <- rws_connect()
 #' rws_disconnect(conn)
 #' print(conn)
