@@ -41,7 +41,7 @@ test_that("rws_write.data.frame checks primary key on input values", {
               PRIMARY KEY (x2, select2))")
   
   expect_error(rws_write(local, conn = conn),
-               "columns 'X2' and 'SELECT2' in data 'local' must be unique[.]$",
+               "^Columns 'X2' and 'SELECT2' in data 'local' must be unique[.]$",
                class = "chk_error")
   local$x2 <- 1:3
   expect_identical(rws_write(local, conn = conn), "local")

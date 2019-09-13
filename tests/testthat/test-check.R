@@ -26,7 +26,7 @@ test_that("check_table_names", {
   expect_true(DBI::dbCreateTable(conn, "local", local))
 
   expect_error(check_table_names(1, conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE), 
-               "^table_names must inherit from S3 class 'character'[.]$",
+               "^`table_names` must inherit from S3 class 'character'[.]$",
                class = "chk_error")
   expect_error(check_table_names(c("e", "f"), conn, exists = TRUE, delete = FALSE, all = FALSE, unique = FALSE), 
                "^Table 'e' does not exist[.]$")

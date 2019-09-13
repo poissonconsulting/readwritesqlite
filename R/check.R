@@ -44,7 +44,7 @@ check_table_name <- function(table_name, exists, conn) {
 }
 
 check_table_names <- function(table_names, exists, delete, all, unique, conn) {
-  chk_s3_class(table_names, "character", x_name = "table_names")
+  chk_s3_class(table_names, "character")
   if(!length(table_names)) return(table_names)
   
   vapply(table_names, check_table_name, "", exists = exists, conn = conn,
