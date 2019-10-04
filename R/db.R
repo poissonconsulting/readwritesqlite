@@ -15,8 +15,8 @@ execute <- function(sql, conn) {
   DBI::dbExecute(conn, sql)
 }
 
-sql_interpolate <- function(sql, table_name, conn) {
-  DBI::sqlInterpolate(conn, sql, table_name = table_name)
+sql_interpolate <- function(sql, ..., conn) {
+  DBI::sqlInterpolate(conn, sql, ...)
 }
 
 sql_strip_foreign_keys <- function(sql) {
@@ -25,7 +25,7 @@ sql_strip_foreign_keys <- function(sql) {
 
 nrows_table <- function(table_name, conn) {
   sql <- "SELECT COUNT(*) FROM ?table_name;"
-  sql <- sql_interpolate(sql, table_name, conn)
+  sql <- sql_interpolate(sql, table_name = table_name, conn = conn)
   nrows <- get_query(sql, conn)
   nrows <- nrows[1, 1]
   nrows
@@ -40,7 +40,14 @@ create_table <- function(data, table_name, log, silent, conn) {
 
 drop_table <- function(table_name, conn) {
   sql <- "DROP TABLE IF EXISTS ?table_name;"
-  sql <- sql_interpolate(sql, table_name, conn)
+  sql <- sql_interpolate(sql, table_name = table_name, conn = conn)
+  execute(sql, conn)
+}
+
+rename_table <- function(table_name, new_table_name, conn) {
+  sql <- "ALTER TABLE ?table_name RENAME TO ?new_table_name;"
+  sql <- sql_interpolate(sql, table_name = table_name, 
+                         new_table_name = new_table_name, conn = conn)
   execute(sql, conn)
 }
 
@@ -60,7 +67,7 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
       on.exit(drop_table("temp", conn = conn))
       DBI::dbAppendTable(conn, "temp", data)
       sql <- "REPLACE INTO ?table_name SELECT * FROM temp;"
-      sql <- sql_interpolate(sql, table_name, conn)
+      sql <- sql_interpolate(sql, table_name = table_name, conn = conn)
       nrow1 <- nrows_table(table_name, conn)
       execute(sql, conn)
       nrow2 <- nrows_table(table_name, conn)
@@ -86,7 +93,7 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
 
 delete_data <- function(table_name, meta, log, conn) {
   sql <- "DELETE FROM ?table_name;"
-  sql <- sql_interpolate(sql, table_name, conn)
+  sql <- sql_interpolate(sql, table_name = table_name, conn = conn)
   nrow <- execute(sql, conn)
   if (log) {
     log_command(table_name, command = "DELETE", nrow = nrow, conn = conn)
@@ -118,7 +125,7 @@ query_data <- function(query, meta, conn) {
 
 table_schema <- function(table_name, conn) {
   sql <- "SELECT sql FROM sqlite_master WHERE name = ?table_name;"
-  sql <- sql_interpolate(sql, table_name, conn)
+  sql <- sql_interpolate(sql, table_name = table_name, conn = conn)
   schema <- get_query(sql, conn)[[1]]
   schema
 }
