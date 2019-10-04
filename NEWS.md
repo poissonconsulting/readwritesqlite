@@ -1,4 +1,4 @@
-- Added `rws_rename_table()`.
+- Added `rws_rename_table()` and `rws_rename_column()`.
 - Updated error messages to tidyverse style.
 - Moved `sf` and `units` packages to Suggests.
 - Deprecated `check_sqlite_connection()` for `chk_sqlite_conn()`.

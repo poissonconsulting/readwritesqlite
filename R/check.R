@@ -49,6 +49,24 @@ check_table_name <- function(table_name, exists, conn) {
   table_name
 }
 
+check_column_name <- function(table_name, column_name, exists, conn) {
+  check_table_name(table_name, exists = TRUE, conn = conn)
+  chk_string(column_name)
+  
+  column_exists <- column_name %in% column_names(table_name, conn)
+
+  if (isTRUE(exists) && !column_exists) {
+    err("Column '", column_name, "' does not exist in table '", table_name, "'.")
+  }
+
+  if (isFALSE(exists) && column_exists) {
+    err("Column '", column_name, "' already exists in table '", table_name, "'.")
+  }
+
+  column_name
+}
+
+
 check_table_names <- function(table_names, exists, delete, all, unique, conn) {
   chk_s3_class(table_names, "character")
   if (!length(table_names)) {

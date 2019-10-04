@@ -51,6 +51,14 @@ rename_table <- function(table_name, new_table_name, conn) {
   execute(sql, conn)
 }
 
+rename_column <- function(table_name, column_name, new_column_name, conn) {
+  sql <- "ALTER TABLE ?table_name RENAME COLUMN ?column_name TO ?new_column_name;"
+  sql <- sql_interpolate(sql, table_name = table_name,
+                         column_name = column_name,
+                         new_column_name = new_column_name, conn = conn)
+  execute(sql, conn)
+}
+
 write_data <- function(data, table_name, replace, meta, log, conn) {
   if (meta) {
     sf_column_name <- sf_column_name(data)

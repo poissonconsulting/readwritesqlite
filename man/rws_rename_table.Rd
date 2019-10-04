@@ -2,7 +2,7 @@
 % Please edit documentation in R/rename.R
 \name{rws_rename_table}
 \alias{rws_rename_table}
-\title{Rename SQLite Column}
+\title{Rename SQLite Table}
 \usage{
 rws_rename_table(table_name, new_table_name, conn)
 }
@@ -17,14 +17,17 @@ rws_rename_table(table_name, new_table_name, conn)
 TRUE
 }
 \description{
-Rename SQLite Column
+Rename SQLite Table
 }
 \examples{
 conn <- rws_connect()
-rws_write(list(somedata = rws_data), exists = FALSE, conn = conn)
+rws_write(rws_data, exists = FALSE, conn = conn)
 rws_list_tables(conn)
-rws_rename_table("somedata", "tableb", conn)
+rws_rename_table("rws_data", "tableb", conn)
 rws_list_tables(conn)
 rws_disconnect(conn)
+}
+\seealso{
+Other rws_rename: \code{\link{rws_rename_column}}
 }
 \concept{rws_rename}
