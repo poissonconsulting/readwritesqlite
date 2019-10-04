@@ -38,3 +38,29 @@ test_that("rws_rename_table multiple tables", {
   expect_identical(rws_read_init(conn)$TableInit, sort(c("MOREDATA", "TABLEB")))
   expect_identical(rws_read_meta(conn)$TableMeta, sort(c("MOREDATA", "TABLEB")))
 })
+
+test_that("rws_rename_table primary key", {
+  
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+
+  DBI::dbExecute(conn, "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)")
+
+  DBI::dbExecute(conn, "CREATE TABLE local2 (
+                  x INTEGER NOT NULL PRIMARY KEY,
+                  y INTEGER NOT NULL,
+                FOREIGN KEY (x) REFERENCES local (x))")
+
+  local <- data.frame(x = 1:4)
+  expect_identical(rws_write(local, conn = conn), "local")
+
+  local2 <- data.frame(x = c(1:2, 4L))
+  local2$y <- local2$x + 10L
+  expect_identical(rws_write(local2, conn = conn), "local2")
+  
+  expect_true(rws_rename_table("local", "tb", conn = conn))
+  
+  expect_identical(readwritesqlite:::table_schema("local2", conn),
+                   "CREATE TABLE local2 (\n                  x INTEGER NOT NULL PRIMARY KEY,\n                  y INTEGER NOT NULL,\n                FOREIGN KEY (x) REFERENCES \"tb\" (x))")
+})
