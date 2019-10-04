@@ -90,7 +90,7 @@ Key attribute information is preserved for many classes.
 library(readwritesqlite)
 
 # for nicer printing of data frames
-library(tibble) 
+library(tibble)
 library(sf)
 
 conn <- rws_connect()
