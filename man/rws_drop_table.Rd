@@ -15,7 +15,10 @@ rws_drop_table(table_name, conn)
 TRUE
 }
 \description{
-Drop SQLite Table
+Drops SQLite table using DROP TABLE.
+}
+\details{
+Also drops rows from meta and init tables.
 }
 \examples{
 conn <- rws_connect()
@@ -24,6 +27,9 @@ rws_list_tables(conn)
 rws_drop_table("rws_data", conn = conn)
 rws_list_tables(conn)
 rws_disconnect(conn)
+}
+\references{
+\url{https://www.sqlite.org/lang_droptable.html}
 }
 \seealso{
 Other rws_rename: \code{\link{rws_rename_column}},

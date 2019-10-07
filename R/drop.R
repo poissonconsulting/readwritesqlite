@@ -1,7 +1,12 @@
 #' Drop SQLite Table
+#' 
+#' Drops SQLite table using DROP TABLE.
+#' 
+#' Also drops rows from meta and init tables.
 #'
 #' @inheritParams rws_write
 #' @param table_name A string of the name of the table.
+#' @references \url{https://www.sqlite.org/lang_droptable.html}
 #' @family rws_rename
 #' @export
 #' @return TRUE
