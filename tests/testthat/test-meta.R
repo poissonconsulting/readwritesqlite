@@ -494,6 +494,8 @@ test_that("meta sfc different types", {
   query <- "UPDATE `local` SET `ztextold` = 'MULTIPOINT (0 1, 0 1, 0 1)'"
   DBI::dbExecute(conn, query)
   
+  skip_if_not_installed("sf", minimum_version = "0.8-1")
+  
   remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
