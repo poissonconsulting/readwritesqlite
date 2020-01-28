@@ -467,26 +467,33 @@ test_that("meta sfc different types", {
     sf::st_point(c(0, 1)),
     sf::st_point(c(0, 1))
   ), crs = 4326)
-
+  
   local <- data.frame(
     zinteger = z,
     zreal = z,
     znumeric = z,
     ztext = z,
+    ztextold = z,
     zblob = z
   )
 
-  colnames(local) <- c("zinteger", "zreal", "znumeric", "ztext", "zblob")
+  colnames(local) <- c("zinteger", "zreal", "znumeric", "ztext", "ztextold", "zblob")
 
   DBI::dbExecute(conn, "CREATE TABLE local (
                   zinteger INTEGER,
                   zreal REAL,
                   znumeric NUMERIC,
                   ztext TEXT,
+                  ztextold TEXT,
                   zblob BLOB
               )")
 
   expect_identical(rws_write(local, conn = conn), "local")
+  
+  # modify ztextold to resemble old multipoint style
+  query <- "UPDATE `local` SET `ztextold` = 'MULTIPOINT (0 1, 0 1, 0 1)'"
+  DBI::dbExecute(conn, query)
+  
   remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote2 <- DBI::dbReadTable(conn, "local")
@@ -494,10 +501,10 @@ test_that("meta sfc different types", {
     vapply(remote2, is.blob, TRUE),
     c(
       zinteger = TRUE, zreal = TRUE, znumeric = TRUE,
-      ztext = FALSE, zblob = TRUE
+      ztext = FALSE, ztextold = FALSE, zblob = TRUE
     )
   )
-  expect_identical(remote2$ztext, "MULTIPOINT (0 1, 0 1, 0 1)")
+  expect_identical(remote2$ztext, "MULTIPOINT ((0 1), (0 1), (0 1))")
 })
 
 test_that("meta factor different types", {
