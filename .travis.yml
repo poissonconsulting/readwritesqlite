@@ -3,9 +3,10 @@ sudo: required
 cache: packages
 
 r:
-  - oldrel
-  - release
   - devel
+  - release
+  - oldrel
+  - 3.4
 
 r_packages:
   - covr
