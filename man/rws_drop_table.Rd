@@ -32,7 +32,8 @@ rws_disconnect(conn)
 \url{https://www.sqlite.org/lang_droptable.html}
 }
 \seealso{
-Other rws_rename: \code{\link{rws_rename_column}},
-  \code{\link{rws_rename_table}}
+Other rws_rename: 
+\code{\link{rws_rename_column}()},
+\code{\link{rws_rename_table}()}
 }
 \concept{rws_rename}

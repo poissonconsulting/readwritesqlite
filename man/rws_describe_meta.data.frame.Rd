@@ -20,7 +20,9 @@ An invisible character vector of the previous descriptions.
 Add Data Frame of Descriptions to SQL Meta Data Table
 }
 \seealso{
-Other rws_read: \code{\link{rws_read.SQLiteConnection}},
-  \code{\link{rws_read.character}}, \code{\link{rws_read}}
+Other rws_read: 
+\code{\link{rws_read.SQLiteConnection}()},
+\code{\link{rws_read.character}()},
+\code{\link{rws_read}()}
 }
 \concept{rws_read}

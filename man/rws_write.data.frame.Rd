@@ -4,10 +4,20 @@
 \alias{rws_write.data.frame}
 \title{Write a Data Frame to a SQLite Database}
 \usage{
-\method{rws_write}{data.frame}(x, exists = TRUE, delete = FALSE,
-  replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE,
-  strict = TRUE, x_name = substitute(x),
-  silent = getOption("rws.silent", FALSE), conn, ...)
+\method{rws_write}{data.frame}(
+  x,
+  exists = TRUE,
+  delete = FALSE,
+  replace = FALSE,
+  meta = TRUE,
+  log = TRUE,
+  commit = TRUE,
+  strict = TRUE,
+  x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE),
+  conn,
+  ...
+)
 }
 \arguments{
 \item{x}{A data frame.}
@@ -48,7 +58,9 @@ rws_list_tables(conn)
 rws_disconnect(conn)
 }
 \seealso{
-Other rws_write: \code{\link{rws_write.environment}},
-  \code{\link{rws_write.list}}, \code{\link{rws_write}}
+Other rws_write: 
+\code{\link{rws_write.environment}()},
+\code{\link{rws_write.list}()},
+\code{\link{rws_write}()}
 }
 \concept{rws_write}

@@ -4,11 +4,22 @@
 \alias{rws_write.list}
 \title{Write a Named List of Data Frames to a SQLite Database}
 \usage{
-\method{rws_write}{list}(x, exists = TRUE, delete = FALSE,
-  replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE,
-  strict = TRUE, x_name = substitute(x),
-  silent = getOption("rws.silent", FALSE), conn, all = TRUE,
-  unique = TRUE, ...)
+\method{rws_write}{list}(
+  x,
+  exists = TRUE,
+  delete = FALSE,
+  replace = FALSE,
+  meta = TRUE,
+  log = TRUE,
+  commit = TRUE,
+  strict = TRUE,
+  x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE),
+  conn,
+  all = TRUE,
+  unique = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A named list of data frames.}
@@ -52,8 +63,9 @@ rws_list_tables(conn)
 rws_disconnect(conn)
 }
 \seealso{
-Other rws_write: \code{\link{rws_write.data.frame}},
-  \code{\link{rws_write.environment}},
-  \code{\link{rws_write}}
+Other rws_write: 
+\code{\link{rws_write.data.frame}()},
+\code{\link{rws_write.environment}()},
+\code{\link{rws_write}()}
 }
 \concept{rws_write}

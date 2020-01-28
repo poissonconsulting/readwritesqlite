@@ -30,7 +30,8 @@ rws_read_table("local", conn = conn)
 rws_disconnect(conn)
 }
 \seealso{
-Other rws_rename: \code{\link{rws_drop_table}},
-  \code{\link{rws_rename_table}}
+Other rws_rename: 
+\code{\link{rws_drop_table}()},
+\code{\link{rws_rename_table}()}
 }
 \concept{rws_rename}

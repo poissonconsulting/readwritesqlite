@@ -7,8 +7,12 @@
 \usage{
 chk_sqlite_conn(x, connected = NA, err = TRUE, x_name = NULL)
 
-check_sqlite_connection(x, connected = NA, x_name = substitute(x),
-  error = TRUE)
+check_sqlite_connection(
+  x,
+  connected = NA,
+  x_name = substitute(x),
+  error = TRUE
+)
 }
 \arguments{
 \item{x}{The object to check.}

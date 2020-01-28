@@ -4,11 +4,22 @@
 \alias{rws_write.environment}
 \title{Write the Data Frames in an Environment to a SQLite Database}
 \usage{
-\method{rws_write}{environment}(x, exists = TRUE, delete = FALSE,
-  replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE,
-  strict = TRUE, x_name = substitute(x),
-  silent = getOption("rws.silent", FALSE), conn, all = TRUE,
-  unique = TRUE, ...)
+\method{rws_write}{environment}(
+  x,
+  exists = TRUE,
+  delete = FALSE,
+  replace = FALSE,
+  meta = TRUE,
+  log = TRUE,
+  commit = TRUE,
+  strict = TRUE,
+  x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE),
+  conn,
+  all = TRUE,
+  unique = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{An environment.}
@@ -55,7 +66,9 @@ rws_list_tables(conn)
 rws_disconnect(conn)
 }
 \seealso{
-Other rws_write: \code{\link{rws_write.data.frame}},
-  \code{\link{rws_write.list}}, \code{\link{rws_write}}
+Other rws_write: 
+\code{\link{rws_write.data.frame}()},
+\code{\link{rws_write.list}()},
+\code{\link{rws_write}()}
 }
 \concept{rws_write}

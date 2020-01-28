@@ -28,7 +28,8 @@ rws_list_tables(conn)
 rws_disconnect(conn)
 }
 \seealso{
-Other rws_rename: \code{\link{rws_drop_table}},
-  \code{\link{rws_rename_column}}
+Other rws_rename: 
+\code{\link{rws_drop_table}()},
+\code{\link{rws_rename_column}()}
 }
 \concept{rws_rename}

@@ -5,10 +5,20 @@
 \alias{rws_write_sqlite}
 \title{Write to a SQLite Database}
 \usage{
-rws_write(x, exists = TRUE, delete = FALSE, replace = FALSE,
-  meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
-  x_name = substitute(x), silent = getOption("rws.silent", FALSE),
-  conn, ...)
+rws_write(
+  x,
+  exists = TRUE,
+  delete = FALSE,
+  replace = FALSE,
+  meta = TRUE,
+  log = TRUE,
+  commit = TRUE,
+  strict = TRUE,
+  x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE),
+  conn,
+  ...
+)
 }
 \arguments{
 \item{x}{The object to write.}
@@ -49,8 +59,9 @@ rws_write(rws_data, exists = FALSE, conn = conn)
 rws_disconnect(conn)
 }
 \seealso{
-Other rws_write: \code{\link{rws_write.data.frame}},
-  \code{\link{rws_write.environment}},
-  \code{\link{rws_write.list}}
+Other rws_write: 
+\code{\link{rws_write.data.frame}()},
+\code{\link{rws_write.environment}()},
+\code{\link{rws_write.list}()}
 }
 \concept{rws_write}
