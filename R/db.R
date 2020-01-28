@@ -32,7 +32,7 @@ nrows_table <- function(table_name, conn) {
 }
 
 create_table <- function(data, table_name, log, silent, conn) {
-  if (!isFALSE(silent)) msg("Creating table '", table_name, "'.")
+  if (!vld_false(silent)) msg("Creating table '", table_name, "'.")
   DBI::dbCreateTable(conn, table_name, data)
   if (log) log_command(table_name, command = "CREATE", nrow = 0L, conn = conn)
   data

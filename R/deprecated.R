@@ -67,7 +67,7 @@ chk_deparse <- function(x) {
   if (!is.character(x)) {
     x <- deparse(x)
   }
-  if (isTRUE(is.na(x))) {
+  if (vld_true(is.na(x))) {
     x <- "NA"
   }
   if (!is_string(x)) {
@@ -77,7 +77,7 @@ chk_deparse <- function(x) {
 }
 
 chk_fail <- function(..., error) {
-  if (missing(error) || isTRUE(error)) {
+  if (missing(error) || vld_true(error)) {
     err(...)
   }
   wrn(...)
@@ -93,9 +93,9 @@ check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), e
   chk_lgl(connected)
   chk_flag(error)
   chk_s3_class(x, "SQLiteConnection", x_name = x_name)
-  if (isTRUE(connected) && !dbIsValid(x)) {
+  if (vld_true(connected) && !dbIsValid(x)) {
     chk_fail(x_name, " must be connected", error = error)
-  } else if (isFALSE(connected) && dbIsValid(x)) {
+  } else if (vld_false(connected) && dbIsValid(x)) {
     chk_fail(x_name, " must be disconnected", error = error)
   }
   invisible(x)

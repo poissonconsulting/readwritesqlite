@@ -19,11 +19,11 @@ rws_connect <- function(dbname = ":memory:", exists = NA) {
   chk_string(dbname)
   chk_lgl(exists)
 
-  if (isTRUE(exists) && !file.exists(dbname)) {
+  if (vld_true(exists) && !file.exists(dbname)) {
     err("File '", dbname, "' must already exist.")
   }
 
-  if (isFALSE(exists) && file.exists(dbname)) {
+  if (vld_false(exists) && file.exists(dbname)) {
     err("File '", dbname, "' must not already exist.")
   }
 

@@ -1,6 +1,6 @@
 write_sqlite_data <- function(data, table_name, exists, delete, replace, meta, log,
                               strict, silent, conn) {
-  if (isFALSE(exists) || (is.na(exists) && !tables_exists(table_name, conn))) {
+  if (vld_false(exists) || (is.na(exists) && !tables_exists(table_name, conn))) {
     create_table(data, table_name, log = log, silent = silent, conn = conn)
   }
 
@@ -166,7 +166,7 @@ rws_write.list <- function(x,
     err("List `", x_name, "` includes objects which are not data frames.")
   }
 
-  if (isTRUE(exists)) {
+  if (vld_true(exists)) {
     exists2 <- tables_exists(names(x), conn)
     if (any(!exists2)) {
       extra <- names(x)[!exists2]

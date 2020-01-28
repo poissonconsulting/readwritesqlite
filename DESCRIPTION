@@ -1,6 +1,6 @@
 Package: readwritesqlite
 Title: Enhanced Reading and Writing for 'SQLite' Databases
-Version: 0.0.2.9005
+Version: 0.1.0
 Authors@R: c(
     person("Joe", "Thorley", , "joe@poissonconsulting.ca", c("aut", "cre"), comment = c(ORCID = "0000-0002-7683-4592")),
     person("Sebastian", "Dalgarno", , "seb@poissonconsulting.ca", "ctb", comment = c(ORCID = "0000-0002-3658-4517")),   
@@ -16,7 +16,7 @@ Description:
 License: MIT + file LICENSE
 URL: https://github.com/poissonconsulting/readwritesqlite
 BugReports: https://github.com/poissonconsulting/readwritesqlite/issues
-Depends: R (>= 3.4)
+Depends: R (>= 3.3)
 Imports: 
     chk,
     hms,

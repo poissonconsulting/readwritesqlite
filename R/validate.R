@@ -9,7 +9,7 @@ validate_data <- function(data, table_name, strict, silent, conn) {
 
   chk_superset(colnames(data), colnames, x_name = p0("'", table_name, "' column names"))
 
-  if (isFALSE(silent)) {
+  if (vld_false(silent)) {
     extra <- data_names[!names(data_names) %in% colnames]
     if (length(extra)) {
       msg <- p0(

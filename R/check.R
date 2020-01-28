@@ -26,7 +26,7 @@ chk_sqlite_conn <- function(x, connected = NA, err = TRUE, x_name = NULL) {
   }
   if (is.null(x_name)) x_name <- paste0("`", deparse(substitute(x)), "`")
   chk_s4_class(x, "SQLiteConnection", x_name = x_name)
-  if (isTRUE(connected)) err(x_name, " must be connected.")
+  if (vld_true(connected)) err(x_name, " must be connected.")
   err(x_name, " must be disconnected.")
 }
 
@@ -38,11 +38,11 @@ check_table_name <- function(table_name, exists, conn) {
   }
 
   table_exists <- tables_exists(table_name, conn)
-  if (isTRUE(exists) && !table_exists) {
+  if (vld_true(exists) && !table_exists) {
     err("Table '", table_name, "' does not exist.")
   }
 
-  if (isFALSE(exists) && table_exists) {
+  if (vld_false(exists) && table_exists) {
     err("Table '", table_name, "' already exists.")
   }
 
@@ -55,11 +55,11 @@ check_column_name <- function(table_name, column_name, exists, conn) {
   
   column_exists <- column_name %in% column_names(table_name, conn)
 
-  if (isTRUE(exists) && !column_exists) {
+  if (vld_true(exists) && !column_exists) {
     err("Column '", column_name, "' does not exist in table '", table_name, "'.")
   }
 
-  if (isFALSE(exists) && column_exists) {
+  if (vld_false(exists) && column_exists) {
     err("Column '", column_name, "' already exists in table '", table_name, "'.")
   }
 
@@ -78,14 +78,14 @@ check_table_names <- function(table_names, exists, delete, all, unique, conn) {
     USE.NAMES = FALSE
   )
 
-  if (unique || isFALSE(exists) || delete) {
+  if (unique || vld_false(exists) || delete) {
     duplicates <- duplicated(to_upper(table_names))
     if (any(duplicates)) {
       table_names <- table_names[!duplicated(to_upper(table_names))]
       table_names <- sort(table_names)
 
       unique <- if (unique) "unique = TRUE" else NULL
-      exists <- if (isFALSE(exists)) "exists = FALSE" else NULL
+      exists <- if (vld_false(exists)) "exists = FALSE" else NULL
       delete <- if (delete) "delete = TRUE" else NULL
 
       but <- p0(c(unique, exists, delete), collapse = " and ")
@@ -95,7 +95,7 @@ check_table_names <- function(table_names, exists, delete, all, unique, conn) {
       )
     }
   }
-  if (all && !isFALSE(exists)) {
+  if (all && !vld_false(exists)) {
     missing <-
       setdiff(to_upper(rws_list_tables(conn)), to_upper(table_names))
     if (length(missing)) {
