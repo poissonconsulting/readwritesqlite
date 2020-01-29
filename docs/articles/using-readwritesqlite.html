@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       <h1>Using readwritesqlite</h1>
                         <h4 class="author">Joe Thorley</h4>
             
-            <h4 class="date">2019-07-23</h4>
+            <h4 class="date">2020-01-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/poissonconsulting/readwritesqlite/blob/master/vignettes/using-readwritesqlite.Rmd"><code>vignettes/using-readwritesqlite.Rmd</code></a></small>
       <div class="hidden name"><code>using-readwritesqlite.Rmd</code></div>
@@ -99,24 +99,25 @@
 <h2 class="hasAnchor">
 <a href="#starting" class="anchor"></a>Starting</h2>
 <p>The first task after loading <code>readwritesqlite</code> is to create an object of class SQLiteConnection. Below we create one in memory although in general the user will want to specify a path.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readwritesqlite)</a>
-<a class="sourceLine" id="cb1-2" title="2">conn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rws_connect.html">rws_connect</a></span>(<span class="st">":memory:"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readwritesqlite)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>conn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rws_connect.html">rws_connect</a></span>(<span class="st">":memory:"</span>)</span></code></pre></div>
 </div>
 <div id="writing-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#writing-data" class="anchor"></a>Writing Data</h2>
 <p>Individual data frames, environments or named lists of data frames can be written to a connection using <code><a href="../reference/rws_write.html">rws_write()</a></code>.</p>
 <p>In the case of a data frame the default table name is the name of the object (an alternative name can be specified using the <code>x_name</code> argument).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/rws_write.html">rws_write</a></span>(rws_data, <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span>(conn)</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co">#&gt; [1] "rws_data"</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="../reference/rws_write.html">rws_write</a></span>(rws_data, <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; Loading required namespace: sf</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span>(conn)</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; [1] "rws_data"</span></span></code></pre></div>
 <p>The fact that <code><a href="../reference/rws_write.html">rws_write()</a></code> accepts environments means that the user can easily write all the data frames in the current environment to a SQLiteConnection.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">a_table &lt;-<span class="st"> </span>rws_data[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>, <span class="st">"logical"</span>)]</a>
-<a class="sourceLine" id="cb3-2" title="2">another_table &lt;-<span class="st"> </span>rws_data[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"factor"</span>, <span class="st">"ordered"</span>)]</a>
-<a class="sourceLine" id="cb3-3" title="3">not_a_table &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="../reference/rws_write.html">rws_write</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/environment.html">environment</a></span>(), <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">all =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span>(conn)</a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>a_table &lt;-<span class="st"> </span>rws_data[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"date"</span>, <span class="st">"logical"</span>)]</span>
+<span id="cb3-2"><a href="#cb3-2"></a>another_table &lt;-<span class="st"> </span>rws_data[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"factor"</span>, <span class="st">"ordered"</span>)]</span>
+<span id="cb3-3"><a href="#cb3-3"></a>not_a_table &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="kw"><a href="../reference/rws_write.html">rws_write</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/environment.html">environment</a></span>(), <span class="dt">exists =</span> <span class="ot">FALSE</span>, <span class="dt">all =</span> <span class="ot">FALSE</span>, <span class="dt">conn =</span> conn)</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="kw"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span>(conn)</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></span></code></pre></div>
 <p>Objects which are not data frames are silently filtered from environments but cause an error with lists.</p>
 <div id="exists" class="section level3">
 <h3 class="hasAnchor">
@@ -168,77 +169,78 @@
 <h2 class="hasAnchor">
 <a href="#reading-data" class="anchor"></a>Reading Data</h2>
 <p>Data can be read using <code><a href="../reference/rws_read.html">rws_read()</a></code> which either takes a vector of table names or the connection as the first argument. <code><a href="../reference/rws_read.html">rws_read()</a></code> returns a named list of tibbles. If the connection is the first argument then the named list consists of all tables in the data base.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">tables &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rws_read.html">rws_read</a></span>(conn)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(tables)</a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></a>
-<a class="sourceLine" id="cb4-4" title="4">tables<span class="op">$</span>rws_data</a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; geometry type:  POINT</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; dimension:      XY</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; epsg (SRID):    4326</span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>tables &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rws_read.html">rws_read</a></span>(conn)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(tables)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>tables<span class="op">$</span>rws_data</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; geometry type:  POINT</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; dimension:      XY</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; epsg (SRID):    4326</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt; # A tibble: 3 x 7</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span></span></code></pre></div>
 <p>The table names can of course be manipulated and <code><a href="https://rdrr.io/r/base/list2env.html">list2env()</a></code> used to assign the data frames to the current environment.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(tables) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/chartr.html">toupper</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(tables))</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/list2env.html">list2env</a></span>(tables, <span class="kw"><a href="https://rdrr.io/r/base/environment.html">environment</a></span>())</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(tables) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/chartr.html">toupper</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(tables))</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw"><a href="https://rdrr.io/r/base/list2env.html">list2env</a></span>(tables, <span class="kw"><a href="https://rdrr.io/r/base/environment.html">environment</a></span>())</span></code></pre></div>
 <p>If the user wishes to read a single data frame they can use <code><a href="../reference/rws_read_table.html">rws_read_table()</a></code></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/rws_read_table.html">rws_read_table</a></span>(<span class="st">"rws_data"</span>, <span class="dt">conn =</span> conn)</a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="co">#&gt; geometry type:  POINT</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co">#&gt; dimension:      XY</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt; epsg (SRID):    4326</span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; # A tibble: 3 x 7</span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span></a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span></a>
-<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span></a>
-<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="../reference/rws_read_table.html">rws_read_table</a></span>(<span class="st">"rws_data"</span>, <span class="dt">conn =</span> conn)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; geometry type:  POINT</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; dimension:      XY</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt; epsg (SRID):    4326</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; # A tibble: 3 x 7</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span></span></code></pre></div>
 <p>The <code><a href="../reference/rws_read_meta.html">rws_read_meta()</a></code> and <code><a href="../reference/rws_read_log.html">rws_read_log()</a></code> allow the user to read the meta and log tables.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/rws_read_meta.html">rws_read_meta</a></span>(conn)</a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="co">#&gt; # A tibble: 13 x 4</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt;    TableMeta    ColumnMeta MetaMeta                         DescriptionMeta</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                            &lt;chr&gt;          </span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt;  1 A_TABLE      DATE       class: Date                      &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt;  2 A_TABLE      GEOMETRY   proj: +proj=longlat +datum=WGS8… &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt;  3 A_TABLE      LOGICAL    class: logical                   &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt;  4 ANOTHER_TAB… FACTOR     factor: 'x', 'y'                 &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt;  5 ANOTHER_TAB… GEOMETRY   proj: +proj=longlat +datum=WGS8… &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt;  6 ANOTHER_TAB… ORDERED    ordered: 'y', 'x'                &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt;  7 RWS_DATA     DATE       class: Date                      &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt;  8 RWS_DATA     FACTOR     factor: 'x', 'y'                 &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt;  9 RWS_DATA     GEOMETRY   proj: +proj=longlat +datum=WGS8… &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt; 10 RWS_DATA     LOGICAL    class: logical                   &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; 11 RWS_DATA     ORDERED    ordered: 'y', 'x'                &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; 12 RWS_DATA     POSIXCT    tz: Etc/GMT+8                    &lt;NA&gt;           </span></a>
-<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; 13 RWS_DATA     UNITS      units: m                         &lt;NA&gt;</span></a></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/rws_read_log.html">rws_read_log</a></span>(conn)</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; # A tibble: 6 x 5</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt;   DateTimeUTCLog      UserLog TableLog      CommandLog NRowLog</span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; 1 2019-07-07 16:09:59 joe     RWS_DATA      CREATE           0</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 2 2019-07-07 16:10:00 joe     RWS_DATA      INSERT           3</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 3 2019-07-07 16:10:00 joe     A_TABLE       CREATE           0</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 4 2019-07-07 16:10:00 joe     A_TABLE       INSERT           3</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 5 2019-07-07 16:10:00 joe     ANOTHER_TABLE CREATE           0</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 6 2019-07-07 16:10:00 joe     ANOTHER_TABLE INSERT           3</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="../reference/rws_read_meta.html">rws_read_meta</a></span>(conn)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co">#&gt; # A tibble: 13 x 4</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt;    TableMeta     ColumnMeta MetaMeta                             DescriptionMeta</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;                                &lt;chr&gt;          </span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;  1 A_TABLE       DATE       class: Date                          &lt;NA&gt;           </span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt;  2 A_TABLE       GEOMETRY   proj: +proj=longlat +datum=WGS84 +n… &lt;NA&gt;           </span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt;  3 A_TABLE       LOGICAL    class: logical                       &lt;NA&gt;           </span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt;  4 ANOTHER_TABLE FACTOR     factor: 'x', 'y'                     &lt;NA&gt;           </span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt;  5 ANOTHER_TABLE GEOMETRY   proj: +proj=longlat +datum=WGS84 +n… &lt;NA&gt;           </span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt;  6 ANOTHER_TABLE ORDERED    ordered: 'y', 'x'                    &lt;NA&gt;           </span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt;  7 RWS_DATA      DATE       class: Date                          &lt;NA&gt;           </span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt;  8 RWS_DATA      FACTOR     factor: 'x', 'y'                     &lt;NA&gt;           </span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#&gt;  9 RWS_DATA      GEOMETRY   proj: +proj=longlat +datum=WGS84 +n… &lt;NA&gt;           </span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">#&gt; 10 RWS_DATA      LOGICAL    class: logical                       &lt;NA&gt;           </span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt; 11 RWS_DATA      ORDERED    ordered: 'y', 'x'                    &lt;NA&gt;           </span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt; 12 RWS_DATA      POSIXCT    tz: Etc/GMT+8                        &lt;NA&gt;           </span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; 13 RWS_DATA      UNITS      units: m                             &lt;NA&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw"><a href="../reference/rws_read_log.html">rws_read_log</a></span>(conn)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt; # A tibble: 6 x 5</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt;   DateTimeUTCLog      UserLog TableLog      CommandLog NRowLog</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt; 1 2019-07-07 16:09:59 joe     RWS_DATA      CREATE           0</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; 2 2019-07-07 16:10:00 joe     RWS_DATA      INSERT           3</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; 3 2019-07-07 16:10:00 joe     A_TABLE       CREATE           0</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; 4 2019-07-07 16:10:00 joe     A_TABLE       INSERT           3</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; 5 2019-07-07 16:10:00 joe     ANOTHER_TABLE CREATE           0</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; 6 2019-07-07 16:10:00 joe     ANOTHER_TABLE INSERT           3</span></span></code></pre></div>
 </div>
 <div id="cleaning-up" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cleaning-up" class="anchor"></a>Cleaning Up</h2>
 <p>It’s good practice to close a connection once you have finished with it.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/rws_disconnect.html">rws_disconnect</a></span>(conn)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="../reference/rws_disconnect.html">rws_disconnect</a></span>(conn)</span></code></pre></div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -260,7 +262,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

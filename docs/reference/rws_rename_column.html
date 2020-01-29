@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read Initialization Data table from SQLite Database — rws_read_init • readwritesqlite</title>
+<title>Rename SQLite Column — rws_rename_column • readwritesqlite</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Read Initialization Data table from SQLite Database — rws_read_init" />
-<meta property="og:description" content="The table is created if it doesn't exist." />
+<meta property="og:title" content="Rename SQLite Column — rws_rename_column" />
+<meta property="og:description" content="Rename SQLite Column" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,20 +120,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read Initialization Data table from SQLite Database</h1>
-    <small class="dont-index">Source: <a href='https://github.com/poissonconsulting/readwritesqlite/blob/master/R/init.R'><code>R/init.R</code></a></small>
-    <div class="hidden name"><code>rws_read_init.Rd</code></div>
+    <h1>Rename SQLite Column</h1>
+    <small class="dont-index">Source: <a href='https://github.com/poissonconsulting/readwritesqlite/blob/master/R/rename.R'><code>R/rename.R</code></a></small>
+    <div class="hidden name"><code>rws_rename_column.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The table is created if it doesn't exist.</p>
+    <p>Rename SQLite Column</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rws_read_init</span>(<span class='no'>conn</span>)</pre>
+    <pre class="usage"><span class='fu'>rws_rename_column</span>(<span class='no'>table_name</span>, <span class='no'>column_name</span>, <span class='no'>new_column_name</span>, <span class='no'>conn</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>table_name</th>
+      <td><p>A string of the name of the table.</p></td>
+    </tr>
+    <tr>
+      <th>column_name</th>
+      <td><p>A string of the column name.</p></td>
+    </tr>
+    <tr>
+      <th>new_column_name</th>
+      <td><p>A string of the new name for the column.</p></td>
+    </tr>
     <tr>
       <th>conn</th>
       <td><p>A SQLiteConnection to a database.</p></td>
@@ -142,22 +154,30 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of the init table</p>
+    <p>TRUE</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other rws_rename: 
+<code><a href='rws_drop_table.html'>rws_drop_table</a>()</code>,
+<code><a href='rws_rename_table.html'>rws_rename_table</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>conn</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rws_connect.html'>rws_connect</a></span>()
-<span class='fu'>rws_read_init</span>(<span class='no'>conn</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 0 x 3</span><span>
-#&gt; </span><span style='color: #555555;'># … with 3 variables: TableInit </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, IsInit </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, SFInit </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'><span class='fu'><a href='rws_write.html'>rws_write</a></span>(<span class='no'>rws_data</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)
-<span class='fu'>rws_read_init</span>(<span class='no'>conn</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
-#&gt;   TableInit IsInit SFInit  
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
-#&gt; </span><span style='color: #555555;'>1</span><span> RWS_DATA       1 GEOMETRY</div><div class='input'><span class='fu'><a href='rws_disconnect.html'>rws_disconnect</a></span>(<span class='no'>conn</span>)</div></span></pre>
+<span class='fu'><a href='rws_write.html'>rws_write</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>x_name</span> <span class='kw'>=</span> <span class='st'>"local"</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)
+<span class='fu'><a href='rws_read_table.html'>rws_read_table</a></span>(<span class='st'>"local"</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 1</span><span>
+#&gt;       x
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1</div><div class='input'><span class='fu'>rws_rename_column</span>(<span class='st'>"local"</span>, <span class='st'>"x"</span>, <span class='st'>"Y"</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='rws_read_table.html'>rws_read_table</a></span>(<span class='st'>"local"</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 1</span><span>
+#&gt;       Y
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1</div><div class='input'><span class='fu'><a href='rws_disconnect.html'>rws_disconnect</a></span>(<span class='no'>conn</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
