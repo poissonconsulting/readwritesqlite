@@ -1,28 +1,5 @@
 context("check")
 
-test_that("chk_sqlite_conn", {
-  expect_error(chk_sqlite_conn(1),
-    "^`1` must inherit from S4 class 'SQLiteConnection'[.]$",
-    class = "chk_error"
-  )
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  expect_true(chk_sqlite_conn(conn))
-  expect_true(chk_sqlite_conn(conn, connected = TRUE))
-  expect_error(
-    chk_sqlite_conn(conn, connected = FALSE),
-    "`conn` must be disconnected[.]$"
-  )
-  DBI::dbDisconnect(conn)
-
-  expect_true(chk_sqlite_conn(conn))
-  expect_false(chk_sqlite_conn(conn, connected = TRUE, err = FALSE))
-  expect_error(
-    chk_sqlite_conn(conn, connected = TRUE),
-    "`conn` must be connected[.]$"
-  )
-  expect_true(chk_sqlite_conn(conn, connected = FALSE))
-})
-
 test_that("check_table_names", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

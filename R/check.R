@@ -1,35 +1,3 @@
-#' Check SQLite Connection
-#'
-#' Checks whether an R object is a SQLite Connection.
-#'
-#' @inheritParams chk::chk_flag
-#' @param connected A logical scalar specifying whether x should be connected.
-#' @param err A flag indicating whether to throw an informative error
-#' or immediately generate an informative message if the check fails.
-#' @param error A flag indicating whether to throw an informative error
-#' or immediately generate an informative message if the check fails.
-#' @return TRUE if passes check. Otherwise if throws an informative error unless
-#' \code{err = FALSE} in which case it returns FALSE.
-#' @export
-#'
-#' @examples
-#' conn <- rws_connect()
-#' chk_sqlite_conn(conn)
-#' rws_disconnect(conn)
-#' try(chk_sqlite_conn(conn, connected = TRUE))
-chk_sqlite_conn <- function(x, connected = NA, err = TRUE, x_name = NULL) {
-  if (inherits(x, "SQLiteConnection") && (is.na(connected) || connected == dbIsValid(x))) {
-    return(TRUE)
-  }
-  if (!err) {
-    return(FALSE)
-  }
-  if (is.null(x_name)) x_name <- paste0("`", deparse(substitute(x)), "`")
-  chk_s4_class(x, "SQLiteConnection", x_name = x_name)
-  if (vld_true(connected)) err(x_name, " must be connected.")
-  err(x_name, " must be disconnected.")
-}
-
 check_table_name <- function(table_name, exists, conn) {
   chk_string(table_name)
 

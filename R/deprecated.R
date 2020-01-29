@@ -84,6 +84,7 @@ chk_fail <- function(..., error) {
 }
 
 #' @describeIn chk_sqlite_conn Check SQLite Connection
+#' @param error A flag specifying whether to through an error if the check fails.
 #'
 #' @export
 check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), error = TRUE) {
@@ -92,7 +93,7 @@ check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), e
   x_name <- chk_deparse(x_name)
   chk_lgl(connected)
   chk_flag(error)
-  chk_s3_class(x, "SQLiteConnection", x_name = x_name)
+  chk_s4_class(x, "SQLiteConnection", x_name = x_name)
   if (vld_true(connected) && !dbIsValid(x)) {
     chk_fail(x_name, " must be connected", error = error)
   } else if (vld_false(connected) && dbIsValid(x)) {
