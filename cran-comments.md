@@ -1,14 +1,14 @@
 ## Test environments
 
+release 3.6.2
+
 * OS X (local) - release
-* Ubuntu (travis) - oldrelease, release and devel
-* Windows (win-builder) - release and devel
-* Windows (rhub) - devel 
+* Ubuntu (travis) - devel, release, oldrel and 3.4 - 3.3
+* Windows (appveyor) - release
+* Windows (win-builder) - devel
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 note
+0 errors | 0 warnings | 1 note
 
-This is a new release that fixes test errors associated with the upcoming release of RSQLite.
-
-https://github.com/poissonconsulting/readwritesqlite/issues/9
+Fixing problems at https://cran.r-project.org/web/checks/check_results_readwritesqlite.html.
