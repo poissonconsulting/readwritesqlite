@@ -108,9 +108,9 @@ Key attribute information is preserved for many classes.
 library(readwritesqlite)
 
 # for nicer printing of data frames
-library(tibble) 
+library(tibble)
 library(sf)
-#> Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3
+#> Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0
 
 conn <- rws_connect()
 
@@ -151,15 +151,15 @@ The attribute information is stored in the metadata table
 ``` r
 rws_read_meta(conn = conn)
 #> # A tibble: 7 x 4
-#>   TableMeta ColumnMeta MetaMeta                             DescriptionMeta
-#>   <chr>     <chr>      <chr>                                <chr>          
-#> 1 RWS_DATA  DATE       class: Date                          <NA>           
-#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                     <NA>           
-#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +n… <NA>           
-#> 4 RWS_DATA  LOGICAL    class: logical                       <NA>           
-#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                    <NA>           
-#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                        <NA>           
-#> 7 RWS_DATA  UNITS      units: m                             <NA>
+#>   TableMeta ColumnMeta MetaMeta                                  DescriptionMeta
+#>   <chr>     <chr>      <chr>                                     <chr>          
+#> 1 RWS_DATA  DATE       class: Date                               <NA>           
+#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                          <NA>           
+#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +no_defs <NA>           
+#> 4 RWS_DATA  LOGICAL    class: logical                            <NA>           
+#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                         <NA>           
+#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                             <NA>           
+#> 7 RWS_DATA  UNITS      units: m                                  <NA>
 ```
 
 The user can add descriptions if they wish.
@@ -169,15 +169,15 @@ rws_describe_meta("rws_data", "posixct", "The time of a visit", conn = conn)
 rws_describe_meta("rws_data", "units", "The site length.", conn = conn)
 rws_read_meta(conn = conn)
 #> # A tibble: 7 x 4
-#>   TableMeta ColumnMeta MetaMeta                          DescriptionMeta   
-#>   <chr>     <chr>      <chr>                             <chr>             
-#> 1 RWS_DATA  DATE       class: Date                       <NA>              
-#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                  <NA>              
-#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84… <NA>              
-#> 4 RWS_DATA  LOGICAL    class: logical                    <NA>              
-#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                 <NA>              
-#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                     The time of a vis…
-#> 7 RWS_DATA  UNITS      units: m                          The site length.
+#>   TableMeta ColumnMeta MetaMeta                               DescriptionMeta   
+#>   <chr>     <chr>      <chr>                                  <chr>             
+#> 1 RWS_DATA  DATE       class: Date                            <NA>              
+#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                       <NA>              
+#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +no_… <NA>              
+#> 4 RWS_DATA  LOGICAL    class: logical                         <NA>              
+#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                      <NA>              
+#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                          The time of a vis…
+#> 7 RWS_DATA  UNITS      units: m                               The site length.
 ```
 
 The log provides a record of data changes that have been made using
