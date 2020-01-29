@@ -11,7 +11,7 @@
 
 \item{...}{Not used.}
 
-\item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
+\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
 }
 \value{
 An invisible character vector of the previous descriptions.

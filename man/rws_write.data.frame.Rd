@@ -42,7 +42,7 @@ inserting data. If \code{meta = TRUE} the meta data is deleted.}
 
 \item{silent}{A flag specifying whether to suppress messages and warnings.}
 
-\item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
+\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
 
 \item{...}{Not used.}
 }

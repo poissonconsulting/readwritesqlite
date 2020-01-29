@@ -7,7 +7,7 @@
 \method{rws_read}{SQLiteConnection}(x, meta = TRUE, ...)
 }
 \arguments{
-\item{x}{A \code{\linkS4class{SQLiteConnection}} to a database.}
+\item{x}{A \linkS4class{SQLiteConnection} to a database.}
 
 \item{meta}{A flag specifying whether to preserve meta data.}
 

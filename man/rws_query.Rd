@@ -12,7 +12,7 @@ rws_query(query, meta = TRUE, conn)
 
 \item{meta}{A flag specifying whether to preserve meta data.}
 
-\item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
+\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
 }
 \value{
 A data frame of the query.

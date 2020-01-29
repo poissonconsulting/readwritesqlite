@@ -1,14 +1,14 @@
 #' Opens SQLite Database Connection
 #'
-#' Opens a \code{\linkS4class{SQLiteConnection}} to a SQLite database with
+#' Opens a [SQLiteConnection-class] to a SQLite database with
 #' foreign key constraints enabled.
 #'
 #' @inheritParams RSQLite::SQLite
 #' @param exists A flag specifying whether the table(s) must already exist.
-#' @return A \code{\linkS4class{SQLiteConnection}} to a SQLite database with
+#' @return A [SQLiteConnection-class] to a SQLite database with
 #' foreign key constraints enabled.
 #' @aliases rws_open_connection
-#' @seealso \code{\link{rws_disconnect}()}
+#' @seealso [rws_disconnect()]
 #' @export
 #'
 #' @examples
@@ -34,11 +34,11 @@ rws_connect <- function(dbname = ":memory:", exists = NA) {
 
 #' Close SQLite Database Connection
 #'
-#' Closes a \code{\linkS4class{SQLiteConnection}} to a SQLite database.
+#' Closes a [SQLiteConnection-class] to a SQLite database.
 #'
 #' @inheritParams RSQLite::SQLite
 #' @aliases rws_close_connection
-#' @seealso \code{\link{rws_connect}()}
+#' @seealso [rws_connect()]
 #' @export
 #'
 #' @examples

@@ -23,11 +23,11 @@ in-memory database.
 \item{exists}{A flag specifying whether the table(s) must already exist.}
 }
 \value{
-A \code{\linkS4class{SQLiteConnection}} to a SQLite database with
+A \linkS4class{SQLiteConnection} to a SQLite database with
 foreign key constraints enabled.
 }
 \description{
-Opens a \code{\linkS4class{SQLiteConnection}} to a SQLite database with
+Opens a \linkS4class{SQLiteConnection} to a SQLite database with
 foreign key constraints enabled.
 }
 \examples{
@@ -36,5 +36,5 @@ print(conn)
 rws_disconnect(conn)
 }
 \seealso{
-\code{\link{rws_disconnect}()}
+\code{\link[=rws_disconnect]{rws_disconnect()}}
 }

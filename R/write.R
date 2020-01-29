@@ -24,14 +24,14 @@ write_sqlite_data <- function(data, table_name, exists, delete, replace, meta, l
 #' @param x The object to write.
 #' @param exists A flag specifying whether the table(s) must already exist.
 #' @param delete A flag specifying whether to delete existing rows before
-#' inserting data. If \code{meta = TRUE} the meta data is deleted.
+#' inserting data. If `meta = TRUE` the meta data is deleted.
 #' @param replace A flag specifying whether to replace any existing rows whose inclusion would violate unique or primary key constraints.
 #' @param meta A flag specifying whether to preserve meta data.
 #' @param log A flag specifying whether to log the table operations.
 #' @param commit A flag specifying whether to commit the operations
 #' (calling with commit = FALSE can be useful for checking data).
 #' @param strict A flag specifying whether to error if x has extraneous columns or if exists = TRUE extraneous data frames.
-#' @param conn A \code{\linkS4class{SQLiteConnection}} to a database.
+#' @param conn A [SQLiteConnection-class] to a database.
 #' @param x_name A string of the name of the object.
 #' @param silent A flag specifying whether to suppress messages and warnings.
 #' @param ... Not used.

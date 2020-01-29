@@ -6,7 +6,7 @@
 #'
 #' @inheritParams rws_write
 #' @param table_name A string of the name of the table.
-#' @references \url{https://www.sqlite.org/lang_droptable.html}
+#' @references <https://www.sqlite.org/lang_droptable.html>
 #' @family rws_rename
 #' @export
 #' @return TRUE

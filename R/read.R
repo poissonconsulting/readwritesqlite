@@ -46,7 +46,7 @@ rws_read.character <- function(x, meta = TRUE, conn,
 #' Read All Tables from a SQLite Database
 #'
 #' @inheritParams rws_write
-#' @param x A \code{\linkS4class{SQLiteConnection}} to a database.
+#' @param x A [SQLiteConnection-class] to a database.
 #' @return A named list of the data frames.
 #' @family rws_read
 #' @export

@@ -8,7 +8,7 @@
 rws_read_init(conn)
 }
 \arguments{
-\item{conn}{A \code{\linkS4class{SQLiteConnection}} to a database.}
+\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
 }
 \value{
 A data frame of the init table

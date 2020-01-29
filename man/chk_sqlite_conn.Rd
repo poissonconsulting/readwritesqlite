@@ -24,11 +24,11 @@ check_sqlite_connection(
 \item{error}{A flag specifying whether to through an error if the check fails.}
 }
 \value{
-`NULL`, invisibly. Called for the side effect of throwing an error
-  if the condition is not met.
+\code{NULL}, invisibly. Called for the side effect of throwing an error
+if the condition is not met.
 }
 \description{
-`chk_sqlite_conn`
+\code{chk_sqlite_conn}
 checks if a SQLite connection.
 }
 \section{Functions}{

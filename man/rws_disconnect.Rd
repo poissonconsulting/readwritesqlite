@@ -13,7 +13,7 @@ rws_disconnect(conn)
 will be cloned.}
 }
 \description{
-Closes a \code{\linkS4class{SQLiteConnection}} to a SQLite database.
+Closes a \linkS4class{SQLiteConnection} to a SQLite database.
 }
 \examples{
 conn <- rws_connect()
@@ -21,5 +21,5 @@ rws_disconnect(conn)
 print(conn)
 }
 \seealso{
-\code{\link{rws_connect}()}
+\code{\link[=rws_connect]{rws_connect()}}
 }
