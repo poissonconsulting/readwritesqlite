@@ -20,13 +20,13 @@ Imports:
     hms,
     DBI,
     RSQLite,
-    lifecycle
+    lifecycle,
+    tibble
 Suggests: 
     covr,
     testthat,
     knitr,
     rmarkdown,
-    tibble,
     units,
     sf
 URL: https://github.com/poissonconsulting/readwritesqlite

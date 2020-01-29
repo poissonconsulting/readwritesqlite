@@ -40,7 +40,7 @@ user <- function() {
 
 as_tibble_sf <- function(x) {
   sf_column_name <- sf_column_name(x)
-  class(x) <- c("tbl_df", "tbl", "data.frame")
+  x <- tibble::as_tibble(x)
   if (!is.na(sf_column_name)) {
     x <- st_sf(x, sf_column_name = sf_column_name, stringsAsFactors = FALSE)
   }
