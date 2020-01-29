@@ -6,7 +6,7 @@
 #' @family rws_rename
 #' @export
 #' @return TRUE
-#' 
+#'
 #' @examples
 #' conn <- rws_connect()
 #' rws_write(rws_data, exists = FALSE, conn = conn)
@@ -21,14 +21,14 @@ rws_rename_table <- function(table_name, new_table_name, conn) {
 
   meta <- rws_read_meta(conn)
   init <- rws_read_init(conn)
-  
+
   rename_table(table_name, new_table_name, conn = conn)
   table_name <- to_upper(table_name)
   new_table_name <- to_upper(new_table_name)
-  
+
   meta$TableMeta <- sub(p0("^", table_name, "$"), new_table_name, meta$TableMeta)
   init$TableInit <- sub(p0("^", table_name, "$"), new_table_name, init$TableInit)
-  
+
   replace_meta_table(meta, conn = conn)
   replace_init_table(init, conn = conn)
   TRUE
@@ -43,7 +43,7 @@ rws_rename_table <- function(table_name, new_table_name, conn) {
 #' @family rws_rename
 #' @export
 #' @return TRUE
-#' 
+#'
 #' @examples
 #' conn <- rws_connect()
 #' rws_write(data.frame(x = 1), x_name = "local", exists = FALSE, conn = conn)
@@ -54,21 +54,22 @@ rws_rename_table <- function(table_name, new_table_name, conn) {
 rws_rename_column <- function(table_name, column_name, new_column_name, conn) {
   chk_sqlite_conn(conn, connected = TRUE)
   check_table_name(table_name, exists = TRUE, conn = conn)
-  
+
   check_column_name(table_name, column_name, exists = TRUE, conn)
   chk_string(new_column_name)
-  if(to_upper(column_name) != to_upper(new_column_name))
+  if (to_upper(column_name) != to_upper(new_column_name)) {
     check_column_name(table_name, new_column_name, exists = FALSE, conn)
+  }
 
   meta <- rws_read_meta(conn)
 
   rename_column(table_name, column_name, new_column_name, conn = conn)
-  
+
   table_name <- to_upper(table_name)
   column_name <- to_upper(column_name)
   new_column_name <- to_upper(new_column_name)
-  
-  meta$ColumnMeta[meta$TableMeta == table_name] <- 
+
+  meta$ColumnMeta[meta$TableMeta == table_name] <-
     sub(p0("^", column_name, "$"), new_column_name, meta$ColumnMeta[meta$TableMeta == table_name])
 
   replace_meta_table(meta, conn = conn)

@@ -4,12 +4,12 @@
 #' @param connected A logical scalar specifying whether x should be connected.
 #' @return `NULL`, invisibly. Called for the side effect of throwing an error
 #'   if the condition is not met.
-#'   
+#'
 #' @description
 #'
 #' `chk_sqlite_conn`
 #' checks if a SQLite connection.
-#' 
+#'
 #' @export
 #'
 #' @examples

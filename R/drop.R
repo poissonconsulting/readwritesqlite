@@ -1,7 +1,7 @@
 #' Drop SQLite Table
-#' 
+#'
 #' Drops SQLite table using DROP TABLE.
-#' 
+#'
 #' Also drops rows from meta and init tables.
 #'
 #' @inheritParams rws_write
@@ -10,7 +10,7 @@
 #' @family rws_rename
 #' @export
 #' @return TRUE
-#' 
+#'
 #' @examples
 #' conn <- rws_connect()
 #' rws_write(rws_data, exists = FALSE, conn = conn)
@@ -24,13 +24,13 @@ rws_drop_table <- function(table_name, conn) {
 
   meta <- rws_read_meta(conn)
   init <- rws_read_init(conn)
-  
+
   drop_table(table_name, conn = conn)
   table_name <- to_upper(table_name)
 
-  meta <- meta[meta$TableMeta != table_name, ,drop = FALSE]
-  init <- init[init$TableInit != table_name, ,drop = FALSE]
-  
+  meta <- meta[meta$TableMeta != table_name, , drop = FALSE]
+  init <- init[init$TableInit != table_name, , drop = FALSE]
+
   replace_meta_table(meta, conn = conn)
   replace_init_table(init, conn = conn)
   TRUE

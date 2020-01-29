@@ -17,8 +17,9 @@ make_meta_data <- function(conn) {
     ))
   }
   meta_data <- lapply(table_names, column_names, conn = conn)
-  meta_data <- mapply(function(x, y)
-    data.frame(TableMeta = y, ColumnMeta = x, stringsAsFactors = FALSE),
+  meta_data <- mapply(function(x, y) {
+    data.frame(TableMeta = y, ColumnMeta = x, stringsAsFactors = FALSE)
+  },
   meta_data, table_names,
   SIMPLIFY = FALSE
   )

@@ -37,7 +37,7 @@ rws_describe_meta.character <- function(x, column, description, ..., conn) {
   chk_s3_class(description, "character")
   chk_sqlite_conn(conn, connected = TRUE)
   chk_unused(...)
-  
+
   rws_describe_meta(data.frame(
     Table = x, Column = column, Description = description,
     stringsAsFactors = FALSE
@@ -61,38 +61,38 @@ rws_describe_meta.data.frame <- function(x, ..., conn) {
   chk_s3_class(x$Description, "character")
   chk_sqlite_conn(conn, connected = TRUE)
   chk_unused(...)
-  
+
   if (!nrow(x)) {
     return(invisible(rws_read_meta(conn)))
   }
-  
+
   x <- x[c("Table", "Column", "Description")]
   x$Table <- to_upper(x$Table)
   x$Column <- to_upper(x$Column)
-  
+
   if (anyDuplicated(x[c("Table", "Column")])) {
     err("Columns 'Table' and 'Column' in data 'x' must be unique.")
   }
-  
+
   x$Row <- 1:nrow(x)
-  
+
   meta <- rws_read_meta(conn)
   meta$RowMeta <- 1:nrow(meta)
-  
+
   meta <- merge(meta, x,
-                by.x = c("TableMeta", "ColumnMeta"),
-                by.y = c("Table", "Column"), all = TRUE
+    by.x = c("TableMeta", "ColumnMeta"),
+    by.y = c("Table", "Column"), all = TRUE
   )
-  
+
   if (any(is.na(meta$RowMeta))) {
     err("All description tables and columns must exist in the meta table.")
   }
-  
+
   meta$DescriptionMeta[!is.na(meta$Row)] <- meta$Description[!is.na(meta$Row)]
   meta <- meta[order(meta$RowMeta), ]
-  
+
   meta <- meta[c("TableMeta", "ColumnMeta", "MetaMeta", "DescriptionMeta")]
-  
+
   replace_meta_table(meta, conn = conn)
   invisible(as_tibble_sf(meta))
 }

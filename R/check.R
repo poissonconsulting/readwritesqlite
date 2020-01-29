@@ -20,7 +20,7 @@ check_table_name <- function(table_name, exists, conn) {
 check_column_name <- function(table_name, column_name, exists, conn) {
   check_table_name(table_name, exists = TRUE, conn = conn)
   chk_string(column_name)
-  
+
   column_exists <- column_name %in% column_names(table_name, conn)
 
   if (vld_true(exists) && !column_exists) {

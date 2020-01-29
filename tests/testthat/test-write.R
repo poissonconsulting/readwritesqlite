@@ -744,7 +744,9 @@ test_that("meta then inconsistent data then error meta but delete reset", {
   expect_identical(remote, local)
 
   local2 <- local
-  local2[] <- lapply(local2, function(x) return("garbage"))
+  local2[] <- lapply(local2, function(x) {
+    return("garbage")
+  })
   local2 <- local2[1, ]
 
   expect_error(

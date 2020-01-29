@@ -46,16 +46,20 @@ drop_table <- function(table_name, conn) {
 
 rename_table <- function(table_name, new_table_name, conn) {
   sql <- "ALTER TABLE ?table_name RENAME TO ?new_table_name;"
-  sql <- sql_interpolate(sql, table_name = table_name, 
-                         new_table_name = new_table_name, conn = conn)
+  sql <- sql_interpolate(sql,
+    table_name = table_name,
+    new_table_name = new_table_name, conn = conn
+  )
   execute(sql, conn)
 }
 
 rename_column <- function(table_name, column_name, new_column_name, conn) {
   sql <- "ALTER TABLE ?table_name RENAME COLUMN ?column_name TO ?new_column_name;"
-  sql <- sql_interpolate(sql, table_name = table_name,
-                         column_name = column_name,
-                         new_column_name = new_column_name, conn = conn)
+  sql <- sql_interpolate(sql,
+    table_name = table_name,
+    column_name = column_name,
+    new_column_name = new_column_name, conn = conn
+  )
   execute(sql, conn)
 }
 
