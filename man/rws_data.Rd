@@ -4,7 +4,9 @@
 \name{rws_data}
 \alias{rws_data}
 \title{Example Data}
-\format{An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 3 rows and 7 columns.}
+\format{
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 3 rows and 7 columns.
+}
 \usage{
 rws_data
 }
