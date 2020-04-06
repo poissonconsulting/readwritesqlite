@@ -191,7 +191,17 @@ test_that("meta reads all classes", {
     )
   )
   remote <- rws_read_table("local", conn = conn)
-  expect_identical(remote, tibble::as_tibble(local))
+  expect_identical(class(remote), c("tbl_df", "tbl", "data.frame"))
+  expect_identical(colnames(remote), colnames(local))
+  expect_identical(nrow(remote), 1L)
+  expect_identical(remote$logical, local$logical)
+  expect_identical(remote$date, local$date)
+  expect_identical(remote$posixct, local$posixct)
+  expect_identical(remote$units, local$units)
+  expect_identical(remote$hms, local$hms)
+  expect_identical(remote$factor, local$factor)
+  expect_identical(remote$ordered, local$ordered)
+  expect_equivalent(remote$geometry, local$geometry)
 })
 
 test_that("meta = FALSE same as just writing", {
@@ -497,7 +507,17 @@ test_that("meta sfc different types", {
   skip_if_not_installed("sf", minimum_version = "0.8-1")
 
   remote <- rws_read_table("local", conn = conn)
-  expect_identical(remote, tibble::as_tibble(local))
+  
+  expect_identical(class(remote), c("tbl_df", "tbl", "data.frame"))
+  expect_identical(colnames(remote), colnames(local))
+  expect_identical(nrow(remote), 1L)
+  expect_equivalent(remote$zinteger, local$zinteger)
+  expect_equivalent(remote$zreal, local$zreal)
+  expect_equivalent(remote$znumeric, local$znumeric)
+  expect_equivalent(remote$ztext, local$ztext)
+  expect_equivalent(remote$ztextold, local$ztextold)
+  expect_equivalent(remote$zblob, local$zblob)
+  
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(
     vapply(remote2, is.blob, TRUE),

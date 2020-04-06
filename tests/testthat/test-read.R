@@ -65,7 +65,18 @@ test_that("rws_read with meta = FALSE ", {
     rws_read_table("local", meta = TRUE, conn = conn)
   )
   remote <- rws_read_table("local", meta = TRUE, conn = conn)
-  expect_identical(remote, local)
+  
+  expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
+  expect_identical(colnames(remote), colnames(local))
+  expect_identical(nrow(remote), 3L)
+  expect_identical(remote$logical, local$logical)
+  expect_identical(remote$date, local$date)
+  expect_identical(remote$posixct, local$posixct)
+  expect_identical(remote$units, local$units)
+  expect_identical(remote$factor, local$factor)
+  expect_identical(remote$ordered, local$ordered)
+  expect_equivalent(remote$geometry, local$geometry)
+
   remote2 <- rws_read_table("local", meta = FALSE, conn = conn)
   remote2$geometry <- NULL
   expect_identical(remote2, tibble::tibble(

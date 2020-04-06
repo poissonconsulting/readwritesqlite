@@ -48,7 +48,17 @@ test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
 
   expect_identical(rws_write(local, exists = FALSE, conn = conn), "local")
   remote <- rws_query("SELECT * FROM local", conn = conn)
-  expect_identical(remote, tibble::as_tibble(local))
+  expect_identical(class(remote), c("tbl_df", "tbl", "data.frame"))
+  expect_identical(colnames(remote), colnames(local))
+  expect_identical(nrow(remote), 1L)
+  expect_identical(remote$logical, local$logical)
+  expect_identical(remote$date, local$date)
+  expect_identical(remote$posixct, local$posixct)
+  expect_identical(remote$units, local$units)
+  expect_identical(remote$hms, local$hms)
+  expect_identical(remote$factor, local$factor)
+  expect_identical(remote$ordered, local$ordered)
+  expect_equivalent(remote$geometry, local$geometry)
 })
 
 test_that("rws_get_sqlite_query teases apart two", {

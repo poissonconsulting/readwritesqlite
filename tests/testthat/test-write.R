@@ -557,7 +557,16 @@ test_that("sf data frames with single geometry passed back", {
     stringsAsFactors = FALSE
   ))
   remote <- rws_read_table("local", conn = conn)
-  expect_identical(remote, local)
+  expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
+  expect_identical(colnames(remote), colnames(local))
+  expect_identical(nrow(remote), 3L)
+  expect_identical(remote$logical, local$logical)
+  expect_identical(remote$date, local$date)
+  expect_identical(remote$posixct, local$posixct)
+  expect_identical(remote$units, local$units)
+  expect_identical(remote$factor, local$factor)
+  expect_identical(remote$ordered, local$ordered)
+  expect_equivalent(remote$geometry, local$geometry)
 })
 
 test_that("sf data frames with two geometries and correct one passed back", {
@@ -579,7 +588,12 @@ test_that("sf data frames with two geometries and correct one passed back", {
     stringsAsFactors = FALSE
   ))
   remote <- rws_read_table("local", conn = conn)
-  expect_identical(remote, local)
+  
+  expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
+  expect_identical(colnames(remote), colnames(local))
+  expect_identical(nrow(remote), 3L)
+  expect_equivalent(remote$first, local$first)
+  expect_equivalent(remote$second, local$second)
 })
 
 test_that("sf can change sf_column", {
@@ -601,8 +615,11 @@ test_that("sf can change sf_column", {
     stringsAsFactors = FALSE
   ))
   remote <- rws_read_table("local", conn = conn)
-  expect_identical(remote, local)
-  local
+  expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
+  expect_identical(colnames(remote), colnames(local))
+  expect_identical(nrow(remote), 3L)
+  expect_equivalent(remote$first, local$first)
+  expect_equivalent(remote$second, local$second)
 })
 
 test_that("sf data frames with two geometries and lots of other stuff and correct one passed back", {
@@ -621,7 +638,17 @@ test_that("sf data frames with two geometries and lots of other stuff and correc
     stringsAsFactors = FALSE
   ))
   remote <- rws_read_table("local", conn = conn)
-  expect_identical(remote, local)
+  expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
+  expect_identical(colnames(remote), colnames(local))
+  expect_identical(nrow(remote), 3L)
+  expect_identical(remote$logical, local$logical)
+  expect_identical(remote$date, local$date)
+  expect_identical(remote$posixct, local$posixct)
+  expect_identical(remote$units, local$units)
+  expect_identical(remote$factor, local$factor)
+  expect_identical(remote$ordered, local$ordered)
+  expect_equivalent(remote$geometry, local$geometry)
+  expect_equivalent(remote$second, local$second)
 })
 
 test_that("initialized even with no rows of data", {
@@ -641,7 +668,18 @@ test_that("initialized even with no rows of data", {
     stringsAsFactors = FALSE
   ))
   remote <- rws_read_table("local", conn = conn)
-  expect_identical(remote, local)
+  
+  expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
+  expect_identical(colnames(remote), colnames(local))
+  expect_identical(nrow(remote), 0L)
+  expect_identical(remote$logical, local$logical)
+  expect_identical(remote$date, local$date)
+  expect_identical(remote$posixct, local$posixct)
+  expect_identical(remote$units, local$units)
+  expect_identical(remote$factor, local$factor)
+  expect_identical(remote$ordered, local$ordered)
+  expect_equivalent(remote$geometry, local$geometry)
+  expect_equivalent(remote$second, local$second)
 })
 
 test_that("initialized meta with no rows of data and not overwritten unless delete = TRUE", {
