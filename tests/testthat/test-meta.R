@@ -507,7 +507,7 @@ test_that("meta sfc different types", {
   skip_if_not_installed("sf", minimum_version = "0.8-1")
 
   remote <- rws_read_table("local", conn = conn)
-  
+
   expect_identical(class(remote), c("tbl_df", "tbl", "data.frame"))
   expect_identical(colnames(remote), colnames(local))
   expect_identical(nrow(remote), 1L)
@@ -517,7 +517,7 @@ test_that("meta sfc different types", {
   expect_equivalent(remote$ztext, local$ztext)
   expect_equivalent(remote$ztextold, local$ztextold)
   expect_equivalent(remote$zblob, local$zblob)
-  
+
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(
     vapply(remote2, is.blob, TRUE),

@@ -65,7 +65,7 @@ test_that("rws_read with meta = FALSE ", {
     rws_read_table("local", meta = TRUE, conn = conn)
   )
   remote <- rws_read_table("local", meta = TRUE, conn = conn)
-  
+
   expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
   expect_identical(colnames(remote), colnames(local))
   expect_identical(nrow(remote), 3L)

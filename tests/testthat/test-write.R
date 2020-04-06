@@ -588,7 +588,7 @@ test_that("sf data frames with two geometries and correct one passed back", {
     stringsAsFactors = FALSE
   ))
   remote <- rws_read_table("local", conn = conn)
-  
+
   expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
   expect_identical(colnames(remote), colnames(local))
   expect_identical(nrow(remote), 3L)
@@ -668,7 +668,7 @@ test_that("initialized even with no rows of data", {
     stringsAsFactors = FALSE
   ))
   remote <- rws_read_table("local", conn = conn)
-  
+
   expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
   expect_identical(colnames(remote), colnames(local))
   expect_identical(nrow(remote), 0L)
