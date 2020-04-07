@@ -154,7 +154,7 @@
 <span class="co"># for nicer printing of data frames</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tibble</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sf</span>)
-<span class="co">#&gt; Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0</span>
+<span class="co">#&gt; Linking to GEOS 3.8.1, GDAL 2.4.4, PROJ 7.0.0</span>
 
 <span class="no">conn</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/rws_connect.html">rws_connect</a></span>()
 
@@ -164,8 +164,7 @@
 <span class="co">#&gt; geometry type:  POINT</span>
 <span class="co">#&gt; dimension:      XY</span>
 <span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span>
-<span class="co">#&gt; epsg (SRID):    4326</span>
-<span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span>
+<span class="co">#&gt; CRS:            EPSG:4326</span>
 <span class="co">#&gt; # A tibble: 3 x 7</span>
 <span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span>
 <span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [Â°]&gt;</span>
@@ -180,8 +179,7 @@
 <span class="co">#&gt; geometry type:  POINT</span>
 <span class="co">#&gt; dimension:      XY</span>
 <span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span>
-<span class="co">#&gt; epsg (SRID):    4326</span>
-<span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span>
+<span class="co">#&gt; CRS:            +proj=longlat +datum=WGS84 +no_defs </span>
 <span class="co">#&gt; # A tibble: 3 x 7</span>
 <span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span>
 <span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [Â°]&gt;</span>
@@ -193,13 +191,13 @@
 <span class="co">#&gt; # A tibble: 7 x 4</span>
 <span class="co">#&gt;   TableMeta ColumnMeta MetaMeta                                  DescriptionMeta</span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;                                     &lt;chr&gt;          </span>
-<span class="co">#&gt; 1 RWS_DATA  DATE       class: Date                               &lt;NA&gt;           </span>
-<span class="co">#&gt; 2 RWS_DATA  FACTOR     factor: 'x', 'y'                          &lt;NA&gt;           </span>
-<span class="co">#&gt; 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +no_defs &lt;NA&gt;           </span>
-<span class="co">#&gt; 4 RWS_DATA  LOGICAL    class: logical                            &lt;NA&gt;           </span>
-<span class="co">#&gt; 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                         &lt;NA&gt;           </span>
-<span class="co">#&gt; 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                             &lt;NA&gt;           </span>
-<span class="co">#&gt; 7 RWS_DATA  UNITS      units: m                                  &lt;NA&gt;</span></pre></div>
+<span class="co">#&gt; 1 RWS_DATA  DATE       "class: Date"                             &lt;NA&gt;           </span>
+<span class="co">#&gt; 2 RWS_DATA  FACTOR     "factor: 'x', 'y'"                        &lt;NA&gt;           </span>
+<span class="co">#&gt; 3 RWS_DATA  GEOMETRY   "proj: +proj=longlat +datum=WGS84 +no_deâ¦ &lt;NA&gt;           </span>
+<span class="co">#&gt; 4 RWS_DATA  LOGICAL    "class: logical"                          &lt;NA&gt;           </span>
+<span class="co">#&gt; 5 RWS_DATA  ORDERED    "ordered: 'y', 'x'"                       &lt;NA&gt;           </span>
+<span class="co">#&gt; 6 RWS_DATA  POSIXCT    "tz: Etc/GMT+8"                           &lt;NA&gt;           </span>
+<span class="co">#&gt; 7 RWS_DATA  UNITS      "units: m"                                &lt;NA&gt;</span></pre></div>
 <p>The user can add descriptions if they wish.</p>
 <div class="sourceCode" id="cb6"><pre class="r"><span class="fu"><a href="reference/rws_describe_meta.html">rws_describe_meta</a></span>(<span class="st">"rws_data"</span>, <span class="st">"posixct"</span>, <span class="st">"The time of a visit"</span>, <span class="kw">conn</span> <span class="kw">=</span> <span class="no">conn</span>)
 <span class="fu"><a href="reference/rws_describe_meta.html">rws_describe_meta</a></span>(<span class="st">"rws_data"</span>, <span class="st">"units"</span>, <span class="st">"The site length."</span>, <span class="kw">conn</span> <span class="kw">=</span> <span class="no">conn</span>)
@@ -207,13 +205,13 @@
 <span class="co">#&gt; # A tibble: 7 x 4</span>
 <span class="co">#&gt;   TableMeta ColumnMeta MetaMeta                               DescriptionMeta   </span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;                                  &lt;chr&gt;             </span>
-<span class="co">#&gt; 1 RWS_DATA  DATE       class: Date                            &lt;NA&gt;              </span>
-<span class="co">#&gt; 2 RWS_DATA  FACTOR     factor: 'x', 'y'                       &lt;NA&gt;              </span>
-<span class="co">#&gt; 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +no_â¦ &lt;NA&gt;              </span>
-<span class="co">#&gt; 4 RWS_DATA  LOGICAL    class: logical                         &lt;NA&gt;              </span>
-<span class="co">#&gt; 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                      &lt;NA&gt;              </span>
-<span class="co">#&gt; 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                          The time of a visâ¦</span>
-<span class="co">#&gt; 7 RWS_DATA  UNITS      units: m                               The site length.</span></pre></div>
+<span class="co">#&gt; 1 RWS_DATA  DATE       "class: Date"                          &lt;NA&gt;              </span>
+<span class="co">#&gt; 2 RWS_DATA  FACTOR     "factor: 'x', 'y'"                     &lt;NA&gt;              </span>
+<span class="co">#&gt; 3 RWS_DATA  GEOMETRY   "proj: +proj=longlat +datum=WGS84 +noâ¦ &lt;NA&gt;              </span>
+<span class="co">#&gt; 4 RWS_DATA  LOGICAL    "class: logical"                       &lt;NA&gt;              </span>
+<span class="co">#&gt; 5 RWS_DATA  ORDERED    "ordered: 'y', 'x'"                    &lt;NA&gt;              </span>
+<span class="co">#&gt; 6 RWS_DATA  POSIXCT    "tz: Etc/GMT+8"                        The time of a visâ¦</span>
+<span class="co">#&gt; 7 RWS_DATA  UNITS      "units: m"                             The site length.</span></pre></div>
 <p>The log provides a record of data changes that have been made using readwritesqlite.</p>
 <div class="sourceCode" id="cb7"><pre class="r"><span class="fu"><a href="reference/rws_read_log.html">rws_read_log</a></span>(<span class="kw">conn</span> <span class="kw">=</span> <span class="no">conn</span>)
 <span class="co">#&gt; # A tibble: 2 x 5</span>

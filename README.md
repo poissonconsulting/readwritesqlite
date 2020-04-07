@@ -110,7 +110,7 @@ library(readwritesqlite)
 # for nicer printing of data frames
 library(tibble)
 library(sf)
-#> Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0
+#> Linking to GEOS 3.8.1, GDAL 2.4.4, PROJ 7.0.0
 
 conn <- rws_connect()
 
@@ -120,8 +120,7 @@ rws_data
 #> geometry type:  POINT
 #> dimension:      XY
 #> bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1
-#> epsg (SRID):    4326
-#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#> CRS:            EPSG:4326
 #> # A tibble: 3 x 7
 #>   logical date       factor ordered posixct             units    geometry
 #>   <lgl>   <date>     <fct>  <ord>   <dttm>                [m] <POINT [°]>
@@ -136,8 +135,7 @@ rws_read_table("rws_data", conn = conn)
 #> geometry type:  POINT
 #> dimension:      XY
 #> bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1
-#> epsg (SRID):    4326
-#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#> CRS:            +proj=longlat +datum=WGS84 +no_defs 
 #> # A tibble: 3 x 7
 #>   logical date       factor ordered posixct             units    geometry
 #>   <lgl>   <date>     <fct>  <ord>   <dttm>                [m] <POINT [°]>
@@ -153,13 +151,13 @@ rws_read_meta(conn = conn)
 #> # A tibble: 7 x 4
 #>   TableMeta ColumnMeta MetaMeta                                  DescriptionMeta
 #>   <chr>     <chr>      <chr>                                     <chr>          
-#> 1 RWS_DATA  DATE       class: Date                               <NA>           
-#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                          <NA>           
-#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +no_defs <NA>           
-#> 4 RWS_DATA  LOGICAL    class: logical                            <NA>           
-#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                         <NA>           
-#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                             <NA>           
-#> 7 RWS_DATA  UNITS      units: m                                  <NA>
+#> 1 RWS_DATA  DATE       "class: Date"                             <NA>           
+#> 2 RWS_DATA  FACTOR     "factor: 'x', 'y'"                        <NA>           
+#> 3 RWS_DATA  GEOMETRY   "proj: +proj=longlat +datum=WGS84 +no_de… <NA>           
+#> 4 RWS_DATA  LOGICAL    "class: logical"                          <NA>           
+#> 5 RWS_DATA  ORDERED    "ordered: 'y', 'x'"                       <NA>           
+#> 6 RWS_DATA  POSIXCT    "tz: Etc/GMT+8"                           <NA>           
+#> 7 RWS_DATA  UNITS      "units: m"                                <NA>
 ```
 
 The user can add descriptions if they wish.
@@ -171,13 +169,13 @@ rws_read_meta(conn = conn)
 #> # A tibble: 7 x 4
 #>   TableMeta ColumnMeta MetaMeta                               DescriptionMeta   
 #>   <chr>     <chr>      <chr>                                  <chr>             
-#> 1 RWS_DATA  DATE       class: Date                            <NA>              
-#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                       <NA>              
-#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +no_… <NA>              
-#> 4 RWS_DATA  LOGICAL    class: logical                         <NA>              
-#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                      <NA>              
-#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                          The time of a vis…
-#> 7 RWS_DATA  UNITS      units: m                               The site length.
+#> 1 RWS_DATA  DATE       "class: Date"                          <NA>              
+#> 2 RWS_DATA  FACTOR     "factor: 'x', 'y'"                     <NA>              
+#> 3 RWS_DATA  GEOMETRY   "proj: +proj=longlat +datum=WGS84 +no… <NA>              
+#> 4 RWS_DATA  LOGICAL    "class: logical"                       <NA>              
+#> 5 RWS_DATA  ORDERED    "ordered: 'y', 'x'"                    <NA>              
+#> 6 RWS_DATA  POSIXCT    "tz: Etc/GMT+8"                        The time of a vis…
+#> 7 RWS_DATA  UNITS      "units: m"                             The site length.
 ```
 
 The log provides a record of data changes that have been made using

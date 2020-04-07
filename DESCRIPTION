@@ -14,7 +14,7 @@ Description: Reads and writes data frames to 'SQLite'
     informative error messages.
 License: MIT + file LICENSE
 Depends: 
-    R (>= 3.3)
+    R (>= 3.4)
 Imports: 
     chk,
     hms,

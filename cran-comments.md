@@ -3,7 +3,7 @@
 release 3.6.2
 
 * OS X (local) - release
-* Ubuntu (travis) - devel, release, oldrel and 3.4 - 3.3
+* Ubuntu (travis) - devel, release, oldrel and 3.4
 * Windows (appveyor) - release
 * Windows (win-builder) - devel
 
