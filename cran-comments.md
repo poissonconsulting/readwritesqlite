@@ -11,4 +11,4 @@ release 3.6.2
 
 0 errors | 0 warnings | 1 note
 
-Fixing problems at https://cran.r-project.org/web/checks/check_results_readwritesqlite.html.
+Fixed problems at https://cran.r-project.org/web/checks/check_results_readwritesqlite.html.
