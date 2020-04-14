@@ -93,7 +93,9 @@ data_column_meta <- function(column) {
   }
   if (is.sfc(column)) {
     if (!requireNamespace("sf")) err("Package 'sf' must be installed.")
-    return(p("proj:", sf::st_crs(column)$proj4string))
+    proj <- p("proj:", sf::st_crs(column)$proj4string)
+    proj <- sub("\\s*$", "", proj)
+    return(proj)
   }
   if (is.units(column)) {
     if (!requireNamespace("units")) err("Package 'units' must be installed.")

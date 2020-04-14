@@ -853,3 +853,31 @@ test_that("meta TRUE then FALSE then read with TRUE", {
     tibble::tibble(fac = factor(c("this", "that", NA, NA, NA)))
   )
 })
+
+test_that("meta strips trailing spaces proj", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+
+  local <- data.frame(
+    logical = TRUE,
+    geometry = sf::st_sfc(sf::st_point(c(0, 1)), crs = 4326)
+  )
+
+  expect_identical(rws_write(local, exists = FALSE, conn = conn), "local")
+  expect_identical(
+    readwritesqlite:::table_schema("local", conn),
+    paste0(
+      "CREATE TABLE `local` (\n  `logical` INTEGER,\n  ",
+      "`geometry` BLOB\n)"
+    )
+  )
+  remote <- rws_read_table("local", conn = conn)
+  expect_identical(class(remote), c("tbl_df", "tbl", "data.frame"))
+  expect_identical(colnames(remote), colnames(local))
+  expect_identical(nrow(remote), 1L)
+  expect_identical(remote$logical, local$logical)
+  expect_equivalent(remote$geometry, local$geometry)
+  
+  expect_identical(rws_read_meta(conn = conn)$MetaMeta[1],
+                    "proj: +proj=longlat +datum=WGS84 +no_defs")
+})

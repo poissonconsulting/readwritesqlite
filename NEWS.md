@@ -1,6 +1,10 @@
+# readwritesqlite 0.1.1.9000
+
+- Removes trailing spaces on sf (>= 0.9-1) projections which are causing write error.
+
 # readwritesqlite 0.1.1
 
-- Fix failing CRAN tests with latest sf (>= 0.9.1)
+- Fix failing CRAN tests with sf (>= 0.9-1)
 
 # readwritesqlite 0.1.0
 
