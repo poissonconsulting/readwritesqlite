@@ -13,3 +13,4 @@
 ^\.covrignore$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^\.github$
