@@ -1,6 +1,6 @@
 test_that("chk_sqlite_conn", {
   expect_error(chk_sqlite_conn(1),
-    "^`1` must inherit from S4 class 'SQLiteConnection'[.]$",
+    "`1` must inherit from S4 class 'SQLiteConnection'[.].*`1` must inherit from S3 class 'Pool'[.]$",
     class = "chk_error"
   )
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")

@@ -11,5 +11,6 @@
 #' rws_disconnect(conn)
 #' vld_sqlite_conn(conn, connected = TRUE)
 vld_sqlite_conn <- function(x, connected = NA) {
-  vld_s4_class(x, "SQLiteConnection") && (is.na(connected) || connected == dbIsValid(x))
+  (vld_s4_class(x, "SQLiteConnection") || vld_s3_class(x, "Pool"))  && 
+    (is.na(connected) || connected == dbIsValid(x))
 }

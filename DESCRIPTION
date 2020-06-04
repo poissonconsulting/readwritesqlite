@@ -24,6 +24,7 @@ Imports:
     tibble
 Suggests: 
     covr,
+    pool,
     testthat,
     knitr,
     rmarkdown,
