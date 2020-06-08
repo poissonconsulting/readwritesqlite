@@ -13,7 +13,7 @@ Description: Reads and writes data frames to 'SQLite'
     'hms' columns.  It also logs changes to tables and provides more
     informative error messages.
 License: MIT + file LICENSE
-Depends: R (>= 3.6.3)
+Depends: R (>= 3.6)
 Imports: 
     chk,
     hms,
