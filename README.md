@@ -13,8 +13,6 @@ MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org
 [![CRAN
 status](https://www.r-pkg.org/badges/version/readwritesqlite)](https://cran.r-project.org/package=readwritesqlite)
 ![CRAN Downloads](http://cranlogs.r-pkg.org/badges/readwritesqlite)
-[![Codecov test
-coverage](https://codecov.io/gh/poissonconsulting/readwritesqlite/branch/master/graph/badge.svg)](https://codecov.io/gh/poissonconsulting/readwritesqlite?branch=master)
 <!-- badges: end -->
 
 # readwritesqlite
@@ -101,7 +99,7 @@ library(readwritesqlite)
 # for nicer printing of data frames
 library(tibble)
 library(sf)
-#> Linking to GEOS 3.8.1, GDAL 2.4.4, PROJ 7.0.1
+#> Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0
 
 conn <- rws_connect()
 
@@ -151,8 +149,7 @@ rws_read_meta(conn = conn)
 #> 7 RWS_DATA  UNITS      units: m                                  <NA>
 ```
 
-The user can add descriptions if they
-wish.
+The user can add descriptions if they wish.
 
 ``` r
 rws_describe_meta("rws_data", "posixct", "The time of a visit", conn = conn)
