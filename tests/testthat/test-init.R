@@ -41,9 +41,9 @@ test_that("init makes table", {
       SFInit = rep(NA_character_, 2)
     )
   )
-  rws_data <- as.data.frame(rws_data)
-  rws_data <- tibble::as_tibble(rws_data)
-  local3 <- rws_data
+  rws_data_sf <- as.data.frame(rws_data_sf)
+  rws_data_sf <- tibble::as_tibble(rws_data_sf)
+  local3 <- rws_data_sf
   expect_identical(
     rws_write(local3, conn = conn, exists = NA),
     "local3"
@@ -56,7 +56,7 @@ test_that("init makes table", {
       SFInit = rep(NA_character_, 3)
     )
   )
-  local4 <- rws_data
+  local4 <- rws_data_sf
   local4 <- sf::st_sf(local4, sf_column_name = "geometry")
   expect_identical(
     rws_write(local4, conn = conn, exists = NA),
@@ -104,7 +104,7 @@ test_that("init makes table", {
 #   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #   teardown(DBI::dbDisconnect(conn))
 #
-#   local <- rws_data
+#   local <- rws_data_sf
 #   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
 #   sf <- DBI::dbReadTable(conn, "readwritesqlite_sf")
 #   expect_identical(sf, data.frame(TableSF = character(0), ColumnSF = character(0),
@@ -127,7 +127,7 @@ test_that("init makes table", {
 #   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #   teardown(DBI::dbDisconnect(conn))
 #
-#   local <- rws_data
+#   local <- rws_data_sf
 #   local <- sf::st_sf(local, sf_column_name = "geometry")
 #
 #   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
@@ -153,7 +153,7 @@ test_that("init makes table", {
 #   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #   teardown(DBI::dbDisconnect(conn))
 #
-#   local <- rws_data
+#   local <- rws_data_sf
 #   local <- sf::st_sf(local, sf_column_name = "geometry")
 #
 #   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
@@ -179,7 +179,7 @@ test_that("init makes table", {
 #   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
 #   teardown(DBI::dbDisconnect(conn))
 #
-#   local <- rws_data
+#   local <- rws_data_sf
 #   local <- sf::st_sf(local, sf_column_name = "geometry")
 #
 #   expect_identical(rws_write(local, exists = NA, conn = conn), "local")

@@ -4,7 +4,7 @@ test_that("rws_drop_table works", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
-  rws_write(list(somedata = readwritesqlite::rws_data), exists = FALSE, conn = conn)
+  rws_write(list(somedata = readwritesqlite:::rws_data_sf), exists = FALSE, conn = conn)
   expect_identical(rws_list_tables(conn), "somedata")
   expect_true(rws_drop_table("somedata", conn))
   expect_identical(rws_list_tables(conn), character(0))
@@ -16,7 +16,7 @@ test_that("rws_rename_table informative errors", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
-  rws_write(list(somedata = readwritesqlite::rws_data), exists = FALSE, conn = conn)
+  rws_write(list(somedata = readwritesqlite:::rws_data_sf), exists = FALSE, conn = conn)
   expect_error(
     rws_drop_table("somedata2", conn),
     "^Table 'somedata2' does not exist[.]$"

@@ -4,7 +4,7 @@ test_that("rws_rename_table works", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
-  rws_write(list(somedata = readwritesqlite::rws_data), exists = FALSE, conn = conn)
+  rws_write(list(somedata = readwritesqlite:::rws_data_sf), exists = FALSE, conn = conn)
   expect_identical(rws_list_tables(conn), "somedata")
   expect_true(rws_rename_table("somedata", "tableb", conn))
   expect_identical(rws_list_tables(conn), "tableb")
@@ -16,7 +16,7 @@ test_that("rws_rename_table informative errors", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
-  rws_write(list(somedata = readwritesqlite::rws_data), exists = FALSE, conn = conn)
+  rws_write(list(somedata = readwritesqlite:::rws_data_sf), exists = FALSE, conn = conn)
   expect_identical(rws_list_tables(conn), "somedata")
   expect_error(
     rws_rename_table("somedata2", "tableb", conn),

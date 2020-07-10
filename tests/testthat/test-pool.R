@@ -4,7 +4,7 @@ test_that("sf data frames with single geometry passed back", {
   teardown(pool::poolReturn(conn))
   teardown(pool::poolClose(pool))
   
-  local <- readwritesqlite::rws_data
+  local <- readwritesqlite:::rws_data_sf
   
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")

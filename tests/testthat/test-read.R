@@ -58,7 +58,7 @@ test_that("rws_read with meta = FALSE ", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))
 
-  local <- readwritesqlite::rws_data
+  local <- readwritesqlite:::rws_data_sf
   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
   expect_identical(
     rws_read_table("local", meta = TRUE, conn = conn),
