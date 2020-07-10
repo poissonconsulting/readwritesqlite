@@ -75,7 +75,6 @@ To install the developmental version from [GitHub](https://github.com/poissoncon
 remotes::install_github("poissonconsulting/readwritesqlite")
 ```
 
-
 ## Demonstration
 
 Key attribute information is preserved for many classes.

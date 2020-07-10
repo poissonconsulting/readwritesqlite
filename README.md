@@ -99,54 +99,43 @@ library(readwritesqlite)
 # for nicer printing of data frames
 library(tibble)
 library(sf)
-#> Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0
+#> Linking to GEOS 3.8.1, GDAL 3.1.2, PROJ 7.1.0
 
 conn <- rws_connect()
 
 rws_data <- readwritesqlite::rws_data
 rws_data
-#> Simple feature collection with 3 features and 6 fields
-#> geometry type:  POINT
-#> dimension:      XY
-#> bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1
-#> CRS:            EPSG:4326
-#> # A tibble: 3 x 7
-#>   logical date       factor ordered posixct             units    geometry
-#>   <lgl>   <date>     <fct>  <ord>   <dttm>                [m] <POINT [°]>
-#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)
-#> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)
-#> 3 NA      NA         <NA>   <NA>    NA                     NA       (1 1)
+#> # A tibble: 3 x 6
+#>   logical date       factor ordered posixct             units
+#>   <lgl>   <date>     <fct>  <ord>   <dttm>                [m]
+#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0
+#> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5
+#> 3 NA      NA         <NA>   <NA>    NA                     NA
 
 rws_write(rws_data, exists = FALSE, conn = conn)
 
 rws_read_table("rws_data", conn = conn)
-#> Simple feature collection with 3 features and 6 fields
-#> geometry type:  POINT
-#> dimension:      XY
-#> bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1
-#> CRS:            +proj=longlat +datum=WGS84 +no_defs
-#> # A tibble: 3 x 7
-#>   logical date       factor ordered posixct             units    geometry
-#>   <lgl>   <date>     <fct>  <ord>   <dttm>                [m] <POINT [°]>
-#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)
-#> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)
-#> 3 NA      NA         <NA>   <NA>    NA                     NA       (1 1)
+#> # A tibble: 3 x 6
+#>   logical date       factor ordered posixct             units
+#>   <lgl>   <date>     <fct>  <ord>   <dttm>                [m]
+#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0
+#> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5
+#> 3 NA      NA         <NA>   <NA>    NA                     NA
 ```
 
 The attribute information is stored in the metadata table
 
 ``` r
 rws_read_meta(conn = conn)
-#> # A tibble: 7 x 4
-#>   TableMeta ColumnMeta MetaMeta                                  DescriptionMeta
-#>   <chr>     <chr>      <chr>                                     <chr>          
-#> 1 RWS_DATA  DATE       class: Date                               <NA>           
-#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                          <NA>           
-#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +no_defs <NA>           
-#> 4 RWS_DATA  LOGICAL    class: logical                            <NA>           
-#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                         <NA>           
-#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                             <NA>           
-#> 7 RWS_DATA  UNITS      units: m                                  <NA>
+#> # A tibble: 6 x 4
+#>   TableMeta ColumnMeta MetaMeta          DescriptionMeta
+#>   <chr>     <chr>      <chr>             <chr>          
+#> 1 RWS_DATA  DATE       class: Date       <NA>           
+#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'  <NA>           
+#> 3 RWS_DATA  LOGICAL    class: logical    <NA>           
+#> 4 RWS_DATA  ORDERED    ordered: 'y', 'x' <NA>           
+#> 5 RWS_DATA  POSIXCT    tz: Etc/GMT+8     <NA>           
+#> 6 RWS_DATA  UNITS      units: m          <NA>
 ```
 
 The user can add descriptions if they wish.
@@ -155,16 +144,15 @@ The user can add descriptions if they wish.
 rws_describe_meta("rws_data", "posixct", "The time of a visit", conn = conn)
 rws_describe_meta("rws_data", "units", "The site length.", conn = conn)
 rws_read_meta(conn = conn)
-#> # A tibble: 7 x 4
-#>   TableMeta ColumnMeta MetaMeta                               DescriptionMeta   
-#>   <chr>     <chr>      <chr>                                  <chr>             
-#> 1 RWS_DATA  DATE       class: Date                            <NA>              
-#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'                       <NA>              
-#> 3 RWS_DATA  GEOMETRY   proj: +proj=longlat +datum=WGS84 +no_… <NA>              
-#> 4 RWS_DATA  LOGICAL    class: logical                         <NA>              
-#> 5 RWS_DATA  ORDERED    ordered: 'y', 'x'                      <NA>              
-#> 6 RWS_DATA  POSIXCT    tz: Etc/GMT+8                          The time of a vis…
-#> 7 RWS_DATA  UNITS      units: m                               The site length.
+#> # A tibble: 6 x 4
+#>   TableMeta ColumnMeta MetaMeta          DescriptionMeta    
+#>   <chr>     <chr>      <chr>             <chr>              
+#> 1 RWS_DATA  DATE       class: Date       <NA>               
+#> 2 RWS_DATA  FACTOR     factor: 'x', 'y'  <NA>               
+#> 3 RWS_DATA  LOGICAL    class: logical    <NA>               
+#> 4 RWS_DATA  ORDERED    ordered: 'y', 'x' <NA>               
+#> 5 RWS_DATA  POSIXCT    tz: Etc/GMT+8     The time of a visit
+#> 6 RWS_DATA  UNITS      units: m          The site length.
 ```
 
 The log provides a record of data changes that have been made using
