@@ -133,21 +133,21 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for list</span>
-<span class='fu'><a href='rws_write.html'>rws_write</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>delete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>commit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>x_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>x</span>),
-  <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"rws.silent"</span>, <span class='fl'>FALSE</span>),
-  <span class='no'>conn</span>,
-  <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>unique</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+<span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_write.html'>rws_write</a></span>(
+  <span class='kw'>x</span>,
+  exists = <span class='fl'>TRUE</span>,
+  delete = <span class='fl'>FALSE</span>,
+  replace = <span class='fl'>FALSE</span>,
+  meta = <span class='fl'>TRUE</span>,
+  log = <span class='fl'>TRUE</span>,
+  commit = <span class='fl'>TRUE</span>,
+  strict = <span class='fl'>TRUE</span>,
+  x_name = <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='kw'>x</span>),
+  silent = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"rws.silent"</span>, <span class='fl'>FALSE</span>),
+  <span class='kw'>conn</span>,
+  all = <span class='fl'>TRUE</span>,
+  unique = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -216,14 +216,14 @@ inserting data. If <code>meta = TRUE</code> the meta data is deleted.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other rws_write: 
-<code><a href='rws_write.data.frame.html'>rws_write.data.frame</a>()</code>,
-<code><a href='rws_write.environment.html'>rws_write.environment</a>()</code>,
-<code><a href='rws_write.html'>rws_write</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_write.data.frame.html'>rws_write.data.frame</a>()</code>,
+<code><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_write.environment.html'>rws_write.environment</a>()</code>,
+<code><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_write.html'>rws_write</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>conn</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rws_connect.html'>rws_connect</a></span>()
-<span class='fu'><a href='rws_list_tables.html'>rws_list_tables</a></span>(<span class='no'>conn</span>)</div><div class='output co'>#&gt; character(0)</div><div class='input'><span class='fu'><a href='rws_write.html'>rws_write</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>somedata</span> <span class='kw'>=</span> <span class='no'>rws_data</span>, <span class='kw'>anothertable</span> <span class='kw'>=</span> <span class='no'>rws_data</span>), <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)
-<span class='fu'><a href='rws_list_tables.html'>rws_list_tables</a></span>(<span class='no'>conn</span>)</div><div class='output co'>#&gt; [1] "anothertable" "somedata"    </div><div class='input'><span class='fu'><a href='rws_disconnect.html'>rws_disconnect</a></span>(<span class='no'>conn</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>conn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_connect.html'>rws_connect</a></span>()
+<span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_list_tables.html'>rws_list_tables</a></span>(<span class='kw'>conn</span>)</div><div class='output co'>#&gt; character(0)</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_write.html'>rws_write</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(somedata = <span class='kw'>rws_data</span>, anothertable = <span class='kw'>rws_data</span>), exists = <span class='fl'>FALSE</span>, conn = <span class='kw'>conn</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_list_tables.html'>rws_list_tables</a></span>(<span class='kw'>conn</span>)</div><div class='output co'>#&gt; [1] "anothertable" "somedata"    </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_disconnect.html'>rws_disconnect</a></span>(<span class='kw'>conn</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

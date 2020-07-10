@@ -133,7 +133,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for character</span>
-<span class='fu'><a href='rws_describe_meta.html'>rws_describe_meta</a></span>(<span class='no'>x</span>, <span class='no'>column</span>, <span class='no'>description</span>, <span class='no'>...</span>, <span class='no'>conn</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_describe_meta.html'>rws_describe_meta</a></span>(<span class='kw'>x</span>, <span class='kw'>column</span>, <span class='kw'>description</span>, <span class='kw'>...</span>, <span class='kw'>conn</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,11 +166,17 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other rws_describe_meta: 
-<code><a href='rws_describe_meta.html'>rws_describe_meta</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_describe_meta.html'>rws_describe_meta</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>conn</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rws_connect.html'>rws_connect</a></span>()
-<span class='fu'><a href='rws_write.html'>rws_write</a></span>(<span class='no'>rws_data</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: sf</span></div><div class='input'><span class='fu'><a href='rws_read_meta.html'>rws_read_meta</a></span>(<span class='no'>conn</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 7 x 4</span><span>
+    <pre class="examples"><div class='input'><span class='kw'>conn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_connect.html'>rws_connect</a></span>()
+<span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_write.html'>rws_write</a></span>(<span class='kw'>rws_data</span>, exists = <span class='fl'>FALSE</span>, conn = <span class='kw'>conn</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: sf</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_read_meta.html'>rws_read_meta</a></span>(<span class='kw'>conn</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>We detected these problematic arguments:</span>
+#&gt; <span class='warning'>* `needs_dots`</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
+#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 7 x 4</span><span>
 #&gt;   TableMeta ColumnMeta MetaMeta                                  DescriptionMeta
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
 #&gt; </span><span style='color: #555555;'>1</span><span> RWS_DATA  DATE       class: Date                               </span><span style='color: #BB0000;'>NA</span><span>             
@@ -179,9 +185,15 @@
 #&gt; </span><span style='color: #555555;'>4</span><span> RWS_DATA  LOGICAL    class: logical                            </span><span style='color: #BB0000;'>NA</span><span>             
 #&gt; </span><span style='color: #555555;'>5</span><span> RWS_DATA  ORDERED    ordered: 'y', 'x'                         </span><span style='color: #BB0000;'>NA</span><span>             
 #&gt; </span><span style='color: #555555;'>6</span><span> RWS_DATA  POSIXCT    tz: Etc/GMT+8                             </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #555555;'>7</span><span> RWS_DATA  UNITS      units: m                                  </span><span style='color: #BB0000;'>NA</span><span>             </div><div class='input'><span class='fu'><a href='rws_describe_meta.html'>rws_describe_meta</a></span>(<span class='st'>"rws_data"</span>, <span class='st'>"Units"</span>, <span class='st'>"The site length."</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)
-<span class='fu'><a href='rws_describe_meta.html'>rws_describe_meta</a></span>(<span class='st'>"rws_data"</span>, <span class='st'>"POSIXct"</span>, <span class='st'>"Time of the visit"</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)
-<span class='fu'><a href='rws_read_meta.html'>rws_read_meta</a></span>(<span class='no'>conn</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 7 x 4</span><span>
+#&gt; </span><span style='color: #555555;'>7</span><span> RWS_DATA  UNITS      units: m                                  </span><span style='color: #BB0000;'>NA</span><span>             </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_describe_meta.html'>rws_describe_meta</a></span>(<span class='st'>"rws_data"</span>, <span class='st'>"Units"</span>, <span class='st'>"The site length."</span>, conn = <span class='kw'>conn</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_describe_meta.html'>rws_describe_meta</a></span>(<span class='st'>"rws_data"</span>, <span class='st'>"POSIXct"</span>, <span class='st'>"Time of the visit"</span>, conn = <span class='kw'>conn</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_read_meta.html'>rws_read_meta</a></span>(<span class='kw'>conn</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>We detected these problematic arguments:</span>
+#&gt; <span class='warning'>* `needs_dots`</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
+#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 7 x 4</span><span>
 #&gt;   TableMeta ColumnMeta MetaMeta                                 DescriptionMeta 
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'>1</span><span> RWS_DATA  DATE       class: Date                              </span><span style='color: #BB0000;'>NA</span><span>              
@@ -190,7 +202,7 @@
 #&gt; </span><span style='color: #555555;'>4</span><span> RWS_DATA  LOGICAL    class: logical                           </span><span style='color: #BB0000;'>NA</span><span>              
 #&gt; </span><span style='color: #555555;'>5</span><span> RWS_DATA  ORDERED    ordered: 'y', 'x'                        </span><span style='color: #BB0000;'>NA</span><span>              
 #&gt; </span><span style='color: #555555;'>6</span><span> RWS_DATA  POSIXCT    tz: Etc/GMT+8                            Time of the vis…
-#&gt; </span><span style='color: #555555;'>7</span><span> RWS_DATA  UNITS      units: m                                 The site length.</div><div class='input'><span class='fu'><a href='rws_disconnect.html'>rws_disconnect</a></span>(<span class='no'>conn</span>)</div></span></pre>
+#&gt; </span><span style='color: #555555;'>7</span><span> RWS_DATA  UNITS      units: m                                 The site length.</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_disconnect.html'>rws_disconnect</a></span>(<span class='kw'>conn</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
