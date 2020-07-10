@@ -111,7 +111,7 @@
 <p>In the case of a data frame the default table name is the name of the object (an alternative name can be specified using the <code>x_name</code> argument).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="fu"><a href="../reference/rws_write.html">rws_write</a></span>(<span class="kw">rws_data</span>, exists = <span class="fl">FALSE</span>, conn = <span class="kw">conn</span>)
-<span class="co">#&gt; Loading required namespace: sf</span>
+<span class="co">#&gt; Loading required namespace: units</span>
 <span class="fu"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span>(<span class="kw">conn</span>)
 <span class="co">#&gt; [1] "rws_data"</span>
 </pre></div>
@@ -180,11 +180,6 @@
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">tables</span>)
 <span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span>
 <span class="kw">tables</span><span class="op">$</span><span class="kw">rws_data</span>
-<span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span>
-<span class="co">#&gt; geometry type:  POINT</span>
-<span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span>
-<span class="co">#&gt; CRS:            +proj=longlat +datum=WGS84 +no_defs</span>
 <span class="co">#&gt; Warning: `...` is not empty.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; We detected these problematic arguments:</span>
@@ -192,12 +187,12 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
 <span class="co">#&gt; Did you misspecify an argument?</span>
-<span class="co">#&gt; # A tibble: 3 x 7</span>
-<span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span>
-<span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span>
-<span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span>
-<span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span>
-<span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span>
+<span class="co">#&gt; # A tibble: 3 x 6</span>
+<span class="co">#&gt;   logical date       factor ordered posixct             units</span>
+<span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m]</span>
+<span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0</span>
+<span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5</span>
+<span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA</span>
 </pre></div>
 <p>The table names can of course be manipulated and <code><a href="https://rdrr.io/r/base/list2env.html">list2env()</a></code> used to assign the data frames to the current environment.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
@@ -207,11 +202,6 @@
 <p>If the user wishes to read a single data frame they can use <code><a href="../reference/rws_read_table.html">rws_read_table()</a></code></p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="fu"><a href="../reference/rws_read_table.html">rws_read_table</a></span>(<span class="st">"rws_data"</span>, conn = <span class="kw">conn</span>)
-<span class="co">#&gt; Simple feature collection with 3 features and 6 fields</span>
-<span class="co">#&gt; geometry type:  POINT</span>
-<span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1</span>
-<span class="co">#&gt; CRS:            +proj=longlat +datum=WGS84 +no_defs</span>
 <span class="co">#&gt; Warning: `...` is not empty.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; We detected these problematic arguments:</span>
@@ -219,12 +209,12 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
 <span class="co">#&gt; Did you misspecify an argument?</span>
-<span class="co">#&gt; # A tibble: 3 x 7</span>
-<span class="co">#&gt;   logical date       factor ordered posixct             units    geometry</span>
-<span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m] &lt;POINT [°]&gt;</span>
-<span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0       (0 1)</span>
-<span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5       (1 0)</span>
-<span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA       (1 1)</span>
+<span class="co">#&gt; # A tibble: 3 x 6</span>
+<span class="co">#&gt;   logical date       factor ordered posixct             units</span>
+<span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m]</span>
+<span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0</span>
+<span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5</span>
+<span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA</span>
 </pre></div>
 <p>The <code><a href="../reference/rws_read_meta.html">rws_read_meta()</a></code> and <code><a href="../reference/rws_read_log.html">rws_read_log()</a></code> allow the user to read the meta and log tables.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
@@ -236,22 +226,19 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
 <span class="co">#&gt; Did you misspecify an argument?</span>
-<span class="co">#&gt; # A tibble: 13 x 4</span>
-<span class="co">#&gt;    TableMeta     ColumnMeta MetaMeta                             DescriptionMeta</span>
-<span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;                                &lt;chr&gt;          </span>
-<span class="co">#&gt;  1 A_TABLE       DATE       class: Date                          &lt;NA&gt;           </span>
-<span class="co">#&gt;  2 A_TABLE       GEOMETRY   proj: +proj=longlat +datum=WGS84 +n… &lt;NA&gt;           </span>
-<span class="co">#&gt;  3 A_TABLE       LOGICAL    class: logical                       &lt;NA&gt;           </span>
-<span class="co">#&gt;  4 ANOTHER_TABLE FACTOR     factor: 'x', 'y'                     &lt;NA&gt;           </span>
-<span class="co">#&gt;  5 ANOTHER_TABLE GEOMETRY   proj: +proj=longlat +datum=WGS84 +n… &lt;NA&gt;           </span>
-<span class="co">#&gt;  6 ANOTHER_TABLE ORDERED    ordered: 'y', 'x'                    &lt;NA&gt;           </span>
-<span class="co">#&gt;  7 RWS_DATA      DATE       class: Date                          &lt;NA&gt;           </span>
-<span class="co">#&gt;  8 RWS_DATA      FACTOR     factor: 'x', 'y'                     &lt;NA&gt;           </span>
-<span class="co">#&gt;  9 RWS_DATA      GEOMETRY   proj: +proj=longlat +datum=WGS84 +n… &lt;NA&gt;           </span>
-<span class="co">#&gt; 10 RWS_DATA      LOGICAL    class: logical                       &lt;NA&gt;           </span>
-<span class="co">#&gt; 11 RWS_DATA      ORDERED    ordered: 'y', 'x'                    &lt;NA&gt;           </span>
-<span class="co">#&gt; 12 RWS_DATA      POSIXCT    tz: Etc/GMT+8                        &lt;NA&gt;           </span>
-<span class="co">#&gt; 13 RWS_DATA      UNITS      units: m                             &lt;NA&gt;</span>
+<span class="co">#&gt; # A tibble: 10 x 4</span>
+<span class="co">#&gt;    TableMeta     ColumnMeta MetaMeta          DescriptionMeta</span>
+<span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;             &lt;chr&gt;          </span>
+<span class="co">#&gt;  1 A_TABLE       DATE       class: Date       &lt;NA&gt;           </span>
+<span class="co">#&gt;  2 A_TABLE       LOGICAL    class: logical    &lt;NA&gt;           </span>
+<span class="co">#&gt;  3 ANOTHER_TABLE FACTOR     factor: 'x', 'y'  &lt;NA&gt;           </span>
+<span class="co">#&gt;  4 ANOTHER_TABLE ORDERED    ordered: 'y', 'x' &lt;NA&gt;           </span>
+<span class="co">#&gt;  5 RWS_DATA      DATE       class: Date       &lt;NA&gt;           </span>
+<span class="co">#&gt;  6 RWS_DATA      FACTOR     factor: 'x', 'y'  &lt;NA&gt;           </span>
+<span class="co">#&gt;  7 RWS_DATA      LOGICAL    class: logical    &lt;NA&gt;           </span>
+<span class="co">#&gt;  8 RWS_DATA      ORDERED    ordered: 'y', 'x' &lt;NA&gt;           </span>
+<span class="co">#&gt;  9 RWS_DATA      POSIXCT    tz: Etc/GMT+8     &lt;NA&gt;           </span>
+<span class="co">#&gt; 10 RWS_DATA      UNITS      units: m          &lt;NA&gt;</span>
 </pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="fu"><a href="../reference/rws_read_log.html">rws_read_log</a></span>(<span class="kw">conn</span>)

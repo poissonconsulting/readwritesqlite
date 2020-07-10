@@ -173,41 +173,31 @@
   x_name = <span class='st'>"data2"</span>,
   exists = <span class='fl'>FALSE</span>, conn = <span class='kw'>conn</span>
 )
-<span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_read.html'>rws_read</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rws_data"</span>, <span class='st'>"data2"</span>), conn = <span class='kw'>conn</span>)</div><div class='output co'>#&gt; $rws_data
-#&gt; Simple feature collection with 3 features and 6 fields
-#&gt; geometry type:  POINT
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1
-#&gt; CRS:            +proj=longlat +datum=WGS84 +no_defs</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
+<span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_read.html'>rws_read</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rws_data"</span>, <span class='st'>"data2"</span>), conn = <span class='kw'>conn</span>)</div><div class='output co'>#&gt; $rws_data</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
 #&gt; <span class='warning'></span>
 #&gt; <span class='warning'>We detected these problematic arguments:</span>
 #&gt; <span class='warning'>* `needs_dots`</span>
 #&gt; <span class='warning'></span>
 #&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
-#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 7</span><span>
-#&gt;   logical date       factor ordered posixct             units    geometry
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;ord&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>                </span><span style='color: #555555;'>[m]</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;POINT [°]&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> TRUE    2000-01-01 x      x       2001-01-02 </span><span style='color: #555555;'>03:04:05</span><span>  10.0       (0 1)
-#&gt; </span><span style='color: #555555;'>2</span><span> FALSE   2001-02-03 y      y       2006-07-08 </span><span style='color: #555555;'>09:10:11</span><span>  11.5       (1 0)
-#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>                     NA       (1 1)
+#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 3 x 6</span><span>
+#&gt;   logical date       factor ordered posixct             units
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;ord&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>                </span><span style='color: #555555;'>[m]</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> TRUE    2000-01-01 x      x       2001-01-02 </span><span style='color: #555555;'>03:04:05</span><span>  10.0
+#&gt; </span><span style='color: #555555;'>2</span><span> FALSE   2001-02-03 y      y       2006-07-08 </span><span style='color: #555555;'>09:10:11</span><span>  11.5
+#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>                     NA
 #&gt; 
-#&gt; $data2
-#&gt; Simple feature collection with 3 features and 2 fields
-#&gt; geometry type:  POINT
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: 0 ymin: 0 xmax: 1 ymax: 1
-#&gt; CRS:            +proj=longlat +datum=WGS84 +no_defs</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
+#&gt; $data2</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
 #&gt; <span class='warning'></span>
 #&gt; <span class='warning'>We detected these problematic arguments:</span>
 #&gt; <span class='warning'>* `needs_dots`</span>
 #&gt; <span class='warning'></span>
 #&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
-#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 3</span><span>
-#&gt;   date       ordered    geometry
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;ord&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;POINT [°]&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> 2000-01-01 x             (0 1)
-#&gt; </span><span style='color: #555555;'>2</span><span> 2001-02-03 y             (1 0)
-#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #BB0000;'>NA</span><span>         </span><span style='color: #BB0000;'>NA</span><span>            (1 1)
+#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 2</span><span>
+#&gt;   date       ordered
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;ord&gt;</span><span>  
+#&gt; </span><span style='color: #555555;'>1</span><span> 2000-01-01 x      
+#&gt; </span><span style='color: #555555;'>2</span><span> 2001-02-03 y      
+#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #BB0000;'>NA</span><span>         </span><span style='color: #BB0000;'>NA</span><span>     
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/readwritesqlite/man/rws_disconnect.html'>rws_disconnect</a></span>(<span class='kw'>conn</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
