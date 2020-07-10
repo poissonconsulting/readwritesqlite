@@ -1,3 +1,9 @@
+# readwritesqlite 0.1.1.9001
+
+- Remove geometry sfc column from rws_data.
+- Extended to also work with pool objects.
+
+
 # readwritesqlite 0.1.1.9000
 
 - Removes trailing spaces on sf (>= 0.9-1) projections which are causing write error.
