@@ -85,7 +85,7 @@
       <h1 data-toc-skip>Using readwritesqlite</h1>
                         <h4 class="author">Joe Thorley</h4>
             
-            <h4 class="date">2020-07-10</h4>
+            <h4 class="date">2020-07-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/poissonconsulting/readwritesqlite/blob/master/vignettes/using-readwritesqlite.Rmd"><code>vignettes/using-readwritesqlite.Rmd</code></a></small>
       <div class="hidden name"><code>using-readwritesqlite.Rmd</code></div>
@@ -180,13 +180,6 @@
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">tables</span>)
 <span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span>
 <span class="kw">tables</span><span class="op">$</span><span class="kw">rws_data</span>
-<span class="co">#&gt; Warning: `...` is not empty.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; We detected these problematic arguments:</span>
-<span class="co">#&gt; * `needs_dots`</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
-<span class="co">#&gt; Did you misspecify an argument?</span>
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   logical date       factor ordered posixct             units</span>
 <span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m]</span>
@@ -202,13 +195,6 @@
 <p>If the user wishes to read a single data frame they can use <code><a href="../reference/rws_read_table.html">rws_read_table()</a></code></p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="fu"><a href="../reference/rws_read_table.html">rws_read_table</a></span>(<span class="st">"rws_data"</span>, conn = <span class="kw">conn</span>)
-<span class="co">#&gt; Warning: `...` is not empty.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; We detected these problematic arguments:</span>
-<span class="co">#&gt; * `needs_dots`</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
-<span class="co">#&gt; Did you misspecify an argument?</span>
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   logical date       factor ordered posixct             units</span>
 <span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m]</span>
@@ -219,13 +205,6 @@
 <p>The <code><a href="../reference/rws_read_meta.html">rws_read_meta()</a></code> and <code><a href="../reference/rws_read_log.html">rws_read_log()</a></code> allow the user to read the meta and log tables.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="../reference/rws_read_meta.html">rws_read_meta</a></span>(<span class="kw">conn</span>)
-<span class="co">#&gt; Warning: `...` is not empty.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; We detected these problematic arguments:</span>
-<span class="co">#&gt; * `needs_dots`</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These dots only exist to allow future extensions and should be empty.</span>
-<span class="co">#&gt; Did you misspecify an argument?</span>
 <span class="co">#&gt; # A tibble: 10 x 4</span>
 <span class="co">#&gt;    TableMeta     ColumnMeta MetaMeta          DescriptionMeta</span>
 <span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;             &lt;chr&gt;          </span>
