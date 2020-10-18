@@ -43,12 +43,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -137,30 +131,28 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>To install the latest release from <a href="https://cran.r-project.org">CRAN</a></p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"readwritesqlite"</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"readwritesqlite"</span><span class="op">)</span></pre></div>
 <p>To install the developmental version from <a href="https://github.com/poissonconsulting/readwritesqlite">GitHub</a></p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="co"># install.packages("remotes")</span>
-<span class="kw">remotes</span>::<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"poissonconsulting/readwritesqlite"</span>)
-</pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"poissonconsulting/readwritesqlite"</span><span class="op">)</span></pre></div>
 </div>
 <div id="demonstration" class="section level2">
 <h2 class="hasAnchor">
 <a href="#demonstration" class="anchor"></a>Demonstration</h2>
 <p>Key attribute information is preserved for many classes.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/poissonconsulting/readwritesqlite">readwritesqlite</a></span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/poissonconsulting/readwritesqlite">readwritesqlite</a></span><span class="op">)</span>
 
 <span class="co"># for nicer printing of data frames</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://tibble.tidyverse.org">tibble</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://r-spatial.github.io/sf">sf</a></span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
 <span class="co">#&gt; Linking to GEOS 3.8.1, GDAL 3.1.2, PROJ 7.1.0</span>
 
-<span class="kw">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rws_connect.html">rws_connect</a></span>()
+<span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rws_connect.html">rws_connect</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="kw">rws_data</span> <span class="op">&lt;-</span> <span class="kw">readwritesqlite</span>::<span class="kw"><a href="reference/rws_data.html">rws_data</a></span>
-<span class="kw">rws_data</span>
+<span class="va">rws_data</span> <span class="op">&lt;-</span> <span class="fu">readwritesqlite</span><span class="fu">::</span><span class="va"><a href="reference/rws_data.html">rws_data</a></span>
+<span class="va">rws_data</span>
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   logical date       factor ordered posixct             units</span>
 <span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m]</span>
@@ -168,19 +160,18 @@
 <span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5</span>
 <span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA</span>
 
-<span class="fu"><a href="reference/rws_write.html">rws_write</a></span>(<span class="kw">rws_data</span>, exists = <span class="fl">FALSE</span>, conn = <span class="kw">conn</span>)
+<span class="fu"><a href="reference/rws_write.html">rws_write</a></span><span class="op">(</span><span class="va">rws_data</span>, exists <span class="op">=</span> <span class="cn">FALSE</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
 
-<span class="fu"><a href="reference/rws_read_table.html">rws_read_table</a></span>(<span class="st">"rws_data"</span>, conn = <span class="kw">conn</span>)
+<span class="fu"><a href="reference/rws_read_table.html">rws_read_table</a></span><span class="op">(</span><span class="st">"rws_data"</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   logical date       factor ordered posixct             units</span>
 <span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m]</span>
 <span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0</span>
 <span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5</span>
-<span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA</span>
-</pre></div>
+<span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA</span></pre></div>
 <p>The attribute information is stored in the metadata table</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="reference/rws_read_meta.html">rws_read_meta</a></span>(conn = <span class="kw">conn</span>)
+<span class="fu"><a href="reference/rws_read_meta.html">rws_read_meta</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 x 4</span>
 <span class="co">#&gt;   TableMeta ColumnMeta MetaMeta          DescriptionMeta</span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;             &lt;chr&gt;          </span>
@@ -189,13 +180,12 @@
 <span class="co">#&gt; 3 RWS_DATA  LOGICAL    class: logical    &lt;NA&gt;           </span>
 <span class="co">#&gt; 4 RWS_DATA  ORDERED    ordered: 'y', 'x' &lt;NA&gt;           </span>
 <span class="co">#&gt; 5 RWS_DATA  POSIXCT    tz: Etc/GMT+8     &lt;NA&gt;           </span>
-<span class="co">#&gt; 6 RWS_DATA  UNITS      units: m          &lt;NA&gt;</span>
-</pre></div>
+<span class="co">#&gt; 6 RWS_DATA  UNITS      units: m          &lt;NA&gt;</span></pre></div>
 <p>The user can add descriptions if they wish.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="reference/rws_describe_meta.html">rws_describe_meta</a></span>(<span class="st">"rws_data"</span>, <span class="st">"posixct"</span>, <span class="st">"The time of a visit"</span>, conn = <span class="kw">conn</span>)
-<span class="fu"><a href="reference/rws_describe_meta.html">rws_describe_meta</a></span>(<span class="st">"rws_data"</span>, <span class="st">"units"</span>, <span class="st">"The site length."</span>, conn = <span class="kw">conn</span>)
-<span class="fu"><a href="reference/rws_read_meta.html">rws_read_meta</a></span>(conn = <span class="kw">conn</span>)
+<span class="fu"><a href="reference/rws_describe_meta.html">rws_describe_meta</a></span><span class="op">(</span><span class="st">"rws_data"</span>, <span class="st">"posixct"</span>, <span class="st">"The time of a visit"</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
+<span class="fu"><a href="reference/rws_describe_meta.html">rws_describe_meta</a></span><span class="op">(</span><span class="st">"rws_data"</span>, <span class="st">"units"</span>, <span class="st">"The site length."</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
+<span class="fu"><a href="reference/rws_read_meta.html">rws_read_meta</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 x 4</span>
 <span class="co">#&gt;   TableMeta ColumnMeta MetaMeta          DescriptionMeta    </span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;             &lt;chr&gt;              </span>
@@ -204,21 +194,18 @@
 <span class="co">#&gt; 3 RWS_DATA  LOGICAL    class: logical    &lt;NA&gt;               </span>
 <span class="co">#&gt; 4 RWS_DATA  ORDERED    ordered: 'y', 'x' &lt;NA&gt;               </span>
 <span class="co">#&gt; 5 RWS_DATA  POSIXCT    tz: Etc/GMT+8     The time of a visit</span>
-<span class="co">#&gt; 6 RWS_DATA  UNITS      units: m          The site length.</span>
-</pre></div>
+<span class="co">#&gt; 6 RWS_DATA  UNITS      units: m          The site length.</span></pre></div>
 <p>The log provides a record of data changes that have been made using readwritesqlite.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="reference/rws_read_log.html">rws_read_log</a></span>(conn = <span class="kw">conn</span>)
+<span class="fu"><a href="reference/rws_read_log.html">rws_read_log</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 2 x 5</span>
 <span class="co">#&gt;   DateTimeUTCLog      UserLog TableLog CommandLog NRowLog</span>
 <span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;        &lt;int&gt;</span>
 <span class="co">#&gt; 1 2019-07-07 16:05:10 joe     RWS_DATA CREATE           0</span>
-<span class="co">#&gt; 2 2019-07-07 16:05:11 joe     RWS_DATA INSERT           3</span>
-</pre></div>
+<span class="co">#&gt; 2 2019-07-07 16:05:11 joe     RWS_DATA INSERT           3</span></pre></div>
 <p>Don’t forget to disconnect when done.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="reference/rws_disconnect.html">rws_disconnect</a></span>(<span class="kw">conn</span>)
-</pre></div>
+<span class="fu"><a href="reference/rws_disconnect.html">rws_disconnect</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></pre></div>
 </div>
 <div id="information" class="section level2">
 <h2 class="hasAnchor">
@@ -294,7 +281,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
