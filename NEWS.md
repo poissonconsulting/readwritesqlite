@@ -2,7 +2,6 @@
 
 - Internal changes only.
 
-
 # readwritesqlite 0.1.2
 
 ## New Features
