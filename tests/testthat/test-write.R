@@ -1,5 +1,3 @@
-context("write")
-
 test_that("rws_write.data.frame checks reserved table names", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

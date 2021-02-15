@@ -1,5 +1,3 @@
-context("query")
-
 test_that("rws_get_sqlite_query works with meta = FALSE", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

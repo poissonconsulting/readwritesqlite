@@ -1,5 +1,3 @@
-context("utils")
-
 test_that("rws_table_names", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

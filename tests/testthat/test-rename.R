@@ -1,5 +1,3 @@
-context("rename")
-
 test_that("rws_rename_table works", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

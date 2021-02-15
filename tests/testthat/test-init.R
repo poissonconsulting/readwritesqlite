@@ -1,5 +1,3 @@
-context("init")
-
 test_that("init makes table", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

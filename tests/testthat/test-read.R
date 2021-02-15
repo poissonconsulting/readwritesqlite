@@ -1,5 +1,3 @@
-context("read")
-
 test_that("rws_read requires table", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

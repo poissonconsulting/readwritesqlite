@@ -1,5 +1,3 @@
-context("drop")
-
 test_that("rws_drop_table works", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

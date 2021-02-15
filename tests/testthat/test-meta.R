@@ -1,5 +1,3 @@
-context("meta")
-
 test_that("make_meta_data works", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

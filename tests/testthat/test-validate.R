@@ -1,5 +1,3 @@
-context("validate")
-
 test_that("rws_write.data.frame checks all columns present", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

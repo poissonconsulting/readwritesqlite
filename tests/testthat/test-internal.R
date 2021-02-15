@@ -1,5 +1,3 @@
-context("internal")
-
 test_that("test query_table_names", {
   expect_identical(query_table_names(""), character(0))
   expect_identical(query_table_names("FROM"), character(0))

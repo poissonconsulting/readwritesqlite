@@ -1,5 +1,3 @@
-context("db")
-
 test_that("nrows_table", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

@@ -1,5 +1,3 @@
-context("connection")
-
 test_that("rws_connect", {
   expect_error(
     rws_connect(":memory:", exists = TRUE),

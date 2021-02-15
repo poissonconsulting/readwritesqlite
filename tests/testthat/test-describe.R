@@ -1,5 +1,3 @@
-context("describe")
-
 test_that("describe with scalars works", {
   conn <- rws_connect(":memory:")
   teardown(rws_disconnect(conn))

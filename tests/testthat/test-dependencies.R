@@ -1,5 +1,3 @@
-context("dependencies")
-
 test_that("unquoted table names case insensitive in RSQLite", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   teardown(DBI::dbDisconnect(conn))

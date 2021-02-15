@@ -1,5 +1,3 @@
-context("vld")
-
 test_that("vld_sqlite_conn", {
   expect_false(vld_sqlite_conn(1))
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
