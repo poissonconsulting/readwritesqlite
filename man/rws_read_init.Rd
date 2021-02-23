@@ -3,7 +3,7 @@
 \name{rws_read_init}
 \alias{rws_read_init}
 \alias{rws_read_sqlite_init}
-\title{Read Initialization Data table from SQLite Database}
+\title{Read Initialization Data table from a SQLite Database}
 \usage{
 rws_read_init(conn)
 }

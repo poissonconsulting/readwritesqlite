@@ -3,7 +3,7 @@
 \name{rws_read_table}
 \alias{rws_read_table}
 \alias{rws_read_sqlite_table}
-\title{Read A Table from a SQLite Database}
+\title{Read a Table from a SQLite Database}
 \usage{
 rws_read_table(x, meta = TRUE, conn)
 }
@@ -18,7 +18,7 @@ rws_read_table(x, meta = TRUE, conn)
 A data frame of the table.
 }
 \description{
-Read A Table from a SQLite Database
+Read a Table from a SQLite Database
 }
 \examples{
 conn <- rws_connect()

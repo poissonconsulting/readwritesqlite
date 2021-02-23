@@ -3,7 +3,7 @@
 \name{rws_read_log}
 \alias{rws_read_log}
 \alias{rws_read_sqlite_log}
-\title{Read Log Data Table from SQLite Database}
+\title{Read Log Data Table from a SQLite Database}
 \usage{
 rws_read_log(conn)
 }

@@ -3,7 +3,7 @@
 \name{rws_read_meta}
 \alias{rws_read_meta}
 \alias{rws_read_sqlite_meta}
-\title{Read Meta Data table from SQLite Database}
+\title{Read Meta Data table from a SQLite Database}
 \usage{
 rws_read_meta(conn)
 }

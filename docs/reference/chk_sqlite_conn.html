@@ -73,7 +73,7 @@ checks if a SQLite connection." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ checks if a SQLite connection." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -107,7 +107,7 @@ checks if a SQLite connection." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/poissonconsulting/readwritesqlite/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,14 +134,14 @@ checks if a SQLite connection." />
 checks if a SQLite connection.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>chk_sqlite_conn</span>(<span class='no'>x</span>, <span class='kw'>connected</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>x_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>chk_sqlite_conn</span><span class='op'>(</span><span class='va'>x</span>, connected <span class='op'>=</span> <span class='cn'>NA</span>, x_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>check_sqlite_connection</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>connected</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>x_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>x</span>),
-  <span class='kw'>error</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+<span class='fu'>check_sqlite_connection</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  connected <span class='op'>=</span> <span class='cn'>NA</span>,
+  x_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>,
+  error <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,10 +176,11 @@ if the condition is not met.</p>
 </ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>conn</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rws_connect.html'>rws_connect</a></span>()
-<span class='fu'>chk_sqlite_conn</span>(<span class='no'>conn</span>)
-<span class='fu'><a href='rws_disconnect.html'>rws_disconnect</a></span>(<span class='no'>conn</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>chk_sqlite_conn</span>(<span class='no'>conn</span>, <span class='kw'>connected</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; Error : `conn` must be connected.</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>conn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rws_connect.html'>rws_connect</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>chk_sqlite_conn</span><span class='op'>(</span><span class='va'>conn</span><span class='op'>)</span>
+<span class='fu'><a href='rws_disconnect.html'>rws_disconnect</a></span><span class='op'>(</span><span class='va'>conn</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'>chk_sqlite_conn</span><span class='op'>(</span><span class='va'>conn</span>, connected <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Error : `conn` must be connected.</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -195,7 +196,7 @@ if the condition is not met.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

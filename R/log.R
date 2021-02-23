@@ -38,7 +38,7 @@ log_command <- function(table_name, command, nrow, conn) {
   DBI::dbAppendTable(conn, .log_table_name, data)
 }
 
-#' Read Log Data Table from SQLite Database
+#' Read Log Data Table from a SQLite Database
 #'
 #' The table is created if it doesn't exist.
 #'
