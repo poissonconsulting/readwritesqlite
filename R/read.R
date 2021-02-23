@@ -70,7 +70,7 @@ rws_read.SQLiteConnection <- function(x, meta = TRUE, ...) {
   rws_read(table_names, meta = meta, conn = x)
 }
 
-#' Read A Table from a SQLite Database
+#' Read a Table from a SQLite Database
 #'
 #' @inheritParams rws_write
 #' @param x A string of the table name.

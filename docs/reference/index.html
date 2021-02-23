@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -79,7 +79,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -105,7 +105,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/poissonconsulting/readwritesqlite/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,8 +136,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-connection" class="hasAnchor"><a href="#section-connection" class="anchor"></a>Connection</h2>
+          <p class="section-desc"><p>Open, Close or Check SQLite Connection</p></p>
         </th>
       </tr>
       
@@ -160,10 +160,29 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="rws_data.html">rws_data</a></code> </p>
+          <p><code><a href="rws_disconnect.html">rws_disconnect()</a></code> </p>
         </td>
-        <td><p>Example Data</p></td>
+        <td><p>Close SQLite Database Connection</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="vld_sqlite_conn.html">vld_sqlite_conn()</a></code> </p>
+        </td>
+        <td><p>Validate SQLite Connection</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-edit" class="hasAnchor"><a href="#section-edit" class="anchor"></a>Edit</h2>
+          <p class="section-desc"><p>Edit SQLite Database</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="rws_describe_meta.html">rws_describe_meta()</a></code> </p>
@@ -184,69 +203,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="rws_disconnect.html">rws_disconnect()</a></code> </p>
-        </td>
-        <td><p>Close SQLite Database Connection</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="rws_drop_table.html">rws_drop_table()</a></code> </p>
         </td>
         <td><p>Drop SQLite Table</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rws_list_tables.html">rws_list_tables()</a></code> </p>
-        </td>
-        <td><p>Table Names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rws_query.html">rws_query()</a></code> </p>
-        </td>
-        <td><p>Query SQLite Database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rws_read.html">rws_read()</a></code> </p>
-        </td>
-        <td><p>Read from a SQLite Database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rws_read.SQLiteConnection.html">rws_read(<i>&lt;SQLiteConnection&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Read All Tables from a SQLite Database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rws_read.character.html">rws_read(<i>&lt;character&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Read Tables from a SQLite Database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rws_read_init.html">rws_read_init()</a></code> </p>
-        </td>
-        <td><p>Read Initialization Data table from SQLite Database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rws_read_log.html">rws_read_log()</a></code> </p>
-        </td>
-        <td><p>Read Log Data Table from SQLite Database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rws_read_meta.html">rws_read_meta()</a></code> </p>
-        </td>
-        <td><p>Read Meta Data table from SQLite Database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rws_read_table.html">rws_read_table()</a></code> </p>
-        </td>
-        <td><p>Read A Table from a SQLite Database</p></td>
       </tr><tr>
         
         <td>
@@ -283,12 +242,79 @@
           <p><code><a href="rws_write.list.html">rws_write(<i>&lt;list&gt;</i>)</a></code> </p>
         </td>
         <td><p>Write a Named List of Data Frames to a SQLite Database</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-read" class="hasAnchor"><a href="#section-read" class="anchor"></a>Read</h2>
+          <p class="section-desc"><p>Read SQLite Database</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="rws_data.html">rws_data</a></code> </p>
+        </td>
+        <td><p>Example Data</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="vld_sqlite_conn.html">vld_sqlite_conn()</a></code> </p>
+          <p><code><a href="rws_list_tables.html">rws_list_tables()</a></code> </p>
         </td>
-        <td><p>Validate SQLite Connection</p></td>
+        <td><p>Table Names</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rws_query.html">rws_query()</a></code> </p>
+        </td>
+        <td><p>Query SQLite Database</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rws_read.html">rws_read()</a></code> </p>
+        </td>
+        <td><p>Read from a SQLite Database</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rws_read.SQLiteConnection.html">rws_read(<i>&lt;SQLiteConnection&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Read All Tables from a SQLite Database</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rws_read.character.html">rws_read(<i>&lt;character&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Read Tables from a SQLite Database</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rws_read_init.html">rws_read_init()</a></code> </p>
+        </td>
+        <td><p>Read Initialization Data table from a SQLite Database</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rws_read_log.html">rws_read_log()</a></code> </p>
+        </td>
+        <td><p>Read Log Data Table from a SQLite Database</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rws_read_meta.html">rws_read_meta()</a></code> </p>
+        </td>
+        <td><p>Read Meta Data table from a SQLite Database</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rws_read_table.html">rws_read_table()</a></code> </p>
+        </td>
+        <td><p>Read a Table from a SQLite Database</p></td>
       </tr>
     </tbody>
     </table>
@@ -308,7 +334,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

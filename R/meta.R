@@ -58,7 +58,7 @@ confirm_meta_table <- function(conn) {
   replace_meta_table(meta_data, conn)
 }
 
-#' Read Meta Data table from SQLite Database
+#' Read Meta Data table from a SQLite Database
 #'
 #' The table is created if it doesn't exist.
 #'

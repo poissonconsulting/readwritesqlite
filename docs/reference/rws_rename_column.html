@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -106,7 +106,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/poissonconsulting/readwritesqlite/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,7 +132,7 @@
     <p>Rename SQLite Column</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rws_rename_column</span>(<span class='no'>table_name</span>, <span class='no'>column_name</span>, <span class='no'>new_column_name</span>, <span class='no'>conn</span>)</pre>
+    <pre class="usage"><span class='fu'>rws_rename_column</span><span class='op'>(</span><span class='va'>table_name</span>, <span class='va'>column_name</span>, <span class='va'>new_column_name</span>, <span class='va'>conn</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,15 +165,19 @@
 <code><a href='rws_rename_table.html'>rws_rename_table</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>conn</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rws_connect.html'>rws_connect</a></span>()
-<span class='fu'><a href='rws_write.html'>rws_write</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>x_name</span> <span class='kw'>=</span> <span class='st'>"local"</span>, <span class='kw'>exists</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)
-<span class='fu'><a href='rws_read_table.html'>rws_read_table</a></span>(<span class='st'>"local"</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 1</span><span>
+    <pre class="examples"><div class='input'><span class='va'>conn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rws_connect.html'>rws_connect</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='rws_write.html'>rws_write</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>, x_name <span class='op'>=</span> <span class='st'>"local"</span>, exists <span class='op'>=</span> <span class='cn'>FALSE</span>, conn <span class='op'>=</span> <span class='va'>conn</span><span class='op'>)</span>
+<span class='fu'><a href='rws_read_table.html'>rws_read_table</a></span><span class='op'>(</span><span class='st'>"local"</span>, conn <span class='op'>=</span> <span class='va'>conn</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 1</span><span>
 #&gt;       x
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     1</div><div class='input'><span class='fu'>rws_rename_column</span>(<span class='st'>"local"</span>, <span class='st'>"x"</span>, <span class='st'>"Y"</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='rws_read_table.html'>rws_read_table</a></span>(<span class='st'>"local"</span>, <span class='kw'>conn</span> <span class='kw'>=</span> <span class='no'>conn</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 1</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     1</div><div class='input'><span class='fu'>rws_rename_column</span><span class='op'>(</span><span class='st'>"local"</span>, <span class='st'>"x"</span>, <span class='st'>"Y"</span>, conn <span class='op'>=</span> <span class='va'>conn</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='rws_read_table.html'>rws_read_table</a></span><span class='op'>(</span><span class='st'>"local"</span>, conn <span class='op'>=</span> <span class='va'>conn</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 1</span><span>
 #&gt;       Y
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     1</div><div class='input'><span class='fu'><a href='rws_disconnect.html'>rws_disconnect</a></span>(<span class='no'>conn</span>)</div></span></pre>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     1</div><div class='input'><span class='fu'><a href='rws_disconnect.html'>rws_disconnect</a></span><span class='op'>(</span><span class='va'>conn</span><span class='op'>)</span>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -189,7 +193,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

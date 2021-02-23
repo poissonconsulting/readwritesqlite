@@ -1,0 +1,37 @@
+destination: docs
+
+reference:
+- title: Connection
+  desc: Open, Close or Check SQLite Connection
+  contents:
+  - '`chk_sqlite_conn`'
+  - '`check_sqlite_connection`'
+  - '`rws_connect`'
+  - '`rws_disconnect`'
+  - '`vld_sqlite_conn`'
+- title: Edit
+  desc: Edit SQLite Database
+  contents:
+  - '`rws_describe_meta`'
+  - '`rws_describe_meta.character`'
+  - '`rws_describe_meta.data.frame`'
+  - '`rws_drop_table`'
+  - '`rws_rename_column`'
+  - '`rws_rename_table`'
+  - '`rws_write`'
+  - '`rws_write.data.frame`'
+  - '`rws_write.environment`'
+  - '`rws_write.list`'
+- title: Read
+  desc: Read SQLite Database
+  contents:
+  - '`rws_data`'
+  - '`rws_list_tables`'
+  - '`rws_query`'
+  - '`rws_read`'
+  - '`rws_read.SQLiteConnection`'
+  - '`rws_read.character`'
+  - '`rws_read_init`'
+  - '`rws_read_log`'
+  - '`rws_read_meta`'
+  - '`rws_read_table`'

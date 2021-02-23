@@ -78,7 +78,7 @@ confirm_init_table <- function(conn) {
   replace_init_table(init_data, conn)
 }
 
-#' Read Initialization Data table from SQLite Database
+#' Read Initialization Data table from a SQLite Database
 #'
 #' The table is created if it doesn't exist.
 #'
