@@ -33,7 +33,10 @@ Imports:
     lifecycle,
     RSQLite,
     tibble,
-    sf
+    sf,
+    rlang,
+    clisymbols,
+    crayon
 Suggests: 
     covr,
     knitr,
