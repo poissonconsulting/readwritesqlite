@@ -35,7 +35,7 @@ Imports:
     tibble,
     sf,
     rlang,
-    clisymbols,
+    glue,
     crayon
 Suggests: 
     covr,
