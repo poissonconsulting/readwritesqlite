@@ -32,13 +32,16 @@ Imports:
     hms,
     lifecycle,
     RSQLite,
-    tibble
+    tibble,
+    sf,
+    rlang,
+    glue,
+    crayon
 Suggests: 
     covr,
     knitr,
     pool,
     rmarkdown,
-    sf,
     testthat,
     units
 VignetteBuilder: 

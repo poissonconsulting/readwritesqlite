@@ -14,3 +14,8 @@ vld_sqlite_conn <- function(x, connected = NA) {
   (vld_s4_class(x, "SQLiteConnection") || vld_s3_class(x, "Pool"))  && 
     (is.na(connected) || connected == dbIsValid(x))
 }
+
+vld_crs <- function(x){
+  result <- suppressWarnings(try(sf::st_crs(x, valid = FALSE), silent = TRUE))
+  all(!inherits(result, "try-error"), vld_character(x), vld_scalar(x), !is.na(x))
+}
