@@ -19,3 +19,7 @@ An invisible named vector of the file names and new file names saved.
 \description{
 Export all spatial datasets in a database as geopackages.
 }
+\details{
+If more than one spatial column is present in a table,
+a separate geopackage will be exported for each, and the other spatial columns will be dropped.
+}
