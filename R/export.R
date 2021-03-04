@@ -5,7 +5,8 @@
 #' @param overwrite A flag specifying whether to overwrite existing geopackages.
 #' @return An invisible named vector of the file names and new file names saved.
 #' @export
-#'
+#' @details If more than one spatial column is present in a table,
+#'  a separate geopackage will be exported for each, and the other spatial columns will be dropped.
 rws_export_gpkg <- function(conn, dir, overwrite = FALSE) {
   chk_flag(overwrite)
   chk_character(dir)
@@ -40,6 +41,8 @@ rws_export_gpkg <- function(conn, dir, overwrite = FALSE) {
   if(!file.exists(dir)) dir.create(dir)
   ui_line(glue::glue("Saving files to {ui_value(dir)}"))
   
+  exported <- vector()
+  
   for(i in 1:length(exports$ColumnMeta)) {
     col_name <- exports$ColumnMeta[i]
     tbl_name <- exports$TableMeta[i]
@@ -71,9 +74,9 @@ rws_export_gpkg <- function(conn, dir, overwrite = FALSE) {
     
     sf::st_write(table, path, delete_dsn = overwrite, quiet = TRUE)
     ui_line(glue::glue("Exported table {ui_value(tbl_name)} with spatial column {ui_value(col_name)} as {ui_value(basename(path))}"))
-    
+    exported[i] <- path
   }
-  
+  return(invisible(exported))
 }
 
 
