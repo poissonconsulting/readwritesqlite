@@ -32,8 +32,6 @@ test_that("rws_export_gpkg works", {
   
   expect_identical(class(table_exported$logical), "logical")
   expect_identical(class(table_exported$date), "Date")
-  expect_identical(class(table_exported$factor), "character")
-  expect_identical(class(table_exported$ordered), "character")
   expect_identical(class(table_exported$posixct), c("POSIXct", "POSIXt"))
   expect_identical(class(table_exported$units), "numeric")
   expect_identical(class(table_exported$geom), c("sfc_POINT", "sfc"))
