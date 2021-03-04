@@ -38,6 +38,7 @@ rws_export_gpkg <- function(conn, dir, overwrite = FALSE) {
   tbl_names <- rws_list_tables(conn = conn)
   
   if(!file.exists(dir)) dir.create(dir)
+  ui_line(glue::glue("Saving files to {ui_value(dir)}"))
   
   for(i in 1:length(exports$ColumnMeta)) {
     col_name <- exports$ColumnMeta[i]
@@ -69,6 +70,7 @@ rws_export_gpkg <- function(conn, dir, overwrite = FALSE) {
     if(file.exists(path) & !overwrite) err("File ", basename(path), " already exisits. Set 'overwrite' = TRUE to overwrite.")
     
     sf::st_write(table, path, delete_dsn = overwrite, quiet = TRUE)
+    ui_line(glue::glue("Exported table {ui_value(tbl_name)} with spatial column {ui_value(col_name)} as {ui_value(basename(path))}"))
     
   }
   
