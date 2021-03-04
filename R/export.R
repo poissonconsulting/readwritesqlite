@@ -71,7 +71,7 @@ rws_export_gpkg <- function(conn, dir, overwrite = FALSE) {
     sf::st_write(table, path, delete_dsn = overwrite, quiet = TRUE)
     
   }
-  
+  rws_disconnect(conn = conn)
 }
 
 
