@@ -35,7 +35,7 @@ reference:
   - '`rws_read_log`'
   - '`rws_read_meta`'
   - '`rws_read_table`'
-  - title: Export
+- title: Export
   desc: Export spatial data from SQLite Database
   contents:
   - '`rws_export_gpkg`'
