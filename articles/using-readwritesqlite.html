@@ -60,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/poissonconsulting/readwritesqlite/">
+  <a href="https://github.com/poissonconsulting/readwritesqlite/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -81,9 +81,9 @@
       <h1 data-toc-skip>Using readwritesqlite</h1>
                         <h4 data-toc-skip class="author">Joe Thorley</h4>
             
-            <h4 data-toc-skip class="date">2021-02-15</h4>
+            <h4 data-toc-skip class="date">2021-03-05</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/poissonconsulting/readwritesqlite/blob/master/vignettes/using-readwritesqlite.Rmd"><code>vignettes/using-readwritesqlite.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/poissonconsulting/readwritesqlite/blob/master/vignettes/using-readwritesqlite.Rmd" class="external-link"><code>vignettes/using-readwritesqlite.Rmd</code></a></small>
       <div class="hidden name"><code>using-readwritesqlite.Rmd</code></div>
 
     </div>
@@ -96,7 +96,7 @@
 <a href="#starting" class="anchor"></a>Starting</h2>
 <p>The first task after loading <code>readwritesqlite</code> is to create an object of class SQLiteConnection. Below we create one in memory although in general the user will want to specify a path.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/poissonconsulting/readwritesqlite">readwritesqlite</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/poissonconsulting/readwritesqlite" class="external-link">readwritesqlite</a></span><span class="op">)</span>
 <span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rws_connect.html">rws_connect</a></span><span class="op">(</span><span class="st">":memory:"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="writing-data" class="section level2">
@@ -111,10 +111,10 @@
 <span class="co">#&gt; [1] "rws_data"</span></code></pre></div>
 <p>The fact that <code><a href="../reference/rws_write.html">rws_write()</a></code> accepts environments means that the user can easily write all the data frames in the current environment to a SQLiteConnection.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">a_table</span> <span class="op">&lt;-</span> <span class="va">rws_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"logical"</span><span class="op">)</span><span class="op">]</span>
-<span class="va">another_table</span> <span class="op">&lt;-</span> <span class="va">rws_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"factor"</span>, <span class="st">"ordered"</span><span class="op">)</span><span class="op">]</span>
+<code class="sourceCode R"><span class="va">a_table</span> <span class="op">&lt;-</span> <span class="va">rws_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"logical"</span><span class="op">)</span><span class="op">]</span>
+<span class="va">another_table</span> <span class="op">&lt;-</span> <span class="va">rws_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"factor"</span>, <span class="st">"ordered"</span><span class="op">)</span><span class="op">]</span>
 <span class="va">not_a_table</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="fu"><a href="../reference/rws_write.html">rws_write</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/environment.html">environment</a></span><span class="op">(</span><span class="op">)</span>, exists <span class="op">=</span> <span class="cn">FALSE</span>, all <span class="op">=</span> <span class="cn">FALSE</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
+<span class="fu"><a href="../reference/rws_write.html">rws_write</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a></span><span class="op">(</span><span class="op">)</span>, exists <span class="op">=</span> <span class="cn">FALSE</span>, all <span class="op">=</span> <span class="cn">FALSE</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
 <span class="fu"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span>
 <span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></code></pre></div>
 <p>Objects which are not data frames are silently filtered from environments but cause an error with lists.</p>
@@ -161,7 +161,7 @@
 <div id="silent" class="section level3">
 <h3 class="hasAnchor">
 <a href="#silent" class="anchor"></a>Silent</h3>
-<p>If the user wishes to suppress package specific messages or warnings then they should set <code>silent = TRUE</code>. As the default value is <code>silent = getOption("rws.silent", FALSE)</code> the user can silence the package session-wide with <code><a href="https://rdrr.io/r/base/options.html">options(silent = TRUE)</a></code>.</p>
+<p>If the user wishes to suppress package specific messages or warnings then they should set <code>silent = TRUE</code>. As the default value is <code>silent = getOption("rws.silent", FALSE)</code> the user can silence the package session-wide with <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options(silent = TRUE)</a></code>.</p>
 </div>
 </div>
 <div id="reading-data" class="section level2">
@@ -170,7 +170,7 @@
 <p>Data can be read using <code><a href="../reference/rws_read.html">rws_read()</a></code> which either takes a vector of table names or the connection as the first argument. <code><a href="../reference/rws_read.html">rws_read()</a></code> returns a named list of tibbles. If the connection is the first argument then the named list consists of all tables in the data base.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tables</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rws_read.html">rws_read</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">tables</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">tables</span><span class="op">)</span>
 <span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span>
 <span class="va">tables</span><span class="op">$</span><span class="va">rws_data</span>
 <span class="co">#&gt; # A tibble: 3 x 6</span>
@@ -179,10 +179,10 @@
 <span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0</span>
 <span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5</span>
 <span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                     NA</span></code></pre></div>
-<p>The table names can of course be manipulated and <code><a href="https://rdrr.io/r/base/list2env.html">list2env()</a></code> used to assign the data frames to the current environment.</p>
+<p>The table names can of course be manipulated and <code><a href="https://rdrr.io/r/base/list2env.html" class="external-link">list2env()</a></code> used to assign the data frames to the current environment.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">tables</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">toupper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">tables</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/list2env.html">list2env</a></span><span class="op">(</span><span class="va">tables</span>, <span class="fu"><a href="https://rdrr.io/r/base/environment.html">environment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">tables</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">tables</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/list2env.html" class="external-link">list2env</a></span><span class="op">(</span><span class="va">tables</span>, <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>If the user wishes to read a single data frame they can use <code><a href="../reference/rws_read_table.html">rws_read_table()</a></code></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/rws_read_table.html">rws_read_table</a></span><span class="op">(</span><span class="st">"rws_data"</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
@@ -240,11 +240,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Joe Thorley, Poisson Consulting.</p>
+  <p></p>
+<p>Developed by Joe Thorley, Poisson Consulting.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

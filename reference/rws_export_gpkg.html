@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Getting help with readwritesqlite • readwritesqlite</title>
+<title>Export all spatial datasets in a database as geopackages. — rws_export_gpkg • readwritesqlite</title>
 
 
 <!-- jquery -->
@@ -18,8 +18,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
-<link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script>
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
@@ -33,13 +33,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
 
-<meta property="og:title" content="Getting help with readwritesqlite" />
+<meta property="og:title" content="Export all spatial datasets in a database as geopackages. — rws_export_gpkg" />
+<meta property="og:description" content="Export all spatial datasets in a database as geopackages." />
 
 
 
@@ -66,7 +67,7 @@
   <body data-spy="scroll" data-target="#toc">
     
 
-    <div class="container template-title-body">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -78,7 +79,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">readwritesqlite</a>
+        <a class="navbar-link" href="../index.html">readwritesqlite</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
       </span>
     </div>
@@ -86,7 +87,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -96,12 +97,12 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/using-readwritesqlite.html">Using readwritesqlite</a>
+      <a href="../articles/using-readwritesqlite.html">Using readwritesqlite</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="news/index.html">Changelog</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -122,36 +123,51 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Getting help with readwritesqlite</h1>
+    <h1>Export all spatial datasets in a database as geopackages.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/poissonconsulting/readwritesqlite/blob/master/R/export.R'><code>R/export.R</code></a></small>
+    <div class="hidden name"><code>rws_export_gpkg.Rd</code></div>
     </div>
 
-<div id="getting-help-with-readwritesqlite" class="section level1">
+    <div class="ref-description">
+    <p>Export all spatial datasets in a database as geopackages.</p>
+    </div>
 
-<p>Thanks for using readwritesqlite! Before filing an issue, there are a few places to explore and pieces to put together to make the process as smooth as possible.</p>
-<div id="make-sure-its-new" class="section level2">
-<h2 class="hasAnchor">
-<a href="#make-sure-its-new" class="anchor"></a>Make sure its new</h2>
-<p>Before opening a new issue, be sure to <a href="https://github.com//issues" class="external-link">search issues and pull requests</a> to make sure the bug hasn’t been reported and/or already fixed in the development version. By default, the search will be pre-populated with <code>is:issue is:open</code>. You can <a href="https://help.github.com/articles/searching-issues-and-pull-requests/" class="external-link">edit the qualifiers</a> (e.g. <code>is:pr</code>, <code>is:closed</code>) as needed. For example, you’d simply remove <code>is:open</code> to search <em>all</em> issues in the repo, open or closed.</p>
-</div>
-<div id="make-a-reprex" class="section level2">
-<h2 class="hasAnchor">
-<a href="#make-a-reprex" class="anchor"></a>Make a reprex</h2>
-<p>Start by making a minimal <strong>repr</strong>oducible <strong>ex</strong>ample using the <a href="https://reprex.tidyverse.org/" class="external-link">reprex</a> package. If you haven’t heard of or used reprex before, you’re in for a treat! Seriously, reprex will make all of your R-question-asking endeavors easier (which is a pretty insane ROI for the five to ten minutes it’ll take you to learn what it’s all about). For additional reprex pointers, check out the <a href="https://www.tidyverse.org/help/" class="external-link">Get help!</a> section of the tidyverse site.</p>
-</div>
-</div>
+    <pre class="usage"><span class='fu'>rws_export_gpkg</span><span class='op'>(</span><span class='va'>conn</span>, <span class='va'>dir</span>, overwrite <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>conn</th>
+      <td><p>A SQLiteConnection to a database.</p></td>
+    </tr>
+    <tr>
+      <th>dir</th>
+      <td><p>A string of the path to the directory to save the geopackages in.</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>A flag specifying whether to overwrite existing geopackages.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An invisible named vector of the file names and new file names saved.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If more than one spatial column is present in a table,
+a separate geopackage will be exported for each, and the other spatial columns will be dropped.</p>
 
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
-
 
 
       <footer>
