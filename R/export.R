@@ -58,7 +58,7 @@ rws_export_gpkg <- function(conn, dir, overwrite = FALSE) {
     tbl_geom_names <- exports$ColumnMeta[exports$TableMeta == tbl_name]
     tbl_geom_names <- names(table)[toupper(names(table)) %in% tbl_geom_names]
     tbl_name <- tbl_names[toupper(tbl_names) == tbl_name]
-    tbl_name <- ifelse(exports$GeomInit[i], tbl_name, paste0(tbl_name, "-", col_name))
+    tbl_name <- ifelse(exports$GeomInit[i], tbl_name, paste0(tbl_name, "_", col_name))
     
     unwanted_cols <- tbl_geom_names[!tbl_geom_names == col_name]
     

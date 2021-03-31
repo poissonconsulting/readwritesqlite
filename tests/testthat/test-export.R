@@ -17,7 +17,7 @@ test_that("rws_export_gpkg works", {
   
   files <- list.files(dir, full.names = TRUE)
   
-  expect_true(all(c("data1-geometry2.gpkg", "data1.gpkg", "data2-geometry.gpkg", "data2-geometry2.gpkg") 
+  expect_true(all(c("data1_geometry2.gpkg", "data1.gpkg", "data2_geometry.gpkg", "data2_geometry2.gpkg") 
                   %in% basename(files)))
   
   expect_error(rws_export_gpkg(conn = conn, dir = dir), 
@@ -25,7 +25,7 @@ test_that("rws_export_gpkg works", {
   
   table_expected_changes <- sf_data_deact[,!names(sf_data_deact) == "geometry2"]
   names(table_expected_changes)[names(table_expected_changes) == "geometry"] <- "geom"
-  table_exported <- sf::st_read(file.path(dir, "data1-geometry2.gpkg"), quiet = TRUE) 
+  table_exported <- sf::st_read(file.path(dir, "data1_geometry2.gpkg"), quiet = TRUE) 
   unlink(dir, recursive = TRUE)
   
   expect_identical(names(table_exported), names(table_expected_changes))
