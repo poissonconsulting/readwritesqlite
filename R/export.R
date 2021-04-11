@@ -38,7 +38,7 @@ rws_export_gpkg <- function(conn, dir = ".", overwrite = FALSE) {
   
   tbl_names <- rws_list_tables(conn = conn)
   
-  if(!file.exists(dir)) dir.create(dir)
+  if(!file.exists(dir)) dir.create(dir, recursive = TRUE)
   ui_line(glue::glue("Saving files to {ui_value(dir)}"))
   
   exported <- vector()
