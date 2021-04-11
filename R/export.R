@@ -7,10 +7,10 @@
 #' @export
 #' @details If more than one spatial column is present in a table,
 #'  a separate geopackage will be exported for each, and the other spatial columns will be dropped.
-rws_export_gpkg <- function(conn, dir, overwrite = FALSE) {
-  chk_flag(overwrite)
-  chk_character(dir)
+rws_export_gpkg <- function(conn, dir = ".", overwrite = FALSE) {
   chk_sqlite_conn(conn)
+  chk_string(dir)
+  chk_flag(overwrite)
   
   meta <- suppressWarnings(try(rws_read_meta(conn = conn), silent = TRUE))
   if(inherits(meta, "try-error")) err("Database must have a valid metadata table.")
