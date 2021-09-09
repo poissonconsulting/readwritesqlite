@@ -8,6 +8,13 @@
 
 <title>Close SQLite Database Connection — rws_disconnect • readwritesqlite</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -41,6 +48,7 @@
 
 <meta property="og:title" content="Close SQLite Database Connection — rws_disconnect" />
 <meta property="og:description" content="Closes a SQLiteConnection to a SQLite database." />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -56,9 +64,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-
-
-<!-- dependencies from examples -->
 
 
   
@@ -137,7 +142,7 @@
     <p>Closes a SQLiteConnection to a SQLite database.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rws_disconnect</span><span class='op'>(</span><span class='va'>conn</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>rws_disconnect</span><span class='op'>(</span><span class='va'>conn</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,11 +160,12 @@ will be cloned.</p></td>
     <div class='dont-index'><p><code><a href='rws_connect.html'>rws_connect()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>conn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rws_connect.html'>rws_connect</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>rws_disconnect</span><span class='op'>(</span><span class='va'>conn</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>conn</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;SQLiteConnection&gt;
-#&gt;   DISCONNECTED</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>conn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rws_connect.html'>rws_connect</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>rws_disconnect</span><span class='op'>(</span><span class='va'>conn</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>conn</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;SQLiteConnection&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   DISCONNECTED</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
