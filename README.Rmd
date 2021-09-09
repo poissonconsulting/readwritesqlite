@@ -12,6 +12,8 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
+# readwritesqlite <img src="man/figures/logo.png" align="right" />
 <!-- badges: start -->
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check](https://github.com/poissonconsulting/readwritesqlite/workflows/R-CMD-check/badge.svg)](https://github.com/poissonconsulting/readwritesqlite/actions)

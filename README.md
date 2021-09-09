@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# readwritesqlite <img src="man/figures/logo.png" align="right" />
+
 <!-- badges: start -->
 
 [![Lifecycle:
@@ -24,36 +26,36 @@ changes or provide particularly useful error messages.
 
 `readwritesqlite` is an R package that by default
 
-  - preserves (and subsequently checks) the following metadata
-      - the class for logical, Date and hms columns
-      - the levels for factors and ordered factors
-      - the time zone for POSIXct columns
-      - the units for unit columns
-      - the projection for sfc columns
-      - the sf column for sf objects
-  - logs
-      - the date time
-      - system user
-      - table creation and data insertion or deletion
-  - provides informative error messages if
-      - columns are missing
-      - NOT NULL columns contain missing values
-      - PRIMARY KEY column values in the input data are not unique
+-   preserves (and subsequently checks) the following metadata
+    -   the class for logical, Date and hms columns
+    -   the levels for factors and ordered factors
+    -   the time zone for POSIXct columns
+    -   the units for unit columns
+    -   the projection for sfc columns
+    -   the sf column for sf objects
+-   logs
+    -   the date time
+    -   system user
+    -   table creation and data insertion or deletion
+-   provides informative error messages if
+    -   columns are missing
+    -   NOT NULL columns contain missing values
+    -   PRIMARY KEY column values in the input data are not unique
 
 `readwritesqlite` also allows the user to
 
-  - write environments (or named lists) of data frames (useful for
+-   write environments (or named lists) of data frames (useful for
     populating databases)
-  - delete existing data (and meta data) before writing (useful for
+-   delete existing data (and meta data) before writing (useful for
     converting an existing database)
-  - replace existing data which causes unique or primary key conflicts
+-   replace existing data which causes unique or primary key conflicts
     (useful for updating databases)
-  - confirm data can be written without committing any changes (useful
+-   confirm data can be written without committing any changes (useful
     for checking data)
-  - check all existing tables are written to (useful for data transfers)
-  - rearrange and add levels for factors and add levels for ordered
+-   check all existing tables are written to (useful for data transfers)
+-   rearrange and add levels for factors and add levels for ordered
     factors
-  - initialize the meta data for a new table by writing a data frame or
+-   initialize the meta data for a new table by writing a data frame or
     sf data frame with no rows but logical, Date, factor, ordered,
     POSIXct, sfc or unit columns (useful for creating an empty database
     with additional informative checks)
@@ -99,35 +101,35 @@ library(readwritesqlite)
 # for nicer printing of data frames
 library(tibble)
 library(sf)
-#> Linking to GEOS 3.9.0, GDAL 3.2.0, PROJ 7.2.0
+#> Linking to GEOS 3.8.1, GDAL 3.2.1, PROJ 7.2.1
 
 conn <- rws_connect()
 
 rws_data <- readwritesqlite::rws_data
 rws_data
-#> # A tibble: 3 x 6
+#> # A tibble: 3 × 6
 #>   logical date       factor ordered posixct             units
 #>   <lgl>   <date>     <fct>  <ord>   <dttm>                [m]
-#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0
+#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10  
 #> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5
-#> 3 NA      NA         <NA>   <NA>    NA                     NA
+#> 3 NA      NA         <NA>   <NA>    NA                   NA
 
 rws_write(rws_data, exists = FALSE, conn = conn)
 
 rws_read_table("rws_data", conn = conn)
-#> # A tibble: 3 x 6
+#> # A tibble: 3 × 6
 #>   logical date       factor ordered posixct             units
 #>   <lgl>   <date>     <fct>  <ord>   <dttm>                [m]
-#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10.0
+#> 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10  
 #> 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5
-#> 3 NA      NA         <NA>   <NA>    NA                     NA
+#> 3 NA      NA         <NA>   <NA>    NA                   NA
 ```
 
 The attribute information is stored in the metadata table
 
 ``` r
 rws_read_meta(conn = conn)
-#> # A tibble: 6 x 4
+#> # A tibble: 6 × 4
 #>   TableMeta ColumnMeta MetaMeta          DescriptionMeta
 #>   <chr>     <chr>      <chr>             <chr>          
 #> 1 RWS_DATA  DATE       class: Date       <NA>           
@@ -144,7 +146,7 @@ The user can add descriptions if they wish.
 rws_describe_meta("rws_data", "posixct", "The time of a visit", conn = conn)
 rws_describe_meta("rws_data", "units", "The site length.", conn = conn)
 rws_read_meta(conn = conn)
-#> # A tibble: 6 x 4
+#> # A tibble: 6 × 4
 #>   TableMeta ColumnMeta MetaMeta          DescriptionMeta    
 #>   <chr>     <chr>      <chr>             <chr>              
 #> 1 RWS_DATA  DATE       class: Date       <NA>               
