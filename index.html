@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2.9000</span>
       </span>
     </div>
 
@@ -72,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/poissonconsulting/readwritesqlite/">
+  <a href="https://github.com/poissonconsulting/readwritesqlite/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -90,16 +90,15 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="readwritesqlite-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#readwritesqlite-" class="anchor" aria-hidden="true"></a>readwritesqlite <img src="reference/figures/logo.png" align="right">
+<div class="section level1">
+<div class="page-header"><h1 id="readwritesqlite-">readwritesqlite <img src="reference/figures/logo.png" align="right"><a class="anchor" aria-label="anchor" href="#readwritesqlite-"></a>
 </h1></div>
 <!-- badges: start -->
 
 </div>
-<div id="readwritesqlite" class="section level1">
-<h1 class="hasAnchor">
-<a href="#readwritesqlite" class="anchor" aria-hidden="true"></a>readwritesqlite</h1>
+<div class="section level1">
+<h1 id="readwritesqlite">readwritesqlite<a class="anchor" aria-label="anchor" href="#readwritesqlite"></a>
+</h1>
 <p>SQLite databases are a simple, powerful way to validate, query and store related data frames particularly when used with the RSQLite package. However, current solutions do not preserve (or check) meta data, log changes or provide particularly useful error messages.</p>
 <p><code>readwritesqlite</code> is an R package that by default</p>
 <ul>
@@ -141,9 +140,9 @@
 <p><code>readwritesqlite</code> provides all these features through its <code><a href="reference/rws_write.html">rws_write()</a></code> and <code><a href="reference/rws_read.html">rws_read()</a></code> functions.</p>
 <p>The <code><a href="reference/rws_query.html">rws_query()</a></code> function allows the user to pass a SQL query. By default, the metadata (except the setting of the sf column) is, if unambiguously defined, preserved for each column in the final query. To enable this functionality the user should ensure that a) columns in tables which will be referenced in the same query should have different names or identical metadata and b) column names in the final query should match those in the referenced base tables.</p>
 <p>The init, meta and log data are stored in separate tables from the main data which means that they do not interfere with other ways of interacting with a SQLite database.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>To install the latest release from <a href="https://cran.r-project.org" class="external-link">CRAN</a></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"readwritesqlite"</span><span class="op">)</span></code></pre></div>
@@ -152,9 +151,9 @@
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"poissonconsulting/readwritesqlite"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="demonstration" class="section level2">
-<h2 class="hasAnchor">
-<a href="#demonstration" class="anchor" aria-hidden="true"></a>Demonstration</h2>
+<div class="section level2">
+<h2 id="demonstration">Demonstration<a class="anchor" aria-label="anchor" href="#demonstration"></a>
+</h2>
 <p>Key attribute information is preserved for many classes.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/poissonconsulting/readwritesqlite" class="external-link">readwritesqlite</a></span><span class="op">)</span>
@@ -222,20 +221,20 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/rws_disconnect.html">rws_disconnect</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="information" class="section level2">
-<h2 class="hasAnchor">
-<a href="#information" class="anchor" aria-hidden="true"></a>Information</h2>
+<div class="section level2">
+<h2 id="information">Information<a class="anchor" aria-label="anchor" href="#information"></a>
+</h2>
 <p>For more information on using <code>readwritesqlite</code> see the vignette <a href="https://poissonconsulting.github.io/readwritesqlite/articles/using-readwritesqlite.html" class="external-link">using-readwritesqlite</a>.</p>
 </div>
-<div id="contribution" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contribution" class="anchor" aria-hidden="true"></a>Contribution</h2>
+<div class="section level2">
+<h2 id="contribution">Contribution<a class="anchor" aria-label="anchor" href="#contribution"></a>
+</h2>
 <p>Please report any <a href="https://github.com/poissonconsulting/readwritesqlite/issues" class="external-link">issues</a>.</p>
 <p><a href="https://github.com/poissonconsulting/readwritesqlite/pulls" class="external-link">Pull requests</a> are always welcome.</p>
 </div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor" aria-hidden="true"></a>Code of Conduct</h2>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
 <p>Please note that the readwritesqlite project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
@@ -246,13 +245,9 @@
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=readwritesqlite">https://​cloud.r-project.org/​package=readwritesqlite</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/poissonconsulting/readwritesqlite/">https://​github.com/​poissonconsulting/​readwritesqlite/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/poissonconsulting/readwritesqlite/issues">
-    https://​github.com/​poissonconsulting/​readwritesqlite/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=readwritesqlite" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/poissonconsulting/readwritesqlite/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/poissonconsulting/readwritesqlite/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -260,7 +255,7 @@
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
@@ -275,9 +270,9 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Joe Thorley <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-7683-4592" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Joe Thorley <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-7683-4592" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Poisson Consulting <br><small class="roles"> Copyright holder, funder </small>  </li>
-<li><a href="authors.html">More on authors...</a></li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -303,7 +298,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>

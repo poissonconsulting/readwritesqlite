@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readwritesqlite</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2.9000</span>
       </span>
     </div>
 
@@ -88,9 +88,9 @@
       <h1 data-toc-skip>Using readwritesqlite</h1>
                         <h4 data-toc-skip class="author">Joe Thorley</h4>
             
-            <h4 data-toc-skip class="date">2021-09-09</h4>
+            <h4 data-toc-skip class="date">2021-11-10</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/poissonconsulting/readwritesqlite/blob/master/vignettes/using-readwritesqlite.Rmd" class="external-link"><code>vignettes/using-readwritesqlite.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/poissonconsulting/readwritesqlite/blob/HEAD/vignettes/using-readwritesqlite.Rmd" class="external-link"><code>vignettes/using-readwritesqlite.Rmd</code></a></small>
       <div class="hidden name"><code>using-readwritesqlite.Rmd</code></div>
 
     </div>
@@ -98,17 +98,17 @@
     
     
 <p><code>readwritesqlite</code> is an R package to enhance reading and writing to SQLite databases.</p>
-<div id="starting" class="section level2">
-<h2 class="hasAnchor">
-<a href="#starting" class="anchor" aria-hidden="true"></a>Starting</h2>
+<div class="section level2">
+<h2 id="starting">Starting<a class="anchor" aria-label="anchor" href="#starting"></a>
+</h2>
 <p>The first task after loading <code>readwritesqlite</code> is to create an object of class SQLiteConnection. Below we create one in memory although in general the user will want to specify a path.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/poissonconsulting/readwritesqlite" class="external-link">readwritesqlite</a></span><span class="op">)</span>
 <span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rws_connect.html">rws_connect</a></span><span class="op">(</span><span class="st">":memory:"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="writing-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#writing-data" class="anchor" aria-hidden="true"></a>Writing Data</h2>
+<div class="section level2">
+<h2 id="writing-data">Writing Data<a class="anchor" aria-label="anchor" href="#writing-data"></a>
+</h2>
 <p>Individual data frames, environments or named lists of data frames can be written to a connection using <code><a href="../reference/rws_write.html">rws_write()</a></code>.</p>
 <p>In the case of a data frame the default table name is the name of the object (an alternative name can be specified using the <code>x_name</code> argument).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -125,67 +125,67 @@
 <span class="fu"><a href="../reference/rws_list_tables.html">rws_list_tables</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span>
 <span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span></code></pre></div>
 <p>Objects which are not data frames are silently filtered from environments but cause an error with lists.</p>
-<div id="exists" class="section level3">
-<h3 class="hasAnchor">
-<a href="#exists" class="anchor" aria-hidden="true"></a>Exists</h3>
+<div class="section level3">
+<h3 id="exists">Exists<a class="anchor" aria-label="anchor" href="#exists"></a>
+</h3>
 <p>By default the <code>exists</code> argument to the <code><a href="../reference/rws_write.html">rws_write()</a></code> function is <code>TRUE</code>. This means that only existing tables (which were presumably created by the database designer with appropriate checks and foreign keys) can be written to. If the user wishes to automatically create new tables (if they don’t exist) before writing then they should set <code>exists = NA</code>. If the user wishes to only write to previously non-existent tables then they should set <code>exists = FALSE</code>.</p>
 </div>
-<div id="foreign-keys" class="section level3">
-<h3 class="hasAnchor">
-<a href="#foreign-keys" class="anchor" aria-hidden="true"></a>Foreign Keys</h3>
+<div class="section level3">
+<h3 id="foreign-keys">Foreign Keys<a class="anchor" aria-label="anchor" href="#foreign-keys"></a>
+</h3>
 <p>The <code><a href="../reference/rws_write.html">rws_write()</a></code> function ensures that writing the new data frame(s) to the database does not violate foreign keys. If any data does the database is left unchanged.</p>
 </div>
-<div id="committing-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#committing-data" class="anchor" aria-hidden="true"></a>Committing Data</h3>
+<div class="section level3">
+<h3 id="committing-data">Committing Data<a class="anchor" aria-label="anchor" href="#committing-data"></a>
+</h3>
 <p>By default, if no check or key violations occur the data frame(s) are written to the database. Otherwise an error message is issued and all changes are rolled back. If the user wishes to simply check whether data could be written to a database without actually making any changes then they can call <code><a href="../reference/rws_write.html">rws_write()</a></code> with <code>commit = FALSE</code>.</p>
 </div>
-<div id="deleting-data-and-meta-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#deleting-data-and-meta-data" class="anchor" aria-hidden="true"></a>Deleting Data (and Meta Data)</h3>
+<div class="section level3">
+<h3 id="deleting-data-and-meta-data">Deleting Data (and Meta Data)<a class="anchor" aria-label="anchor" href="#deleting-data-and-meta-data"></a>
+</h3>
 <p>Meta data is recorded if the user uses <code><a href="../reference/rws_write.html">rws_write()</a></code> to write a data frame to an empty table. In order to change or add meta data the user should read the existing data from the table (using <code><a href="../reference/rws_read.html">rws_read_sqlite()</a></code>), modify it accordingly and then re-write it using <code><a href="../reference/rws_write.html">rws_write()</a></code> with <code>delete = TRUE</code>. The only exception is for factors and ordered factors. If the existing factor levels are already recorded in the meta data then the user can pass data with additional or rearranged levels for factor and with additional levels for ordered factors without deleting the existing data.</p>
 </div>
-<div id="replacing-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#replacing-data" class="anchor" aria-hidden="true"></a>Replacing Data</h3>
+<div class="section level3">
+<h3 id="replacing-data">Replacing Data<a class="anchor" aria-label="anchor" href="#replacing-data"></a>
+</h3>
 <p>If writing data violates a unique or primary key an error message is returned and the table is unaltered. The only exception to this is if <code>replace = TRUE</code> in which case existing rows which cause unique or primary key violations are removed.</p>
 </div>
-<div id="duplicate-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#duplicate-data" class="anchor" aria-hidden="true"></a>Duplicate Data</h3>
+<div class="section level3">
+<h3 id="duplicate-data">Duplicate Data<a class="anchor" aria-label="anchor" href="#duplicate-data"></a>
+</h3>
 <p>When passing data frames to <code><a href="../reference/rws_write.html">rws_write()</a></code> in the form of an environment or named list, each table must be represented by just one data frame if <code>unique = TRUE</code> (the default). Duplicates are also not permitted if <code>delete = TRUE</code> (because the first data to be written will be overwritten) or <code>exists = FALSE</code> (because the table will exist when the duplicate is written).</p>
 </div>
-<div id="all-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#all-data" class="anchor" aria-hidden="true"></a>All Data</h3>
+<div class="section level3">
+<h3 id="all-data">All Data<a class="anchor" aria-label="anchor" href="#all-data"></a>
+</h3>
 <p>When passing data frames to <code><a href="../reference/rws_write.html">rws_write()</a></code> in the form of an environment or named list, if <code>all = TRUE</code> (the default) and <code>exists</code> is not <code>FALSE</code> then each existing tables must be represented at least once. This option is useful for checking all the tables in a data frame are populated when transferring data from an old to new database.</p>
 </div>
-<div id="strict" class="section level3">
-<h3 class="hasAnchor">
-<a href="#strict" class="anchor" aria-hidden="true"></a>Strict</h3>
+<div class="section level3">
+<h3 id="strict">Strict<a class="anchor" aria-label="anchor" href="#strict"></a>
+</h3>
 <p>By default <code>strict = TRUE</code> and extra columns in an input data frame cause an error to be thrown. If <code>strict = FALSE</code> the error is replaced by a warning and the additional columns are automatically removed from the data. When writing environments or list of data with <code>exists = TRUE</code>, the <code>strict</code> argument also determines if extra data frames cause an informative error or are automatically removed with a warning.</p>
 </div>
-<div id="silent" class="section level3">
-<h3 class="hasAnchor">
-<a href="#silent" class="anchor" aria-hidden="true"></a>Silent</h3>
+<div class="section level3">
+<h3 id="silent">Silent<a class="anchor" aria-label="anchor" href="#silent"></a>
+</h3>
 <p>If the user wishes to suppress package specific messages or warnings then they should set <code>silent = TRUE</code>. As the default value is <code>silent = getOption("rws.silent", FALSE)</code> the user can silence the package session-wide with <code>options(silent = TRUE)</code>.</p>
 </div>
 </div>
-<div id="reading-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#reading-data" class="anchor" aria-hidden="true"></a>Reading Data</h2>
+<div class="section level2">
+<h2 id="reading-data">Reading Data<a class="anchor" aria-label="anchor" href="#reading-data"></a>
+</h2>
 <p>Data can be read using <code><a href="../reference/rws_read.html">rws_read()</a></code> which either takes a vector of table names or the connection as the first argument. <code><a href="../reference/rws_read.html">rws_read()</a></code> returns a named list of tibbles. If the connection is the first argument then the named list consists of all tables in the data base.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tables</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rws_read.html">rws_read</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">tables</span><span class="op">)</span>
 <span class="co">#&gt; [1] "a_table"       "another_table" "rws_data"</span>
 <span class="va">tables</span><span class="op">$</span><span class="va">rws_data</span>
-<span class="co">#&gt; # A tibble: 3 × 6</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span>
 <span class="co">#&gt;   logical date       factor ordered posixct             units</span>
-<span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m]</span>
-<span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10  </span>
-<span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5</span>
-<span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                   NA</span></code></pre></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                <span style="color: #949494;">[m]</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> TRUE    2000-01-01 x      x       2001-01-02 <span style="color: #949494;">03:04:05</span>  10  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> FALSE   2001-02-03 y      y       2006-07-08 <span style="color: #949494;">09:10:11</span>  11.5</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>                   <span style="color: #BB0000;">NA</span></span></code></pre></div>
 <p>The table names can of course be manipulated and <code><a href="https://rdrr.io/r/base/list2env.html" class="external-link">list2env()</a></code> used to assign the data frames to the current environment.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">tables</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">tables</span><span class="op">)</span><span class="op">)</span>
@@ -193,28 +193,28 @@
 <p>If the user wishes to read a single data frame they can use <code><a href="../reference/rws_read_table.html">rws_read_table()</a></code></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/rws_read_table.html">rws_read_table</a></span><span class="op">(</span><span class="st">"rws_data"</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 3 × 6</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span>
 <span class="co">#&gt;   logical date       factor ordered posixct             units</span>
-<span class="co">#&gt;   &lt;lgl&gt;   &lt;date&gt;     &lt;fct&gt;  &lt;ord&gt;   &lt;dttm&gt;                [m]</span>
-<span class="co">#&gt; 1 TRUE    2000-01-01 x      x       2001-01-02 03:04:05  10  </span>
-<span class="co">#&gt; 2 FALSE   2001-02-03 y      y       2006-07-08 09:10:11  11.5</span>
-<span class="co">#&gt; 3 NA      NA         &lt;NA&gt;   &lt;NA&gt;    NA                   NA</span></code></pre></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                <span style="color: #949494;">[m]</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> TRUE    2000-01-01 x      x       2001-01-02 <span style="color: #949494;">03:04:05</span>  10  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> FALSE   2001-02-03 y      y       2006-07-08 <span style="color: #949494;">09:10:11</span>  11.5</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>                   <span style="color: #BB0000;">NA</span></span></code></pre></div>
 <p>The <code><a href="../reference/rws_read_meta.html">rws_read_meta()</a></code> and <code><a href="../reference/rws_read_log.html">rws_read_log()</a></code> allow the user to read the meta and log tables.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/rws_read_meta.html">rws_read_meta</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 10 × 4</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 4</span></span>
 <span class="co">#&gt;    TableMeta     ColumnMeta MetaMeta          DescriptionMeta</span>
-<span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;             &lt;chr&gt;          </span>
-<span class="co">#&gt;  1 A_TABLE       DATE       class: Date       &lt;NA&gt;           </span>
-<span class="co">#&gt;  2 A_TABLE       LOGICAL    class: logical    &lt;NA&gt;           </span>
-<span class="co">#&gt;  3 ANOTHER_TABLE FACTOR     factor: 'x', 'y'  &lt;NA&gt;           </span>
-<span class="co">#&gt;  4 ANOTHER_TABLE ORDERED    ordered: 'y', 'x' &lt;NA&gt;           </span>
-<span class="co">#&gt;  5 RWS_DATA      DATE       class: Date       &lt;NA&gt;           </span>
-<span class="co">#&gt;  6 RWS_DATA      FACTOR     factor: 'x', 'y'  &lt;NA&gt;           </span>
-<span class="co">#&gt;  7 RWS_DATA      LOGICAL    class: logical    &lt;NA&gt;           </span>
-<span class="co">#&gt;  8 RWS_DATA      ORDERED    ordered: 'y', 'x' &lt;NA&gt;           </span>
-<span class="co">#&gt;  9 RWS_DATA      POSIXCT    tz: Etc/GMT+8     &lt;NA&gt;           </span>
-<span class="co">#&gt; 10 RWS_DATA      UNITS      units: m          &lt;NA&gt;</span></code></pre></div>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> A_TABLE       DATE       class: Date       <span style="color: #BB0000;">NA</span>             </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> A_TABLE       LOGICAL    class: logical    <span style="color: #BB0000;">NA</span>             </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> ANOTHER_TABLE FACTOR     factor: 'x', 'y'  <span style="color: #BB0000;">NA</span>             </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ANOTHER_TABLE ORDERED    ordered: 'y', 'x' <span style="color: #BB0000;">NA</span>             </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> RWS_DATA      DATE       class: Date       <span style="color: #BB0000;">NA</span>             </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> RWS_DATA      FACTOR     factor: 'x', 'y'  <span style="color: #BB0000;">NA</span>             </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> RWS_DATA      LOGICAL    class: logical    <span style="color: #BB0000;">NA</span>             </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> RWS_DATA      ORDERED    ordered: 'y', 'x' <span style="color: #BB0000;">NA</span>             </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> RWS_DATA      POSIXCT    tz: Etc/GMT+8     <span style="color: #BB0000;">NA</span>             </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> RWS_DATA      UNITS      units: m          <span style="color: #BB0000;">NA</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/rws_read_log.html">rws_read_log</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 x 5</span>
@@ -227,9 +227,9 @@
 <span class="co">#&gt; 5 2019-07-07 16:10:00 joe     ANOTHER_TABLE CREATE           0</span>
 <span class="co">#&gt; 6 2019-07-07 16:10:00 joe     ANOTHER_TABLE INSERT           3</span></code></pre></div>
 </div>
-<div id="cleaning-up" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cleaning-up" class="anchor" aria-hidden="true"></a>Cleaning Up</h2>
+<div class="section level2">
+<h2 id="cleaning-up">Cleaning Up<a class="anchor" aria-label="anchor" href="#cleaning-up"></a>
+</h2>
 <p>It’s good practice to close a connection once you have finished with it.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/rws_disconnect.html">rws_disconnect</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></code></pre></div>
@@ -253,7 +253,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
