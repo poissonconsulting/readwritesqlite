@@ -42,7 +42,7 @@ test_that("foreign keys", {
 
 test_that("table_info", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(
     logical = TRUE, date = as.Date("2000-01-01"),
@@ -54,7 +54,8 @@ test_that("table_info", {
   expect_identical(rws_write(local, exists = FALSE, conn = conn), "local")
 
   table_info <- table_info("local", conn)
-  expect_is(table_info, "data.frame")
+  typeof(table_info)
+  expect_s3_class(table_info, "data.frame")
   expect_identical(
     colnames(table_info),
     c("cid", "name", "type", "notnull", "dflt_value", "pk")
