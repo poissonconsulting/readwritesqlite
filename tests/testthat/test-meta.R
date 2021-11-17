@@ -1,6 +1,6 @@
 test_that("make_meta_data works", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3))
 
@@ -27,7 +27,7 @@ test_that("make_meta_data works", {
 
 test_that("read_sqlite_meta creates table", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   expect_identical(rws_read_meta(conn), rws_read_meta(conn))
   meta <- rws_read_meta(conn)
@@ -40,7 +40,7 @@ test_that("read_sqlite_meta creates table", {
 
 test_that("meta handles logical", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(z = c(TRUE, FALSE, NA))
   DBI::dbCreateTable(conn, "local", local)
@@ -56,7 +56,7 @@ test_that("meta handles logical", {
 
 test_that("meta handles all classes", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(
     logical = TRUE, date = as.Date("2000-01-01"),
@@ -79,7 +79,7 @@ test_that("meta handles all classes", {
 
 test_that("meta errors if meta and then no meta", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(z = c(TRUE, FALSE, NA))
 
@@ -95,7 +95,7 @@ test_that("meta errors if meta and then no meta", {
 
 test_that("meta errors if no meta and then meta", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(z = as.character(c(TRUE, FALSE, NA)), stringsAsFactors = FALSE)
 
@@ -111,7 +111,7 @@ test_that("meta errors if no meta and then meta", {
 
 test_that("meta errors if inconsistent meta", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(z = c(TRUE, FALSE, NA))
 
@@ -127,7 +127,7 @@ test_that("meta errors if inconsistent meta", {
 
 test_that("fix meta inconsistent by deleting", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(z = c(TRUE, FALSE, NA))
 
@@ -151,7 +151,7 @@ test_that("fix meta inconsistent by deleting", {
 
 test_that("meta reads logical", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(z = c(TRUE, FALSE, NA))
 
@@ -163,7 +163,7 @@ test_that("meta reads logical", {
 
 test_that("meta reads all classes", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(
     logical = TRUE,
@@ -204,7 +204,7 @@ test_that("meta reads all classes", {
 
 test_that("meta = FALSE same as just writing", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(
     logical = TRUE,
@@ -246,7 +246,7 @@ test_that("meta = FALSE same as just writing", {
 
 test_that("meta logical logical different types", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- c(TRUE, FALSE, NA)
   local <- data.frame(
@@ -280,7 +280,7 @@ test_that("meta logical logical different types", {
 
 test_that("meta Date different types", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- as.Date(c("2001-02-03", "2002-03-04", NA))
   local <- data.frame(
@@ -314,7 +314,7 @@ test_that("meta Date different types", {
 
 test_that("meta POSIXct different types", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- as.POSIXct(c(
     "2001-01-02 03:04:05", "2007-08-09 10:11:12", NA
@@ -352,7 +352,7 @@ test_that("meta POSIXct different types", {
 
 test_that("meta hms different types", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- as.POSIXct(c(
     "2001-01-02 03:04:05", "2007-08-09 10:11:12", NA
@@ -392,7 +392,7 @@ test_that("meta hms different types", {
 
 test_that("meta hms preserves decimal", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- as.POSIXct(c(
     "2001-01-02 03:04:05", "2007-08-09 10:11:12", NA
@@ -433,7 +433,7 @@ test_that("meta hms preserves decimal", {
 
 test_that("meta units different types", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- units::as_units(c(10, 11.5, NA), "m3")
 
@@ -468,7 +468,7 @@ test_that("meta units different types", {
 
 test_that("meta sfc different types", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- sf::st_sfc(c(
     sf::st_point(c(0, 1)),
@@ -529,7 +529,7 @@ test_that("meta sfc different types", {
 
 test_that("meta factor different types", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- factor(c("x", "y", NA), levels = c("y", "x"))
   local <- data.frame(
@@ -564,7 +564,7 @@ test_that("meta factor different types", {
 
 test_that("meta factor 11 level", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- factor(c(1:11, NA), levels = c(1:11))
   local <- data.frame(
@@ -591,7 +591,7 @@ test_that("meta factor 11 level", {
 
 test_that("meta ordered different types", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- ordered(c("x", "y", NA), levels = c("y", "x"))
   local <- data.frame(
@@ -625,7 +625,7 @@ test_that("meta ordered different types", {
 
 test_that("meta factor without meta then meta errors", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- factor(c("x", "y", NA), levels = c("y", "x"))
   local <- data.frame(
@@ -667,7 +667,7 @@ test_that("meta factor without meta then meta errors", {
 
 test_that("meta factor rearrange levels", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- factor(c("x", "y", NA), levels = c("y", "x"))
   local <- data.frame(
@@ -706,7 +706,7 @@ test_that("meta factor rearrange levels", {
 
 test_that("meta factor add levels", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- factor(c("x", "y", NA), levels = c("y", "x"))
   local <- data.frame(
@@ -747,7 +747,7 @@ test_that("meta factor add levels", {
 
 test_that("meta ordered add and rearrange levels", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   z <- ordered(c("x", "y", NA), levels = c("y", "x"))
   local <- data.frame(
@@ -810,7 +810,7 @@ test_that("read_meta_levels", {
 
 test_that("meta TRUE then FALSE then read with TRUE", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(fac = factor(c("this", "that", NA)))
   DBI::dbCreateTable(conn, "local", local)
@@ -854,7 +854,7 @@ test_that("meta TRUE then FALSE then read with TRUE", {
 
 test_that("meta strips trailing spaces proj", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(
     logical = TRUE,
