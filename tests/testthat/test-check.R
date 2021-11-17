@@ -1,7 +1,6 @@
 test_that("check_table_names", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
   withr::defer(DBI::dbDisconnect(conn))
-##  teardown(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = 1:2)
   expect_true(DBI::dbCreateTable(conn, "local", local))

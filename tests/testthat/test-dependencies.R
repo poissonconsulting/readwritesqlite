@@ -1,6 +1,6 @@
 test_that("unquoted table names case insensitive in RSQLite", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3))
 
@@ -42,7 +42,7 @@ test_that("unquoted table names case insensitive in RSQLite", {
 
 test_that("``quoted table names case sensitive in RSQLite", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3))
 
@@ -61,7 +61,7 @@ test_that("``quoted table names case sensitive in RSQLite", {
 
 test_that("[] quoted table names case sensitive in RSQLite", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3))
 
@@ -79,7 +79,7 @@ test_that("[] quoted table names case sensitive in RSQLite", {
 
 test_that("\"\" quoted table names case sensitive in RSQLite", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3))
 
@@ -97,7 +97,7 @@ test_that("\"\" quoted table names case sensitive in RSQLite", {
 
 test_that('"" quoted table names case sensitive in RSQLite', {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3))
 

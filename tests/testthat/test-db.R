@@ -1,6 +1,6 @@
 test_that("nrows_table", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3))
   expect_true(DBI::dbCreateTable(conn, "local", local))
@@ -11,7 +11,7 @@ test_that("nrows_table", {
 
 test_that("unquoted table names case insensitive in RSQLite", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3))
 
@@ -29,7 +29,7 @@ test_that("unquoted table names case insensitive in RSQLite", {
 
 test_that("foreign keys", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   # by default foreign keys are not switched on
   expect_false(foreign_keys(TRUE, conn))
