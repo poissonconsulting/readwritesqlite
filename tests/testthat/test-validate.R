@@ -1,6 +1,6 @@
 test_that("rws_write.data.frame checks all columns present", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x = as.character(1:3), select = 1:3)
   DBI::dbCreateTable(conn, "local", local)
@@ -13,7 +13,7 @@ test_that("rws_write.data.frame checks all columns present", {
 
 test_that("rws_write.data.frame checks missing values", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x2 = c(1:3, NA), select2 = 1:4)
 
@@ -32,7 +32,7 @@ test_that("rws_write.data.frame checks missing values", {
 
 test_that("rws_write.data.frame checks primary key on input values", {
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  withr::defer(DBI::dbDisconnect(conn))
 
   local <- data.frame(x2 = c(1, 1, 2), select2 = c(3, 3, 3))
 
