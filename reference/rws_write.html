@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -62,7 +62,8 @@
     <p>Write to a SQLite Database</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">rws_write</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rws_write</span><span class="op">(</span>
   <span class="va">x</span>,
   exists <span class="op">=</span> <span class="cn">TRUE</span>,
   delete <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -76,8 +77,8 @@
   <span class="va">conn</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
@@ -118,11 +119,10 @@ inserting data. If <code>meta = TRUE</code> the meta data is deleted.</p></dd>
 <code><a href="rws_write.environment.html">rws_write.environment</a>()</code>,
 <code><a href="rws_write.list.html">rws_write.list</a>()</code></p></div>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="rws_connect.html">rws_connect</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="rws_connect.html">rws_connect</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">rws_write</span><span class="op">(</span><span class="va">rws_data</span>, exists <span class="op">=</span> <span class="cn">FALSE</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="rws_disconnect.html">rws_disconnect</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></span>
 </code></pre></div>
@@ -139,7 +139,7 @@ inserting data. If <code>meta = TRUE</code> the meta data is deleted.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer></div>

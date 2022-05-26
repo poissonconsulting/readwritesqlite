@@ -55,7 +55,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -94,7 +94,6 @@
 <div class="page-header"><h1 id="readwritesqlite-">readwritesqlite <img src="reference/figures/logo.png" align="right"><a class="anchor" aria-label="anchor" href="#readwritesqlite-"></a>
 </h1></div>
 <!-- badges: start -->
-
 </div>
 <div class="section level1">
 <h1 id="readwritesqlite">readwritesqlite<a class="anchor" aria-label="anchor" href="#readwritesqlite"></a>
@@ -102,8 +101,7 @@
 <p>SQLite databases are a simple, powerful way to validate, query and store related data frames particularly when used with the RSQLite package. However, current solutions do not preserve (or check) meta data, log changes or provide particularly useful error messages.</p>
 <p><code>readwritesqlite</code> is an R package that by default</p>
 <ul>
-<li>preserves (and subsequently checks) the following metadata
-<ul>
+<li>preserves (and subsequently checks) the following metadata<ul>
 <li>the class for logical, Date and hms columns</li>
 <li>the levels for factors and ordered factors</li>
 <li>the time zone for POSIXct columns</li>
@@ -112,15 +110,13 @@
 <li>the sf column for sf objects</li>
 </ul>
 </li>
-<li>logs
-<ul>
+<li>logs<ul>
 <li>the date time</li>
 <li>system user</li>
 <li>table creation and data insertion or deletion</li>
 </ul>
 </li>
-<li>provides informative error messages if
-<ul>
+<li>provides informative error messages if<ul>
 <li>columns are missing</li>
 <li>NOT NULL columns contain missing values</li>
 <li>PRIMARY KEY column values in the input data are not unique</li>
@@ -267,6 +263,13 @@
 </ul>
 </div>
 
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing readwritesqlite</a></li>
+</ul>
+</div>
+
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
@@ -298,7 +301,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer>
