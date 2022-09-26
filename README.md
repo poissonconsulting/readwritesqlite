@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# readwritesqlite <img src="man/figures/logo.png" align="right" />
+# readwritesqlite <img src="man/figures/logo.png" style="float: right" />
 
 <!-- badges: start -->
 
@@ -101,7 +101,7 @@ library(readwritesqlite)
 # for nicer printing of data frames
 library(tibble)
 library(sf)
-#> Linking to GEOS 3.8.1, GDAL 3.2.1, PROJ 7.2.1
+#> Linking to GEOS 3.11.0, GDAL 3.5.1, PROJ 9.0.1; sf_use_s2() is TRUE
 
 conn <- rws_connect()
 

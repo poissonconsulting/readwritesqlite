@@ -6,14 +6,9 @@
 \alias{readwritesqlite-package}
 \title{readwritesqlite: Enhanced Reading and Writing for 'SQLite' Databases}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Reads and writes data frames to 'SQLite' databases
-    while preserving time zones (for POSIXct columns), projections (for
-    'sfc' columns), units (for 'units' columns), levels (for factors and
-    ordered factors) and classes for logical, Date and 'hms' columns.  It
-    also logs changes to tables and provides more informative error
-    messages.
+Reads and writes data frames to 'SQLite' databases while preserving time zones (for POSIXct columns), projections (for 'sfc' columns), units (for 'units' columns), levels (for factors and ordered factors) and classes for logical, Date and 'hms' columns. It also logs changes to tables and provides more informative error messages.
 }
 \seealso{
 Useful links:
