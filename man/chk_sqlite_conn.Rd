@@ -33,9 +33,9 @@ checks if a SQLite connection.
 }
 \section{Functions}{
 \itemize{
-\item \code{check_sqlite_connection}: Check SQLite Connection
-}}
+\item \code{check_sqlite_connection()}: Check SQLite Connection
 
+}}
 \examples{
 conn <- rws_connect()
 chk_sqlite_conn(conn)
