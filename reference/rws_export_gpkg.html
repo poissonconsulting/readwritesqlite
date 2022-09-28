@@ -63,21 +63,28 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rws_export_gpkg</span><span class="op">(</span><span class="va">conn</span>, <span class="va">dir</span>, overwrite <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rws_export_gpkg</span><span class="op">(</span><span class="va">conn</span>, <span class="va">dir</span>, overwrite <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>conn</dt>
 <dd><p>A SQLiteConnection to a database.</p></dd>
+
+
 <dt>dir</dt>
 <dd><p>A string of the path to the directory to save the geopackages in.</p></dd>
+
+
 <dt>overwrite</dt>
 <dd><p>A flag specifying whether to overwrite existing geopackages.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An invisible named vector of the file names and new file names saved.</p>
+    
+
+<p>An invisible named vector of the file names and new file names saved.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -97,7 +104,7 @@ a separate geopackage will be exported for each, and the other spatial columns w
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

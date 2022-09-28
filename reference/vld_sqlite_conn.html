@@ -63,28 +63,33 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">vld_sqlite_conn</span><span class="op">(</span><span class="va">x</span>, connected <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vld_sqlite_conn</span><span class="op">(</span><span class="va">x</span>, connected <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>The object to check.</p></dd>
+
+
 <dt>connected</dt>
 <dd><p>A logical scalar specifying whether x should be connected.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A flag indicating whether the object was validated.</p>
+    
+
+<p>A flag indicating whether the object was validated.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="rws_connect.html">rws_connect</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">vld_sqlite_conn</span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="rws_connect.html">rws_connect</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">vld_sqlite_conn</span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"><span class="fu"><a href="rws_disconnect.html">rws_disconnect</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">vld_sqlite_conn</span><span class="op">(</span><span class="va">conn</span>, connected <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="rws_disconnect.html">rws_disconnect</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">vld_sqlite_conn</span><span class="op">(</span><span class="va">conn</span>, connected <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 </code></pre></div>
     </div>
@@ -100,7 +105,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

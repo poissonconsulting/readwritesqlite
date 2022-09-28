@@ -63,35 +63,42 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rws_query</span><span class="op">(</span><span class="va">query</span>, meta <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">conn</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rws_query</span><span class="op">(</span><span class="va">query</span>, meta <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">conn</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>query</dt>
 <dd><p>A string of a SQLite query.</p></dd>
+
+
 <dt>meta</dt>
 <dd><p>A flag specifying whether to preserve meta data.</p></dd>
+
+
 <dt>conn</dt>
 <dd><p>A SQLiteConnection to a database.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame of the query.</p>
+    
+
+<p>A data frame of the query.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="rws_connect.html">rws_connect</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="rws_write.html">rws_write</a></span><span class="op">(</span><span class="va">rws_data</span>, exists <span class="op">=</span> <span class="cn">FALSE</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">rws_query</span><span class="op">(</span><span class="st">"SELECT date, posixct, factor FROM rws_data"</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="rws_connect.html">rws_connect</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="rws_write.html">rws_write</a></span><span class="op">(</span><span class="va">rws_data</span>, exists <span class="op">=</span> <span class="cn">FALSE</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">rws_query</span><span class="op">(</span><span class="st">"SELECT date, posixct, factor FROM rws_data"</span>, conn <span class="op">=</span> <span class="va">conn</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   date       posixct             factor</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2000-01-01 2001-01-02 <span style="color: #949494;">03:04:05</span> x     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2001-02-03 2006-07-08 <span style="color: #949494;">09:10:11</span> y     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>                  <span style="color: #BB0000;">NA</span>    </span>
-<span class="r-in"><span class="fu"><a href="rws_disconnect.html">rws_disconnect</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="rws_disconnect.html">rws_disconnect</a></span><span class="op">(</span><span class="va">conn</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -106,7 +113,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>
