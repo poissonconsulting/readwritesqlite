@@ -7,6 +7,9 @@
 \usage{
 rws_disconnect(conn)
 }
+\arguments{
+\item{conn}{An \code{RSQLite::SQLiteConnection()}.}
+}
 \description{
 Closes a \linkS4class{SQLiteConnection} to a SQLite database.
 }

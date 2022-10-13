@@ -36,7 +36,7 @@ rws_connect <- function(dbname = ":memory:", exists = NA) {
 #'
 #' Closes a [SQLiteConnection-class] to a SQLite database.
 #'
-#' @inheritParams RSQLite::SQLite
+#' @param conn An `RSQLite::SQLiteConnection()`.
 #' @aliases rws_close_connection
 #' @seealso [rws_connect()]
 #' @export
