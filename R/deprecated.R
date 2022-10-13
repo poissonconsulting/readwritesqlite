@@ -1,18 +1,18 @@
 #' @export
 rws_query_sqlite <- function(query, meta = TRUE, conn) {
-  deprecate_soft("0.1.0", "rws_query_sqlite()", "rws_query()")
+  deprecate_warn("0.2.0", "rws_query_sqlite()", "rws_query()")
   rws_query(query, meta = meta, conn = conn)
 }
 
 #' @export
 rws_open_connection <- function(dbname = "", exists = NA) {
-  deprecate_soft("0.1.0", "rws_open_connection()", "rws_connect()")
+  deprecate_warn("0.2.0", "rws_open_connection()", "rws_connect()")
   rws_connect(dbname = dbname, exists = exists)
 }
 
 #' @export
 rws_close_connection <- function(conn) {
-  deprecate_soft("0.1.0", "rws_close_connection()", "rws_disconnect()")
+  deprecate_warn("0.2.0", "rws_close_connection()", "rws_disconnect()")
   rws_disconnect(conn)
 }
 
@@ -27,37 +27,37 @@ rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE,
                              silent = getOption("rws.silent", FALSE),
                              conn,
                              ...) {
-  deprecate_soft("0.1.0", "rws_write_sqlite()", "rws_write()")
+  deprecate_warn("0.2.0", "rws_write_sqlite()", "rws_write()")
   UseMethod("rws_write")
 }
 
 #' @export
 rws_read_sqlite_log <- function(conn) {
-  deprecate_soft("0.1.0", "rws_read_sqlite_log()", "rws_read_log()")
+  deprecate_warn("0.2.0", "rws_read_sqlite_log()", "rws_read_log()")
   rws_read_log(conn)
 }
 
 #' @export
 rws_read_sqlite_init <- function(conn) {
-  deprecate_soft("0.1.0", "rws_read_sqlite_init()", "rws_read_init()")
+  deprecate_warn("0.2.0", "rws_read_sqlite_init()", "rws_read_init()")
   rws_read_init(conn)
 }
 
 #' @export
 rws_read_sqlite_meta <- function(conn) {
-  deprecate_soft("0.1.0", "rws_read_sqlite_meta()", "rws_read_meta()")
+  deprecate_warn("0.2.0", "rws_read_sqlite_meta()", "rws_read_meta()")
   rws_read_meta(conn)
 }
 
 #' @export
 rws_read_sqlite <- function(x, ...) {
-  deprecate_soft("0.1.0", "rws_read_sqlite()", "rws_read()")
+  deprecate_warn("0.2.0", "rws_read_sqlite()", "rws_read()")
   UseMethod("rws_read")
 }
 
 #' @export
 rws_read_sqlite_table <- function(x, meta = TRUE, conn) {
-  deprecate_soft("0.1.0", "rws_read_sqlite_table()", "rws_read_table()")
+  deprecate_warn("0.2.0", "rws_read_sqlite_table()", "rws_read_table()")
   rws_read_table(x, meta = meta, conn = conn)
 }
 
@@ -88,7 +88,7 @@ chk_fail <- function(..., error) {
 #'
 #' @export
 check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), error = TRUE) {
-  deprecate_soft("0.1.0", "check_sqlite_connection()", "chk_sqlite_conn()")
+  deprecate_warn("0.2.0", "check_sqlite_connection()", "chk_sqlite_conn()")
 
   x_name <- chk_deparse(x_name)
   chk_lgl(connected)
