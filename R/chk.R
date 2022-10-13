@@ -22,8 +22,11 @@ chk_sqlite_conn <- function(x, connected = NA, x_name = NULL) {
     return(invisible())
   }
   if (is.null(x_name)) x_name <- deparse_backtick_chk(substitute(x))
-  chkor(chk_s4_class(x, "SQLiteConnection", x_name = x_name),
-        chk_s3_class(x, "Pool", x_name = x_name))
+  if(!vld_s4_class(x, "SQLiteConnection") && 
+     !vld_s3_class(x, "Pool")) {
+    chkor(chk_s4_class(x, "SQLiteConnection", x_name = x_name),
+          chk_s3_class(x, "Pool", x_name = x_name))
+  }
   if (vld_true(connected)) abort_chk(x_name, " must be connected.")
   abort_chk(x_name, " must be disconnected.")
 }
