@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# readwritesqlite 0.2.0
+
+- Same as previous version.
+
+
 # readwritesqlite 0.1.2.9001
 
 - Switched to testthat 3
