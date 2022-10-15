@@ -67,3 +67,34 @@ test_that("table_info", {
 
   expect_identical(table_column_type("GEOMETRY", "local", conn), "BLOB")
 })
+
+test_that("DBI integer with character converting not numbers to 0L!", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  x <- data.frame(z = c(1L, 0L))
+  DBI::dbWriteTable(conn, "x", x)
+  
+  x <- data.frame(z = c("1", "0", "not a number", NA))
+  DBI::dbWriteTable(conn, "x", x, append = TRUE)
+
+  # this relates to issue #37
+  expect_warning(y <- DBI::dbReadTable("x", conn = conn), "^Column `z`: mixed type, first seen values of type integer, coercing other values of type string$")
+  
+  expect_identical(y, data.frame(z = c(1L, 0L, 1L, 0L, 0L, NA)))
+})
+
+test_that("DBI real with character converting not numbers to 0!", {
+  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  teardown(DBI::dbDisconnect(conn))
+  
+  x <- data.frame(z = c(1, 0))
+  DBI::dbWriteTable(conn, "x", x)
+  
+  x <- data.frame(z = c("1", "0", "not a number", NA))
+  DBI::dbWriteTable(conn, "x", x, append = TRUE)
+  
+  expect_warning(y <- DBI::dbReadTable("x", conn = conn), "^Column `z`: mixed type, first seen values of type real, coercing other values of type string$")
+  
+  expect_identical(y, data.frame(z = c(1, 0, 1, 0, 0, NA)))
+})
