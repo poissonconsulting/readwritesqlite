@@ -2,21 +2,9 @@
 
 # readwritesqlite 0.2.0
 
-- Same as previous version.
-
-
-# readwritesqlite 0.1.2.9001
-
-- Switched to testthat 3
-- Converted soft deprecation to warning deprecation.
-## rws_export_gpkg
- use '_' instead of '-' to separate column and table names in exports
-
-
-
-# readwritesqlite 0.1.2.9000
-
-- Internal changes only.
+- Added `rws_export_gpkg()`.
+- Switched to testthat 3.
+- Previously soft deprecated functions now warn unconditionally.
 
 # readwritesqlite 0.1.2
 
