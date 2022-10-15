@@ -1,6 +1,5 @@
 test_that("rws_export_gpkg works", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+  conn <- local_conn()
   
   sf_data <- readwritesqlite:::rws_data_sf
   sf_data$geometry2 <- sf_data$geometry

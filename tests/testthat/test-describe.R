@@ -1,7 +1,6 @@
 test_that("describe with scalars works", {
-  conn <- rws_connect(":memory:")
-  teardown(rws_disconnect(conn))
-
+  conn <- local_conn()
+  
   local <- data.frame(z = c(TRUE, FALSE, NA))
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
@@ -16,9 +15,8 @@ test_that("describe with scalars works", {
 })
 
 test_that("describe with vector works", {
-  conn <- rws_connect(":memory:")
-  teardown(rws_disconnect(conn))
-
+  conn <- local_conn()
+  
   local <- data.frame(z = c(TRUE, FALSE, NA), y = 1:3)
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
@@ -33,9 +31,8 @@ test_that("describe with vector works", {
 })
 
 test_that("describe errors if extra", {
-  conn <- rws_connect(":memory:")
-  teardown(rws_disconnect(conn))
-
+  conn <- local_conn()
+  
   local <- data.frame(z = c(TRUE, FALSE, NA), y = 1:3)
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
@@ -43,9 +40,8 @@ test_that("describe errors if extra", {
 })
 
 test_that("describe replace works", {
-  conn <- rws_connect(":memory:")
-  teardown(rws_disconnect(conn))
-
+  conn <- local_conn()
+  
   local <- data.frame(z = c(TRUE, FALSE, NA))
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
@@ -74,9 +70,8 @@ test_that("describe replace works", {
 })
 
 test_that("describe two works", {
-  conn <- rws_connect(":memory:")
-  teardown(rws_disconnect(conn))
-
+  conn <- local_conn()
+  
   local <- data.frame(z = c(TRUE, FALSE, NA), a = 1:3)
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")

@@ -1,6 +1,6 @@
 test_that("rws_table_names", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
 
   expect_identical(rws_list_tables(conn), character(0))
   local <- data.frame(x = 1:3)

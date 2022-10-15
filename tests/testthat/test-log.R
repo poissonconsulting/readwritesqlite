@@ -1,7 +1,6 @@
 test_that("rws_read_log creates table", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
-
+  conn <- local_conn()
+  
   log <- rws_read_log(conn)
 
   expect_identical(nrow(log), 0L)
@@ -13,8 +12,8 @@ test_that("rws_read_log creates table", {
 })
 
 test_that("rws_write data.frame logs commands", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
 
   local <- data.frame(x = as.character(1:3))
   DBI::dbCreateTable(conn, "local", local)
@@ -43,8 +42,8 @@ test_that("rws_write data.frame logs commands", {
 
 
 test_that("rws_write list logs commands", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
 
   y <- list(
     local = data.frame(x = as.character(1:3)),
@@ -75,8 +74,8 @@ test_that("rws_write list logs commands", {
 })
 
 test_that("log replace rows UNIQUE constraints", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
 
   DBI::dbExecute(conn, "CREATE TABLE local (
                   x INTEGER UNIQUE NOT NULL,

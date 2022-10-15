@@ -1,6 +1,6 @@
 test_that("rws_get_sqlite_query works with meta = FALSE", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
 
   local <- data.frame(x = 1:3)
   local2 <- as_tibble_sf(local[1:2, , drop = FALSE])
@@ -14,8 +14,8 @@ test_that("rws_get_sqlite_query works with meta = FALSE", {
 })
 
 test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
 
   local <- as_tibble_sf(data.frame(z = c(TRUE, FALSE, NA)))
   expect_identical(rws_write(local, exists = FALSE, conn = conn), "local")
@@ -28,8 +28,8 @@ test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
 
 
 test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
 
   local <- data.frame(
     logical = TRUE,
@@ -60,8 +60,8 @@ test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
 })
 
 test_that("rws_get_sqlite_query teases apart two", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
 
   local <- as_tibble_sf(data.frame(x = 1:3, z = c(TRUE, FALSE, NA), a = c(TRUE, TRUE, FALSE)))
   expect_identical(rws_write(local, exists = FALSE, conn = conn), "local")

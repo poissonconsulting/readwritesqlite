@@ -1,13 +1,13 @@
 test_that("rws_read requires table", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
   
   expect_error(rws_read("local2", conn = conn), "^Table 'local2' does not exist[.]$")
 })
 
 test_that("rws_read returns tibble", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
   
   local <- data.frame(x = as.character(1:3), stringsAsFactors = FALSE)
   DBI::dbWriteTable(conn, "local", local)
@@ -20,16 +20,16 @@ test_that("rws_read returns tibble", {
 })
 
 test_that("rws_read returns empty named list", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
   
   tables <- rws_read(conn)
   expect_identical(tables, list(y = 2)[FALSE])
 })
 
 test_that("rws_read returns list with single named data frame", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
   
   local <- data.frame(x = 1:3)
   DBI::dbWriteTable(conn, "local", local)
@@ -38,8 +38,8 @@ test_that("rws_read returns list with single named data frame", {
 })
 
 test_that("rws_read returns list with multiple named data frames", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
   
   local <- data.frame(x = 1:3)
   local2 <- local[1:2, , drop = FALSE]
@@ -53,8 +53,8 @@ test_that("rws_read returns list with multiple named data frames", {
 })
 
 test_that("rws_read with meta = FALSE ", {
-  conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  teardown(DBI::dbDisconnect(conn))
+
+  conn <- local_conn()
   
   local <- readwritesqlite:::rws_data_sf
   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
