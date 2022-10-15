@@ -7,7 +7,7 @@
 
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![R-CMD-check](https://github.com/poissonconsulting/readwritesqlite/workflows/R-CMD-check/badge.svg)](https://github.com/poissonconsulting/readwritesqlite/actions)
+[![R-CMD-check](https://github.com/poissonconsulting/readwritesqlite/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/poissonconsulting/readwritesqlite/actions/workflows/R-CMD-check.yaml)
 [![Coverage
 status](https://codecov.io/gh/poissonconsulting/readwritesqlite/branch/master/graph/badge.svg)](https://codecov.io/github/poissonconsulting/readwritesqlite?branch=master)
 [![License:
@@ -101,7 +101,7 @@ library(readwritesqlite)
 # for nicer printing of data frames
 library(tibble)
 library(sf)
-#> Linking to GEOS 3.11.0, GDAL 3.5.1, PROJ 9.0.1; sf_use_s2() is TRUE
+#> Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE
 
 conn <- rws_connect()
 
