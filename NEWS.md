@@ -1,3 +1,14 @@
+<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+
+# readwritesqlite 0.1.2.9001
+
+- Switched to testthat 3
+- Converted soft deprecation to warning deprecation.
+## rws_export_gpkg
+ use '_' instead of '-' to separate column and table names in exports
+
+
+
 # readwritesqlite 0.1.2.9000
 
 - Internal changes only.
