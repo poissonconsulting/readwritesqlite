@@ -3,6 +3,7 @@
 # readwritesqlite 0.2.0
 
 - Added `rws_export_gpkg()`.
+- Now R >= 4.0
 - Switched to testthat 3.
 - Previously soft deprecated functions now warn unconditionally.
 
