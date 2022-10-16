@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# readwritesqlite 0.2.0.9000
+
+- Same as previous version.
+
+
 # readwritesqlite 0.2.0
 
 - Added `rws_export_gpkg()`.
