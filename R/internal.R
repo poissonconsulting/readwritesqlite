@@ -1,9 +1,11 @@
 st_sf <- function(data, sf_column_name = NULL,
                   stringsAsFactors = FALSE, sfc_last = TRUE) {
-  if (!requireNamespace("sf")) err("Package 'sf' must be installed.")
-  sf::st_sf(data,
+  rlang::check_installed("sf", reason = "to handle 'sf' objects.")
+  sf::st_sf(
+    data,
     sf_column_name = sf_column_name,
-    stringsAsFactors = stringsAsFactors, sfc_last = sfc_last
+    stringsAsFactors = stringsAsFactors, 
+    sfc_last = sfc_last
   )
 }
 
