@@ -34,7 +34,7 @@ rws_disconnect(conn)
 \seealso{
 Other rws_read: 
 \code{\link{rws_describe_meta.data.frame}()},
-\code{\link{rws_read.SQLiteConnection}()},
-\code{\link{rws_read}()}
+\code{\link{rws_read}()},
+\code{\link{rws_read.SQLiteConnection}()}
 }
 \concept{rws_read}
