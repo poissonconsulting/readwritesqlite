@@ -67,7 +67,7 @@ test_that("rws_read with meta = FALSE ", {
   expect_identical(remote$units, local$units)
   expect_identical(remote$factor, local$factor)
   expect_identical(remote$ordered, local$ordered)
-  expect_equivalent(remote$geometry, local$geometry)
+  expect_equal(remote$geometry, local$geometry, ignore_attr = TRUE)
 
   remote2 <- rws_read_table("local", meta = FALSE, conn = conn)
   remote2$geometry <- NULL
@@ -83,8 +83,7 @@ test_that("rws_read with meta = FALSE ", {
 
 test_that("rws_read converts non number text to NA integer (no 0s)", {
   conn <- rws_connect(":memory:")
-
-  teardown(rws_disconnect(conn))
+  withr::defer(rws_disconnect(conn))
 
   age <- data.frame(zz = c(1L, 0L))
   rws_write(age, exists = FALSE, conn = conn)
@@ -101,8 +100,7 @@ test_that("rws_read converts non number text to NA integer (no 0s)", {
 
 test_that("rws_read converts non number text to NA real (no 0s)", {
   conn <- rws_connect(":memory:")
-
-  teardown(rws_disconnect(conn))
+  withr::defer(rws_disconnect(conn))
 
   age <- data.frame(zz = c(1, 0))
   rws_write(age, exists = FALSE, conn = conn)
@@ -119,8 +117,7 @@ test_that("rws_read converts non number text to NA real (no 0s)", {
 
 test_that("rws_read converts text to NA integer (no 0s)", {
   conn <- rws_connect(":memory:")
-
-  teardown(rws_disconnect(conn))
+  withr::defer(rws_disconnect(conn))
 
   age <- data.frame(zz = c(1L, 0L))
   rws_write(age, exists = FALSE, conn = conn)
@@ -136,8 +133,7 @@ test_that("rws_read converts text to NA integer (no 0s)", {
 
 test_that("rws_read converts text to NA boolean (no 0s)", {
   conn <- rws_connect(":memory:")
-
-  teardown(rws_disconnect(conn))
+  withr::defer(rws_disconnect(conn))
 
   age <- data.frame(zz = c(TRUE, FALSE))
   rws_write(age, exists = FALSE, conn = conn)
@@ -154,8 +150,7 @@ test_that("rws_read converts text to NA boolean (no 0s)", {
 
 test_that("rws_read converts integer to text", {
   conn <- rws_connect(":memory:")
-
-  teardown(rws_disconnect(conn))
+  withr::defer(rws_disconnect(conn))
 
   age <- data.frame(zz = c("1", "0", "no age", NA_character_))
   rws_write(age, exists = FALSE, conn = conn)

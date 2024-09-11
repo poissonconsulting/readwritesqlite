@@ -189,7 +189,7 @@ test_that("meta reads all classes", {
   expect_identical(remote$hms, local$hms)
   expect_identical(remote$factor, local$factor)
   expect_identical(remote$ordered, local$ordered)
-  expect_equivalent(remote$geometry, local$geometry)
+  expect_equal(remote$geometry, local$geometry, ignore_attr = TRUE)
 })
 
 test_that("meta = FALSE same as just writing", {
@@ -491,12 +491,12 @@ test_that("meta sfc different types", {
   expect_identical(class(remote), c("tbl_df", "tbl", "data.frame"))
   expect_identical(colnames(remote), colnames(local))
   expect_identical(nrow(remote), 1L)
-  expect_equivalent(remote$zinteger, local$zinteger)
-  expect_equivalent(remote$zreal, local$zreal)
-  expect_equivalent(remote$znumeric, local$znumeric)
-  expect_equivalent(remote$ztext, local$ztext)
-  expect_equivalent(remote$ztextold, local$ztextold)
-  expect_equivalent(remote$zblob, local$zblob)
+  expect_equal(remote$zinteger, local$zinteger, ignore_attr = TRUE)
+  expect_equal(remote$zreal, local$zreal, ignore_attr = TRUE)
+  expect_equal(remote$znumeric, local$znumeric, ignore_attr = TRUE)
+  expect_equal(remote$ztext, local$ztext, ignore_attr = TRUE)
+  expect_equal(remote$ztextold, local$ztextold, ignore_attr = TRUE)
+  expect_equal(remote$zblob, local$zblob, ignore_attr = TRUE)
 
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(
@@ -847,7 +847,7 @@ test_that("meta strips trailing spaces proj", {
   expect_identical(colnames(remote), colnames(local))
   expect_identical(nrow(remote), 1L)
   expect_identical(remote$logical, local$logical)
-  expect_equivalent(remote$geometry, local$geometry)
+  expect_equal(remote$geometry, local$geometry, ignore_attr = TRUE)
 
   expect_identical(
     rws_read_meta(conn = conn)$MetaMeta[1],
