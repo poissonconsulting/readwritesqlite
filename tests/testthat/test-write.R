@@ -1,5 +1,4 @@
 test_that("rws_write.data.frame checks reserved table names", {
-
   conn <- local_conn()
 
   local <- data.frame(x = as.character(1:3))
@@ -22,7 +21,6 @@ test_that("rws_write.data.frame checks reserved table names", {
 })
 
 test_that("rws_write.data.frame checks table exists", {
-
   conn <- local_conn()
 
   local <- data.frame(x = as.character(1:3))
@@ -33,7 +31,6 @@ test_that("rws_write.data.frame checks table exists", {
 })
 
 test_that("rws_write.data.frame writes to existing table", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3, select = 1:3)
@@ -44,7 +41,6 @@ test_that("rws_write.data.frame writes to existing table", {
 })
 
 test_that("rws_write.data.frame errors if exists = FALSE and already exists", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3, select = 1:3)
@@ -53,7 +49,6 @@ test_that("rws_write.data.frame errors if exists = FALSE and already exists", {
 })
 
 test_that("rws_write.data.frame creates table", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3, select = 1:3)
@@ -63,7 +58,6 @@ test_that("rws_write.data.frame creates table", {
 })
 
 test_that("rws_write.data.frame handling of case", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3, select = 1:3)
@@ -83,7 +77,6 @@ test_that("rws_write.data.frame handling of case", {
 })
 
 test_that("rws_write.data.frame deals with \" quoted table names", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3, select = 1:3)
@@ -99,7 +92,6 @@ test_that("rws_write.data.frame deals with \" quoted table names", {
 })
 
 test_that("rws_write.data.frame deals with [ quoted table names", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3, select = 1:3)
@@ -115,7 +107,6 @@ test_that("rws_write.data.frame deals with [ quoted table names", {
 })
 
 test_that("rws_write.data.frame deals with backtick quoted table names", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3, select = 1:3)
@@ -131,7 +122,6 @@ test_that("rws_write.data.frame deals with backtick quoted table names", {
 })
 
 test_that("rws_write.data.frame corrects column order", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 4:6, select = 1:3)
@@ -151,7 +141,6 @@ test_that("rws_write.data.frame corrects column order", {
 })
 
 test_that("rws_write.data.frame warns for extra columns", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 4:6, y = 1:3)
@@ -169,7 +158,6 @@ test_that("rws_write.data.frame warns for extra columns", {
 })
 
 test_that("rws_write.data.frame is case insensitive", {
-
   conn <- local_conn()
 
   local <- data.frame(x = as.character(1:3), seLect = 1:3)
@@ -180,7 +168,6 @@ test_that("rws_write.data.frame is case insensitive", {
 })
 
 test_that("rws_write.data.frame deals with quoted column names", {
-
   conn <- local_conn()
 
   local <- tibble::tibble(x = factor(1:3), `[x]` = factor(2:4), `"x"` = factor(3:5))
@@ -202,7 +189,6 @@ test_that("rws_write.data.frame deals with quoted column names", {
 })
 
 test_that("rws_write.data.frame can delete", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3)
@@ -214,7 +200,6 @@ test_that("rws_write.data.frame can delete", {
 })
 
 test_that("rws_write.data.frame can not commit", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3)
@@ -227,7 +212,6 @@ test_that("rws_write.data.frame can not commit", {
 })
 
 test_that("rws_write.list errors with none data frames", {
-
   conn <- local_conn()
 
   y <- list(x = 1)
@@ -235,7 +219,6 @@ test_that("rws_write.list errors with none data frames", {
 })
 
 test_that("rws_write.environment issues warning with no data frames", {
-
   conn <- local_conn()
 
   y <- new.env()
@@ -244,7 +227,6 @@ test_that("rws_write.environment issues warning with no data frames", {
 })
 
 test_that("rws_write.list requires named list", {
-
   conn <- local_conn()
 
   y <- list(data.frame(x = 1:3))
@@ -254,7 +236,6 @@ test_that("rws_write.list requires named list", {
 })
 
 test_that("rws_write writes list with 1 data frame", {
-
   conn <- local_conn()
 
   y <- list(local = data.frame(x = 1:3))
@@ -266,7 +247,6 @@ test_that("rws_write writes list with 1 data frame", {
 })
 
 test_that("rws_write writes list with 2 data frame", {
-
   conn <- local_conn()
 
   y <- list(local = data.frame(x = 1:3), local2 = data.frame(y = 1:4))
@@ -281,7 +261,6 @@ test_that("rws_write writes list with 2 data frame", {
 })
 
 test_that("rws_write writes list with 2 identically named data frames", {
-
   conn <- local_conn()
 
   y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
@@ -293,7 +272,6 @@ test_that("rws_write writes list with 2 identically named data frames", {
 })
 
 test_that("rws_write errors if list with 2 identically named data frames and complete = TRUE", {
-
   conn <- local_conn()
 
   y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
@@ -306,7 +284,6 @@ test_that("rws_write errors if list with 2 identically named data frames and com
 })
 
 test_that("rws_write errors if complete = TRUE and not all data frames", {
-
   conn <- local_conn()
 
   y <- list(local = data.frame(x = 1:3))
@@ -320,7 +297,6 @@ test_that("rws_write errors if complete = TRUE and not all data frames", {
 })
 
 test_that("rws_write errors if strict = TRUE and exists = TRUE and extra data frames", {
-
   conn <- local_conn()
 
   y <- list(local = data.frame(x = 1:3), local2 = data.frame(y = 1:2))
@@ -337,7 +313,6 @@ test_that("rws_write errors if strict = TRUE and exists = TRUE and extra data fr
 })
 
 test_that("rws_write writes environment", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3)
@@ -349,7 +324,6 @@ test_that("rws_write writes environment", {
 })
 
 test_that("rws_write not commits", {
-
   conn <- local_conn()
 
   y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
@@ -363,7 +337,6 @@ test_that("rws_write not commits", {
 })
 
 test_that("replace rows PRIMARY KEY constraints", {
-
   conn <- local_conn()
 
   DBI::dbExecute(conn, "CREATE TABLE local (
@@ -397,7 +370,6 @@ test_that("replace rows PRIMARY KEY constraints", {
 })
 
 test_that("replace rows UNIQUE constraints in unique key", {
-
   conn <- local_conn()
 
   DBI::dbExecute(conn, "CREATE TABLE local (
@@ -429,7 +401,6 @@ test_that("replace rows UNIQUE constraints in unique key", {
 })
 
 test_that("replace rows with FOREIGN key", {
-
   conn <- local_conn()
 
   DBI::dbExecute(conn, "CREATE TABLE local (
@@ -452,7 +423,6 @@ test_that("replace rows with FOREIGN key", {
 })
 
 test_that("foreign keys switched on one data frame at a time", {
-
   conn <- local_conn()
 
   DBI::dbExecute(conn, "CREATE TABLE local (
@@ -474,7 +444,6 @@ test_that("foreign keys switched on one data frame at a time", {
 })
 
 test_that("foreign keys switched off for two data frame", {
-
   conn <- local_conn()
 
   DBI::dbExecute(conn, "CREATE TABLE local (
@@ -491,7 +460,6 @@ test_that("foreign keys switched off for two data frame", {
 })
 
 test_that("foreign keys pick up foreign key violation for two data frames", {
-
   conn <- local_conn()
 
   DBI::dbExecute(conn, "CREATE TABLE local (
@@ -510,7 +478,6 @@ test_that("foreign keys pick up foreign key violation for two data frames", {
 })
 
 test_that("strict environment with extra data frame and extra column", {
-
   conn <- local_conn()
 
   env <- new.env()
@@ -541,7 +508,6 @@ test_that("strict environment with extra data frame and extra column", {
 })
 
 test_that("sf data frames with single geometry passed back", {
-
   conn <- local_conn()
 
   local <- readwritesqlite:::rws_data_sf
@@ -568,7 +534,6 @@ test_that("sf data frames with single geometry passed back", {
 })
 
 test_that("sf data frames with two geometries and correct one passed back", {
-
   conn <- local_conn()
 
   local <- as.data.frame(readwritesqlite:::rws_data_sf)
@@ -595,7 +560,6 @@ test_that("sf data frames with two geometries and correct one passed back", {
 })
 
 test_that("sf can change sf_column", {
-
   conn <- local_conn()
 
   local <- as.data.frame(readwritesqlite:::rws_data_sf)
@@ -621,7 +585,6 @@ test_that("sf can change sf_column", {
 })
 
 test_that("sf data frames with two geometries and lots of other stuff and correct one passed back", {
-
   conn <- local_conn()
 
   local <- as.data.frame(readwritesqlite:::rws_data_sf)
@@ -650,7 +613,6 @@ test_that("sf data frames with two geometries and lots of other stuff and correc
 })
 
 test_that("initialized even with no rows of data", {
-
   conn <- local_conn()
 
   local <- as.data.frame(readwritesqlite:::rws_data_sf)
@@ -681,7 +643,6 @@ test_that("initialized even with no rows of data", {
 })
 
 test_that("initialized meta with no rows of data and not overwritten unless delete = TRUE", {
-
   conn <- local_conn()
 
   local <- as.data.frame(readwritesqlite:::rws_data_sf)
@@ -710,7 +671,6 @@ test_that("initialized meta with no rows of data and not overwritten unless dele
 })
 
 test_that("initialized with no rows of data and no metadata and not overwritten unless delete = TRUE", {
-
   conn <- local_conn()
 
   local <- as.data.frame(readwritesqlite:::rws_data_sf)
@@ -739,7 +699,6 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
 })
 
 test_that("initialized with no rows of data and no metadata and not overwritten unless delete = TRUE", {
-
   conn <- local_conn()
 
   local <- as.data.frame(readwritesqlite:::rws_data_sf)
@@ -767,7 +726,6 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
 })
 
 test_that("meta then inconsistent data then error meta but delete reset", {
-
   conn <- local_conn()
 
   local <- as.data.frame(readwritesqlite:::rws_data_sf)
