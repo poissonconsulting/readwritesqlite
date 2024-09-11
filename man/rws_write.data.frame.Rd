@@ -59,8 +59,8 @@ rws_disconnect(conn)
 }
 \seealso{
 Other rws_write: 
+\code{\link{rws_write}()},
 \code{\link{rws_write.environment}()},
-\code{\link{rws_write.list}()},
-\code{\link{rws_write}()}
+\code{\link{rws_write.list}()}
 }
 \concept{rws_write}

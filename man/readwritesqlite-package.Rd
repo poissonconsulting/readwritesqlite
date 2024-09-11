@@ -14,6 +14,7 @@ Reads and writes data frames to 'SQLite' databases while preserving time zones (
 Useful links:
 \itemize{
   \item \url{https://github.com/poissonconsulting/readwritesqlite}
+  \item \url{https://poissonconsulting.github.io/readwritesqlite/}
   \item Report bugs at \url{https://github.com/poissonconsulting/readwritesqlite/issues}
 }
 
