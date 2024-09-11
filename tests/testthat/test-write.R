@@ -493,13 +493,16 @@ test_that("strict environment with extra data frame and extra column", {
     rws_write(env, conn = conn),
     "^The following data frame in 'x' is unrecognised: 'local2'; but exists = TRUE[.]$"
   )
-  
-  expect_warning({
-    expect_warning(
-      rws_write(env, strict = FALSE, conn = conn),
-      "The following data frame in 'x' is unrecognised: 'local2'; but exists = TRUE"
-    )
-  }, "The following column in data 'local' is unrecognised: 'z'")
+
+  expect_warning(
+    {
+      expect_warning(
+        rws_write(env, strict = FALSE, conn = conn),
+        "The following data frame in 'x' is unrecognised: 'local2'; but exists = TRUE"
+      )
+    },
+    "The following column in data 'local' is unrecognised: 'z'"
+  )
 
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, local[1])
@@ -747,17 +750,26 @@ test_that("meta then inconsistent data then error meta but delete reset", {
     "^Column 'logical' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data[.]$"
   )
   expect_identical(rws_write(local2, conn = conn, meta = FALSE, x_name = "local"), "local")
-  
-  expect_warning({
-    expect_warning({
-      expect_warning({
-        expect_warning(
-          remote <- rws_read_table("local", conn = conn),
-          "Column `logical`: mixed type, first seen values of type integer, coercing other values of type string"
-        )
-      }, "Column `date`: mixed type, first seen values of type real, coercing other values of type string")
-    }, "Column `posixct`: mixed type, first seen values of type real, coercing other values of type string")
-  }, "Column `units`: mixed type, first seen values of type real, coercing other values of type string")
+
+  expect_warning(
+    {
+      expect_warning(
+        {
+          expect_warning(
+            {
+              expect_warning(
+                remote <- rws_read_table("local", conn = conn),
+                "Column `logical`: mixed type, first seen values of type integer, coercing other values of type string"
+              )
+            },
+            "Column `date`: mixed type, first seen values of type real, coercing other values of type string"
+          )
+        },
+        "Column `posixct`: mixed type, first seen values of type real, coercing other values of type string"
+      )
+    },
+    "Column `units`: mixed type, first seen values of type real, coercing other values of type string"
+  )
 
   expect_identical(remote, tibble::tibble(
     logical = c(TRUE, FALSE, NA, FALSE),
@@ -769,18 +781,27 @@ test_that("meta then inconsistent data then error meta but delete reset", {
     ),
     units = units::as_units(c(10, 11.5, NA, 0), "m")
   ))
-  
-  expect_warning({
-    expect_warning({
-      expect_warning({
-        expect_warning(
-          remote2 <- rws_read_table("local", meta = FALSE, conn = conn),
-          "Column `logical`: mixed type, first seen values of type integer, coercing other values of type string"
-        )
-      }, "Column `date`: mixed type, first seen values of type real, coercing other values of type string")
-    }, "Column `posixct`: mixed type, first seen values of type real, coercing other values of type string")
-  }, "Column `units`: mixed type, first seen values of type real, coercing other values of type string")
-  
+
+  expect_warning(
+    {
+      expect_warning(
+        {
+          expect_warning(
+            {
+              expect_warning(
+                remote2 <- rws_read_table("local", meta = FALSE, conn = conn),
+                "Column `logical`: mixed type, first seen values of type integer, coercing other values of type string"
+              )
+            },
+            "Column `date`: mixed type, first seen values of type real, coercing other values of type string"
+          )
+        },
+        "Column `posixct`: mixed type, first seen values of type real, coercing other values of type string"
+      )
+    },
+    "Column `units`: mixed type, first seen values of type real, coercing other values of type string"
+  )
+
   expect_identical(remote2, tibble::tibble(
     logical = c(1L, 0L, NA, 0L),
     date = c(10957, 11356, NA, 0),
