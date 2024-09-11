@@ -46,7 +46,7 @@ rws_export_gpkg <- function(conn, dir, overwrite = FALSE) {
 
   exported <- vector()
 
-  for (i in 1:length(exports$ColumnMeta)) {
+  for (i in seq_along(exports$ColumnMeta)) {
     col_name <- exports$ColumnMeta[i]
     tbl_name <- exports$TableMeta[i]
 
@@ -73,7 +73,7 @@ rws_export_gpkg <- function(conn, dir, overwrite = FALSE) {
 
     path <- paste0(file.path(dir, tbl_name), ".gpkg")
 
-    if (file.exists(path) & !overwrite) err("File ", basename(path), " already exisits. Set 'overwrite' = TRUE to overwrite.")
+    if (file.exists(path) && !overwrite) err("File ", basename(path), " already exisits. Set 'overwrite' = TRUE to overwrite.")
 
     sf::st_write(table, path, delete_dsn = overwrite, quiet = TRUE)
     ui_line(glue::glue("Exported table {ui_value(tbl_name)} with spatial column {ui_value(col_name)} as {ui_value(basename(path))}"))
