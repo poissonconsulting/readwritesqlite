@@ -4,7 +4,7 @@ test_that("chk_sqlite_conn", {
     class = "chk_error"
   )
   conn <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
-  
+
   expect_null(chk_sqlite_conn(conn))
   expect_invisible(chk_sqlite_conn(conn))
   expect_null(chk_sqlite_conn(conn, connected = TRUE))

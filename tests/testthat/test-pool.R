@@ -1,11 +1,11 @@
 test_that("sf data frames with single geometry passed back", {
-  pool <-  pool::dbPool(drv = RSQLite::SQLite(), host = ":memory:")
+  pool <- pool::dbPool(drv = RSQLite::SQLite(), host = ":memory:")
   conn <- pool::poolCheckout(pool)
-  teardown(pool::poolReturn(conn))
-  teardown(pool::poolClose(pool))
-  
+  withr::defer(pool::poolReturn(conn))
+  withr::defer(pool::poolClose(pool))
+
   local <- readwritesqlite:::rws_data_sf
-  
+
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
@@ -24,5 +24,5 @@ test_that("sf data frames with single geometry passed back", {
   expect_identical(remote$units, local$units)
   expect_identical(remote$factor, local$factor)
   expect_identical(remote$ordered, local$ordered)
-  expect_equivalent(remote$geometry, local$geometry)
+  expect_equal(remote$geometry, local$geometry, ignore_attr = TRUE)
 })

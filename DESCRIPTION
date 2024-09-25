@@ -21,7 +21,7 @@ Description: Reads and writes data frames to 'SQLite' databases
     also logs changes to tables and provides more informative error
     messages.
 License: MIT + file LICENSE
-URL: https://github.com/poissonconsulting/readwritesqlite
+URL: https://github.com/poissonconsulting/readwritesqlite, https://poissonconsulting.github.io/readwritesqlite/
 BugReports: 
     https://github.com/poissonconsulting/readwritesqlite/issues
 Depends: 
@@ -53,5 +53,5 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
 Config/testthat/edition: 3

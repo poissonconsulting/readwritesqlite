@@ -1,5 +1,4 @@
 test_that("rws_get_sqlite_query works with meta = FALSE", {
-
   conn <- local_conn()
 
   local <- data.frame(x = 1:3)
@@ -8,27 +7,25 @@ test_that("rws_get_sqlite_query works with meta = FALSE", {
   DBI::dbWriteTable(conn, "local2", local2)
 
   data <- rws_query("SELECT * FROM local", meta = FALSE, conn = conn)
-  expect_equal(data, local, check.attributes = FALSE)
+  expect_equal(data, local, ignore_attr = TRUE)
   data2 <- rws_query("SELECT * FROM local2", meta = FALSE, conn = conn)
   expect_identical(data2, local2)
 })
 
 test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
-
   conn <- local_conn()
 
   local <- as_tibble_sf(data.frame(z = c(TRUE, FALSE, NA)))
   expect_identical(rws_write(local, exists = FALSE, conn = conn), "local")
 
   data <- rws_query("SELECT * FROM local", meta = FALSE, conn = conn)
-  expect_equal(data, data.frame(z = c(1L, 0L, NA_integer_)), check.attributes = FALSE)
+  expect_equal(data, data.frame(z = c(1L, 0L, NA_integer_)), ignore_attr = TRUE)
   data2 <- rws_query("SELECT * FROM local", meta = TRUE, conn = conn)
   expect_identical(data2, local)
 })
 
 
 test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
-
   conn <- local_conn()
 
   local <- data.frame(
@@ -56,11 +53,10 @@ test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
   expect_identical(remote$hms, local$hms)
   expect_identical(remote$factor, local$factor)
   expect_identical(remote$ordered, local$ordered)
-  expect_equivalent(remote$geometry, local$geometry)
+  expect_equal(remote$geometry, local$geometry, ignore_attr = TRUE)
 })
 
 test_that("rws_get_sqlite_query teases apart two", {
-
   conn <- local_conn()
 
   local <- as_tibble_sf(data.frame(x = 1:3, z = c(TRUE, FALSE, NA), a = c(TRUE, TRUE, FALSE)))

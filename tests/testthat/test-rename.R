@@ -1,5 +1,4 @@
 test_that("rws_rename_table works", {
-
   conn <- local_conn()
 
   rws_write(list(somedata = readwritesqlite:::rws_data_sf), exists = FALSE, conn = conn)
@@ -11,7 +10,6 @@ test_that("rws_rename_table works", {
 })
 
 test_that("rws_rename_table informative errors", {
-
   conn <- local_conn()
 
   rws_write(list(somedata = readwritesqlite:::rws_data_sf), exists = FALSE, conn = conn)
@@ -32,7 +30,6 @@ test_that("rws_rename_table informative errors", {
 })
 
 test_that("rws_rename_table multiple tables", {
-
   conn <- local_conn()
 
   rws_write(list(somedata = data.frame(y = 2), moredata = data.frame(x = 1)), exists = FALSE, conn = conn)
@@ -44,7 +41,6 @@ test_that("rws_rename_table multiple tables", {
 })
 
 test_that("rws_rename_table primary key", {
-
   conn <- local_conn()
 
   DBI::dbExecute(conn, "CREATE TABLE local (
@@ -71,7 +67,6 @@ test_that("rws_rename_table primary key", {
 })
 
 test_that("rws_rename_column works", {
-
   conn <- local_conn()
 
   rws_write(data.frame(x = 1), x_name = "local", exists = FALSE, conn = conn)
@@ -90,7 +85,6 @@ test_that("rws_rename_column works", {
 })
 
 test_that("rws_rename_column renames own column", {
-
   conn <- local_conn()
 
   rws_write(data.frame(x = 1), x_name = "local", exists = FALSE, conn = conn)
@@ -107,7 +101,6 @@ test_that("rws_rename_column renames own column", {
 })
 
 test_that("rws_rename_column informative errors", {
-
   conn <- local_conn()
 
   rws_write(data.frame(x = 1), x_name = "local", exists = FALSE, conn = conn)
@@ -122,7 +115,6 @@ test_that("rws_rename_column informative errors", {
 })
 
 test_that("rws_rename_column can't overwrite existing column", {
-
   conn <- local_conn()
 
   rws_write(data.frame(x = 1, y = 2), x_name = "local", exists = FALSE, conn = conn)
@@ -133,7 +125,6 @@ test_that("rws_rename_column can't overwrite existing column", {
 })
 
 test_that("rws_rename_column primary key", {
-
   conn <- local_conn()
 
   DBI::dbExecute(conn, "CREATE TABLE local (

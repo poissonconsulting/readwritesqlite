@@ -1,5 +1,4 @@
 test_that("rws_table_names", {
-
   conn <- local_conn()
 
   expect_identical(rws_list_tables(conn), character(0))

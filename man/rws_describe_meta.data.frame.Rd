@@ -21,8 +21,8 @@ Add Data Frame of Descriptions to SQL Meta Data Table
 }
 \seealso{
 Other rws_read: 
+\code{\link{rws_read}()},
 \code{\link{rws_read.SQLiteConnection}()},
-\code{\link{rws_read.character}()},
-\code{\link{rws_read}()}
+\code{\link{rws_read.character}()}
 }
 \concept{rws_read}

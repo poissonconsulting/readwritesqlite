@@ -8,8 +8,8 @@
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check](https://github.com/poissonconsulting/readwritesqlite/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/poissonconsulting/readwritesqlite/actions/workflows/R-CMD-check.yaml)
-[![Coverage
-status](https://codecov.io/gh/poissonconsulting/readwritesqlite/branch/master/graph/badge.svg)](https://codecov.io/github/poissonconsulting/readwritesqlite?branch=master)
+[![Codecov test
+coverage](https://codecov.io/gh/poissonconsulting/readwritesqlite/graph/badge.svg)](https://app.codecov.io/gh/poissonconsulting/readwritesqlite)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![CRAN
@@ -26,39 +26,39 @@ changes or provide particularly useful error messages.
 
 `readwritesqlite` is an R package that by default
 
--   preserves (and subsequently checks) the following metadata
-    -   the class for logical, Date and hms columns
-    -   the levels for factors and ordered factors
-    -   the time zone for POSIXct columns
-    -   the units for unit columns
-    -   the projection for sfc columns
-    -   the sf column for sf objects
--   logs
-    -   the date time
-    -   system user
-    -   table creation and data insertion or deletion
--   provides informative error messages if
-    -   columns are missing
-    -   NOT NULL columns contain missing values
-    -   PRIMARY KEY column values in the input data are not unique
+- preserves (and subsequently checks) the following metadata
+  - the class for logical, Date and hms columns
+  - the levels for factors and ordered factors
+  - the time zone for POSIXct columns
+  - the units for unit columns
+  - the projection for sfc columns
+  - the sf column for sf objects
+- logs
+  - the date time
+  - system user
+  - table creation and data insertion or deletion
+- provides informative error messages if
+  - columns are missing
+  - NOT NULL columns contain missing values
+  - PRIMARY KEY column values in the input data are not unique
 
 `readwritesqlite` also allows the user to
 
--   write environments (or named lists) of data frames (useful for
-    populating databases)
--   delete existing data (and meta data) before writing (useful for
-    converting an existing database)
--   replace existing data which causes unique or primary key conflicts
-    (useful for updating databases)
--   confirm data can be written without committing any changes (useful
-    for checking data)
--   check all existing tables are written to (useful for data transfers)
--   rearrange and add levels for factors and add levels for ordered
-    factors
--   initialize the meta data for a new table by writing a data frame or
-    sf data frame with no rows but logical, Date, factor, ordered,
-    POSIXct, sfc or unit columns (useful for creating an empty database
-    with additional informative checks)
+- write environments (or named lists) of data frames (useful for
+  populating databases)
+- delete existing data (and meta data) before writing (useful for
+  converting an existing database)
+- replace existing data which causes unique or primary key conflicts
+  (useful for updating databases)
+- confirm data can be written without committing any changes (useful for
+  checking data)
+- check all existing tables are written to (useful for data transfers)
+- rearrange and add levels for factors and add levels for ordered
+  factors
+- initialize the meta data for a new table by writing a data frame or sf
+  data frame with no rows but logical, Date, factor, ordered, POSIXct,
+  sfc or unit columns (useful for creating an empty database with
+  additional informative checks)
 
 `readwritesqlite` provides all these features through its `rws_write()`
 and `rws_read()` functions.
@@ -101,7 +101,7 @@ library(readwritesqlite)
 # for nicer printing of data frames
 library(tibble)
 library(sf)
-#> Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE
+#> Linking to GEOS 3.12.2, GDAL 3.9.1, PROJ 9.4.1; sf_use_s2() is TRUE
 
 conn <- rws_connect()
 
