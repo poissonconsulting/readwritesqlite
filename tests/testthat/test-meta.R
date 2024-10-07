@@ -1,5 +1,4 @@
 test_that("make_meta_data works", {
-
   conn <- local_conn()
 
   local <- data.frame(x = as.character(1:3))
@@ -26,7 +25,6 @@ test_that("make_meta_data works", {
 })
 
 test_that("read_sqlite_meta creates table", {
-
   conn <- local_conn()
 
   expect_identical(rws_read_meta(conn), rws_read_meta(conn))
@@ -39,7 +37,6 @@ test_that("read_sqlite_meta creates table", {
 })
 
 test_that("meta handles logical", {
-
   conn <- local_conn()
 
   local <- data.frame(z = c(TRUE, FALSE, NA))
@@ -55,7 +52,6 @@ test_that("meta handles logical", {
 })
 
 test_that("meta handles all classes", {
-
   conn <- local_conn()
 
   local <- data.frame(
@@ -78,7 +74,6 @@ test_that("meta handles all classes", {
 })
 
 test_that("meta errors if meta and then no meta", {
-
   conn <- local_conn()
 
   local <- data.frame(z = c(TRUE, FALSE, NA))
@@ -94,7 +89,6 @@ test_that("meta errors if meta and then no meta", {
 })
 
 test_that("meta errors if no meta and then meta", {
-
   conn <- local_conn()
 
   local <- data.frame(z = as.character(c(TRUE, FALSE, NA)), stringsAsFactors = FALSE)
@@ -110,7 +104,6 @@ test_that("meta errors if no meta and then meta", {
 })
 
 test_that("meta errors if inconsistent meta", {
-
   conn <- local_conn()
 
   local <- data.frame(z = c(TRUE, FALSE, NA))
@@ -126,7 +119,6 @@ test_that("meta errors if inconsistent meta", {
 })
 
 test_that("fix meta inconsistent by deleting", {
-
   conn <- local_conn()
 
   local <- data.frame(z = c(TRUE, FALSE, NA))
@@ -150,7 +142,6 @@ test_that("fix meta inconsistent by deleting", {
 })
 
 test_that("meta reads logical", {
-
   conn <- local_conn()
 
   local <- data.frame(z = c(TRUE, FALSE, NA))
@@ -162,7 +153,6 @@ test_that("meta reads logical", {
 })
 
 test_that("meta reads all classes", {
-
   conn <- local_conn()
 
   local <- data.frame(
@@ -199,11 +189,10 @@ test_that("meta reads all classes", {
   expect_identical(remote$hms, local$hms)
   expect_identical(remote$factor, local$factor)
   expect_identical(remote$ordered, local$ordered)
-  expect_equivalent(remote$geometry, local$geometry)
+  expect_equal(remote$geometry, local$geometry, ignore_attr = TRUE)
 })
 
 test_that("meta = FALSE same as just writing", {
-
   conn <- local_conn()
 
   local <- data.frame(
@@ -245,7 +234,6 @@ test_that("meta = FALSE same as just writing", {
 })
 
 test_that("meta logical logical different types", {
-
   conn <- local_conn()
 
   z <- c(TRUE, FALSE, NA)
@@ -279,7 +267,6 @@ test_that("meta logical logical different types", {
 })
 
 test_that("meta Date different types", {
-
   conn <- local_conn()
 
   z <- as.Date(c("2001-02-03", "2002-03-04", NA))
@@ -313,7 +300,6 @@ test_that("meta Date different types", {
 })
 
 test_that("meta POSIXct different types", {
-
   conn <- local_conn()
 
   z <- as.POSIXct(c(
@@ -351,7 +337,6 @@ test_that("meta POSIXct different types", {
 })
 
 test_that("meta hms different types", {
-
   conn <- local_conn()
 
   z <- as.POSIXct(c(
@@ -391,7 +376,6 @@ test_that("meta hms different types", {
 })
 
 test_that("meta hms preserves decimal", {
-
   conn <- local_conn()
 
   z <- as.POSIXct(c(
@@ -432,7 +416,6 @@ test_that("meta hms preserves decimal", {
 })
 
 test_that("meta units different types", {
-
   conn <- local_conn()
 
   z <- units::as_units(c(10, 11.5, NA), "m3")
@@ -467,7 +450,6 @@ test_that("meta units different types", {
 })
 
 test_that("meta sfc different types", {
-
   conn <- local_conn()
 
   z <- sf::st_sfc(c(
@@ -509,12 +491,12 @@ test_that("meta sfc different types", {
   expect_identical(class(remote), c("tbl_df", "tbl", "data.frame"))
   expect_identical(colnames(remote), colnames(local))
   expect_identical(nrow(remote), 1L)
-  expect_equivalent(remote$zinteger, local$zinteger)
-  expect_equivalent(remote$zreal, local$zreal)
-  expect_equivalent(remote$znumeric, local$znumeric)
-  expect_equivalent(remote$ztext, local$ztext)
-  expect_equivalent(remote$ztextold, local$ztextold)
-  expect_equivalent(remote$zblob, local$zblob)
+  expect_equal(remote$zinteger, local$zinteger, ignore_attr = TRUE)
+  expect_equal(remote$zreal, local$zreal, ignore_attr = TRUE)
+  expect_equal(remote$znumeric, local$znumeric, ignore_attr = TRUE)
+  expect_equal(remote$ztext, local$ztext, ignore_attr = TRUE)
+  expect_equal(remote$ztextold, local$ztextold, ignore_attr = TRUE)
+  expect_equal(remote$zblob, local$zblob, ignore_attr = TRUE)
 
   remote2 <- DBI::dbReadTable(conn, "local")
   expect_identical(
@@ -528,7 +510,6 @@ test_that("meta sfc different types", {
 })
 
 test_that("meta factor different types", {
-
   conn <- local_conn()
 
   z <- factor(c("x", "y", NA), levels = c("y", "x"))
@@ -563,7 +544,6 @@ test_that("meta factor different types", {
 })
 
 test_that("meta factor 11 level", {
-
   conn <- local_conn()
 
   z <- factor(c(1:11, NA), levels = c(1:11))
@@ -590,7 +570,6 @@ test_that("meta factor 11 level", {
 
 
 test_that("meta ordered different types", {
-
   conn <- local_conn()
 
   z <- ordered(c("x", "y", NA), levels = c("y", "x"))
@@ -624,7 +603,6 @@ test_that("meta ordered different types", {
 })
 
 test_that("meta factor without meta then meta errors", {
-
   conn <- local_conn()
 
   z <- factor(c("x", "y", NA), levels = c("y", "x"))
@@ -666,7 +644,6 @@ test_that("meta factor without meta then meta errors", {
 })
 
 test_that("meta factor rearrange levels", {
-
   conn <- local_conn()
 
   z <- factor(c("x", "y", NA), levels = c("y", "x"))
@@ -705,7 +682,6 @@ test_that("meta factor rearrange levels", {
 })
 
 test_that("meta factor add levels", {
-
   conn <- local_conn()
 
   z <- factor(c("x", "y", NA), levels = c("y", "x"))
@@ -746,7 +722,6 @@ test_that("meta factor add levels", {
 })
 
 test_that("meta ordered add and rearrange levels", {
-
   conn <- local_conn()
 
   z <- ordered(c("x", "y", NA), levels = c("y", "x"))
@@ -809,7 +784,6 @@ test_that("read_meta_levels", {
 })
 
 test_that("meta TRUE then FALSE then read with TRUE", {
-
   conn <- local_conn()
 
   local <- data.frame(fac = factor(c("this", "that", NA)))
@@ -853,7 +827,6 @@ test_that("meta TRUE then FALSE then read with TRUE", {
 })
 
 test_that("meta strips trailing spaces proj", {
-
   conn <- local_conn()
 
   local <- data.frame(
@@ -874,8 +847,10 @@ test_that("meta strips trailing spaces proj", {
   expect_identical(colnames(remote), colnames(local))
   expect_identical(nrow(remote), 1L)
   expect_identical(remote$logical, local$logical)
-  expect_equivalent(remote$geometry, local$geometry)
-  
-  expect_identical(rws_read_meta(conn = conn)$MetaMeta[1],
-                    "proj: +proj=longlat +datum=WGS84 +no_defs")
+  expect_equal(remote$geometry, local$geometry, ignore_attr = TRUE)
+
+  expect_identical(
+    rws_read_meta(conn = conn)$MetaMeta[1],
+    "proj: +proj=longlat +datum=WGS84 +no_defs"
+  )
 })

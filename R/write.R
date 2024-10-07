@@ -71,8 +71,7 @@ rws_write <- function(x, exists = TRUE, delete = FALSE,
 #' rws_write(rws_data, x_name = "moredata", exists = FALSE, conn = conn)
 #' rws_list_tables(conn)
 #' rws_disconnect(conn)
-rws_write.data.frame <- function(
-                                 x, exists = TRUE, delete = FALSE, replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
+rws_write.data.frame <- function(x, exists = TRUE, delete = FALSE, replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
                                  x_name = substitute(x), silent = getOption("rws.silent", FALSE),
                                  conn, ...) {
   chk_lgl(exists)

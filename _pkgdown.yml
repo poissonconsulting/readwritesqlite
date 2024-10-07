@@ -1,4 +1,6 @@
-destination: docs
+url: https://poissonconsulting.github.io/readwritesqlite/
+template:
+  bootstrap: 5
 
 reference:
 - title: Connection

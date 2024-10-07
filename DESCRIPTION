@@ -21,7 +21,7 @@ Description: Reads and writes data frames to 'SQLite' databases
     also logs changes to tables and provides more informative error
     messages.
 License: MIT + file LICENSE
-URL: https://github.com/poissonconsulting/readwritesqlite
+URL: https://github.com/poissonconsulting/readwritesqlite, https://poissonconsulting.github.io/readwritesqlite/
 BugReports: 
     https://github.com/poissonconsulting/readwritesqlite/issues
 Depends: 

@@ -74,10 +74,10 @@ rws_describe_meta.data.frame <- function(x, ..., conn) {
     err("Columns 'Table' and 'Column' in data 'x' must be unique.")
   }
 
-  x$Row <- 1:nrow(x)
+  x$Row <- seq_len(nrow(x))
 
   meta <- rws_read_meta(conn)
-  meta$RowMeta <- 1:nrow(meta)
+  meta$RowMeta <- seq_len(nrow(meta))
 
   meta <- merge(meta, x,
     by.x = c("TableMeta", "ColumnMeta"),

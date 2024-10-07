@@ -8,13 +8,12 @@ rws_data <- tibble::tibble(
 )
 
 rws_data_sf <- rws_data
-rws_data_sf$geometry <-  sf::st_sfc(sf::st_point(c(0, 1)),
-                                  sf::st_point(c(1, 0)),
-                                  sf::st_point(c(1, 1)),
-                                  crs = 4326
+rws_data_sf$geometry <- sf::st_sfc(sf::st_point(c(0, 1)),
+  sf::st_point(c(1, 0)),
+  sf::st_point(c(1, 1)),
+  crs = 4326
 )
 rws_data_sf <- sf::st_sf(rws_data_sf)
 
 usethis::use_data(rws_data, overwrite = TRUE)
 usethis::use_data(rws_data_sf, overwrite = TRUE, internal = TRUE)
-

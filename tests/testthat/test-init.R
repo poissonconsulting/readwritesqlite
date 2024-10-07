@@ -1,6 +1,6 @@
 test_that("init makes table", {
   conn <- local_conn()
-  
+
   expect_identical(
     rws_read_init(conn = conn),
     tibble::tibble(
@@ -98,7 +98,7 @@ test_that("init makes table", {
 
 #
 # test_that("sfc data frames stays sfc even if sf written", {
-# 
+#
 #   conn <- local_conn()
 #
 #   local <- rws_data_sf
@@ -121,7 +121,7 @@ test_that("init makes table", {
 # })
 #
 # test_that("sfc data frames stays sf even if sfc written", {
-# 
+#
 #   conn <- local_conn()
 #
 #   local <- rws_data_sf
@@ -147,7 +147,7 @@ test_that("init makes table", {
 # })
 #
 # test_that("sf data frames stays sf even if sfc written", {
-# 
+#
 #   conn <- local_conn()
 #
 #   local <- rws_data_sf
@@ -173,7 +173,7 @@ test_that("init makes table", {
 # })
 #
 # test_that("sf data frames reset if delete = TRUE", {
-# 
+#
 #   conn <- local_conn()
 #
 #   local <- rws_data_sf
