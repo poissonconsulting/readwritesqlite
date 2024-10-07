@@ -93,13 +93,13 @@ data_column_meta <- function(column) {
     return(p("tz:", tz(column)))
   }
   if (is.sfc(column)) {
-    if (!requireNamespace("sf")) err("Package 'sf' must be installed.")
+    rlang::check_installed("sf", reason = "to handle 'sf' objects.")
     proj <- p("proj:", sf::st_crs(column)$proj4string)
     proj <- sub("\\s*$", "", proj)
     return(proj)
   }
   if (is.units(column)) {
-    if (!requireNamespace("units")) err("Package 'units' must be installed.")
+    rlang::check_installed("units")
     return(p("units:", units::deparse_unit(column)))
   }
   if (is.ordered(column)) {
@@ -136,13 +136,13 @@ read_meta_data_column <- function(column, meta) {
     return(as_POSIXct(column, tz = tz))
   }
   if (grepl("^units:", meta)) {
-    if (!requireNamespace("units")) err("Package 'units' must be installed.")
+    rlang::check_installed("units")
     units <- sub("(^units:\\s*)(.*)", "\\2", meta)
     column <- as.double(column)
     return(units::as_units(column, units))
   }
   if (grepl("^proj:", meta)) {
-    if (!requireNamespace("sf")) err("Package 'sf' must be installed.")
+    rlang::check_installed("sf", reason = "to handle 'sf' objects.")
     proj <- sub("(^proj:\\s*)(.*)", "\\2", meta)
     return(sf::st_set_crs(sf::st_as_sfc(column), proj))
   }
@@ -200,7 +200,7 @@ write_meta_data_column <- function(column, column_name, table_name, conn) {
   is_text <- is_table_column_text(column_name, table_name, conn)
 
   if (grepl("^proj:", meta)) {
-    if (!requireNamespace("sf")) err("Package 'sf' must be installed.")
+    rlang::check_installed("sf", reason = "to handle 'sf' objects.")
     if (is_text) {
       return(sf::st_as_text(column))
     }

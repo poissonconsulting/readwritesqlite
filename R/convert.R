@@ -15,8 +15,8 @@ raw_to_character <- function(data) {
 
 sfc_to_blob <- function(data) {
   is_sfc <- vapply(data, is.sfc, TRUE)
-  if (any(is_sfc) && !requireNamespace("sf")) {
-    err("Package 'sf' must be installed.")
+  if (any(is_sfc)) {
+    rlang::check_installed("sf", reason = "to handle 'sf' objects.")
   }
 
   data[is_sfc] <- lapply(data[is_sfc], sf::st_as_binary,
