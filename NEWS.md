@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9003
+
+## Continuous integration
+
+- Ignore errors when removing pkg-config on macOS (#43).
+
+
 # readwritesqlite 0.2.0.9002
 
 ## Continuous integration
