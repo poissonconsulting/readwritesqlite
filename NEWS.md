@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9004
+
+## Continuous integration
+
+- Use larger retry count for lock-threads workflow (#44).
+
+
 # readwritesqlite 0.2.0.9003
 
 ## Continuous integration
