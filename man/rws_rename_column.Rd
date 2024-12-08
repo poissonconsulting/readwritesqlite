@@ -13,7 +13,7 @@ rws_rename_column(table_name, column_name, new_column_name, conn)
 
 \item{new_column_name}{A string of the new name for the column.}
 
-\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
+\item{conn}{A \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a database.}
 }
 \value{
 TRUE

@@ -11,7 +11,7 @@ rws_rename_table(table_name, new_table_name, conn)
 
 \item{new_table_name}{A string of the new name for the table.}
 
-\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
+\item{conn}{A \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a database.}
 }
 \value{
 TRUE

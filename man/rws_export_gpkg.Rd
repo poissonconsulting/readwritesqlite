@@ -7,7 +7,7 @@
 rws_export_gpkg(conn, dir, overwrite = FALSE)
 }
 \arguments{
-\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
+\item{conn}{A \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a database.}
 
 \item{dir}{A string of the path to the directory to save the geopackages in.}
 

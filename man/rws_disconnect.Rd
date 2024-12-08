@@ -11,7 +11,7 @@ rws_disconnect(conn)
 \item{conn}{An \code{RSQLite::SQLiteConnection()}.}
 }
 \description{
-Closes a \linkS4class{SQLiteConnection} to a SQLite database.
+Closes a \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a SQLite database.
 }
 \examples{
 conn <- rws_connect()

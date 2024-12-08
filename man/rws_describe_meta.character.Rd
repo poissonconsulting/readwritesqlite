@@ -15,7 +15,7 @@
 
 \item{...}{Not used.}
 
-\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
+\item{conn}{A \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a database.}
 }
 \value{
 An invisible copy of the updated meta table.
