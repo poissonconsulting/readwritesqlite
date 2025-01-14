@@ -1,6 +1,6 @@
 url: https://poissonconsulting.github.io/readwritesqlite/
 template:
-  bootstrap: 5
+  package: poissontemplate
 
 reference:
 - title: Connection
