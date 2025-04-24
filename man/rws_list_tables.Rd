@@ -7,7 +7,7 @@
 rws_list_tables(conn)
 }
 \arguments{
-\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
+\item{conn}{A \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a database.}
 }
 \value{
 A character vector of table names.

@@ -9,7 +9,7 @@ rws_drop_table(table_name, conn)
 \arguments{
 \item{table_name}{A string of the name of the table.}
 
-\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
+\item{conn}{A \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a database.}
 }
 \value{
 TRUE

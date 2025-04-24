@@ -11,7 +11,7 @@
 
 \item{meta}{A flag specifying whether to preserve meta data.}
 
-\item{conn}{A \linkS4class{SQLiteConnection} to a database.}
+\item{conn}{A \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a database.}
 
 \item{...}{Not used.}
 }
