@@ -1,5 +1,24 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9007
+
+## Chore
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/poissonconsulting/readwritesqlite/actions/runs/14636202234
+
+## Continuous integration
+
+- Explain (#51).
+
+- Add xml2 for covr, print testthat results (#50).
+
+- Fix (#49).
+
+- Sync (#48).
+
+
 # readwritesqlite 0.2.0.9006
 
 ## Continuous integration
