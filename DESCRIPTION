@@ -1,6 +1,6 @@
 Package: readwritesqlite
 Title: Enhanced Reading and Writing for 'SQLite' Databases
-Version: 0.2.0.9007
+Version: 0.2.0.9008
 Authors@R: 
     c(person(given = "Joe",
              family = "Thorley",

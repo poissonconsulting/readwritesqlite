@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9008
+
+## Continuous integration
+
+- Correct installation of xml2 (#52).
+
+
 # readwritesqlite 0.2.0.9007
 
 ## Chore
