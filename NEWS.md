@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9009
+
+## Continuous integration
+
+- Only fail covr builds if token is given (#54).
+
+- Always use `_R_CHECK_FORCE_SUGGESTS_=false` (#53).
+
+
 # readwritesqlite 0.2.0.9008
 
 ## Continuous integration
