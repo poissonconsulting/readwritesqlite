@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9010
+
+## Continuous integration
+
+- Permissions, better tests for missing suggests, lints (#55).
+
+
 # readwritesqlite 0.2.0.9009
 
 ## Continuous integration
