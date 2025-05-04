@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9011
+
+## Continuous integration
+
+- Enhance permissions for workflow (#56).
+
+
 # readwritesqlite 0.2.0.9010
 
 ## Continuous integration
