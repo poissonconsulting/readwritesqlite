@@ -1,4 +1,6 @@
 test_that("sf data frames with single geometry passed back", {
+  skip_if_not_installed("pool")
+
   pool <- pool::dbPool(drv = RSQLite::SQLite(), host = ":memory:")
   conn <- pool::poolCheckout(pool)
   withr::defer(pool::poolReturn(conn))
