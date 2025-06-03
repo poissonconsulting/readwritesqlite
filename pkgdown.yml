@@ -3,7 +3,7 @@ pkgdown: 2.1.3.9000
 pkgdown_sha: f950aed41af49c732ba7884d0806c3641a7b94b3
 articles:
   using-readwritesqlite: using-readwritesqlite.html
-last_built: 2025-06-02T07:01Z
+last_built: 2025-06-03T22:01Z
 urls:
   reference: https://poissonconsulting.github.io/readwritesqlite/reference
   article: https://poissonconsulting.github.io/readwritesqlite/articles
