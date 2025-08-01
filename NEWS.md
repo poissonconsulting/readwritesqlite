@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9013
+
+## Continuous integration
+
+- Format with air, check detritus, better handling of `extra-packages` (#58).
+
+
 # readwritesqlite 0.2.0.9012
 
 ## Testing
