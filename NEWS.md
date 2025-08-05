@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9014
+
+## Continuous integration
+
+- Cleanup and fix macOS (#59).
+
+
 # readwritesqlite 0.2.0.9013
 
 ## Continuous integration
