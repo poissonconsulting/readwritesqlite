@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9016
+
+## Continuous integration
+
+- Use reviewdog for external PRs (#60).
+
+
 # readwritesqlite 0.2.0.9015
 
 ## Chore
