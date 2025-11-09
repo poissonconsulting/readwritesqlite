@@ -1,5 +1,12 @@
 # Changelog
 
+## readwritesqlite 0.2.0.9017
+
+### Continuous integration
+
+- Sync
+  ([\#61](https://github.com/poissonconsulting/readwritesqlite/issues/61)).
+
 ## readwritesqlite 0.2.0.9016
 
 ### Continuous integration
