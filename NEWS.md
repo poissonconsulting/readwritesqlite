@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9018
+
+## Continuous integration
+
+- Use workflows for fledge (#62).
+
+
 # readwritesqlite 0.2.0.9017
 
 ## Continuous integration
