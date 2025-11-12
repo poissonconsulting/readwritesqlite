@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9019
+
+## Continuous integration
+
+- Fix reviewdog and add commenting workflow (#63).
+
+
 # readwritesqlite 0.2.0.9018
 
 ## Continuous integration
