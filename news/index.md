@@ -1,5 +1,12 @@
 # Changelog
 
+## readwritesqlite 0.2.0.9019
+
+### Continuous integration
+
+- Fix reviewdog and add commenting workflow
+  ([\#63](https://github.com/poissonconsulting/readwritesqlite/issues/63)).
+
 ## readwritesqlite 0.2.0.9018
 
 ### Continuous integration

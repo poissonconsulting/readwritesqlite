@@ -18,13 +18,13 @@ Source:
 [`DESCRIPTION`](https://github.com/poissonconsulting/readwritesqlite/blob/main/DESCRIPTION)
 
 Thorley J (2025). *readwritesqlite: Enhanced Reading and Writing for
-'SQLite' Databases*. R package version 0.2.0.9018,
+'SQLite' Databases*. R package version 0.2.0.9019,
 <https://github.com/poissonconsulting/readwritesqlite>.
 
     @Manual{,
       title = {readwritesqlite: Enhanced Reading and Writing for 'SQLite' Databases},
       author = {Joe Thorley},
       year = {2025},
-      note = {R package version 0.2.0.9018},
+      note = {R package version 0.2.0.9019},
       url = {https://github.com/poissonconsulting/readwritesqlite},
     }
