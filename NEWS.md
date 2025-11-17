@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9020
+
+## Continuous integration
+
+- Install binaries from r-universe for dev workflow (#64).
+
+
 # readwritesqlite 0.2.0.9019
 
 ## Continuous integration
