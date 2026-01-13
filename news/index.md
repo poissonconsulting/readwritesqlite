@@ -1,5 +1,12 @@
 # Changelog
 
+## readwritesqlite 0.2.0.9020
+
+### Continuous integration
+
+- Install binaries from r-universe for dev workflow
+  ([\#64](https://github.com/poissonconsulting/readwritesqlite/issues/64)).
+
 ## readwritesqlite 0.2.0.9019
 
 ### Continuous integration
