@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9021
+
+## Continuous integration
+
+- Fix comment (#67).
+
+- Tweaks (#66).
+
+- Test all R versions on branches that start with cran- (#65).
+
+
 # readwritesqlite 0.2.0.9020
 
 ## Continuous integration
