@@ -29,7 +29,7 @@ rws_read(conn)
 rws_disconnect(conn)
 }
 \seealso{
-Other rws_read: 
+Other rws_read:
 \code{\link{rws_describe_meta.data.frame}()},
 \code{\link{rws_read}()},
 \code{\link{rws_read.character}()}

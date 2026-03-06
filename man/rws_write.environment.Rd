@@ -66,7 +66,7 @@ rws_list_tables(conn)
 rws_disconnect(conn)
 }
 \seealso{
-Other rws_write: 
+Other rws_write:
 \code{\link{rws_write}()},
 \code{\link{rws_write.data.frame}()},
 \code{\link{rws_write.list}()}
