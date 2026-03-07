@@ -23,11 +23,11 @@ in-memory database.
 \item{exists}{A flag specifying whether the table(s) must already exist.}
 }
 \value{
-A \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a SQLite database with
+A \link[RSQLite:SQLiteConnection-class]{SQLiteConnection} to a SQLite database with
 foreign key constraints enabled.
 }
 \description{
-Opens a \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a SQLite database with
+Opens a \link[RSQLite:SQLiteConnection-class]{SQLiteConnection} to a SQLite database with
 foreign key constraints enabled.
 }
 \examples{

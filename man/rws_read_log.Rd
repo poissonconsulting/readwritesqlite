@@ -8,7 +8,7 @@
 rws_read_log(conn)
 }
 \arguments{
-\item{conn}{A \link[RSQLite:SQLiteConnection-class]{RSQLite::SQLiteConnection} to a database.}
+\item{conn}{A \link[RSQLite:SQLiteConnection-class]{SQLiteConnection} to a database.}
 }
 \value{
 A data frame of the log table
