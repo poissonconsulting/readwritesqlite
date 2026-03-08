@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9023
+
+## Chore
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/poissonconsulting/readwritesqlite/actions/runs/22789311423
+
+
 # readwritesqlite 0.2.0.9022
 
 ## Chore
