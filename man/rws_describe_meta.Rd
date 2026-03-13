@@ -21,6 +21,6 @@ Add Descriptions to SQL Meta Data Table
 }
 \seealso{
 Other rws_describe_meta:
-\code{\link{rws_describe_meta.character}()}
+\code{\link[=rws_describe_meta.character]{rws_describe_meta.character()}}
 }
 \concept{rws_describe_meta}

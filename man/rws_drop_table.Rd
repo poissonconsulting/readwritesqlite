@@ -33,7 +33,7 @@ rws_disconnect(conn)
 }
 \seealso{
 Other rws_rename:
-\code{\link{rws_rename_column}()},
-\code{\link{rws_rename_table}()}
+\code{\link[=rws_rename_column]{rws_rename_column()}},
+\code{\link[=rws_rename_table]{rws_rename_table()}}
 }
 \concept{rws_rename}

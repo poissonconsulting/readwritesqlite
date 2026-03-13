@@ -60,8 +60,8 @@ rws_disconnect(conn)
 }
 \seealso{
 Other rws_write:
-\code{\link{rws_write.data.frame}()},
-\code{\link{rws_write.environment}()},
-\code{\link{rws_write.list}()}
+\code{\link[=rws_write.data.frame]{rws_write.data.frame()}},
+\code{\link[=rws_write.environment]{rws_write.environment()}},
+\code{\link[=rws_write.list]{rws_write.list()}}
 }
 \concept{rws_write}

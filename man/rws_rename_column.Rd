@@ -31,7 +31,7 @@ rws_disconnect(conn)
 }
 \seealso{
 Other rws_rename:
-\code{\link{rws_drop_table}()},
-\code{\link{rws_rename_table}()}
+\code{\link[=rws_drop_table]{rws_drop_table()}},
+\code{\link[=rws_rename_table]{rws_rename_table()}}
 }
 \concept{rws_rename}

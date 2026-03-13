@@ -34,6 +34,6 @@ rws_disconnect(conn)
 }
 \seealso{
 Other rws_describe_meta:
-\code{\link{rws_describe_meta}()}
+\code{\link[=rws_describe_meta]{rws_describe_meta()}}
 }
 \concept{rws_describe_meta}
