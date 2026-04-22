@@ -12,9 +12,6 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 coverage](https://codecov.io/gh/poissonconsulting/readwritesqlite/graph/badge.svg)](https://app.codecov.io/gh/poissonconsulting/readwritesqlite)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/readwritesqlite)](https://cran.r-project.org/package=readwritesqlite)
-![CRAN Downloads](http://cranlogs.r-pkg.org/badges/readwritesqlite)
 <!-- badges: end -->
 
 # readwritesqlite
