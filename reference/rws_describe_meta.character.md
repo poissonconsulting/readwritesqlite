@@ -30,7 +30,7 @@ rws_describe_meta(x, column, description, ..., conn)
 - conn:
 
   A
-  [RSQLite::SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
+  [SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
   to a database.
 
 ## Value

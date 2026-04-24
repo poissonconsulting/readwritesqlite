@@ -21,7 +21,7 @@ rws_query(query, meta = TRUE, conn)
 - conn:
 
   A
-  [RSQLite::SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
+  [SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
   to a database.
 
 ## Value

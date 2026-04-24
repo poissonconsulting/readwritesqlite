@@ -1,5 +1,45 @@
 # Changelog
 
+## readwritesqlite 0.2.0.9024
+
+### Chore
+
+- Auto-update from GitHub Actions.
+
+  Run:
+  <https://github.com/poissonconsulting/readwritesqlite/actions/runs/23032491497>
+
+## readwritesqlite 0.2.0.9023
+
+### Chore
+
+- Auto-update from GitHub Actions.
+
+  Run:
+  <https://github.com/poissonconsulting/readwritesqlite/actions/runs/22789311423>
+
+## readwritesqlite 0.2.0.9022
+
+### Chore
+
+- Auto-update from GitHub Actions.
+
+  Run:
+  <https://github.com/poissonconsulting/readwritesqlite/actions/runs/22745285849>
+
+## readwritesqlite 0.2.0.9021
+
+### Continuous integration
+
+- Fix comment
+  ([\#67](https://github.com/poissonconsulting/readwritesqlite/issues/67)).
+
+- Tweaks
+  ([\#66](https://github.com/poissonconsulting/readwritesqlite/issues/66)).
+
+- Test all R versions on branches that start with cran-
+  ([\#65](https://github.com/poissonconsulting/readwritesqlite/issues/65)).
+
 ## readwritesqlite 0.2.0.9020
 
 ### Continuous integration

@@ -1,7 +1,7 @@
 # Close SQLite Database Connection
 
 Closes a
-[RSQLite::SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
+[SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
 to a SQLite database.
 
 ## Usage

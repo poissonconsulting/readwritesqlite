@@ -21,7 +21,7 @@ rws_rename_table(table_name, new_table_name, conn)
 - conn:
 
   A
-  [RSQLite::SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
+  [SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
   to a database.
 
 ## Value

@@ -14,7 +14,7 @@ rws_read(x, meta = TRUE, ...)
 - x:
 
   A
-  [RSQLite::SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
+  [SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
   to a database.
 
 - meta:

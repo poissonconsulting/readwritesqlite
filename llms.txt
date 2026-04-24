@@ -88,8 +88,9 @@ library(readwritesqlite)
 
 # for nicer printing of data frames
 library(tibble)
+#> Warning: package 'tibble' was built under R version 4.5.3
 library(sf)
-#> Linking to GEOS 3.12.2, GDAL 3.9.1, PROJ 9.4.1; sf_use_s2() is TRUE
+#> Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
 
 conn <- rws_connect()
 

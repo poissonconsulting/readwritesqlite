@@ -1,7 +1,7 @@
 # Opens SQLite Database Connection
 
 Opens a
-[RSQLite::SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
+[SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
 to a SQLite database with foreign key constraints enabled.
 
 ## Usage
@@ -32,7 +32,7 @@ rws_connect(dbname = ":memory:", exists = NA)
 ## Value
 
 A
-[RSQLite::SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
+[SQLiteConnection](https://rsqlite.r-dbi.org/reference/SQLiteConnection-class.html)
 to a SQLite database with foreign key constraints enabled.
 
 ## See also
