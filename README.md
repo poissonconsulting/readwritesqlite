@@ -11,7 +11,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 [![Codecov test
 coverage](https://codecov.io/gh/poissonconsulting/readwritesqlite/graph/badge.svg)](https://app.codecov.io/gh/poissonconsulting/readwritesqlite)
 [![License:
-MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/license/mit/)
+MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/readwritesqlite)](https://cran.r-project.org/package=readwritesqlite)
 ![CRAN Downloads](http://cranlogs.r-pkg.org/badges/readwritesqlite)
@@ -100,9 +100,8 @@ library(readwritesqlite)
 
 # for nicer printing of data frames
 library(tibble)
-#> Warning: package 'tibble' was built under R version 4.5.3
 library(sf)
-#> Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
+#> Linking to GEOS 3.12.2, GDAL 3.9.1, PROJ 9.4.1; sf_use_s2() is TRUE
 
 conn <- rws_connect()
 
