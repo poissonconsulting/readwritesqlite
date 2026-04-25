@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# readwritesqlite 0.2.0.9025
+
+- Merge pull request #68 from poissonconsulting/rm-cran-badges.
+
+  Remove CRAN badges from README from `md` and `Rmd`
+
+
 # readwritesqlite 0.2.0.9024
 
 ## Chore
