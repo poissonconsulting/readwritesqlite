@@ -68,6 +68,7 @@ interacting with a SQLite database.
 To install the latest release from [CRAN](https://cran.r-project.org)
 
 ``` r
+
 install.packages("readwritesqlite")
 ```
 
@@ -75,6 +76,7 @@ To install the developmental version from
 [GitHub](https://github.com/poissonconsulting/readwritesqlite)
 
 ``` r
+
 # install.packages("remotes")
 remotes::install_github("poissonconsulting/readwritesqlite")
 ```
@@ -84,6 +86,7 @@ remotes::install_github("poissonconsulting/readwritesqlite")
 Key attribute information is preserved for many classes.
 
 ``` r
+
 library(readwritesqlite)
 
 # for nicer printing of data frames
@@ -117,6 +120,7 @@ rws_read_table("rws_data", conn = conn)
 The attribute information is stored in the metadata table
 
 ``` r
+
 rws_read_meta(conn = conn)
 #> # A tibble: 6 × 4
 #>   TableMeta ColumnMeta MetaMeta          DescriptionMeta
@@ -132,6 +136,7 @@ rws_read_meta(conn = conn)
 The user can add descriptions if they wish.
 
 ``` r
+
 rws_describe_meta("rws_data", "posixct", "The time of a visit", conn = conn)
 rws_describe_meta("rws_data", "units", "The site length.", conn = conn)
 rws_read_meta(conn = conn)
@@ -150,6 +155,7 @@ The log provides a record of data changes that have been made using
 readwritesqlite.
 
 ``` r
+
 rws_read_log(conn = conn)
 #> # A tibble: 2 x 5
 #>   DateTimeUTCLog      UserLog TableLog CommandLog NRowLog
@@ -161,6 +167,7 @@ rws_read_log(conn = conn)
 Don’t forget to disconnect when done.
 
 ``` r
+
 rws_disconnect(conn)
 ```
 

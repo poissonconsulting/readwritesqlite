@@ -1,5 +1,22 @@
 # Changelog
 
+## readwritesqlite 0.2.0.9026
+
+### Chore
+
+- Auto-update from GitHub Actions.
+
+  Run:
+  <https://github.com/poissonconsulting/readwritesqlite/actions/runs/25267044076>
+
+## readwritesqlite 0.2.0.9025
+
+- Merge pull request
+  [\#68](https://github.com/poissonconsulting/readwritesqlite/issues/68)
+  from poissonconsulting/rm-cran-badges.
+
+  Remove CRAN badges from README from `md` and `Rmd`
+
 ## readwritesqlite 0.2.0.9024
 
 ### Chore

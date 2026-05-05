@@ -10,6 +10,7 @@ class SQLiteConnection. Below we create one in memory although in
 general the user will want to specify a path.
 
 ``` r
+
 library(readwritesqlite)
 conn <- rws_connect(":memory:")
 ```
@@ -25,6 +26,7 @@ object (an alternative name can be specified using the `x_name`
 argument).
 
 ``` r
+
 rws_write(rws_data, exists = FALSE, conn = conn)
 rws_list_tables(conn)
 #> [1] "rws_data"
@@ -36,6 +38,7 @@ accepts environments means that the user can easily write all the data
 frames in the current environment to a SQLiteConnection.
 
 ``` r
+
 a_table <- rws_data[c("date", "logical")]
 another_table <- rws_data[c("factor", "ordered")]
 not_a_table <- 1
@@ -146,6 +149,7 @@ returns a named list of tibbles. If the connection is the first argument
 then the named list consists of all tables in the data base.
 
 ``` r
+
 tables <- rws_read(conn)
 names(tables)
 #> [1] "a_table"       "another_table" "rws_data"
@@ -163,6 +167,7 @@ The table names can of course be manipulated and
 data frames to the current environment.
 
 ``` r
+
 names(tables) <- toupper(names(tables))
 list2env(tables, environment())
 ```
@@ -171,6 +176,7 @@ If the user wishes to read a single data frame they can use
 [`rws_read_table()`](https://poissonconsulting.github.io/readwritesqlite/reference/rws_read_table.md)
 
 ``` r
+
 rws_read_table("rws_data", conn = conn)
 #> # A tibble: 3 × 6
 #>   logical date       factor ordered posixct             units
@@ -187,6 +193,7 @@ and
 allow the user to read the meta and log tables.
 
 ``` r
+
 rws_read_meta(conn)
 #> # A tibble: 10 × 4
 #>    TableMeta     ColumnMeta MetaMeta          DescriptionMeta
@@ -204,6 +211,7 @@ rws_read_meta(conn)
 ```
 
 ``` r
+
 rws_read_log(conn)
 #> # A tibble: 6 x 5
 #>   DateTimeUTCLog      UserLog TableLog      CommandLog NRowLog
@@ -221,5 +229,6 @@ rws_read_log(conn)
 It’s good practice to close a connection once you have finished with it.
 
 ``` r
+
 rws_disconnect(conn)
 ```
