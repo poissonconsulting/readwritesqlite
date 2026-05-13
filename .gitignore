@@ -14,3 +14,4 @@ docs/
 inst/docs/
 scripts/
 docs
+.ccache/
