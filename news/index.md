@@ -1,5 +1,31 @@
 # Changelog
 
+## readwritesqlite 0.2.0.9029
+
+### Continuous integration
+
+- Only run fledge on pushes to main.
+
+## readwritesqlite 0.2.0.9028
+
+### Continuous integration
+
+- Tweak fledge workflow and ccache action.
+
+## readwritesqlite 0.2.0.9027
+
+### Continuous integration
+
+- Cosmetics.
+
+- Bump action versions.
+
+- Install clang-format-21.
+
+- Align fledge workflow.
+
+- Harmonize.
+
 ## readwritesqlite 0.2.0.9026
 
 ### Chore
