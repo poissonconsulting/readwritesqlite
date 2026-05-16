@@ -1,5 +1,19 @@
 # Changelog
 
+## readwritesqlite 0.2.0.9030
+
+### Chore
+
+- Add ccache to `.gitignore` and `.Rbuildignore`.
+
+### Continuous integration
+
+- Create snapshot update PR against correct branch.
+
+- Add reference to `/apply-patch` workflow in commit message.
+
+- Clarify rationale for not deploying on schedule.
+
 ## readwritesqlite 0.2.0.9029
 
 ### Continuous integration
