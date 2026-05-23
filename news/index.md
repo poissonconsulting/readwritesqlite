@@ -1,5 +1,10 @@
 # Changelog
 
+## readwritesqlite 0.2.0.9031
+
+- Ci: Unify fledge.yaml across cynkratemplate and fledge
+  ([\#86](https://github.com/poissonconsulting/readwritesqlite/issues/86)).
+
 ## readwritesqlite 0.2.0.9030
 
 ### Chore
