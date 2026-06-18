@@ -1,5 +1,10 @@
 # Changelog
 
+## readwritesqlite 0.2.0.9033
+
+- Add fledge-bump workflow
+- Add fledge-tag-on-merge workflow
+
 ## readwritesqlite 0.2.0.9032
 
 ### Continuous integration
