@@ -1,3 +1,11 @@
+<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+
+# readwritesqlite 0.2.0.9033
+
+* Add fledge-bump workflow
+* Add fledge-tag-on-merge workflow
+
+
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
 # readwritesqlite 0.2.0.9032
