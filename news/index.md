@@ -1,5 +1,9 @@
 # Changelog
 
+## readwritesqlite 0.2.0.9035
+
+- Same as previous version.
+
 ## readwritesqlite 0.2.0.9034
 
 - Same as previous version.
