@@ -10,7 +10,7 @@ jobs:
   R-CMD-check:
     uses: poissonconsulting/.github/.github/workflows/R-CMD-check.yaml@v1
     with:
-      tier: cran
+      tier: unimportant
       jags: false
       tex: false
       private: false
