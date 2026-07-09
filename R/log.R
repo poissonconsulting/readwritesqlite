@@ -1,5 +1,8 @@
 log_schema <- function() {
-  p("CREATE TABLE", .log_table_name, "(
+  p(
+    "CREATE TABLE",
+    .log_table_name,
+    "(
   DateTimeUTCLog TEXT NOT NULL,
   UserLog TEXT NOT NULL,
   TableLog TEXT NOT NULL,
@@ -9,7 +12,8 @@ log_schema <- function() {
     DATETIME(DateTimeUTCLog) IS DateTimeUTCLog AND
     CommandLog IN ('CREATE', 'UPDATE', 'DELETE', 'INSERT', 'DROP') AND
     NRowLog >= 0
-));")
+));"
+  )
 }
 
 confirm_log_table <- function(conn) {

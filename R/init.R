@@ -1,19 +1,24 @@
 init_schema <- function() {
-  p("CREATE TABLE", .init_table_name, "(
+  p(
+    "CREATE TABLE",
+    .init_table_name,
+    "(
   TableInit TEXT NOT NULL PRIMARY KEY,
   IsInit INTEGER NOT NULL,
   SFInit TEXT,
   CHECK(
     (IsInit >= 0 AND IsInit <= 1) AND
     (SFInit IS NULL OR IsInit == 1)
-));")
+));"
+  )
 }
 
 make_init_data <- function(conn) {
   table_names <- rws_list_tables(conn)
   if (!length(table_names)) {
     return(data.frame(
-      TableInit = character(0), IsInit = integer(0),
+      TableInit = character(0),
+      IsInit = integer(0),
       SFInit = character(0),
       stringsAsFactors = FALSE
     ))
@@ -21,8 +26,10 @@ make_init_data <- function(conn) {
   is_init <- lapply(table_names, nrows_table, conn = conn)
   is_init <- as.integer(is_init > 0)
   init_data <- data.frame(
-    TableInit = to_upper(table_names), IsInit = is_init,
-    SFInit = NA_character_, stringsAsFactors = FALSE
+    TableInit = to_upper(table_names),
+    IsInit = is_init,
+    SFInit = NA_character_,
+    stringsAsFactors = FALSE
   )
   init_data
 }
@@ -122,13 +129,17 @@ write_init_data <- function(table_name, sf_column_name, conn) {
 read_init_data <- function(data, table_name, conn) {
   confirm_init_table(conn)
   init_table <- read_data(.init_table_name, meta = FALSE, conn = conn)
-  sf_column_name <- init_table$SFInit[init_table$TableInit == to_upper(table_name)]
+  sf_column_name <- init_table$SFInit[
+    init_table$TableInit == to_upper(table_name)
+  ]
   if (is.na(sf_column_name)) {
     return(data)
   }
   sf_column_name <- names(data)[to_upper(names(data)) == sf_column_name]
-  st_sf(data,
-    sf_column_name = sf_column_name, stringsAsFactors = FALSE,
+  st_sf(
+    data,
+    sf_column_name = sf_column_name,
+    stringsAsFactors = FALSE,
     sfc_last = FALSE
   )
 }

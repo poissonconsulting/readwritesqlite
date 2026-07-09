@@ -45,7 +45,10 @@ test_that("rws_write.data.frame errors if exists = FALSE and already exists", {
 
   local <- data.frame(x = 1:3, select = 1:3)
   DBI::dbCreateTable(conn, "local", local)
-  expect_error(rws_write(local, exists = FALSE, conn = conn), "^Table 'local' already exists[.]$")
+  expect_error(
+    rws_write(local, exists = FALSE, conn = conn),
+    "^Table 'local' already exists[.]$"
+  )
 })
 
 test_that("rws_write.data.frame creates table", {
@@ -86,7 +89,10 @@ test_that("rws_write.data.frame deals with \" quoted table names", {
   expect_identical(rws_list_tables(conn), sort(c("\"local\"", "local")))
 
   expect_identical(rws_write(local, conn = conn), "local")
-  expect_identical(rws_write(locals, x_name = "\"local\"", conn = conn), "\"local\"")
+  expect_identical(
+    rws_write(locals, x_name = "\"local\"", conn = conn),
+    "\"local\""
+  )
   remotes <- DBI::dbReadTable(conn, "\"local\"")
   expect_identical(remotes, locals)
 })
@@ -101,7 +107,10 @@ test_that("rws_write.data.frame deals with [ quoted table names", {
   expect_identical(rws_list_tables(conn), sort(c("[local]", "local")))
 
   expect_identical(rws_write(local, conn = conn), "local")
-  expect_identical(rws_write(locals, x_name = "[local]", conn = conn), "[local]")
+  expect_identical(
+    rws_write(locals, x_name = "[local]", conn = conn),
+    "[local]"
+  )
   remotes <- as.data.frame(rws_read_table("[local]", conn = conn))
   expect_identical(remotes, locals)
 })
@@ -116,7 +125,10 @@ test_that("rws_write.data.frame deals with backtick quoted table names", {
   expect_identical(rws_list_tables(conn), sort(c("`local`", "local")))
 
   expect_identical(rws_write(local, conn = conn), "local")
-  expect_identical(rws_write(locals, x_name = "`local`", conn = conn), "`local`")
+  expect_identical(
+    rws_write(locals, x_name = "`local`", conn = conn),
+    "`local`"
+  )
   remotes <- DBI::dbReadTable(conn, "`local`")
   expect_identical(remotes, locals)
 })
@@ -127,7 +139,10 @@ test_that("rws_write.data.frame corrects column order", {
   local <- data.frame(x = 4:6, select = 1:3)
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
-  expect_identical(rws_write(local[2:1], x_name = "local", conn = conn), "local")
+  expect_identical(
+    rws_write(local[2:1], x_name = "local", conn = conn),
+    "local"
+  )
   expect_error(
     rws_write(local[c(1, 1, 2)], x_name = "local", conn = conn),
     "^The following column in data 'local' is unrecognised: 'x.1'[.]$"
@@ -170,7 +185,11 @@ test_that("rws_write.data.frame is case insensitive", {
 test_that("rws_write.data.frame deals with quoted column names", {
   conn <- local_conn()
 
-  local <- tibble::tibble(x = factor(1:3), `[x]` = factor(2:4), `"x"` = factor(3:5))
+  local <- tibble::tibble(
+    x = factor(1:3),
+    `[x]` = factor(2:4),
+    `"x"` = factor(3:5)
+  )
   expect_identical(rws_write(local, conn = conn, exists = FALSE), "local")
 
   meta <- rws_read_meta(conn)
@@ -215,7 +234,10 @@ test_that("rws_write.list errors with none data frames", {
   conn <- local_conn()
 
   y <- list(x = 1)
-  expect_error(rws_write(y, conn = conn), "^List `y` includes objects which are not data frames[.]$")
+  expect_error(
+    rws_write(y, conn = conn),
+    "^List `y` includes objects which are not data frames[.]$"
+  )
 })
 
 test_that("rws_write.environment issues warning with no data frames", {
@@ -223,14 +245,19 @@ test_that("rws_write.environment issues warning with no data frames", {
 
   y <- new.env()
   assign("x", 1, envir = y)
-  expect_warning(rws_write(y, conn = conn), "^Environment 'y' has no data frames[.]$")
+  expect_warning(
+    rws_write(y, conn = conn),
+    "^Environment 'y' has no data frames[.]$"
+  )
 })
 
 test_that("rws_write.list requires named list", {
   conn <- local_conn()
 
   y <- list(data.frame(x = 1:3))
-  expect_error(rws_write(y, conn = conn), "^`x` must be named[.]$",
+  expect_error(
+    rws_write(y, conn = conn),
+    "^`x` must be named[.]$",
     class = "chk_error"
   )
 })
@@ -266,7 +293,10 @@ test_that("rws_write writes list with 2 identically named data frames", {
   y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
 
   DBI::dbCreateTable(conn, "LOCAL", y$local)
-  expect_identical(rws_write(y, conn = conn, unique = FALSE), c("local", "LOCAL"))
+  expect_identical(
+    rws_write(y, conn = conn, unique = FALSE),
+    c("local", "LOCAL")
+  )
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, rbind(y$local, y$LOCAL))
 })
@@ -318,7 +348,10 @@ test_that("rws_write writes environment", {
   local <- data.frame(x = 1:3)
   z <- 1
 
-  expect_identical(rws_write(environment(), conn = conn, exists = FALSE), "local")
+  expect_identical(
+    rws_write(environment(), conn = conn, exists = FALSE),
+    "local"
+  )
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, local)
 })
@@ -328,10 +361,24 @@ test_that("rws_write not commits", {
 
   y <- list(local = data.frame(x = 1:3), LOCAL = data.frame(x = 1:4))
 
-  expect_identical(rws_write(y, exists = NA, commit = FALSE, unique = FALSE, conn = conn), c("local", "LOCAL"))
+  expect_identical(
+    rws_write(y, exists = NA, commit = FALSE, unique = FALSE, conn = conn),
+    c("local", "LOCAL")
+  )
   expect_identical(DBI::dbListTables(conn), character(0))
-  expect_identical(rws_write(y, exists = NA, commit = TRUE, unique = FALSE, conn = conn), c("local", "LOCAL"))
-  expect_identical(DBI::dbListTables(conn), c("local", "readwritesqlite_init", "readwritesqlite_log", "readwritesqlite_meta"))
+  expect_identical(
+    rws_write(y, exists = NA, commit = TRUE, unique = FALSE, conn = conn),
+    c("local", "LOCAL")
+  )
+  expect_identical(
+    DBI::dbListTables(conn),
+    c(
+      "local",
+      "readwritesqlite_init",
+      "readwritesqlite_log",
+      "readwritesqlite_meta"
+    )
+  )
   remote <- DBI::dbReadTable(conn, "local")
   expect_identical(remote, rbind(y$local, y$LOCAL))
 })
@@ -339,24 +386,36 @@ test_that("rws_write not commits", {
 test_that("replace rows PRIMARY KEY constraints", {
   conn <- local_conn()
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
                   x INTEGER PRIMARY KEY NOT NULL,
-                  y INTEGER)")
+                  y INTEGER)"
+  )
 
   local <- data.frame(x = 1:3, y = 2:4)
   expect_identical(rws_write(local, conn = conn), "local")
   local$x <- c(1:2, 4L)
   local$y <- local$y + 10L
-  expect_error(rws_write(local, conn = conn), "UNIQUE constraint failed: local.x")
+  expect_error(
+    rws_write(local, conn = conn),
+    "UNIQUE constraint failed: local.x"
+  )
   expect_identical(rws_write(local, replace = TRUE, conn = conn), "local")
   remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::tibble(x = 1:4, y = c(12L, 13L, 4L, 14L)))
   expect_identical(rws_write(local, replace = TRUE, conn = conn), "local")
   remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::tibble(x = 1:4, y = c(12L, 13L, 4L, 14L)))
-  expect_error(rws_write(local, conn = conn), "UNIQUE constraint failed: local.x")
+  expect_error(
+    rws_write(local, conn = conn),
+    "UNIQUE constraint failed: local.x"
+  )
 
-  expect_identical(rws_write(local, delete = TRUE, replace = TRUE, conn = conn), "local")
+  expect_identical(
+    rws_write(local, delete = TRUE, replace = TRUE, conn = conn),
+    "local"
+  )
   remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote$x[1] <- 5L
@@ -365,22 +424,33 @@ test_that("replace rows PRIMARY KEY constraints", {
   expect_identical(remote, tibble::as_tibble(local))
   expect_identical(
     sort(DBI::dbListTables(conn)),
-    c("local", "readwritesqlite_init", "readwritesqlite_log", "readwritesqlite_meta")
+    c(
+      "local",
+      "readwritesqlite_init",
+      "readwritesqlite_log",
+      "readwritesqlite_meta"
+    )
   )
 })
 
 test_that("replace rows UNIQUE constraints in unique key", {
   conn <- local_conn()
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
                   x INTEGER UNIQUE NOT NULL,
-                  y INTEGER)")
+                  y INTEGER)"
+  )
 
   local <- data.frame(x = 1:3, y = 2:4)
   expect_identical(rws_write(local, conn = conn), "local")
   local$x <- c(1:2, 4L)
   local$y <- local$y + 10L
-  expect_error(rws_write(local, conn = conn), "UNIQUE constraint failed: local.x")
+  expect_error(
+    rws_write(local, conn = conn),
+    "UNIQUE constraint failed: local.x"
+  )
   expect_identical(rws_write(local, replace = TRUE, conn = conn), "local")
   remote <- rws_read_table("local", conn = conn)
   expect_identical(sort(remote$x), 1:4)
@@ -389,9 +459,15 @@ test_that("replace rows UNIQUE constraints in unique key", {
   remote <- rws_read_table("local", conn = conn)
   expect_identical(sort(remote$x), 1:4)
   expect_identical(sort(remote$y), c(4L, 12L, 13L, 14L))
-  expect_error(rws_write(local, conn = conn), "UNIQUE constraint failed: local.x")
+  expect_error(
+    rws_write(local, conn = conn),
+    "UNIQUE constraint failed: local.x"
+  )
 
-  expect_identical(rws_write(local, delete = TRUE, replace = TRUE, conn = conn), "local")
+  expect_identical(
+    rws_write(local, delete = TRUE, replace = TRUE, conn = conn),
+    "local"
+  )
   remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, tibble::as_tibble(local))
   remote$x[1] <- 5L
@@ -403,13 +479,19 @@ test_that("replace rows UNIQUE constraints in unique key", {
 test_that("replace rows with FOREIGN key", {
   conn <- local_conn()
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
-                  x INTEGER PRIMARY KEY NOT NULL)")
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)"
+  )
 
-  DBI::dbExecute(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local2 (
                   x INTEGER NOT NULL PRIMARY KEY,
                   y INTEGER NOT NULL,
-                FOREIGN KEY (x) REFERENCES local (x))")
+                FOREIGN KEY (x) REFERENCES local (x))"
+  )
 
   local <- data.frame(x = 1:4)
   expect_identical(rws_write(local, conn = conn), "local")
@@ -418,19 +500,28 @@ test_that("replace rows with FOREIGN key", {
   local2$y <- local2$x + 10L
   expect_identical(rws_write(local2, conn = conn), "local2")
 
-  expect_error(rws_write(local2, conn = conn), "UNIQUE constraint failed: local2.x")
+  expect_error(
+    rws_write(local2, conn = conn),
+    "UNIQUE constraint failed: local2.x"
+  )
   rws_write(local2, conn = conn, replace = TRUE)
 })
 
 test_that("foreign keys switched on one data frame at a time", {
   conn <- local_conn()
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
-                  x INTEGER PRIMARY KEY NOT NULL)")
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)"
+  )
 
-  DBI::dbExecute(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local2 (
                   x INTEGER NOT NULL,
-                FOREIGN KEY (x) REFERENCES local (x))")
+                FOREIGN KEY (x) REFERENCES local (x))"
+  )
 
   y <- list(local = data.frame(x = 1:4), local2 = data.frame(x = 1:3))
 
@@ -440,18 +531,27 @@ test_that("foreign keys switched on one data frame at a time", {
   )
 
   expect_identical(rws_write(y$local, x_name = "local", conn = conn), "local")
-  expect_identical(rws_write(y$local2, x_name = "local2", conn = conn), "local2")
+  expect_identical(
+    rws_write(y$local2, x_name = "local2", conn = conn),
+    "local2"
+  )
 })
 
 test_that("foreign keys switched off for two data frame", {
   conn <- local_conn()
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
-                  x INTEGER PRIMARY KEY NOT NULL)")
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)"
+  )
 
-  DBI::dbExecute(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local2 (
                   x INTEGER NOT NULL,
-                FOREIGN KEY (x) REFERENCES local (x))")
+                FOREIGN KEY (x) REFERENCES local (x))"
+  )
 
   expect_false(foreign_keys(TRUE, conn))
   y <- list(local2 = data.frame(x = 1:3), local = data.frame(x = 1:4))
@@ -462,12 +562,18 @@ test_that("foreign keys switched off for two data frame", {
 test_that("foreign keys pick up foreign key violation for two data frames", {
   conn <- local_conn()
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
-                  x INTEGER PRIMARY KEY NOT NULL)")
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)"
+  )
 
-  DBI::dbExecute(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local2 (
                   x INTEGER NOT NULL,
-                FOREIGN KEY (x) REFERENCES local (x))")
+                FOREIGN KEY (x) REFERENCES local (x))"
+  )
 
   expect_false(foreign_keys(FALSE, conn))
   expect_false(defer_foreign_keys(TRUE, conn))
@@ -517,11 +623,15 @@ test_that("sf data frames with single geometry passed back", {
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
-  expect_identical(init, data.frame(
-    TableInit = "LOCAL",
-    IsInit = 1L, SFInit = "GEOMETRY",
-    stringsAsFactors = FALSE
-  ))
+  expect_identical(
+    init,
+    data.frame(
+      TableInit = "LOCAL",
+      IsInit = 1L,
+      SFInit = "GEOMETRY",
+      stringsAsFactors = FALSE
+    )
+  )
   remote <- rws_read_table("local", conn = conn)
   expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
   expect_identical(colnames(remote), colnames(local))
@@ -548,10 +658,15 @@ test_that("sf data frames with two geometries and correct one passed back", {
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
-  expect_identical(init, data.frame(
-    TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
-    stringsAsFactors = FALSE
-  ))
+  expect_identical(
+    init,
+    data.frame(
+      TableInit = "LOCAL",
+      IsInit = 1L,
+      SFInit = "SECOND",
+      stringsAsFactors = FALSE
+    )
+  )
   remote <- rws_read_table("local", conn = conn)
 
   expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
@@ -574,10 +689,15 @@ test_that("sf can change sf_column", {
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
-  expect_identical(init, data.frame(
-    TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
-    stringsAsFactors = FALSE
-  ))
+  expect_identical(
+    init,
+    data.frame(
+      TableInit = "LOCAL",
+      IsInit = 1L,
+      SFInit = "SECOND",
+      stringsAsFactors = FALSE
+    )
+  )
   remote <- rws_read_table("local", conn = conn)
   expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
   expect_identical(colnames(remote), colnames(local))
@@ -596,10 +716,15 @@ test_that("sf data frames with two geometries and lots of other stuff and correc
 
   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
-  expect_identical(init, data.frame(
-    TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
-    stringsAsFactors = FALSE
-  ))
+  expect_identical(
+    init,
+    data.frame(
+      TableInit = "LOCAL",
+      IsInit = 1L,
+      SFInit = "SECOND",
+      stringsAsFactors = FALSE
+    )
+  )
   remote <- rws_read_table("local", conn = conn)
   expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
   expect_identical(colnames(remote), colnames(local))
@@ -625,10 +750,15 @@ test_that("initialized even with no rows of data", {
 
   expect_identical(rws_write(local, exists = NA, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
-  expect_identical(init, data.frame(
-    TableInit = "LOCAL", IsInit = 1L, SFInit = "SECOND",
-    stringsAsFactors = FALSE
-  ))
+  expect_identical(
+    init,
+    data.frame(
+      TableInit = "LOCAL",
+      IsInit = 1L,
+      SFInit = "SECOND",
+      stringsAsFactors = FALSE
+    )
+  )
   remote <- rws_read_table("local", conn = conn)
 
   expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
@@ -694,7 +824,10 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
     "^Column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data[.]$"
   )
 
-  expect_identical(rws_write(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
+  expect_identical(
+    rws_write(local2, delete = TRUE, conn = conn, x_name = "local"),
+    "local"
+  )
 
   remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, local2)
@@ -721,7 +854,10 @@ test_that("initialized with no rows of data and no metadata and not overwritten 
     "^Column 'date' in table 'local' has 'class: Date' meta data for the input data but 'No' for the existing data[.]$"
   )
 
-  expect_identical(rws_write(local2, delete = TRUE, conn = conn, x_name = "local"), "local")
+  expect_identical(
+    rws_write(local2, delete = TRUE, conn = conn, x_name = "local"),
+    "local"
+  )
 
   remote <- rws_read_table("local", conn = conn)
   expect_identical(remote, local2)
@@ -749,7 +885,10 @@ test_that("meta then inconsistent data then error meta but delete reset", {
     rws_write(local2, conn = conn, x_name = "local"),
     "^Column 'logical' in table 'local' has 'No' meta data for the input data but 'class: logical' for the existing data[.]$"
   )
-  expect_identical(rws_write(local2, conn = conn, meta = FALSE, x_name = "local"), "local")
+  expect_identical(
+    rws_write(local2, conn = conn, meta = FALSE, x_name = "local"),
+    "local"
+  )
 
   expect_warning(
     {
@@ -771,16 +910,25 @@ test_that("meta then inconsistent data then error meta but delete reset", {
     "Column `units`: mixed type, first seen values of type real, coercing other values of type string"
   )
 
-  expect_identical(remote, tibble::tibble(
-    logical = c(TRUE, FALSE, NA, FALSE),
-    date = as.Date(c("2000-01-01", "2001-02-03", NA, "1970-01-01")),
-    factor = factor(c("x", "y", NA, NA), levels = c("x", "y")),
-    ordered = ordered(c("x", "y", NA, NA), levels = c("y", "x")),
-    posixct = as.POSIXct(c("2001-01-02 03:04:05", "2006-07-08 09:10:11", NA, "1969-12-31 16:00:00"),
-      tz = "Etc/GMT+8"
-    ),
-    units = units::as_units(c(10, 11.5, NA, 0), "m")
-  ))
+  expect_identical(
+    remote,
+    tibble::tibble(
+      logical = c(TRUE, FALSE, NA, FALSE),
+      date = as.Date(c("2000-01-01", "2001-02-03", NA, "1970-01-01")),
+      factor = factor(c("x", "y", NA, NA), levels = c("x", "y")),
+      ordered = ordered(c("x", "y", NA, NA), levels = c("y", "x")),
+      posixct = as.POSIXct(
+        c(
+          "2001-01-02 03:04:05",
+          "2006-07-08 09:10:11",
+          NA,
+          "1969-12-31 16:00:00"
+        ),
+        tz = "Etc/GMT+8"
+      ),
+      units = units::as_units(c(10, 11.5, NA, 0), "m")
+    )
+  )
 
   expect_warning(
     {
@@ -802,14 +950,17 @@ test_that("meta then inconsistent data then error meta but delete reset", {
     "Column `units`: mixed type, first seen values of type real, coercing other values of type string"
   )
 
-  expect_identical(remote2, tibble::tibble(
-    logical = c(1L, 0L, NA, 0L),
-    date = c(10957, 11356, NA, 0),
-    factor = c("x", "y", NA, "garbage"),
-    ordered = c("x", "y", NA, "garbage"),
-    posixct = c(978433445, 1152378611, NA, 0),
-    units = c(10, 11.5, NA, 0)
-  ))
+  expect_identical(
+    remote2,
+    tibble::tibble(
+      logical = c(1L, 0L, NA, 0L),
+      date = c(10957, 11356, NA, 0),
+      factor = c("x", "y", NA, "garbage"),
+      ordered = c("x", "y", NA, "garbage"),
+      posixct = c(978433445, 1152378611, NA, 0),
+      units = c(10, 11.5, NA, 0)
+    )
+  )
 
   expect_identical(rws_write(local, delete = TRUE, conn = conn), "local")
   remote <- rws_read_table("local", conn = conn)

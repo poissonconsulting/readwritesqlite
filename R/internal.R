@@ -1,10 +1,14 @@
-st_sf <- function(data, sf_column_name = NULL,
-                  stringsAsFactors = FALSE, sfc_last = TRUE) {
+st_sf <- function(
+  data,
+  sf_column_name = NULL,
+  stringsAsFactors = FALSE,
+  sfc_last = TRUE
+) {
   rlang::check_installed("sf", reason = "to handle 'sf' objects.")
   sf::st_sf(
     data,
     sf_column_name = sf_column_name,
-    stringsAsFactors = stringsAsFactors, 
+    stringsAsFactors = stringsAsFactors,
     sfc_last = sfc_last
   )
 }
@@ -12,9 +16,7 @@ st_sf <- function(data, sf_column_name = NULL,
 as_Date <- function(x) as.Date(x, origin = as.Date("1970-01-01"))
 
 as_POSIXct <- function(x, tz) {
-  as.POSIXct(x, tz = tz, origin = as.POSIXct("1970-01-01",
-    tz = "GMT"
-  ))
+  as.POSIXct(x, tz = tz, origin = as.POSIXct("1970-01-01", tz = "GMT"))
 }
 
 is.Date <- function(x) inherits(x, "Date")

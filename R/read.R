@@ -32,10 +32,16 @@ rws_read <- function(x, ...) {
 #' )
 #' rws_read(c("rws_data", "data2"), conn = conn)
 #' rws_disconnect(conn)
-rws_read.character <- function(x, meta = TRUE, conn,
-                               ...) {
+rws_read.character <- function(x, meta = TRUE, conn, ...) {
   chk_sqlite_conn(conn, connected = TRUE)
-  check_table_names(x, exists = TRUE, delete = FALSE, all = FALSE, unique = TRUE, conn = conn)
+  check_table_names(
+    x,
+    exists = TRUE,
+    delete = FALSE,
+    all = FALSE,
+    unique = TRUE,
+    conn = conn
+  )
   chk_unused(...)
 
   datas <- lapply(x, read_sqlite_data, meta = meta, conn = conn)

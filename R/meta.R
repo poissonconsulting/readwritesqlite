@@ -1,18 +1,23 @@
 meta_schema <- function() {
-  p("CREATE TABLE", .meta_table_name, "(
+  p(
+    "CREATE TABLE",
+    .meta_table_name,
+    "(
   TableMeta TEXT NOT NULL,
   ColumnMeta TEXT NOT NULL,
   MetaMeta TEXT,
   DescriptionMeta TEXT,
   PRIMARY KEY(TableMeta, ColumnMeta)
-);")
+);"
+  )
 }
 
 make_meta_data <- function(conn) {
   table_names <- rws_list_tables(conn)
   if (!length(table_names)) {
     return(data.frame(
-      TableMeta = character(0), ColumnMeta = character(0),
+      TableMeta = character(0),
+      ColumnMeta = character(0),
       stringsAsFactors = FALSE
     ))
   }
@@ -21,7 +26,8 @@ make_meta_data <- function(conn) {
     function(x, y) {
       data.frame(TableMeta = y, ColumnMeta = x, stringsAsFactors = FALSE)
     },
-    meta_data, table_names,
+    meta_data,
+    table_names,
     SIMPLIFY = FALSE
   )
   meta_data$stringsAsFactors <- FALSE
@@ -52,7 +58,9 @@ confirm_meta_table <- function(conn) {
   }
   meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
   meta_data <- make_meta_data(conn)
-  meta_data <- merge(meta_data, meta_table,
+  meta_data <- merge(
+    meta_data,
+    meta_table,
     all.x = TRUE,
     by = c("TableMeta", "ColumnMeta")
   )
@@ -185,10 +193,11 @@ write_meta_data_column <- function(column, column_name, table_name, conn) {
   table_name <- to_upper(table_name)
 
   meta_table <- read_data(.meta_table_name, meta = FALSE, conn = conn)
-  meta_table$MetaMeta[meta_table$TableMeta == table_name &
-    meta_table$ColumnMeta == column_name] <- meta
+  meta_table$MetaMeta[
+    meta_table$TableMeta == table_name &
+      meta_table$ColumnMeta == column_name
+  ] <- meta
   replace_meta_table(meta_table, conn = conn)
-
 
   if (grepl("^units:", meta)) {
     return(as.double(column))
@@ -243,7 +252,9 @@ validate_data_meta <- function(data, table_name, conn) {
   meta <- meta_table_meta(table_name, conn)[to_upper(names(data_meta))]
 
   data_meta[is.na(data_meta)] <- "No"
-  if (is_initialized(table_name, conn)) meta[is.na(meta)] <- "No"
+  if (is_initialized(table_name, conn)) {
+    meta[is.na(meta)] <- "No"
+  }
 
   mismatch <- which(!is.na(meta) & data_meta != meta)
   for (wch in mismatch) {
@@ -253,9 +264,16 @@ validate_data_meta <- function(data, table_name, conn) {
       column_name <- names(dmeta)
 
       err(
-        "Column '", column_name, "' in table '", table_name,
-        "' has '", dmeta, "' meta data for the input data",
-        " but '", mmeta, "' for the existing data."
+        "Column '",
+        column_name,
+        "' in table '",
+        table_name,
+        "' has '",
+        dmeta,
+        "' meta data for the input data",
+        " but '",
+        mmeta,
+        "' for the existing data."
       )
     }
   }
@@ -273,8 +291,11 @@ write_meta_data <- function(data, table_name, conn) {
 
   data[column_names] <-
     mapply(
-      FUN = write_meta_data_column, data[column_names], column_names,
-      MoreArgs = list(table_name = table_name, conn = conn), SIMPLIFY = FALSE
+      FUN = write_meta_data_column,
+      data[column_names],
+      column_names,
+      MoreArgs = list(table_name = table_name, conn = conn),
+      SIMPLIFY = FALSE
     )
   data
 }
@@ -292,8 +313,10 @@ read_meta_data <- function(data, table_name, conn) {
   }
 
   data[names(meta)] <- mapply(
-    FUN = read_meta_data_column, data[names(meta)],
-    meta, SIMPLIFY = FALSE
+    FUN = read_meta_data_column,
+    data[names(meta)],
+    meta,
+    SIMPLIFY = FALSE
   )
   data
 }
@@ -313,8 +336,10 @@ read_meta_data_data <- function(data, meta) {
   }
 
   data[names(meta)] <- mapply(
-    FUN = read_meta_data_column, data[names(meta)],
-    meta, SIMPLIFY = FALSE
+    FUN = read_meta_data_column,
+    data[names(meta)],
+    meta,
+    SIMPLIFY = FALSE
   )
   data
 }
@@ -328,7 +353,9 @@ unambigous_meta_meta <- function(table_names, conn) {
   names(meta) <- meta_table$ColumnMeta
 
   duplicates <- unique(names(meta)[duplicated(names(meta))])
-  if (length(duplicates)) meta <- meta[!names(meta) %in% duplicates]
+  if (length(duplicates)) {
+    meta <- meta[!names(meta) %in% duplicates]
+  }
   meta
 }
 

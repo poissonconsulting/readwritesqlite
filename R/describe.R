@@ -38,10 +38,15 @@ rws_describe_meta.character <- function(x, column, description, ..., conn) {
   chk_sqlite_conn(conn, connected = TRUE)
   chk_unused(...)
 
-  rws_describe_meta(data.frame(
-    Table = x, Column = column, Description = description,
-    stringsAsFactors = FALSE
-  ), conn = conn)
+  rws_describe_meta(
+    data.frame(
+      Table = x,
+      Column = column,
+      Description = description,
+      stringsAsFactors = FALSE
+    ),
+    conn = conn
+  )
 }
 
 #' Add Data Frame of Descriptions to SQL Meta Data Table
@@ -79,9 +84,12 @@ rws_describe_meta.data.frame <- function(x, ..., conn) {
   meta <- rws_read_meta(conn)
   meta$RowMeta <- seq_len(nrow(meta))
 
-  meta <- merge(meta, x,
+  meta <- merge(
+    meta,
+    x,
     by.x = c("TableMeta", "ColumnMeta"),
-    by.y = c("Table", "Column"), all = TRUE
+    by.y = c("Table", "Column"),
+    all = TRUE
   )
 
   if (any(is.na(meta$RowMeta))) {

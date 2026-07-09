@@ -24,11 +24,23 @@ check_column_name <- function(table_name, column_name, exists, conn) {
   column_exists <- column_name %in% column_names(table_name, conn)
 
   if (vld_true(exists) && !column_exists) {
-    err("Column '", column_name, "' does not exist in table '", table_name, "'.")
+    err(
+      "Column '",
+      column_name,
+      "' does not exist in table '",
+      table_name,
+      "'."
+    )
   }
 
   if (vld_false(exists) && column_exists) {
-    err("Column '", column_name, "' already exists in table '", table_name, "'.")
+    err(
+      "Column '",
+      column_name,
+      "' already exists in table '",
+      table_name,
+      "'."
+    )
   }
 
   column_name
@@ -41,8 +53,12 @@ check_table_names <- function(table_names, exists, delete, all, unique, conn) {
     return(table_names)
   }
 
-  vapply(table_names, check_table_name, "",
-    exists = exists, conn = conn,
+  vapply(
+    table_names,
+    check_table_name,
+    "",
+    exists = exists,
+    conn = conn,
     USE.NAMES = FALSE
   )
 
@@ -57,8 +73,12 @@ check_table_names <- function(table_names, exists, delete, all, unique, conn) {
       delete <- if (delete) "delete = TRUE" else NULL
 
       but <- p0(c(unique, exists, delete), collapse = " and ")
-      err("The following table name%s %r duplicated: ",
-        cc(table_names, " and "), "; but ", but, ".",
+      err(
+        "The following table name%s %r duplicated: ",
+        cc(table_names, " and "),
+        "; but ",
+        but,
+        ".",
         n = length(table_names)
       )
     }
@@ -67,8 +87,10 @@ check_table_names <- function(table_names, exists, delete, all, unique, conn) {
     missing <-
       setdiff(to_upper(rws_list_tables(conn)), to_upper(table_names))
     if (length(missing)) {
-      err("The following table name%s %r not represented: ",
-        cc(missing, " and "), "; but all = TRUE and exists != FALSE.",
+      err(
+        "The following table name%s %r not represented: ",
+        cc(missing, " and "),
+        "; but all = TRUE and exists != FALSE.",
         n = length(missing)
       )
     }

@@ -1,6 +1,18 @@
-write_sqlite_data <- function(data, table_name, exists, delete, replace, meta, log,
-                              strict, silent, conn) {
-  if (vld_false(exists) || (is.na(exists) && !tables_exists(table_name, conn))) {
+write_sqlite_data <- function(
+  data,
+  table_name,
+  exists,
+  delete,
+  replace,
+  meta,
+  log,
+  strict,
+  silent,
+  conn
+) {
+  if (
+    vld_false(exists) || (is.na(exists) && !tables_exists(table_name, conn))
+  ) {
     create_table(data, table_name, log = log, silent = silent, conn = conn)
   }
 
@@ -8,12 +20,19 @@ write_sqlite_data <- function(data, table_name, exists, delete, replace, meta, l
     delete_data(table_name, meta = meta, log = log, conn = conn)
   }
 
-  data <- validate_data(data, table_name,
-    strict = strict, silent = silent,
+  data <- validate_data(
+    data,
+    table_name,
+    strict = strict,
+    silent = silent,
     conn = conn
   )
-  write_data(data, table_name,
-    replace = replace, meta = meta, log = log,
+  write_data(
+    data,
+    table_name,
+    replace = replace,
+    meta = meta,
+    log = log,
     conn = conn
   )
   data
@@ -44,16 +63,20 @@ write_sqlite_data <- function(data, table_name, exists, delete, replace, meta, l
 #' conn <- rws_connect()
 #' rws_write(rws_data, exists = FALSE, conn = conn)
 #' rws_disconnect(conn)
-rws_write <- function(x, exists = TRUE, delete = FALSE,
-                      replace = FALSE,
-                      meta = TRUE,
-                      log = TRUE,
-                      commit = TRUE,
-                      strict = TRUE,
-                      x_name = substitute(x),
-                      silent = getOption("rws.silent", FALSE),
-                      conn,
-                      ...) {
+rws_write <- function(
+  x,
+  exists = TRUE,
+  delete = FALSE,
+  replace = FALSE,
+  meta = TRUE,
+  log = TRUE,
+  commit = TRUE,
+  strict = TRUE,
+  x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE),
+  conn,
+  ...
+) {
   UseMethod("rws_write")
 }
 
@@ -71,9 +94,20 @@ rws_write <- function(x, exists = TRUE, delete = FALSE,
 #' rws_write(rws_data, x_name = "moredata", exists = FALSE, conn = conn)
 #' rws_list_tables(conn)
 #' rws_disconnect(conn)
-rws_write.data.frame <- function(x, exists = TRUE, delete = FALSE, replace = FALSE, meta = TRUE, log = TRUE, commit = TRUE, strict = TRUE,
-                                 x_name = substitute(x), silent = getOption("rws.silent", FALSE),
-                                 conn, ...) {
+rws_write.data.frame <- function(
+  x,
+  exists = TRUE,
+  delete = FALSE,
+  replace = FALSE,
+  meta = TRUE,
+  log = TRUE,
+  commit = TRUE,
+  strict = TRUE,
+  x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE),
+  conn,
+  ...
+) {
   chk_lgl(exists)
   chk_flag(delete)
   chk_flag(replace)
@@ -95,12 +129,17 @@ rws_write.data.frame <- function(x, exists = TRUE, delete = FALSE, replace = FAL
   on.exit(dbRollback(conn, name = "rws_write"))
   on.exit(foreign_keys(foreign_keys, conn), add = TRUE)
 
-  write_sqlite_data(x,
-    table_name = x_name, exists = exists,
-    delete = delete, replace = replace,
-    meta = meta, log = log,
+  write_sqlite_data(
+    x,
+    table_name = x_name,
+    exists = exists,
+    delete = delete,
+    replace = replace,
+    meta = meta,
+    log = log,
     strict = strict,
-    silent = silent, conn = conn
+    silent = silent,
+    conn = conn
   )
 
   if (!commit) {
@@ -128,19 +167,22 @@ rws_write.data.frame <- function(x, exists = TRUE, delete = FALSE, replace = FAL
 #' rws_write(list(somedata = rws_data, anothertable = rws_data), exists = FALSE, conn = conn)
 #' rws_list_tables(conn)
 #' rws_disconnect(conn)
-rws_write.list <- function(x,
-                           exists = TRUE,
-                           delete = FALSE,
-                           replace = FALSE,
-                           meta = TRUE,
-                           log = TRUE,
-                           commit = TRUE,
-                           strict = TRUE,
-                           x_name = substitute(x),
-                           silent = getOption("rws.silent", FALSE),
-                           conn,
-                           all = TRUE,
-                           unique = TRUE, ...) {
+rws_write.list <- function(
+  x,
+  exists = TRUE,
+  delete = FALSE,
+  replace = FALSE,
+  meta = TRUE,
+  log = TRUE,
+  commit = TRUE,
+  strict = TRUE,
+  x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE),
+  conn,
+  all = TRUE,
+  unique = TRUE,
+  ...
+) {
   chk_named(x)
   chk_lgl(exists)
   chk_flag(delete)
@@ -171,10 +213,14 @@ rws_write.list <- function(x,
       extra <- names(x)[!exists2]
       msg <- p0(
         "The following data frame%s in '",
-        x_name, "' %r unrecognised: ", cc(extra, " and "),
+        x_name,
+        "' %r unrecognised: ",
+        cc(extra, " and "),
         "; but exists = TRUE."
       )
-      if (strict) err(msg, n = length(extra))
+      if (strict) {
+        err(msg, n = length(extra))
+      }
       if (!silent) wrn(msg, n = length(extra))
     }
     x <- x[exists2]
@@ -183,9 +229,13 @@ rws_write.list <- function(x,
     }
   }
 
-  check_table_names(names(x),
-    exists = exists, delete = delete, all = all,
-    unique = unique, conn = conn
+  check_table_names(
+    names(x),
+    exists = exists,
+    delete = delete,
+    all = all,
+    unique = unique,
+    conn = conn
   )
 
   foreign_keys <- foreign_keys(TRUE, conn)
@@ -196,14 +246,21 @@ rws_write.list <- function(x,
   on.exit(foreign_keys(foreign_keys, conn), add = TRUE)
   on.exit(defer_foreign_keys(defer, conn), add = TRUE)
 
-  mapply(write_sqlite_data, x, names(x),
+  mapply(
+    write_sqlite_data,
+    x,
+    names(x),
     MoreArgs = list(
-      exists = exists, delete = delete,
+      exists = exists,
+      delete = delete,
       replace = replace,
-      meta = meta, log = log,
+      meta = meta,
+      log = log,
       silent = silent,
-      strict = strict, conn = conn
-    ), SIMPLIFY = FALSE
+      strict = strict,
+      conn = conn
+    ),
+    SIMPLIFY = FALSE
   )
 
   if (!commit) {
@@ -233,19 +290,22 @@ rws_write.list <- function(x,
 #' rws_write(environment(), exists = FALSE, conn = conn)
 #' rws_list_tables(conn)
 #' rws_disconnect(conn)
-rws_write.environment <- function(x,
-                                  exists = TRUE,
-                                  delete = FALSE,
-                                  replace = FALSE,
-                                  meta = TRUE,
-                                  log = TRUE,
-                                  commit = TRUE,
-                                  strict = TRUE,
-                                  x_name = substitute(x),
-                                  silent = getOption("rws.silent", FALSE),
-                                  conn,
-                                  all = TRUE,
-                                  unique = TRUE, ...) {
+rws_write.environment <- function(
+  x,
+  exists = TRUE,
+  delete = FALSE,
+  replace = FALSE,
+  meta = TRUE,
+  log = TRUE,
+  commit = TRUE,
+  strict = TRUE,
+  x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE),
+  conn,
+  all = TRUE,
+  unique = TRUE,
+  ...
+) {
   x_name <- chk_deparse(x_name)
   chk_string(x_name)
   chk_flag(silent)
@@ -261,11 +321,19 @@ rws_write.environment <- function(x,
   }
 
   invisible(
-    rws_write(x,
-      exists = exists, delete = delete, replace = replace,
-      meta = meta, log = log, commit = commit,
-      strict = strict, silent = silent,
-      conn = conn, all = all, unique = unique
+    rws_write(
+      x,
+      exists = exists,
+      delete = delete,
+      replace = replace,
+      meta = meta,
+      log = log,
+      commit = commit,
+      strict = strict,
+      silent = silent,
+      conn = conn,
+      all = all,
+      unique = unique
     )
   )
 }

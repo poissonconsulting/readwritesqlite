@@ -1,7 +1,11 @@
 test_that("rws_drop_table works", {
   conn <- local_conn()
 
-  rws_write(list(somedata = readwritesqlite:::rws_data_sf), exists = FALSE, conn = conn)
+  rws_write(
+    list(somedata = readwritesqlite:::rws_data_sf),
+    exists = FALSE,
+    conn = conn
+  )
   expect_identical(rws_list_tables(conn), "somedata")
   expect_true(rws_drop_table("somedata", conn))
   expect_identical(rws_list_tables(conn), character(0))
@@ -12,7 +16,11 @@ test_that("rws_drop_table works", {
 test_that("rws_rename_table informative errors", {
   conn <- local_conn()
 
-  rws_write(list(somedata = readwritesqlite:::rws_data_sf), exists = FALSE, conn = conn)
+  rws_write(
+    list(somedata = readwritesqlite:::rws_data_sf),
+    exists = FALSE,
+    conn = conn
+  )
   expect_error(
     rws_drop_table("somedata2", conn),
     "^Table 'somedata2' does not exist[.]$"
@@ -26,7 +34,11 @@ test_that("rws_rename_table informative errors", {
 test_that("rws_rename_table multiple tables", {
   conn <- local_conn()
 
-  rws_write(list(somedata = data.frame(y = 2), moredata = data.frame(x = 1)), exists = FALSE, conn = conn)
+  rws_write(
+    list(somedata = data.frame(y = 2), moredata = data.frame(x = 1)),
+    exists = FALSE,
+    conn = conn
+  )
   expect_identical(rws_list_tables(conn), sort(c("moredata", "somedata")))
   expect_true(rws_drop_table("somedata", conn))
   expect_identical(rws_list_tables(conn), "moredata")
@@ -37,13 +49,19 @@ test_that("rws_rename_table multiple tables", {
 test_that("rws_drop_table primary key deferred", {
   conn <- local_conn()
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
-                  x INTEGER PRIMARY KEY NOT NULL)")
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)"
+  )
 
-  DBI::dbExecute(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local2 (
                   x INTEGER NOT NULL PRIMARY KEY,
                   y INTEGER NOT NULL,
-                FOREIGN KEY (x) REFERENCES local (x))")
+                FOREIGN KEY (x) REFERENCES local (x))"
+  )
 
   local <- data.frame(x = 1:4)
   expect_identical(rws_write(local, conn = conn), "local")
@@ -62,10 +80,15 @@ test_that("rws_drop_table primary key deferred", {
 
   expect_identical(
     rws_read_table("local2", conn = conn),
-    structure(list(x = c(1L, 2L, 4L), y = c(11L, 12L, 14L)), class = c(
-      "tbl_df",
-      "tbl", "data.frame"
-    ), row.names = c(NA, -3L))
+    structure(
+      list(x = c(1L, 2L, 4L), y = c(11L, 12L, 14L)),
+      class = c(
+        "tbl_df",
+        "tbl",
+        "data.frame"
+      ),
+      row.names = c(NA, -3L)
+    )
   )
 
   expect_error(rws_write(local2, conn = conn), "no such table: main.local")

@@ -4,7 +4,8 @@ test_that("rws_write.data.frame checks all columns present", {
   local <- data.frame(x = as.character(1:3), select = 1:3)
   DBI::dbCreateTable(conn, "local", local)
   local <- local[1]
-  expect_error(rws_write(local, conn = conn),
+  expect_error(
+    rws_write(local, conn = conn),
     "'local' column names must include 'SELECT'",
     class = "chk_error"
   )
@@ -15,10 +16,13 @@ test_that("rws_write.data.frame checks missing values", {
 
   local <- data.frame(x2 = c(1:3, NA), select2 = 1:4)
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
                   x2 INTEGER NOT NULL,
                   select2 REAL NOT NULL
-              )")
+              )"
+  )
 
   expect_error(
     rws_write(local, conn = conn),
@@ -33,12 +37,16 @@ test_that("rws_write.data.frame checks primary key on input values", {
 
   local <- data.frame(x2 = c(1, 1, 2), select2 = c(3, 3, 3))
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
                   x2 INTEGER,
                   select2 INTEGER,
-              PRIMARY KEY (x2, select2))")
+              PRIMARY KEY (x2, select2))"
+  )
 
-  expect_error(rws_write(local, conn = conn),
+  expect_error(
+    rws_write(local, conn = conn),
     "^Columns 'X2' and 'SELECT2' in data 'local' must be unique[.]$",
     class = "chk_error"
   )

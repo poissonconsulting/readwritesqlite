@@ -17,5 +17,10 @@ vld_sqlite_conn <- function(x, connected = NA) {
 
 vld_crs <- function(x) {
   result <- suppressWarnings(try(sf::st_crs(x, valid = FALSE), silent = TRUE))
-  all(!inherits(result, "try-error"), vld_character(x), vld_scalar(x), !is.na(x))
+  all(
+    !inherits(result, "try-error"),
+    vld_character(x),
+    vld_scalar(x),
+    !is.na(x)
+  )
 }

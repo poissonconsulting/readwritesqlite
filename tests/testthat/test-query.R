@@ -59,9 +59,17 @@ test_that("rws_get_sqlite_query works with meta = TRUE and logical", {
 test_that("rws_get_sqlite_query teases apart two", {
   conn <- local_conn()
 
-  local <- as_tibble_sf(data.frame(x = 1:3, z = c(TRUE, FALSE, NA), a = c(TRUE, TRUE, FALSE)))
+  local <- as_tibble_sf(data.frame(
+    x = 1:3,
+    z = c(TRUE, FALSE, NA),
+    a = c(TRUE, TRUE, FALSE)
+  ))
   expect_identical(rws_write(local, exists = FALSE, conn = conn), "local")
-  local2 <- as_tibble_sf(data.frame(x = 2:4, z2 = c(1, 2, NA), a = c(TRUE, FALSE, TRUE)))
+  local2 <- as_tibble_sf(data.frame(
+    x = 2:4,
+    z2 = c(1, 2, NA),
+    a = c(TRUE, FALSE, TRUE)
+  ))
   expect_identical(rws_write(local2, exists = FALSE, conn = conn), "local2")
 
   data <- rws_query("SELECT * FROM local", conn = conn)
@@ -72,9 +80,15 @@ test_that("rws_get_sqlite_query teases apart two", {
 
   expect_identical(data, local)
 
-  data <- rws_query("SELECT local.a AS a FROM local INNER JOIN local2 ON local.x = local2.x", conn = conn)
+  data <- rws_query(
+    "SELECT local.a AS a FROM local INNER JOIN local2 ON local.x = local2.x",
+    conn = conn
+  )
   expect_identical(data, as_tibble_sf(data.frame(a = c(TRUE, FALSE))))
 
-  data <- rws_query("SELECT local.a AS a FROM local INNER JOIN local3 ON local.x = local3.x", conn = conn)
+  data <- rws_query(
+    "SELECT local.a AS a FROM local INNER JOIN local3 ON local.x = local3.x",
+    conn = conn
+  )
   expect_identical(data, as_tibble_sf(data.frame(a = c(1L, 0L))))
 })

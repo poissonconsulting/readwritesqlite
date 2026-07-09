@@ -20,7 +20,12 @@ sql_interpolate <- function(sql, ..., conn) {
 }
 
 sql_strip_foreign_keys <- function(sql) {
-  sql <- gsub(",\\s*FOREIGN\\s+KEY\\s*\\(\\s*\\w+\\s*(,\\s*\\w+)*\\s*\\)\\s*REFERENCES\\s+\\w+\\s*\\(\\s*\\w+\\s*(,\\s*\\w+)*\\s*\\)", "", sql, ignore.case = TRUE)
+  sql <- gsub(
+    ",\\s*FOREIGN\\s+KEY\\s*\\(\\s*\\w+\\s*(,\\s*\\w+)*\\s*\\)\\s*REFERENCES\\s+\\w+\\s*\\(\\s*\\w+\\s*(,\\s*\\w+)*\\s*\\)",
+    "",
+    sql,
+    ignore.case = TRUE
+  )
 }
 
 nrows_table <- function(table_name, conn) {
@@ -32,9 +37,13 @@ nrows_table <- function(table_name, conn) {
 }
 
 create_table <- function(data, table_name, log, silent, conn) {
-  if (!vld_false(silent)) msg("Creating table '", table_name, "'.")
+  if (!vld_false(silent)) {
+    msg("Creating table '", table_name, "'.")
+  }
   DBI::dbCreateTable(conn, table_name, data)
-  if (log) log_command(table_name, command = "CREATE", nrow = 0L, conn = conn)
+  if (log) {
+    log_command(table_name, command = "CREATE", nrow = 0L, conn = conn)
+  }
   data
 }
 
@@ -46,19 +55,23 @@ drop_table <- function(table_name, conn) {
 
 rename_table <- function(table_name, new_table_name, conn) {
   sql <- "ALTER TABLE ?table_name RENAME TO ?new_table_name;"
-  sql <- sql_interpolate(sql,
+  sql <- sql_interpolate(
+    sql,
     table_name = table_name,
-    new_table_name = new_table_name, conn = conn
+    new_table_name = new_table_name,
+    conn = conn
   )
   execute(sql, conn)
 }
 
 rename_column <- function(table_name, column_name, new_column_name, conn) {
   sql <- "ALTER TABLE ?table_name RENAME COLUMN ?column_name TO ?new_column_name;"
-  sql <- sql_interpolate(sql,
+  sql <- sql_interpolate(
+    sql,
     table_name = table_name,
     column_name = column_name,
-    new_column_name = new_column_name, conn = conn
+    new_column_name = new_column_name,
+    conn = conn
   )
   execute(sql, conn)
 }
@@ -87,16 +100,31 @@ write_data <- function(data, table_name, replace, meta, log, conn) {
         nrow_insert <- nrow2 - nrow1
         nrow_replace <- nrow(data) - nrow_insert
         if (nrow_replace > 0) {
-          log_command(table_name, command = "UPDATE", nrow = nrow_replace, conn = conn)
+          log_command(
+            table_name,
+            command = "UPDATE",
+            nrow = nrow_replace,
+            conn = conn
+          )
         }
         if (nrow_insert) {
-          log_command(table_name, command = "INSERT", nrow = nrow_insert, conn = conn)
+          log_command(
+            table_name,
+            command = "INSERT",
+            nrow = nrow_insert,
+            conn = conn
+          )
         }
       }
     } else {
       DBI::dbAppendTable(conn, table_name, data)
       if (log) {
-        log_command(table_name, command = "INSERT", nrow = nrow(data), conn = conn)
+        log_command(
+          table_name,
+          command = "INSERT",
+          nrow = nrow(data),
+          conn = conn
+        )
       }
     }
   }
