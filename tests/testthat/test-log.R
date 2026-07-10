@@ -4,10 +4,16 @@ test_that("rws_read_log creates table", {
   log <- rws_read_log(conn)
 
   expect_identical(nrow(log), 0L)
-  expect_identical(colnames(log), c(
-    "DateTimeUTCLog", "UserLog", "TableLog",
-    "CommandLog", "NRowLog"
-  ))
+  expect_identical(
+    colnames(log),
+    c(
+      "DateTimeUTCLog",
+      "UserLog",
+      "TableLog",
+      "CommandLog",
+      "NRowLog"
+    )
+  )
   expect_identical(attr(log$DateTimeUTCLog, "tzone"), "UTC")
 })
 
@@ -74,9 +80,12 @@ test_that("rws_write list logs commands", {
 test_that("log replace rows UNIQUE constraints", {
   conn <- local_conn()
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
                   x INTEGER UNIQUE NOT NULL,
-                  y INTEGER)")
+                  y INTEGER)"
+  )
 
   local <- data.frame(x = 1:3, y = 2:4)
   expect_identical(rws_write(local, conn = conn), "local")

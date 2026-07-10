@@ -1,7 +1,11 @@
 test_that("rws_rename_table works", {
   conn <- local_conn()
 
-  rws_write(list(somedata = readwritesqlite:::rws_data_sf), exists = FALSE, conn = conn)
+  rws_write(
+    list(somedata = readwritesqlite:::rws_data_sf),
+    exists = FALSE,
+    conn = conn
+  )
   expect_identical(rws_list_tables(conn), "somedata")
   expect_true(rws_rename_table("somedata", "tableb", conn))
   expect_identical(rws_list_tables(conn), "tableb")
@@ -12,7 +16,11 @@ test_that("rws_rename_table works", {
 test_that("rws_rename_table informative errors", {
   conn <- local_conn()
 
-  rws_write(list(somedata = readwritesqlite:::rws_data_sf), exists = FALSE, conn = conn)
+  rws_write(
+    list(somedata = readwritesqlite:::rws_data_sf),
+    exists = FALSE,
+    conn = conn
+  )
   expect_identical(rws_list_tables(conn), "somedata")
   expect_error(
     rws_rename_table("somedata2", "tableb", conn),
@@ -32,7 +40,11 @@ test_that("rws_rename_table informative errors", {
 test_that("rws_rename_table multiple tables", {
   conn <- local_conn()
 
-  rws_write(list(somedata = data.frame(y = 2), moredata = data.frame(x = 1)), exists = FALSE, conn = conn)
+  rws_write(
+    list(somedata = data.frame(y = 2), moredata = data.frame(x = 1)),
+    exists = FALSE,
+    conn = conn
+  )
   expect_identical(rws_list_tables(conn), sort(c("moredata", "somedata")))
   expect_true(rws_rename_table("somedata", "tableB", conn))
   expect_identical(rws_list_tables(conn), sort(c("moredata", "tableB")))
@@ -43,13 +55,19 @@ test_that("rws_rename_table multiple tables", {
 test_that("rws_rename_table primary key", {
   conn <- local_conn()
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
-                  x INTEGER PRIMARY KEY NOT NULL)")
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)"
+  )
 
-  DBI::dbExecute(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local2 (
                   x INTEGER NOT NULL PRIMARY KEY,
                   y INTEGER NOT NULL,
-                FOREIGN KEY (x) REFERENCES local (x))")
+                FOREIGN KEY (x) REFERENCES local (x))"
+  )
 
   local <- data.frame(x = 1:4)
   expect_identical(rws_write(local, conn = conn), "local")
@@ -72,13 +90,21 @@ test_that("rws_rename_column works", {
   rws_write(data.frame(x = 1), x_name = "local", exists = FALSE, conn = conn)
   expect_identical(
     rws_read_table("local", conn = conn),
-    structure(list(x = 1), class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -1L))
+    structure(
+      list(x = 1),
+      class = c("tbl_df", "tbl", "data.frame"),
+      row.names = c(NA, -1L)
+    )
   )
 
   expect_true(rws_rename_column("local", "x", "Y", conn = conn))
   expect_identical(
     rws_read_table("local", conn = conn),
-    structure(list(Y = 1), class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -1L))
+    structure(
+      list(Y = 1),
+      class = c("tbl_df", "tbl", "data.frame"),
+      row.names = c(NA, -1L)
+    )
   )
   expect_identical(rws_read_meta(conn)$TableMeta, "LOCAL")
   expect_identical(rws_read_meta(conn)$ColumnMeta, "Y")
@@ -90,13 +116,21 @@ test_that("rws_rename_column renames own column", {
   rws_write(data.frame(x = 1), x_name = "local", exists = FALSE, conn = conn)
   expect_identical(
     rws_read_table("local", conn = conn),
-    structure(list(x = 1), class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -1L))
+    structure(
+      list(x = 1),
+      class = c("tbl_df", "tbl", "data.frame"),
+      row.names = c(NA, -1L)
+    )
   )
 
   expect_true(rws_rename_column("local", "x", "X", conn = conn))
   expect_identical(
     rws_read_table("local", conn = conn),
-    structure(list(X = 1), class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -1L))
+    structure(
+      list(X = 1),
+      class = c("tbl_df", "tbl", "data.frame"),
+      row.names = c(NA, -1L)
+    )
   )
 })
 
@@ -117,7 +151,12 @@ test_that("rws_rename_column informative errors", {
 test_that("rws_rename_column can't overwrite existing column", {
   conn <- local_conn()
 
-  rws_write(data.frame(x = 1, y = 2), x_name = "local", exists = FALSE, conn = conn)
+  rws_write(
+    data.frame(x = 1, y = 2),
+    x_name = "local",
+    exists = FALSE,
+    conn = conn
+  )
   expect_error(
     rws_rename_column("local", "x", "y", conn = conn),
     "Column 'y' already exists in table 'local'[.]$"
@@ -127,13 +166,19 @@ test_that("rws_rename_column can't overwrite existing column", {
 test_that("rws_rename_column primary key", {
   conn <- local_conn()
 
-  DBI::dbExecute(conn, "CREATE TABLE local (
-                  x INTEGER PRIMARY KEY NOT NULL)")
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local (
+                  x INTEGER PRIMARY KEY NOT NULL)"
+  )
 
-  DBI::dbExecute(conn, "CREATE TABLE local2 (
+  DBI::dbExecute(
+    conn,
+    "CREATE TABLE local2 (
                   x INTEGER NOT NULL PRIMARY KEY,
                   y INTEGER NOT NULL,
-                FOREIGN KEY (x) REFERENCES local (x))")
+                FOREIGN KEY (x) REFERENCES local (x))"
+  )
 
   local <- data.frame(x = 1:4)
   expect_identical(rws_write(local, conn = conn), "local")

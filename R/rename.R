@@ -26,8 +26,16 @@ rws_rename_table <- function(table_name, new_table_name, conn) {
   table_name <- to_upper(table_name)
   new_table_name <- to_upper(new_table_name)
 
-  meta$TableMeta <- sub(p0("^", table_name, "$"), new_table_name, meta$TableMeta)
-  init$TableInit <- sub(p0("^", table_name, "$"), new_table_name, init$TableInit)
+  meta$TableMeta <- sub(
+    p0("^", table_name, "$"),
+    new_table_name,
+    meta$TableMeta
+  )
+  init$TableInit <- sub(
+    p0("^", table_name, "$"),
+    new_table_name,
+    init$TableInit
+  )
 
   replace_meta_table(meta, conn = conn)
   replace_init_table(init, conn = conn)
@@ -70,7 +78,11 @@ rws_rename_column <- function(table_name, column_name, new_column_name, conn) {
   new_column_name <- to_upper(new_column_name)
 
   meta$ColumnMeta[meta$TableMeta == table_name] <-
-    sub(p0("^", column_name, "$"), new_column_name, meta$ColumnMeta[meta$TableMeta == table_name])
+    sub(
+      p0("^", column_name, "$"),
+      new_column_name,
+      meta$ColumnMeta[meta$TableMeta == table_name]
+    )
 
   replace_meta_table(meta, conn = conn)
   TRUE

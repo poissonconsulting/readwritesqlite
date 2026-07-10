@@ -4,7 +4,8 @@ test_that("init makes table", {
   expect_identical(
     rws_read_init(conn = conn),
     tibble::tibble(
-      TableInit = character(0), IsInit = integer(0),
+      TableInit = character(0),
+      IsInit = integer(0),
       SFInit = character(0)
     )
   )
@@ -13,7 +14,8 @@ test_that("init makes table", {
   expect_identical(
     rws_read_init(conn = conn),
     tibble::tibble(
-      TableInit = "LOCAL", IsInit = 0L,
+      TableInit = "LOCAL",
+      IsInit = 0L,
       SFInit = NA_character_
     )
   )
@@ -21,7 +23,8 @@ test_that("init makes table", {
   expect_identical(
     rws_read_init(conn = conn),
     tibble::tibble(
-      TableInit = "LOCAL", IsInit = 1L,
+      TableInit = "LOCAL",
+      IsInit = 1L,
       SFInit = NA_character_
     )
   )
@@ -76,14 +79,16 @@ test_that("init makes table", {
     rws_read_init(conn = conn),
     tibble::tibble(
       TableInit = c(
-        "LOCAL", "LOCAL2", "LOCAL3",
-        "LOCAL4", "LOCAL5"
+        "LOCAL",
+        "LOCAL2",
+        "LOCAL3",
+        "LOCAL4",
+        "LOCAL5"
       ),
       IsInit = c(1L, 1L, 1L, 1L, 1L),
       SFInit = c(rep(NA_character_, 3), "GEOMETRY", "GEOMETRY")
     )
   )
-
 
   # local7 <- local4
   # expect_identical(rws_write(local7, conn = conn, meta = FALSE, exists = NA),

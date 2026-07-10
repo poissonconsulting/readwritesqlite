@@ -17,16 +17,20 @@ rws_close_connection <- function(conn) {
 }
 
 #' @export
-rws_write_sqlite <- function(x, exists = TRUE, delete = FALSE,
-                             replace = FALSE,
-                             meta = TRUE,
-                             log = TRUE,
-                             commit = TRUE,
-                             strict = TRUE,
-                             x_name = substitute(x),
-                             silent = getOption("rws.silent", FALSE),
-                             conn,
-                             ...) {
+rws_write_sqlite <- function(
+  x,
+  exists = TRUE,
+  delete = FALSE,
+  replace = FALSE,
+  meta = TRUE,
+  log = TRUE,
+  commit = TRUE,
+  strict = TRUE,
+  x_name = substitute(x),
+  silent = getOption("rws.silent", FALSE),
+  conn,
+  ...
+) {
   deprecate_warn("0.2.0", "rws_write_sqlite()", "rws_write()")
   UseMethod("rws_write")
 }
@@ -61,7 +65,9 @@ rws_read_sqlite_table <- function(x, meta = TRUE, conn) {
   rws_read_table(x, meta = meta, conn = conn)
 }
 
-is_string <- function(x) (is.character(x) || is.factor(x)) && length(x) == 1 && !is.na(x)
+is_string <- function(x) {
+  (is.character(x) || is.factor(x)) && length(x) == 1 && !is.na(x)
+}
 
 chk_deparse <- function(x) {
   if (!is.character(x)) {
@@ -87,7 +93,12 @@ chk_fail <- function(..., error) {
 #' @param error A flag specifying whether to through an error if the check fails.
 #'
 #' @export
-check_sqlite_connection <- function(x, connected = NA, x_name = substitute(x), error = TRUE) {
+check_sqlite_connection <- function(
+  x,
+  connected = NA,
+  x_name = substitute(x),
+  error = TRUE
+) {
   deprecate_warn("0.2.0", "check_sqlite_connection()", "chk_sqlite_conn()")
 
   x_name <- chk_deparse(x_name)

@@ -11,11 +11,15 @@ test_that("sf data frames with single geometry passed back", {
   DBI::dbCreateTable(conn, "local", local)
   expect_identical(rws_write(local, conn = conn), "local")
   init <- DBI::dbReadTable(conn, "readwritesqlite_init")
-  expect_identical(init, data.frame(
-    TableInit = "LOCAL",
-    IsInit = 1L, SFInit = "GEOMETRY",
-    stringsAsFactors = FALSE
-  ))
+  expect_identical(
+    init,
+    data.frame(
+      TableInit = "LOCAL",
+      IsInit = 1L,
+      SFInit = "GEOMETRY",
+      stringsAsFactors = FALSE
+    )
+  )
   remote <- rws_read_table("local", conn = conn)
   expect_identical(class(remote), c("sf", "tbl_df", "tbl", "data.frame"))
   expect_identical(colnames(remote), colnames(local))
