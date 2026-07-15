@@ -13,7 +13,7 @@ test_that("check_table_names", {
       all = FALSE,
       unique = FALSE
     ),
-    "^`table_names` must inherit from S3 class 'character'[.]$",
+    "^`table_names` must inherit from S3 class 'character'",
     class = "chk_error"
   )
   expect_error(
