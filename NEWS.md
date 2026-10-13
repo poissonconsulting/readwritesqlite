@@ -1,4 +1,9 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# readwritesqlite 0.2.0.9040
+
+- Same as previous version.
+
 
 # readwritesqlite 0.2.0.9039
 
